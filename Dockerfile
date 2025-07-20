@@ -6,7 +6,7 @@ COPY package.json ./
 RUN yarn
 
 COPY tsconfig.json .
-COPY src/*.ts src/
+COPY src/ src/
 RUN yarn build
 
 # Runtime stage
