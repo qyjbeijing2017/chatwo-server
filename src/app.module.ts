@@ -5,6 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule } from './logger/logger.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { S3Module } from './s3/s3.module';
+import { AuthModule } from './auth/auth.module';
+import { NakamaModule } from './nakama/nakama.module';
+import { ChatwoUser } from './entities/user.entity';
 
 @Module({
   imports: [
@@ -23,11 +26,13 @@ import { S3Module } from './s3/s3.module';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [],
+        entities: [ChatwoUser],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),
     S3Module,
+    AuthModule,
+    NakamaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
