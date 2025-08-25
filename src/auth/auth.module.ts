@@ -18,4 +18,4 @@ import { ChatwoUser } from 'src/entities/user.entity';
     },
   ],
 })
-export class AuthModule { }
+export class AuthModule {}
