@@ -7,7 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { S3Module } from './s3/s3.module';
 import { AuthModule } from './auth/auth.module';
 import { NakamaModule } from './nakama/nakama.module';
+import { HiltModule } from './hilt/hilt.module';
 import { ChatwoUser } from './entities/user.entity';
+import { ChatwoBlade } from './entities/blade.entity';
+import { ChatwoHilt } from './entities/hilt.entity';
 
 @Module({
   imports: [
@@ -26,13 +29,18 @@ import { ChatwoUser } from './entities/user.entity';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser],
+        entities: [
+          ChatwoUser, 
+          ChatwoHilt, 
+          ChatwoBlade
+        ],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),
     S3Module,
     AuthModule,
     NakamaModule,
+    HiltModule,
   ],
   controllers: [AppController],
   providers: [AppService],

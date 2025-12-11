@@ -3,8 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  Hint,
+  OneToMany,
 } from 'typeorm';
 import { v4 } from 'uuid';
+import { ChatwoHilt } from './hilt.entity';
 
 @Entity()
 export class ChatwoUser {
@@ -19,4 +22,7 @@ export class ChatwoUser {
 
   @Column({ unique: true, nullable: true })
   oculusId: string;
+
+  @OneToMany(() => ChatwoHilt, (hilt) => hilt.owner)
+  hilts: ChatwoHilt[];
 }

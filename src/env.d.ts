@@ -22,5 +22,11 @@ declare namespace NodeJS {
 
     JWT_SECRET: string;
     JWT_EXPIRES_IN: string;
+
+    NAKAMA_HOST: string;
+    NAKAMA_PORT: string;
+    NAKAMA_SERVER_KEY: string;
+    NAKAMA_USE_SSL: string;
+    NAKAMA_RUNTIME_KEY: string;
   }
 }
