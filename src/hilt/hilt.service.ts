@@ -33,13 +33,13 @@ export class HiltService {
         return user.hilts || [];
     }
 
-    async findOne(account: ApiAccount, id: number): Promise<ChatwoHilt> {
+    async findOne(account: ApiAccount, nakamaId: string): Promise<ChatwoHilt> {
         const hilt = await this.hiltRepository.findOne({
             where: {
                 owner: {
                     nakamaId: account.custom_id,
                 },
-                id: id,
+                nakamaId: nakamaId,
             },
             relations: {
                 blade: true
@@ -109,10 +109,10 @@ export class HiltService {
         }
     }
 
-    async remove(userId: string, id: number): Promise<void> {
+    async remove(userId: string, nakamaId: string): Promise<void> {
         const hilt = await this.hiltRepository.findOne({
             where: {
-                id: id,
+                nakamaId: nakamaId,
                 owner: {
                     nakamaId: userId,
                 },

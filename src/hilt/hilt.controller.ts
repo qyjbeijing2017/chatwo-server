@@ -22,9 +22,9 @@ export class HiltController {
     constructor(private readonly hiltService: HiltService) { }
 
     @ApiBearerAuth()
-    @Get(':id')
-    async findOne(@Account() account: ApiAccount, @Param('id', ParseIntPipe) id: number): Promise<ChatwoHilt> {
-        return this.hiltService.findOne(account, id);
+    @Get(':nakamaId')
+    async findOne(@Account() account: ApiAccount, @Param('nakamaId') nakamaId: string): Promise<ChatwoHilt> {
+        return this.hiltService.findOne(account, nakamaId);
     }
 
     @ApiBearerAuth()
@@ -52,9 +52,9 @@ export class HiltController {
 
     @ApiBearerAuth()
     @Server()
-    @Delete(':userId/:id')
-    async remove(@Param('userId') userId: string, @Param('id', ParseIntPipe) id: number): Promise<void> {
-        return this.hiltService.remove(userId, id);
+    @Delete(':userId/:nakamaId')
+    async remove(@Param('userId') userId: string, @Param('nakamaId') nakamaId: string): Promise<void> {
+        return this.hiltService.remove(userId, nakamaId);
     }
 
     @ApiBearerAuth()
