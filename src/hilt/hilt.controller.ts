@@ -15,6 +15,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Server } from 'src/auth/server.decorator';
 import { CreateHiltDto } from './dto/create-hilt.dto';
 import { UpdateHiltDto } from './dto/update-hilt.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('hilt')
 export class HiltController {
@@ -30,12 +31,14 @@ export class HiltController {
         return this.hiltService.findAll(account);
     }
 
+    @ApiBearerAuth()
     @Server()
     @Put()
     async create(@Body() hilt: CreateHiltDto): Promise<ChatwoHilt> {
         return this.hiltService.create(hilt);
     }
 
+    @ApiBearerAuth()
     @Server()
     @Post(':id')
     async update(
@@ -45,12 +48,14 @@ export class HiltController {
         return this.hiltService.update(id, hilt);
     }
 
+    @ApiBearerAuth()
     @Server()
     @Delete(':userId/:id')
     async remove(@Param('userId') userId: string, @Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.hiltService.remove(userId, id);
     }
 
+    @ApiBearerAuth()
     @Server()
     @Get('admin/all')
     async findAllAdmin(): Promise<ChatwoHilt[]> {
