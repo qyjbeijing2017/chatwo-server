@@ -6,6 +6,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { UpdateHiltDto } from './dto/update-hilt.dto';
 import { ChatwoBlade } from 'src/entities/blade.entity';
+import { CreateHiltDto } from './dto/create-hilt.dto';
 
 @Injectable()
 export class HiltService {
@@ -50,8 +51,15 @@ export class HiltService {
         return hilt;
     }
 
-    async create(hiltData: Partial<ChatwoHilt>): Promise<ChatwoHilt> {
-        const hilt = this.hiltRepository.create(hiltData);
+    async create(hiltData: CreateHiltDto): Promise<ChatwoHilt> {
+        const user = await this.userRepository.findOne({ where: { nakamaId: hiltData.ownerNakamaId } });
+        if (!user) {
+            throw new NotFoundException('Owner not found');
+        }
+        const hilt = this.hiltRepository.create({
+            ...hiltData,
+            owner: user,
+        });
         return this.hiltRepository.save(hilt);
     }
 
@@ -66,10 +74,10 @@ export class HiltService {
                 throw new NotFoundException('Hilt not found');
             }
 
-            if (hilt.owner.nakamaId !== hiltData.owner && hilt.state !== HiltEquipState.OUT_OF_CONTROL) {
+            if (hilt.owner.nakamaId !== hiltData.ownerNakamaId && hilt.state !== HiltEquipState.OUT_OF_CONTROL) {
                 throw new UnauthorizedException('You do not own this hilt');
             }
-            const owner = await this.userRepository.findOne({ where: { nakamaId: hiltData.owner } });
+            const owner = await this.userRepository.findOne({ where: { nakamaId: hiltData.ownerNakamaId } });
             if (!owner) {
                 throw new NotFoundException('Owner not found');
             }

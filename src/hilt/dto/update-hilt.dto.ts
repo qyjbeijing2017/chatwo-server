@@ -6,7 +6,7 @@ export class UpdateHiltDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    owner: string;
+    ownerNakamaId: string;
 
     @ApiProperty()
     @IsEnum(HiltEquipState)

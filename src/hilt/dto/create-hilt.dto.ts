@@ -11,7 +11,7 @@ export class CreateHiltDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  userId: string;
+  ownerNakamaId: string;
 
   @ApiProperty()
   @IsEnum(HiltEquipState)
