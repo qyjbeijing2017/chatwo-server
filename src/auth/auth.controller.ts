@@ -2,6 +2,8 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Public } from './public.decorator';
 import { AuthenticateOculusDto } from './dto/authenticate-oculus.dto';
 import { AuthService } from './auth.service';
+import { Server } from './server.decorator';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -18,9 +20,10 @@ export class AuthController {
     return this.authService.oculusExists(id);
   }
 
-  // @Public()
-  // @Get('users')
-  // async getUsers() {
-  //     return this.authService.getUsers();
-  // }
+  @ApiBearerAuth()
+  @Server()
+  @Get('users')
+  async getUsers() {
+      return this.authService.getUsers();
+  }
 }

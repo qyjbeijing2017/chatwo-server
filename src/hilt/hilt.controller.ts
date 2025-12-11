@@ -21,11 +21,13 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 export class HiltController {
     constructor(private readonly hiltService: HiltService) { }
 
+    @ApiBearerAuth()
     @Get(':id')
     async findOne(@Account() account: ApiAccount, @Param('id', ParseIntPipe) id: number): Promise<ChatwoHilt> {
         return this.hiltService.findOne(account, id);
     }
 
+    @ApiBearerAuth()
     @Get()
     async findAll(@Account() account: ApiAccount): Promise<ChatwoHilt[]> {
         return this.hiltService.findAll(account);
