@@ -24,6 +24,6 @@ export class AuthController {
   @Server()
   @Get('users')
   async getUsers() {
-      return this.authService.getUsers();
+    return this.authService.getUsers();
   }
 }

@@ -7,10 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { S3Module } from './s3/s3.module';
 import { AuthModule } from './auth/auth.module';
 import { NakamaModule } from './nakama/nakama.module';
-import { HiltModule } from './hilt/hilt.module';
 import { ChatwoUser } from './entities/user.entity';
 import { ChatwoItem } from './entities/item.entity';
 import { ChatwoLog } from './entities/log.entity';
+import { ItemModule } from './item/item.module';
+import { StatisticModule } from './statistic/statistic.module';
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { ChatwoLog } from './entities/log.entity';
     S3Module,
     AuthModule,
     NakamaModule,
-    HiltModule,
+    ItemModule,
+    StatisticModule,
   ],
   controllers: [AppController],
   providers: [AppService],
