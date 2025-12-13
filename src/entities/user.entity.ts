@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { v4 } from 'uuid';
-import { ChatwoHilt } from './hilt.entity';
+import { ChatwoItem } from './item.entity';
 
 @Entity()
 export class ChatwoUser {
@@ -22,6 +22,6 @@ export class ChatwoUser {
   @Column({ unique: true, nullable: true })
   oculusId: string;
 
-  @OneToMany(() => ChatwoHilt, (hilt) => hilt.owner)
-  hilts: ChatwoHilt[];
+  @OneToMany(() => ChatwoItem, (item) => item.owner)
+  items: ChatwoItem[];
 }

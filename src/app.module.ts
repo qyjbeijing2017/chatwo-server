@@ -9,8 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { NakamaModule } from './nakama/nakama.module';
 import { HiltModule } from './hilt/hilt.module';
 import { ChatwoUser } from './entities/user.entity';
-import { ChatwoBlade } from './entities/blade.entity';
-import { ChatwoHilt } from './entities/hilt.entity';
+import { ChatwoItem } from './entities/item.entity';
+import { ChatwoLog } from './entities/log.entity';
 
 @Module({
   imports: [
@@ -29,7 +29,7 @@ import { ChatwoHilt } from './entities/hilt.entity';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser, ChatwoHilt, ChatwoBlade],
+        entities: [ChatwoUser, ChatwoItem, ChatwoLog],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),
