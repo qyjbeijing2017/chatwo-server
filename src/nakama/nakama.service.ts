@@ -56,7 +56,7 @@ export class NakamaService {
         nakamaId: item.id,
         key: item.key,
         type: configManager.itemMap.get(item.key)?.type ?? ItemType.item,
-        createdAt: new Date(item.createdAt),
+        // createdAt: new Date(item.createdAt),
         meta: item.meta,
       }));
   }
