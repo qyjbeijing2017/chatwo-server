@@ -123,40 +123,76 @@ export class UserService {
   }
 
   async syncFromNakama(nakamaId: string): Promise<ChatwoUser> {
-    const user = await this.userRepository.findOne({
-      where: { nakamaId },
-      relations: {
-        items: true,
-      },
-    });
-    if (!user) {
-      throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
-    }
-
-    const session = await this.nakamaService.login(nakamaId);
-    const nakamaItems = await this.nakamaService.listItems(session);
-
-    const itmesNeedToSave: ChatwoItem[] = [];
-
-    user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
-
-    for (const nakamaItem of nakamaItems) {
-      const item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId) ?? this.itemRepository.create({
-        ...nakamaItem,
-        owner: user,
-      });
-      item.key = nakamaItem.key!;
-      item.type = nakamaItem.type!;
-      item.meta = nakamaItem.meta;
-      itmesNeedToSave.push(item);
-    }
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
+
+      const user = await this.userRepository.findOne({
+        where: { nakamaId },
+        relations: {
+          items: true,
+        },
+      });
+      if (!user) {
+        throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
+      }
+
+      const session = await this.nakamaService.login(nakamaId);
+      const nakamaItems = await this.nakamaService.listItems(session);
+
+      const itmesNeedToSave: ChatwoItem[] = [];
+
+      user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
+
+      const log = this.logRepository.create({
+        message: `User synced from Nakama`,
+        about: [
+          user.nakamaId,
+          'user/syncFromNakama',
+        ],
+        data: {}
+      });
+
+      const wallet = await this.nakamaService.getWallet(session);
+
+      for (const [key, value] of Object.entries(wallet)) {
+        if (user.wallet[key] !== value) {
+          log.data.wallet = log.data.wallet || {};
+          log.data.wallet[key] = value - (user.wallet[key] || 0);
+          user.wallet[key] = value;
+        }
+      }
+
+      for (const nakamaItem of nakamaItems) {
+        let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
+        if (!item) {
+          item = this.itemRepository.create({
+            ...nakamaItem,
+            owner: user,
+          });
+          log.data.item = log.data.item || {};
+          log.data.item.added = log.data.item.added || [];
+          log.data.item.added.push(item);
+        } else {
+          log.data.item = log.data.item || {};
+          log.data.item.update = log.data.item.update || {};
+          log.data.item.update[item.nakamaId] = {
+            metadata: {
+              before: item.meta,
+              after: nakamaItem.meta,
+            },
+          };
+          item.meta = nakamaItem.meta;
+        }
+        itmesNeedToSave.push(item);
+        log.about.push(nakamaItem.nakamaId!);
+      }
+
       await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
+      await queryRunner.manager.save(log);
       await queryRunner.commitTransaction();
       await queryRunner.release();
       return user;

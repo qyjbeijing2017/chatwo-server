@@ -12,11 +12,11 @@ import { ChatwoItem } from './item.entity';
 export type ChatwoWalletAddition = Record<string, number>;
 export interface ChatwoItemUpdateLog {
   [key: string]: {
-    owner: {
+    owner?: {
       before: string;
       after: string;
     };
-    metadata: {
+    metadata?: {
       before: any;
       after: any;
     };

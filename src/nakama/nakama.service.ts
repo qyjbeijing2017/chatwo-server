@@ -34,6 +34,11 @@ export class NakamaService {
     return this.client.getAccount(session);
   }
 
+  async getWallet(session: Session) {
+    const account = await this.client.getAccount(session);
+    return JSON.parse(account.wallet || '{}') as Record<string, number>;
+  }
+
   async listItems(session: Session): Promise<Partial<ChatwoItem>[]> {
     const resp = await this.client.rpc(session, 'refresh_assets', {});
     const data = resp.payload as {
