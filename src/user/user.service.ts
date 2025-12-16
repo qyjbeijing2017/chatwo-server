@@ -191,17 +191,30 @@ export class UserService {
         log.about.push(nakamaItem.nakamaId!);
       }
 
-      const debug = await queryRunner.manager.query(`
-SELECT
-  relname AS partition_name
+      const search_path = await queryRunner.manager.query(`SHOW search_path`);
+      console.log(`Current search_path: `, search_path);
+      const current_schema = await queryRunner.manager.query(`SELECT current_schema()`);
+      console.log(`Current schema: `, current_schema);
+      const rls = await queryRunner.manager.query(`
+SELECT relrowsecurity
 FROM pg_class
-WHERE oid IN (
-  SELECT inhrelid
-  FROM pg_inherits
-  WHERE inhparent = 'public.chatwo_item'::regclass
-);
+WHERE oid = 'public.chatwo_item'::regclass;
+      `);
+      console.log(`RLS on chatwo_item: `, rls);
+      const rls_prolicy = await queryRunner.manager.query(`
+        SELECT *
+FROM pg_policies
+WHERE tablename = 'chatwo_item';
+        `);
+      console.log(`RLS policies on chatwo_item: `, rls_prolicy);
+
+      const trigger = await queryRunner.manager.query(`
+        SELECT tgname, tgtype
+FROM pg_trigger
+WHERE tgrelid = 'public.chatwo_item'::regclass;
 `);
-      console.log(debug);
+      console.log(`Triggers on chatwo_item: `, trigger);
+
 
       await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
