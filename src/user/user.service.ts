@@ -174,7 +174,7 @@ export class UserService {
           });
           log.data.item = log.data.item || {};
           log.data.item.added = log.data.item.added || [];
-          log.data.item.added.push(item);
+          log.data.item.added.push({ ...item });
         } else {
           log.data.item = log.data.item || {};
           log.data.item.update = log.data.item.update || {};
