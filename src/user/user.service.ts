@@ -168,7 +168,7 @@ export class UserService {
       for (const nakamaItem of nakamaItems) {
         let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
         if (!item) {
-          item = this.itemRepository.create({
+          item = queryRunner.manager.create(ChatwoItem, {
             ...nakamaItem,
             owner: user,
           });
