@@ -44,5 +44,7 @@ import 'winston-daily-rotate-file';
     }),
   ],
   exports: [WinstonModule],
+  controllers: [],
+  providers: [],
 })
 export class LoggerModule {}
