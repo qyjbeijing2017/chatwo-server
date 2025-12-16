@@ -87,5 +87,5 @@ Equip_11_SpeedContainerL,Boost Engine (Large),,item,RAssets/Prefabs/Items/Equipm
 Equip_7_GlideModule,Glide Module,,item,RAssets/Prefabs/Items/Equipments/Equip_7_GlideModule,,0.1
 Equip_14_SprintModule,Dash Module,,item,RAssets/Prefabs/Items/Equipments/Equip_14_SprintModule,,0.1
 Equip_9_OverloadModule,Overload Module,,item,RAssets/Prefabs/Items/Equipments/Equip_9_OverloadModule,,0.1
-sc,SC,,currency,,,0.1
-ss,SS,,currency,,,0.1
+#sc,SC,,currency,,,0.1
+#ss,SS,,currency,,,0.1

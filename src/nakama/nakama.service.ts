@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Client, Session } from '@heroiclabs/nakama-js';
-import { ChatwoItem } from 'src/entities/item.entity';
-import { v4 } from 'uuid';
+import { ChatwoItem, ItemType } from 'src/entities/item.entity';
+import { configManager } from 'src/configV2/config';
 
 @Injectable()
 export class NakamaService {
@@ -34,33 +34,25 @@ export class NakamaService {
     return this.client.getAccount(session);
   }
 
-  async listItems(session: Session) {
-    const objs = await this.client.readStorageObjects(session, {
-      object_ids: [
-        {
-          collection: 'user_items',
-          key: 'user_persistence',
-        },
-        {
-          collection: 'user_items',
-          key: 'items',
-        },
-        {
-          collection: 'assets',
-          key: 'items',
-        },
-      ],
-    });
-    const [userPersistenceObj, userItemsObj, assetItemsObj] = objs.objects;
-    const assetItems: {
+  async listItems(session: Session): Promise<Partial<ChatwoItem>[]> {
+    const resp = await this.client.rpc(session, 'refresh_assets', {});
+    const data = resp.payload as {
       [key: string]: {
         id: string;
         key: string;
-        metadata: any;
+        createdAt: string;
+        updatedAt: string;
+        meta: any;
       };
-    } = assetItemsObj.value || {};
-    const userPersistence: { [key: string]: any } =
-      userPersistenceObj.value || {};
-    const userItems: { [key: string]: number } = userItemsObj.value || {};
+    };
+
+    return Object.values(data)
+      .map((item) => ({
+        nakamaId: item.id,
+        key: item.key,
+        type: configManager.itemMap.get(item.key)?.type ?? ItemType.item,
+        createdAt: new Date(item.createdAt),
+        meta: item.meta,
+      }));
   }
 }

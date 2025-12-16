@@ -13,7 +13,6 @@ import { ChatwoLog } from './entities/log.entity';
 import { ItemModule } from './item/item.module';
 import { StatisticModule } from './statistic/statistic.module';
 import { UserModule } from './user/user.module';
-import { ChatwoConfigModule } from './chatwo-config/chatwo-config.module';
 
 @Module({
   imports: [
@@ -42,7 +41,6 @@ import { ChatwoConfigModule } from './chatwo-config/chatwo-config.module';
     ItemModule,
     StatisticModule,
     UserModule,
-    ChatwoConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],

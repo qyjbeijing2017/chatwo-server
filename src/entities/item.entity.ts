@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   DeleteDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { v4 } from 'uuid';
 import { ChatwoUser } from './user.entity';
@@ -43,6 +44,9 @@ export class ChatwoItem {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt: Date;
+
   @Column()
   key: string; // Item key/identifier
 
@@ -53,7 +57,7 @@ export class ChatwoItem {
   owner: ChatwoUser;
 
   @Column({ type: 'jsonb', nullable: true })
-  metadata?: any;
+  meta?: any;
 
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt?: Date;

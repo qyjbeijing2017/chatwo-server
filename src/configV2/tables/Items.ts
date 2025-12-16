@@ -1,4 +1,4 @@
-import { ItemType } from 'src/entities/item.entity';
+import { ItemType } from '../../entities/item.entity';
 import { ConfigEnum, ConfigFloat, ConfigKey, ConfigTable } from '../table';
 
 export class Item extends ConfigTable {

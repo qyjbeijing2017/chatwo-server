@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ChatwoUser } from '../entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ChatwoLog, ChatwoItemLogData } from 'src/entities/log.entity';
+import { ChatwoLog } from 'src/entities/log.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { ChatwoItem } from 'src/entities/item.entity';
 
@@ -18,27 +18,12 @@ export class UserService {
     private readonly itemRepository: Repository<ChatwoItem>,
     private readonly dataSource: DataSource,
     private readonly nakamaService: NakamaService,
-  ) {}
+  ) { }
 
   async findAll(): Promise<ChatwoUser[]> {
     return this.userRepository.find({
       order: { createdAt: 'DESC' },
     });
-  }
-
-  async findOne(id: number): Promise<ChatwoUser> {
-    const user = await this.userRepository.findOne({
-      where: { id },
-      relations: {
-        items: true,
-      },
-    });
-
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    return user;
   }
 
   async findByNakamaId(nakamaId: string): Promise<ChatwoUser> {
@@ -57,6 +42,7 @@ export class UserService {
   }
 
   async findByOculusId(oculusId: string): Promise<ChatwoUser> {
+
     const user = await this.userRepository.findOne({
       where: { oculusId },
       relations: {
@@ -117,7 +103,7 @@ export class UserService {
           user.wallet[key] += value;
         }
         const log = this.logRepository.create({
-          message: `Updated wallet for user ${user.nakamaId}: ${JSON.stringify(updateDto.wallet)}`,
+          message: `User wallet updated: ${updateDto.reason}`,
           about: [user.nakamaId, 'wallet', 'user/update'],
           data: {
             wallet: updateDto.wallet,
@@ -136,43 +122,41 @@ export class UserService {
     }
   }
 
-  async syncFromNakama(user: ChatwoUser): Promise<ChatwoUser> {
+  async syncFromNakama(nakamaId: string): Promise<ChatwoUser> {
+    const user = await this.userRepository.findOne({
+      where: { nakamaId },
+      relations: {
+        items: true,
+      },
+    });
+    if (!user) {
+      throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
+    }
+
+    const session = await this.nakamaService.login(nakamaId);
+    const nakamaItems = await this.nakamaService.listItems(session);
+
+    const itmesNeedToSave: ChatwoItem[] = [];
+
+    user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
+
+    for (const nakamaItem of nakamaItems) {
+      const item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId) ?? this.itemRepository.create({
+        ...nakamaItem,
+        owner: user,
+      });
+      item.key = nakamaItem.key!;
+      item.type = nakamaItem.type!;
+      item.meta = nakamaItem.meta;
+      itmesNeedToSave.push(item);
+    }
+
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      const session = await this.nakamaService.login(user.nakamaId);
-      const account = await this.nakamaService.getAccount(session);
-      const wallet = JSON.parse(account.wallet || '{}') as Record<
-        string,
-        number
-      >;
-      const walletDifferent = Object.entries(wallet).reduce(
-        (diff, [key, value]) => {
-          if (user.wallet[key] !== value) {
-            diff[key] = value - (user.wallet[key] || 0);
-          }
-          return diff;
-        },
-        {} as Record<string, number>,
-      );
-      user.wallet = wallet;
-
-      const nakamaItems = await this.nakamaService.listItems(session);
-
-      const itemLog: ChatwoItemLogData = {};
-
-      const log = this.logRepository.create({
-        message: `Synced wallet from Nakama for user ${user.nakamaId}`,
-        about: [user.nakamaId, 'wallet', 'item', 'user/syncFromNakama'],
-        data: {
-          wallet: walletDifferent,
-        },
-      });
-
-      await queryRunner.manager.save(log);
+      await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
-
       await queryRunner.commitTransaction();
       await queryRunner.release();
       return user;
@@ -181,13 +165,5 @@ export class UserService {
       await queryRunner.release();
       throw error;
     }
-  }
-
-  async syncOneFromNakama(customId: string): Promise<ChatwoUser> {
-    const user = await this.findByNakamaId(customId);
-    if (!user) {
-      throw new NotFoundException(`User with customId ${customId} not found`);
-    }
-    return this.syncFromNakama(user);
   }
 }

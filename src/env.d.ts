@@ -4,6 +4,9 @@ declare namespace NodeJS {
     APP_NAME: string;
     VERSION: string;
     PORT: string;
+    LOG_DIR: string;
+    LOG_LEVEL: string;
+    TIMEZONE: string;
 
     DB_HOST: string;
     DB_PORT: string;
