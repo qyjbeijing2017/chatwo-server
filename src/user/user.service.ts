@@ -189,9 +189,7 @@ export class UserService {
         itmesNeedToSave.push(item);
         log.about.push(nakamaItem.nakamaId!);
       }
-
-      console.log('Items to save:', JSON.stringify(itmesNeedToSave, null, 2));
-
+      console.log('Items to save:', JSON.stringify(itmesNeedToSave.filter(i=>!i.owner), null, 2));
       await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
       await queryRunner.manager.save(log);
