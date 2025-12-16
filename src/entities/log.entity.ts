@@ -39,9 +39,6 @@ export class ChatwoLog {
   @Column()
   message: string; // Log message
 
-  @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: false })
-  owner: ChatwoUser;
-
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
