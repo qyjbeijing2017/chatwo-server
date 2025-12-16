@@ -203,7 +203,18 @@ export class UserService {
       await queryRunner.manager.save(log);
       await queryRunner.commitTransaction();
       await queryRunner.release();
-      return user;
+      return {
+        ...user,
+        items: user.items.map(item => ({
+          id: item.id,
+          nakamaId: item.nakamaId,
+          meta: item.meta,
+          key: item.key,
+          type: item.type,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+        })) as ChatwoItem[],
+      }
     } catch (error) {
       await queryRunner.rollbackTransaction();
       await queryRunner.release();
