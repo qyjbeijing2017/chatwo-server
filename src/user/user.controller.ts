@@ -25,6 +25,13 @@ export class UserController {
 
   @ApiBearerAuth()
   @Server()
+  @Get('gm')
+  async getAllUsers() {
+    return this.userService.findAll();
+  }
+
+  @ApiBearerAuth()
+  @Server()
   @Patch('gm/:name')
   async updateUser(
     @Param('name') name: string,
