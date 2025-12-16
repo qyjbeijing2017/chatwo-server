@@ -28,7 +28,7 @@ export class ItemService {
     return item;
   }
 
-  async findAll(ownerCustomId: string): Promise<ChatwoItem[]> {
+  async findAllByCustomId(ownerCustomId: string): Promise<ChatwoItem[]> {
     return this.itemRepository.find({
       where: {
         owner: {
@@ -47,4 +47,9 @@ export class ItemService {
       },
     });
   }
+
+  async findAll(): Promise<ChatwoItem[]> {
+    return this.itemRepository.find();
+  }
+
 }

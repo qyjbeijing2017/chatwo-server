@@ -13,16 +13,11 @@ import { Server } from 'src/auth/server.decorator';
 export class ItemController {
   constructor(private readonly itemService: ItemService) { }
 
-  @ApiBearerAuth()
-  @Get(':nakamaId')
-  findOne(@Param('nakamaId') nakamaId: string, @Account() account: ApiAccount) {
-    return this.itemService.findOne(nakamaId, account.custom_id || '');
-  }
 
   @ApiBearerAuth()
   @Get()
-  findAll(@Account() account: ApiAccount) {
-    return this.itemService.findAll(account.custom_id || '');
+  findAllByAccount(@Account() account: ApiAccount) {
+    return this.itemService.findAllByCustomId(account.custom_id || '');
   }
 
   @ApiBearerAuth()
@@ -31,4 +26,12 @@ export class ItemController {
   findAllByOwner(@Param('name') name: string) {
     return this.itemService.findAllByOwner(name);
   }
+
+  @ApiBearerAuth()
+  @Get('gm')
+  @Server()
+  findAll() {
+    return this.itemService.findAll();
+  }
+
 }
