@@ -34,4 +34,12 @@ export class ItemController {
     return this.itemService.findAll();
   }
 
+  @ApiBearerAuth()
+  @Get('gm/delete')
+  @Server()
+  findWithDelete() {
+    return this.itemService.findAll();
+  }
+
+
 }

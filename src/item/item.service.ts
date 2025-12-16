@@ -52,4 +52,10 @@ export class ItemService {
     return this.itemRepository.find();
   }
 
+  async findAllWithDeleted(): Promise<ChatwoItem[]> {
+    return this.itemRepository.find({
+      withDeleted: true,
+    });
+  }
+
 }
