@@ -190,6 +190,19 @@ export class UserService {
         itmesNeedToSave.push(item);
         log.about.push(nakamaItem.nakamaId!);
       }
+
+      const debug = await queryRunner.manager.query(`
+  SELECT 
+    current_database()   AS db,
+    current_schema()     AS schema,
+    inet_server_addr()   AS server,
+    inet_server_port()   AS port,
+    *
+  FROM chatwo_item
+  WHERE id = 542
+`);
+      console.log(debug);
+
       await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
       await queryRunner.manager.save(log);
