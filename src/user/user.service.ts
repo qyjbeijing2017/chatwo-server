@@ -168,16 +168,10 @@ export class UserService {
       for (const nakamaItem of nakamaItems) {
         let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
         if (!item) {
-          console.log('Creating new item:', nakamaItem.nakamaId, 'user:', user.id, user.nakamaId);
           item = this.itemRepository.create({
-            nakamaId: nakamaItem.nakamaId,
-            key: nakamaItem.key,
-            type: nakamaItem.type,
-            createdAt: nakamaItem.createdAt,
-            meta: nakamaItem.meta,
+            ...nakamaItem,
             owner: user,
           });
-          console.log('Created item owner:', item.owner?.id, item.owner?.nakamaId);
           log.data.item = log.data.item || {};
           log.data.item.added = log.data.item.added || [];
           log.data.item.added.push(item);
@@ -195,7 +189,6 @@ export class UserService {
         itmesNeedToSave.push(item);
         log.about.push(nakamaItem.nakamaId!);
       }
-      console.log('Items to save:', JSON.stringify(itmesNeedToSave.filter(i=>!i.owner), null, 2));
       await queryRunner.manager.save(itmesNeedToSave);
       await queryRunner.manager.save(user);
       await queryRunner.manager.save(log);
