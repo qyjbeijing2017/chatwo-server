@@ -51,7 +51,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const session = this.nakamaService.getSession(token);
+      const session = await this.nakamaService.login(token);
       const account = await this.nakamaService.getAccount(session);
       request['account'] = account;
     } catch {
