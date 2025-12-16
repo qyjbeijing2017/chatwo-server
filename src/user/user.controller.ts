@@ -13,7 +13,7 @@ export class UserController {
   @ApiBearerAuth()
   @Get()
   async getUserStats(@Account() account: ApiAccount) {
-    return this.userService.findByName(account.custom_id || '');
+    return this.userService.findByNakamaId(account.custom_id || '');
   }
 
   @ApiBearerAuth()
