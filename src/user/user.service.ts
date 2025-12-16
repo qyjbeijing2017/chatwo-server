@@ -192,14 +192,14 @@ export class UserService {
       }
 
       const debug = await queryRunner.manager.query(`
-  SELECT 
-    current_database()   AS db,
-    current_schema()     AS schema,
-    inet_server_addr()   AS server,
-    inet_server_port()   AS port,
-    *
-  FROM chatwo_item
-  WHERE id = 632
+SELECT
+  relname AS partition_name
+FROM pg_class
+WHERE oid IN (
+  SELECT inhrelid
+  FROM pg_inherits
+  WHERE inhparent = 'public.chatwo_item'::regclass
+);
 `);
       console.log(debug);
 
