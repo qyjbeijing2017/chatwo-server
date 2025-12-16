@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 import { ChatwoUser } from '../entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChatwoLog } from 'src/entities/log.entity';
@@ -122,13 +122,78 @@ export class UserService {
     }
   }
 
-  async syncFromNakama(nakamaId: string): Promise<ChatwoUser> {
+  async syncFromNakama(user: ChatwoUser, manager: EntityManager): Promise<void> {
+
+    const session = await this.nakamaService.login(user.nakamaId);
+    const nakamaItems = await this.nakamaService.listItems(session);
+
+    const itmesNeedToSave: ChatwoItem[] = [];
+
+    user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
+
+    const log = manager.create(ChatwoLog, {
+      message: `User synced from Nakama`,
+      about: [
+        user.nakamaId,
+        'user/syncFromNakama',
+      ],
+      data: {}
+    });
+
+    const wallet = await this.nakamaService.getWallet(session);
+
+    for (const [key, value] of Object.entries(wallet)) {
+      if (user.wallet[key] !== value) {
+        log.data.wallet = log.data.wallet || {};
+        log.data.wallet[key] = value - (user.wallet[key] || 0);
+        user.wallet[key] = value;
+      }
+    }
+
+    for (const nakamaItem of nakamaItems) {
+      let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
+      if (!item) {
+        item = manager.create(ChatwoItem, {
+          ...nakamaItem,
+          owner: user,
+        });
+        log.data.item = log.data.item || {};
+        log.data.item.added = log.data.item.added || [];
+        log.data.item.added.push({ ...nakamaItem });
+      } else {
+        log.data.item = log.data.item || {};
+        log.data.item.update = log.data.item.update || {};
+        log.data.item.update[item.nakamaId] = {
+          metadata: {
+            before: item.meta,
+            after: nakamaItem.meta,
+          },
+        };
+        item.owner = user;
+        item.meta = nakamaItem.meta;
+      }
+      itmesNeedToSave.push(item);
+      log.about.push(nakamaItem.nakamaId!);
+    }
+
+    await manager.save(itmesNeedToSave);
+    await manager.update(
+      ChatwoUser,
+      { id: user.id },
+      {
+        name: user.name,
+        wallet: user.wallet,
+      },
+    );
+    await manager.save(log);
+  }
+
+  async syncOneFromNakama(nakamaId: string): Promise<ChatwoUser> {
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-
       const user = await queryRunner.manager.findOne(ChatwoUser, {
         where: { nakamaId },
         relations: {
@@ -139,70 +204,8 @@ export class UserService {
         throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
       }
 
-      const session = await this.nakamaService.login(nakamaId);
-      const nakamaItems = await this.nakamaService.listItems(session);
+      await this.syncFromNakama(user, queryRunner.manager);
 
-      const itmesNeedToSave: ChatwoItem[] = [];
-
-      user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
-
-      const log = queryRunner.manager.create(ChatwoLog, {
-        message: `User synced from Nakama`,
-        about: [
-          user.nakamaId,
-          'user/syncFromNakama',
-        ],
-        data: {}
-      });
-
-      const wallet = await this.nakamaService.getWallet(session);
-
-      for (const [key, value] of Object.entries(wallet)) {
-        if (user.wallet[key] !== value) {
-          log.data.wallet = log.data.wallet || {};
-          log.data.wallet[key] = value - (user.wallet[key] || 0);
-          user.wallet[key] = value;
-        }
-      }
-
-      for (const nakamaItem of nakamaItems) {
-        let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
-        if (!item) {
-          item = queryRunner.manager.create(ChatwoItem, {
-            ...nakamaItem,
-            owner: user,
-          });
-          log.data.item = log.data.item || {};
-          log.data.item.added = log.data.item.added || [];
-          log.data.item.added.push({ ...nakamaItem });
-        } else {
-          log.data.item = log.data.item || {};
-          log.data.item.update = log.data.item.update || {};
-          log.data.item.update[item.nakamaId] = {
-            metadata: {
-              before: item.meta,
-              after: nakamaItem.meta,
-            },
-          };
-          item.owner = user;
-          item.meta = nakamaItem.meta;
-        }
-        itmesNeedToSave.push(item);
-        log.about.push(nakamaItem.nakamaId!);
-      }
-
-      await queryRunner.manager.save(itmesNeedToSave);
-      await queryRunner.manager.update(
-        ChatwoUser,
-        { id: user.id },
-        {
-          name: user.name,
-          wallet: user.wallet,
-        },
-      );
-      await queryRunner.manager.save(log);
-      await queryRunner.commitTransaction();
-      await queryRunner.release();
       return {
         ...user,
         items: user.items.map(item => ({
@@ -215,6 +218,28 @@ export class UserService {
           updatedAt: item.updatedAt,
         })) as ChatwoItem[],
       }
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      await queryRunner.release();
+      throw error;
+    }
+  }
+
+  async syncAllFromNakama(): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const users = await queryRunner.manager.find(ChatwoUser, {
+        relations: {
+          items: true,
+        },
+      });
+      for (const user of users) {
+        await this.syncFromNakama(user, queryRunner.manager);
+      }
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
     } catch (error) {
       await queryRunner.rollbackTransaction();
       await queryRunner.release();

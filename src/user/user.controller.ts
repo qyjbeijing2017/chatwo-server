@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @ApiBearerAuth()
   @Get()
@@ -44,7 +44,14 @@ export class UserController {
   @Post('gm/syncFromNakama/:customId')
   @Server()
   async syncFromNakama(@Param('customId') customId: string) {
-    return this.userService.syncFromNakama(customId);
+    return this.userService.syncOneFromNakama(customId);
+  }
+
+  @ApiBearerAuth()
+  @Post('gm/syncFromNakama')
+  @Server()
+  async syncAllFromNakama() {
+    return this.userService.syncAllFromNakama();
   }
 
   @ApiBearerAuth()
