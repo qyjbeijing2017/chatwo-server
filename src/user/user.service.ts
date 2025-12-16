@@ -184,6 +184,7 @@ export class UserService {
               after: nakamaItem.meta,
             },
           };
+          item.owner = user;
           item.meta = nakamaItem.meta;
         }
         itmesNeedToSave.push(item);
