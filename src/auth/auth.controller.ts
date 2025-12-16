@@ -1,9 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Head,
+  NotFoundException,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { Public } from './public.decorator';
 import { AuthenticateOculusDto } from './dto/authenticate-oculus.dto';
 import { AuthService } from './auth.service';
-import { Server } from './server.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -17,13 +23,16 @@ export class AuthController {
   @Public()
   @Get('oculus/:id/exists')
   async oculusExists(@Param('id') id: string) {
-    return this.authService.oculusExists(id);
+    return { exists: await this.authService.oculusExists(id) };
   }
 
-  @ApiBearerAuth()
-  @Server()
-  @Get('users')
-  async getUsers() {
-    return this.authService.getUsers();
+  @Public()
+  @Head('oculus/:id')
+  async headOculusExists(@Param('id') id: string) {
+    const exists = await this.authService.oculusExists(id);
+    if (!exists) {
+      throw new NotFoundException();
+    }
+    return { exists };
   }
 }

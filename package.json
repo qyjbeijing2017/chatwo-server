@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "compile-config": "ts-node --project tsconfig.node.json ./src/configV2/main.ts"
   },
   "dependencies": {
     "@heroiclabs/nakama-js": "^2.8.0",
@@ -38,7 +39,8 @@
     "typeorm": "^0.3.25",
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "yaml": "^2.8.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

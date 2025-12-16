@@ -22,6 +22,12 @@ export class ChatwoUser {
   @Column({ unique: true, nullable: true })
   oculusId: string;
 
+  @Column({ unique: true, nullable: true })
+  name: string;
+
+  @Column({ type: 'jsonb', default: '{}' })
+  wallet: Record<string, number> = {};
+
   @OneToMany(() => ChatwoItem, (item) => item.owner)
   items: ChatwoItem[];
 }

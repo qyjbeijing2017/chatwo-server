@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly nakamaService: NakamaService,
     private reflector: Reflector,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException();
       }
     }
-    
+
     try {
       const session = this.nakamaService.getSession(token);
       const account = await this.nakamaService.getAccount(session);

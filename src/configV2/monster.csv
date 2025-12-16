@@ -1,0 +1,22 @@
+﻿Name (Key),Area,Type,Position,HP,Speed,SS Drop,Exp Drop,Item Drop,Drop Rate/percent,Skills,Damage
+Cosmo Devour,Station,Boss,Special,"10,000",0,800,1000,,,"1. Meteor Fist (星陨重拳) - Cross-swings both arms twice, then delivers a direct punch causing area impact
+2. Scatter Beam (散射光束) - Fires laser from chest, rotating at fixed angles from left→right then right→left
+3. Void Collapse (虚空坍缩) - Opens mouth to form a black hole with gravitational pull. Triggers at 70%, 50%, and 20% HP","1. 150/150/300 damage
+2. 50 damage per second
+3. 3% HP per second for 10 seconds; instant kill if pulled to center"
+Mimic Chest,Station,Medium,Ground,"2,000",5,80,100,Rare Mimic Chest Head: 1,1,Front Bite (前咬) - Lunges forward with a biting attack,99 damage per hit
+Wood Guardian,Station,Medium,Ground,"1,400",2,18,100,,,"Root Burst (AOE树根攻击) - Roars and generates tree spikes from the ground, creating a circular AOE attack",220 damage per hit
+Venom Bee,Station,Small,Air,800,4,6,50,,,Sting Jab (毒针叮咬) - Flies close to player then charges and swings its tail stinger,140 damage per hit
+Spider,Station,Small,Ground,350,3,5,50,,,Leap Bite (跳扑) - Jumps toward the player and bites,90 damage per hit
+"Glaciron, the Frostveil Serpent",Frostveil Peak,Boss,Air,"18,000",6,600,1000,,,"1. Frost Breath (冰息冲击) - Breathes intense cold in a forward cone
+2. Wing Blade Sweep (翼刃横扫) - Horizontal wing attack covering wide area
+3. Ice Crystal Fall (冰晶坠落) - Summons ice crystals to fall from above","1. 450 damage
+2. 600 damage
+3. 350 damage"
+Frostshade Wraith,Frostveil Peak,Medium,Air,"2,500",6,120,100,"Snow Purple Trail VFX: 1
+Snow Wind Breaker VFX: 1",10,Soul Pierce (灵魂穿刺) - Right hand forward thrust followed immediately by left hand horizontal swing,260 + 200 damage
+Snowbound Guardian,Frostveil Peak,Large,Ground,"3,000",1.5,45,250,,,"1. Ice Fist Strikes (冰拳猛击) - Left hand direct punch followed by right hand direct punch
+2. Ground Pound (撼地下砸) - Jumps, charges, and smashes the ground with right fist causing AOE damage","220 + 280 damage for punches
+350 damage for ground pound"
+Frostfang Wolf,Frostveil Peak,Medium,Ground,"1,500",6,20,100,,,Rushing Bite (前冲咬击) - Quickly steps forward and bites,180 damage per hit
+Corvyn Bat,Frostveil Peak,Small,Air,600,5,6,50,,,Head Bash (顶撞) - Forward head bash attack,80 damage per hit

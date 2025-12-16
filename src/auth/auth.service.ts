@@ -39,6 +39,7 @@ export class AuthService {
     if (!chatwoUser) {
       const newUser = this.userRepository.create({
         oculusId: user.id, // Assuming nakamaId is the same as oculusId for new users
+        name: signInOculusDto.username ?? user.alias,
       });
       chatwoUser = await this.userRepository.save(newUser);
     }
@@ -48,14 +49,10 @@ export class AuthService {
     );
   }
 
-  async oculusExists(id: string): Promise<{ exists: boolean }> {
+  async oculusExists(id: string): Promise<boolean> {
     const chatwoUser = await this.userRepository.findOne({
       where: { oculusId: id },
     });
-    return { exists: !!chatwoUser };
-  }
-
-  async getUsers(): Promise<ChatwoUser[]> {
-    return this.userRepository.find();
+    return !!chatwoUser;
   }
 }

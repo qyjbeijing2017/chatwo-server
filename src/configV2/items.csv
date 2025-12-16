@@ -1,0 +1,91 @@
+﻿key?key,name,InitInStorage?type=bool,type?type=enum&enum[4096]=item&enum[8192]=arm&enum[16384]=skin&enum[32768]=currency&enum[61440]=type&enum[8193]=blade&enum[16385]=head&enum[16486]=eye&enum[16387]=body&enum[16388]=vfx,sourcePath,description,packagedSIze?type=float
+#,Baguette Blade Temporary,,arm,,,0.1
+#,Sausage Blade Temporary,,arm,,,0.1
+#,Katana Blade Temporary,,arm,,,0.1
+#,Lolipop Blade Temporary,,arm,,,0.1
+Equip_3_DefaultWeapon,Hilt Temporary,,arm,RAssets/Prefabs/Items/Equipments/Equip_3_DefaultWeapon,,0.1
+Head_39_BrownGreen 1000 Fans,BrownGreen 1000 Fans Head,,head,RAssets/Prefabs/Characters/Heads/Head_39_BrownGreen 1000 Fans,,0.1
+Head_38_BlackBrown 1000 Fans,BlackBrown 1000 Fans Head,,head,RAssets/Prefabs/Characters/Heads/Head_38_BlackBrown 1000 Fans,,0.1
+Head_37_WhiteBlue 1000 Fans,WhiteBlue 1000 Fans Head,,head,RAssets/Prefabs/Characters/Heads/Head_37_WhiteBlue 1000 Fans,,0.1
+Trail_4_Purple,Purple Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_4_Purple,,0.1
+Sprint_4_Purple,Purple Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/,,0.1
+"Sprint_5_Halloween Wind Breaker ",Halloween Wind Breaker VFX,,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_5_Red,,0.1
+Trail_5_Red,Red Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_5_Red,,0.1
+Sprint_1_Blue,Blue Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_1_Blue,,0.1
+Sprint_5_Red,Red Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_5_Red,,0.1
+Sprint_6_Yellow,Yellow Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_6_Yellow,,0.1
+Sprint_2_Green,Green Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_2_Green,,0.1
+Sprint_7_Orange,Orange Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_7_Orange,,0.1
+Trail_6_Yellow,Yellow Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_6_Yellow,,0.1
+Trail_3_Orange,Orange Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_3_Orange,,0.1
+Trail_1_Blue,Blue Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_1_Blue,,0.1
+Trail_2_Green,Green Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_2_Green,,0.1
+Trail_7_Halloween,Halloween Trail VFX,,vfx,RAssets/Prefabs/Characters/Trails/Trail_7_Halloween,,0.1
+Body_1_Blue Default,Blue Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_1_Blue Default,,0.1
+Body_11_Zombie,Halloween Zombie Body,,body,RAssets/Prefabs/Characters/Bodys/Body_11_Zombie,,0.1
+Body_9_BrownGreen 1000FansSkin,BrownGreen 1000 Fans Body,,body,RAssets/Prefabs/Characters/Bodys/Body_9_BrownGreen 1000FansSkin,,0.1
+Body_6_Yellow Default,Yellow Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_6_Yellow Default,,0.1
+Body_2_Green Default,Green Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_2_Green Default,,0.1
+Body_8_WhiteBlue 1000FansSkin,WhiteBlue 1000 Fans Body,,body,RAssets/Prefabs/Characters/Bodys/Body_8_WhiteBlue 1000FansSkin,,0.1
+Body_3_Orange Default,Orange Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_3_Orange Default,,0.1
+Body_5_Red Default,Red Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_5_Red Default,,0.1
+Body_4_Purple Default,Purple Default Body,True,body,RAssets/Prefabs/Characters/Bodys/Body_4_Purple Default,,0.1
+Body_7_BlackBrown 1000FansSkin,BlackBrown 1000 Fans Body,,body,RAssets/Prefabs/Characters/Bodys/Body_7_BlackBrown 1000FansSkin,,0.1
+Body_10_SkinFossli,Halloween Dino Body,,body,RAssets/Prefabs/Characters/Bodys/Body_10_SkinFossli,,0.1
+Eyes_2_Pumkin,Black Square Eye,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_2_Pumkin,,0.1
+Eyes_1_Goofy,Goofy Eye,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_1_Goofy,,0.1
+Head_43_Zombie,Halloween Zombie Head,,head,RAssets/Prefabs/Characters/Heads/Head_43_Zombie,,0.1
+Head_42_Skin Fossl,Halloween Dino Head,,head,RAssets/Prefabs/Characters/Heads/Head_42_Skin Fossl,,0.1
+Head_19_Blue Water-Shape Default,Blue Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_19_Blue Water-Shape Default,,0.1
+Head_25_Blue Fire-Shape Default,Blue Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_25_Blue Fire-Shape Default,,0.1
+Head_1_Blue Cube-Shape Default,Blue Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_1_Blue Cube-Shape Default,,0.1
+Head_31_Blue Pentagon-Shape Default,Blue Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_31_Blue Pentagon-Shape Default,,0.1
+Head_13_Blue Triangle-Shape Default Head,Blue Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_13_Blue Triangle-Shape Default Head,,0.1
+Head_7_Blue Round-Shape Default,Blue Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_7_Blue Round-Shape Default,,0.1
+Head_9_Orange Round-Shape Default,Orange Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_9_Orange Round-Shape Default,,0.1
+Head_15_Orange Triangle-Shape Default,Orange Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_15_Orange Triangle-Shape Default,,0.1
+Head_33_Orange Pentagon-Shape Default,Orange Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_33_Orange Pentagon-Shape Default,,0.1
+Head_3_Orange Cube-Shape Default,Orange Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_3_Orange Cube-Shape Default,,0.1
+Head_27_Orange Fire-Shape Default,Orange Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_27_Orange Fire-Shape Default,,0.1
+Head_21_Orange Water-Shape Default,Orange Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_21_Orange Water-Shape Default,,0.1
+Head_22_Purple Water-Shape Default,Purple Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_22_Purple Water-Shape Default,,0.1
+Head_28_Purple Fire-Shape Default,Purple Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_28_Purple Fire-Shape Default,,0.1
+Head_4_Purple Cube-Shape Default,Purple Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_4_Purple Cube-Shape Default,,0.1
+Head_34_Purple Pentagon-Shape Default,Purple Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_34_Purple Pentagon-Shape Default,,0.1
+Head_16_Purple Triangle-Shape Default,Purple Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_16_Purple Triangle-Shape Default,,0.1
+Head_10_Purple Round-Shape Default,Purple Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_10_Purple Round-Shape Default,,0.1
+Head_8_Green Round-Shape Default,Green Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_8_Green Round-Shape Default,,0.1
+Head_14_Green Triangle-Shape Default,Green Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_14_Green Triangle-Shape Default,,0.1
+Head_32_Green Pentagon-Shape Default,Green Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_32_Green Pentagon-Shape Default,,0.1
+Head_2_Green Cube-Shape Default,Green Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_2_Green Cube-Shape Default,,0.1
+Head_26_Green Fire-Shape Default,Green Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_26_Green Fire-Shape Default,,0.1
+Head_20_Green Water-Shape Default,Green Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_20_Green Water-Shape Default,,0.1
+Head_30_Yellow Fire-Shape Default,Yellow Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_30_Yellow Fire-Shape Default,,0.1
+Head_24_Yellow Water-Shape Default,Yellow Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_24_Yellow Water-Shape Default,,0.1
+Head_6_Yellow Cube-Shape Default,Yellow Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_6_Yellow Cube-Shape Default,,0.1
+Head_18_Yellow Triangle-Shape Default,Yellow Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_18_Yellow Triangle-Shape Default,,0.1
+Head_36_Yellow Pentagon-Shape Default,Yellow Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_36_Yellow Pentagon-Shape Default,,0.1
+Head_12_Yellow Round-Shape Default Head,Yellow Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_12_Yellow Round-Shape Default Head,,0.1
+Head_11_Red Round-Shape Default,Red Round-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_11_Red Round-Shape Default,,0.1
+Head_35_Red Pentagon-Shape Default,Red Pentagon-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_35_Red Pentagon-Shape Default,,0.1
+Head_17_Red Triangle-Shape Default,Red Triangle-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_17_Red Triangle-Shape Default,,0.1
+Head_5_Red Cube-Shape Default,Red Cube-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_5_Red Cube-Shape Default,,0.1
+Head_23_Red Water-Shape Default,Red Water-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_23_Red Water-Shape Default,,0.1
+Head_29_Red Fire-Shape Default,Red Fire-Shape Default Head,True,head,RAssets/Prefabs/Characters/Heads/Head_29_Red Fire-Shape Default,,0.1
+Head_41_Pumpkin,Pumpkin Head,,head,RAssets/Prefabs/Characters/Heads/Head_41_Pumpkin,,0.1
+Head_40_Goofy,Goofy Head,,head,RAssets/Prefabs/Characters/Heads/Head_40_Goofy,,0.1
+Equip_1_Battery,Energy Star,,item,RAssets/Prefabs/Items/Equipments/Equip_1_Battery,,0.1
+Equip_16_Tube,Walkie-Talkie,,item,RAssets/Prefabs/Items/Equipments/Equip_16_Tube,,0.1
+Equip_15_TrialStone,Friend Stone,,item,RAssets/Prefabs/Items/Equipments/Equip_15_TrialStone,,0.1
+Equip_10_Pen,Color Crystal,,item,RAssets/Prefabs/Items/Equipments/Equip_10_Pen,,0.1
+Equip_6_EnergyContainerS,Energy Pack (Small),,item,RAssets/Prefabs/Items/Equipments/Equip_6_EnergyContainerS,,0.1
+Equip_5_EnergyContainerM,Energy Pack (Medium),,item,RAssets/Prefabs/Items/Equipments/Equip_5_EnergyContainerM,,0.1
+Equip_4_EnergyContainerL,Energy Pack (Large),,item,RAssets/Prefabs/Items/Equipments/Equip_4_EnergyContainerL,,0.1
+Equip_13_SpeedContainerS,Boost Engine (Small),,item,RAssets/Prefabs/Items/Equipments/Equip_13_SpeedContainerS,,0.1
+Equip_12_SpeedContainerM,Boost Engine (Medium),,item,RAssets/Prefabs/Items/Equipments/Equip_12_SpeedContainerM,,0.1
+Equip_11_SpeedContainerL,Boost Engine (Large),,item,RAssets/Prefabs/Items/Equipments/Equip_11_SpeedContainerL,,0.1
+Equip_7_GlideModule,Glide Module,,item,RAssets/Prefabs/Items/Equipments/Equip_7_GlideModule,,0.1
+Equip_14_SprintModule,Dash Module,,item,RAssets/Prefabs/Items/Equipments/Equip_14_SprintModule,,0.1
+Equip_9_OverloadModule,Overload Module,,item,RAssets/Prefabs/Items/Equipments/Equip_9_OverloadModule,,0.1
+sc,SC,,currency,,,0.1
+ss,SS,,currency,,,0.1

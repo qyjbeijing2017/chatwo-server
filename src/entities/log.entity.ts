@@ -7,6 +7,26 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 import { ChatwoUser } from './user.entity';
+import { ChatwoItem } from './item.entity';
+
+export type ChatwoWalletAddition = Record<string, number>;
+export interface ChatwoItemUpdateLog {
+  [key: string]: {
+    owner: {
+      before: string;
+      after: string;
+    };
+    metadata: {
+      before: any;
+      after: any;
+    };
+  };
+}
+export interface ChatwoItemLogData {
+  update?: ChatwoItemUpdateLog;
+  added?: ChatwoItem[];
+  removed?: ChatwoItem[];
+}
 
 @Entity()
 export class ChatwoLog {
@@ -17,9 +37,6 @@ export class ChatwoLog {
   createdAt: Date;
 
   @Column()
-  type: string; // Log type
-
-  @Column()
   message: string; // Log message
 
   @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: false })
@@ -28,8 +45,11 @@ export class ChatwoLog {
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @Column({ type: 'jsonb', nullable: true })
-  data: any;
+  @Column({ type: 'jsonb', default: {} })
+  data: {
+    wallet?: ChatwoWalletAddition;
+    item?: ChatwoItemLogData;
+  };
 
   @Column({ type: 'jsonb' })
   about: string[];

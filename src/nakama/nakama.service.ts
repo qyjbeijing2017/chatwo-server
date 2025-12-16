@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Client, Session } from '@heroiclabs/nakama-js';
+import { ChatwoItem } from 'src/entities/item.entity';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class NakamaService {
@@ -20,11 +22,45 @@ export class NakamaService {
     return this.client.authenticateCustom(id, true, username);
   }
 
+  login(id: string) {
+    return this.client.authenticateCustom(id, false);
+  }
+
   getSession(token: string) {
     return Session.restore(token, '');
   }
 
   getAccount(session: Session) {
     return this.client.getAccount(session);
+  }
+
+  async listItems(session: Session) {
+    const objs = await this.client.readStorageObjects(session, {
+      object_ids: [
+        {
+          collection: 'user_items',
+          key: 'user_persistence',
+        },
+        {
+          collection: 'user_items',
+          key: 'items',
+        },
+        {
+          collection: 'assets',
+          key: 'items',
+        },
+      ],
+    });
+    const [userPersistenceObj, userItemsObj, assetItemsObj] = objs.objects;
+    const assetItems: {
+      [key: string]: {
+        id: string;
+        key: string;
+        metadata: any;
+      };
+    } = assetItemsObj.value || {};
+    const userPersistence: { [key: string]: any } =
+      userPersistenceObj.value || {};
+    const userItems: { [key: string]: number } = userItemsObj.value || {};
   }
 }

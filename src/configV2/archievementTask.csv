@@ -1,0 +1,22 @@
+﻿Name,Description,Type,Award,Condition
+Tutorial,Finish tutorial,once,ss: 100,tutoral
+Fly200,Fly for 200 meters,once,ss: 200,fly.meters > 200
+AddFriend1,"Add 1 Friend (purchase a Friend Stone, pair with other, collect stars from metors)",once,ss: 200,friends.count > 1
+KilledSpider25,Kill 25 spiders,once,ss: 200,pve.monsters.Spider > 25
+BreakBlade50,Break and reforge your blade 50 times,once,ss: 200,blades.breakTimes > 50
+UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,ss: 500,blades.maxLevel > 5
+PurchaseHilt1,"Purchase a hilt ",once,ss: 300,purchases.hilt > 1
+DrawBlade1,Draw your first blade and assemble a brand new Soul-Arm,once,ss: 100,blades.count > 5
+UpgradeArmLv10,Upgrade any Soul-Arm to Lv. 10,once,ss: 500,blade.maxLevel > 10
+KilledWoodGuardian10,Kill 10 Wood Guardian,once,ss: 200,pve.monsters[”Wood Guardian”] > 10
+KilledMimicChest1,Kill 1 Mimic Chest,once,,pve.monsters[”Mimic Chest”] > 1
+DefeatSpiritborne5,Defeat 5 Spiritborne (players),once,ss: 200,pvp.killed > 5
+KilledBoss1,1st Boss Kill,once,ss: 1000,pve.bossKilled > 1
+UpgradeArm30,Upgrade any Soul-Arm to Lv. 30,once,ss: 1000,blades.maxLevel > 30
+OwnSeasonLimitedWeapon1,Own 1 season limited weapon,once,,blades.seasonLimitedCount > 1
+KilledMonsters10,Kill 10 monsters,daily,ss: 200,pve.dailyKilled > 10
+"DefeatSpiritborne5 ",Defeat 5 Spiritborne,daily,ss: 200,pvp.dailyCount > 10
+Fly500,Fly for 500 meters,daily,ss: 200,fly.meters > 500
+KilledBoss10,Kill 10 boss,longterm,,pve.bossKilled > 10
+OwnArmLv30_10,Own 10 Lv. 30 Soul-Arms,longterm,,blades.lv30Count > 10
+AddFriend100,Add 100 friends,longterm,,friends.count > 100

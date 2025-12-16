@@ -1,0 +1,21 @@
+﻿key?key,gain?type=yaml,cost?type=yaml
+Pumpkin Head,Head_41_Pumpkin: 1,ss: 1000
+Boost Engine Small,Equip_13_SpeedContainerS: 1,ss: 50
+Boost Engine Medium,Equip_12_SpeedContainerM: 1,ss: 100
+Boost Engine (Large),Equip_11_SpeedContainerL: 1,ss: 200
+Energy Pack (Small),Equip_6_EnergyContainerS: 1,ss: 20
+Energy Pack (Medium),Equip_5_EnergyContainerM: 1,ss: 50
+Energy Pack (Large),Equip_4_EnergyContainerL: 1,ss: 150
+Glide Module,Equip_7_GlideModule: 1,ss: 100
+Dash Module,Equip_14_SprintModule: 1,ss: 150
+Overload Module,Equip_9_OverloadModule : 1,ss: 150
+Color Crystal,Equip_10_Pen: 1,ss: 5
+Walkie-Talkie,Equip_16_Tube: 1,ss: 20
+Friend Stone,Equip_15_TrialStone: 1,ss: 50
+#Lolipop Blade Temporary,,ss: 0
+#Katana Blade Temporary,,ss: 0
+#Sausage Blade Temporary,,ss: 0
+#Baguette Blade Temporary,,ss: 0
+Goofy Head Eye,"Head_40_Goofy: 1
+Eyes_1_Goofy: 1",ss: 1200
+Halloween Trail VFX,Trail_7_Halloween: 1,ss: 500
