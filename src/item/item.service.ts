@@ -51,7 +51,10 @@ export class ItemService {
         }
       }
     }
-    return items;
+    return items.map(i => ({
+      ...i,
+      owner: null as any,
+    })) as ChatwoItem[];
   }
 
   async findAllByCustomId(ownerCustomId: string): Promise<ChatwoItem[]> {
