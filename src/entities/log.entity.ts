@@ -24,8 +24,8 @@ export interface ChatwoItemUpdateLog {
 }
 export interface ChatwoItemLogData {
   update?: ChatwoItemUpdateLog;
-  added?: ChatwoItem[];
-  removed?: ChatwoItem[];
+  added?: Partial<ChatwoItem>[];
+  removed?: string[];
 }
 
 @Entity()

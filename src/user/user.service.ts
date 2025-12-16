@@ -174,7 +174,7 @@ export class UserService {
           });
           log.data.item = log.data.item || {};
           log.data.item.added = log.data.item.added || [];
-          log.data.item.added.push({ ...item });
+          log.data.item.added.push(nakamaItem);
         } else {
           log.data.item = log.data.item || {};
           log.data.item.update = log.data.item.update || {};
@@ -184,7 +184,6 @@ export class UserService {
               after: nakamaItem.meta,
             },
           };
-          item.owner = user;
           item.meta = nakamaItem.meta;
         }
         itmesNeedToSave.push(item);
