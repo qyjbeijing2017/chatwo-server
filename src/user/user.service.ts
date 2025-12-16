@@ -129,7 +129,7 @@ export class UserService {
     await queryRunner.startTransaction();
     try {
 
-      const user = await this.userRepository.findOne({
+      const user = await queryRunner.manager.findOne(ChatwoUser, {
         where: { nakamaId },
         relations: {
           items: true,
@@ -146,7 +146,7 @@ export class UserService {
 
       user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
 
-      const log = this.logRepository.create({
+      const log = queryRunner.manager.create(ChatwoLog, {
         message: `User synced from Nakama`,
         about: [
           user.nakamaId,
@@ -191,29 +191,29 @@ export class UserService {
         log.about.push(nakamaItem.nakamaId!);
       }
 
-      const search_path = await queryRunner.manager.query(`SHOW search_path`);
-      console.log(`Current search_path: `, search_path);
-      const current_schema = await queryRunner.manager.query(`SELECT current_schema()`);
-      console.log(`Current schema: `, current_schema);
-      const rls = await queryRunner.manager.query(`
-SELECT relrowsecurity
-FROM pg_class
-WHERE oid = 'public.chatwo_item'::regclass;
-      `);
-      console.log(`RLS on chatwo_item: `, rls);
-      const rls_prolicy = await queryRunner.manager.query(`
-        SELECT *
-FROM pg_policies
-WHERE tablename = 'chatwo_item';
-        `);
-      console.log(`RLS policies on chatwo_item: `, rls_prolicy);
+//       const search_path = await queryRunner.manager.query(`SHOW search_path`);
+//       console.log(`Current search_path: `, search_path);
+//       const current_schema = await queryRunner.manager.query(`SELECT current_schema()`);
+//       console.log(`Current schema: `, current_schema);
+//       const rls = await queryRunner.manager.query(`
+// SELECT relrowsecurity
+// FROM pg_class
+// WHERE oid = 'public.chatwo_item'::regclass;
+//       `);
+//       console.log(`RLS on chatwo_item: `, rls);
+//       const rls_prolicy = await queryRunner.manager.query(`
+//         SELECT *
+// FROM pg_policies
+// WHERE tablename = 'chatwo_item';
+//         `);
+//       console.log(`RLS policies on chatwo_item: `, rls_prolicy);
 
-      const trigger = await queryRunner.manager.query(`
-        SELECT tgname, tgtype
-FROM pg_trigger
-WHERE tgrelid = 'public.chatwo_item'::regclass;
-`);
-      console.log(`Triggers on chatwo_item: `, trigger);
+//       const trigger = await queryRunner.manager.query(`
+//         SELECT tgname, tgtype
+// FROM pg_trigger
+// WHERE tgrelid = 'public.chatwo_item'::regclass;
+// `);
+//       console.log(`Triggers on chatwo_item: `, trigger);
 
 
       await queryRunner.manager.save(itmesNeedToSave);
