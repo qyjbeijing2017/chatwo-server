@@ -35,10 +35,10 @@ export class ItemController {
   }
 
   @ApiBearerAuth()
-  @Get('gm/delete')
+  @Get('gm/withDelete')
   @Server()
   findWithDelete() {
-    return this.itemService.findAll();
+    return this.itemService.findAllWithDeleted();
   }
 
 
