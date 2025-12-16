@@ -34,6 +34,7 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
+    console.log('AuthGuard token:', token);
 
     const isServer = this.reflector.getAllAndOverride<boolean>(IS_SERVER_KEY, [
       context.getHandler(),
@@ -41,6 +42,7 @@ export class AuthGuard implements CanActivate {
     ]);
 
     if (isServer) {
+      console.log('AuthGuard server access granted');
       if (token === process.env.NAKAMA_RUNTIME_KEY) {
         return true;
       } else {
