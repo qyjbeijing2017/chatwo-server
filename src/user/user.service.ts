@@ -168,10 +168,16 @@ export class UserService {
       for (const nakamaItem of nakamaItems) {
         let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
         if (!item) {
+          console.log('Creating new item:', nakamaItem.nakamaId, 'user:', user.id, user.nakamaId);
           item = this.itemRepository.create({
-            ...nakamaItem,
+            nakamaId: nakamaItem.nakamaId,
+            key: nakamaItem.key,
+            type: nakamaItem.type,
+            createdAt: nakamaItem.createdAt,
+            meta: nakamaItem.meta,
             owner: user,
           });
+          console.log('Created item owner:', item.owner?.id, item.owner?.nakamaId);
           log.data.item = log.data.item || {};
           log.data.item.added = log.data.item.added || [];
           log.data.item.added.push(item);
