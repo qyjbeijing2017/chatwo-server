@@ -50,13 +50,14 @@ export class NakamaService {
         meta: any;
       };
     };
+    delete data['success']; // Remove success field
 
     return Object.values(data)
       .map((item) => ({
         nakamaId: item.id,
         key: item.key,
         type: configManager.itemMap.get(item.key)?.type ?? ItemType.item,
-        // createdAt: new Date(item.createdAt),
+        createdAt: new Date(item.createdAt),
         meta: item.meta,
       }));
   }
