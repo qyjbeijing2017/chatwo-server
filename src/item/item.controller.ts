@@ -40,6 +40,4 @@ export class ItemController {
   findWithDelete() {
     return this.itemService.findAllWithDeleted();
   }
-
-
 }
