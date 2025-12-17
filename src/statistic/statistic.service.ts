@@ -2,7 +2,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
-import { ArrayContains, LessThan, Raw, Repository } from 'typeorm';
+import { ArrayContains, LessThan, MoreThanOrEqual, Raw, Repository } from 'typeorm';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
@@ -26,7 +26,7 @@ export class StatisticService {
             order: { createdAt: 'DESC' },
             where: {
                 tags: account ? ArrayContains([...logDto.tags, account.custom_id || '']) : ArrayContains(logDto.tags),
-                createdAt: LessThan(new Date(logDto.lessThan || new Date().toISOString())),
+                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || new Date().toISOString())),
             }
         });
         return {

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsArray, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsInt, IsISO8601, IsOptional, IsString } from 'class-validator';
 
 export class LogDto {
     @ApiProperty({
@@ -27,7 +27,7 @@ export class LogDto {
     skip?: number;
 
     @ApiPropertyOptional()
-    @IsString()
+    @IsISO8601()
     @IsOptional()
-    lessThan?: string;
+    afterThan?: string;
 }
