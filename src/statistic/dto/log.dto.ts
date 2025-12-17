@@ -10,7 +10,7 @@ export class LogDto {
     @Transform(({ value }) => {
         // 如果前端传 ?tags=fly,pve
         if (typeof value === 'string') {
-            return JSON.parse(value);
+            return value.split(',');
         }
         // 如果前端传 ?tags=fly&tags=pve，则 value 会是数组
         return value;
