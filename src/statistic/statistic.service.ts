@@ -26,7 +26,7 @@ export class StatisticService {
             order: { createdAt: 'DESC' },
             where: {
                 tags: account ? ArrayContains([...(logDto.tags || []), account.custom_id || '']) : ArrayContains(logDto.tags || []),
-                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || new Date().toISOString())),
+                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || 0)),
             }
         });
         return {
