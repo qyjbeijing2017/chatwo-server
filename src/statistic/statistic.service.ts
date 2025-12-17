@@ -25,7 +25,7 @@ export class StatisticService {
             take: 100,
             order: { createdAt: 'DESC' },
             where: {
-                tags: ArrayContains(["fly"]),
+                tags: account ? ArrayContains([...logDto.tags, account.custom_id || '']) : ArrayContains(logDto.tags),
             }
         });
         return {
