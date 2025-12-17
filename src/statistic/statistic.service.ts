@@ -23,9 +23,9 @@ export class StatisticService {
             skip: logDto.skip || 0,
             take: 100,
             order: { createdAt: 'DESC' },
-            where: {
-                tags: account ? ArrayContains([...logDto.tags, account.custom_id!]) : ArrayContains(logDto.tags),
-            }
+            // where: {
+            //     tags: account ? ArrayContains([...logDto.tags, account.custom_id!]) : ArrayContains(logDto.tags),
+            // }
         });
         return {
             result,
