@@ -104,7 +104,7 @@ export class UserService {
         }
         const log = this.logRepository.create({
           message: `User wallet updated: ${updateDto.reason}`,
-          about: [user.nakamaId, 'wallet', 'user/update'],
+          tags: [user.nakamaId, 'wallet', 'user/update'],
           data: {
             wallet: updateDto.wallet,
           },
@@ -174,7 +174,7 @@ export class UserService {
         item.meta = nakamaItem.meta;
       }
       itmesNeedToSave.push(item);
-      log.about.push(nakamaItem.nakamaId!);
+      log.tags.push(nakamaItem.nakamaId!);
     }
 
     for (const item of user.items) {

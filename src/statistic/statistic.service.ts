@@ -2,7 +2,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
-import { Raw, Repository } from 'typeorm';
+import { ArrayContains, Raw, Repository } from 'typeorm';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
@@ -24,13 +24,9 @@ export class StatisticService {
             take: 100,
             order: { createdAt: 'DESC' },
             where: {
-                data: Raw((alias) => {
-                    const tags = logDto.tags.map((tag) => `'${tag}'`);
-                    return `${alias}::jsonb ?| array[${tags.join(',')}]`;
-                }),
+                tags: account ? ArrayContains([...logDto.tags, account.custom_id!]) : ArrayContains(logDto.tags),
             }
         });
-
         return {
             result,
             total,
@@ -44,7 +40,7 @@ export class StatisticService {
     async fly(account: ApiAccount, dto: FlyDto) {
         const log = this.logRepository.create({
             message: `User ${account.user?.username} flew ${dto.meters} meters.`,
-            about: [account.custom_id || '', 'fly'],
+            tags: [account.custom_id || '', 'fly'],
             data: { fly: dto.meters },
         });
         await this.logRepository.save(log);
@@ -58,7 +54,7 @@ export class StatisticService {
         }
         const log = this.logRepository.create({
             message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
-            about: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type],
+            tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type],
         });
         await this.logRepository.save(log);
         return log;
@@ -71,7 +67,7 @@ export class StatisticService {
         }
         const log = this.logRepository.create({
             message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
-            about: [account.custom_id || '', 'pvp', dto.whoWasKilled],
+            tags: [account.custom_id || '', 'pvp', dto.whoWasKilled],
         });
         await this.logRepository.save(log);
         return log;

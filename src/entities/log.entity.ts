@@ -6,7 +6,6 @@ import {
   ManyToOne,
   DeleteDateColumn,
 } from 'typeorm';
-import { ChatwoUser } from './user.entity';
 import { ChatwoItem } from './item.entity';
 
 export type ChatwoWalletAddition = Record<string, number>;
@@ -49,6 +48,6 @@ export class ChatwoLog {
     fly?: number;
   };
 
-  @Column({ type: 'jsonb' })
-  about: string[];
+  @Column({ type: 'text', array: true, default: [] })
+  tags: string[] = [];
 }
