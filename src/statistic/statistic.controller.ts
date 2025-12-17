@@ -25,7 +25,7 @@ export class StatisticController {
     @Get('gm')
     @Server()
     async getStatisticsGM(
-        @Query('tag') logDto: LogDto,
+        @Query() logDto: LogDto,
     ) {
         return this.statisticService.getAllStatistics(logDto);
     }
