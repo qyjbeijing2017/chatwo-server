@@ -11,6 +11,7 @@ export class LogDto {
     @IsArray()
     @IsString({ each: true })
     @Transform(({ value }) => {
+        console.log('Transforming tags:', value);
         // 如果前端传 ?tags=fly,pve
         if (typeof value === 'string') {
             try {
