@@ -46,6 +46,7 @@ export class ChatwoLog {
   data: {
     wallet?: ChatwoWalletAddition;
     item?: ChatwoItemLogData;
+    fly?: number;
   };
 
   @Column({ type: 'jsonb' })

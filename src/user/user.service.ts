@@ -128,6 +128,7 @@ export class UserService {
     const nakamaItems = await this.nakamaService.listItems(session);
 
     const itmesNeedToSave: ChatwoItem[] = [];
+    const itmesNeedToDelete: ChatwoItem[] = [];
 
     user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
 
@@ -174,6 +175,13 @@ export class UserService {
       }
       itmesNeedToSave.push(item);
       log.about.push(nakamaItem.nakamaId!);
+    }
+
+    for (const item of user.items) {
+      const nakamaItem = nakamaItems.find((ni) => ni.nakamaId === item.nakamaId);
+      if (!nakamaItem) {
+        itmesNeedToDelete.push(item);
+      }
     }
 
     await manager.save(itmesNeedToSave);
