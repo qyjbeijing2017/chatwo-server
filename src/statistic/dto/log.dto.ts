@@ -3,11 +3,7 @@ import { Transform, Type } from 'class-transformer';
 import { IsArray, IsInt, IsISO8601, IsOptional, IsString } from 'class-validator';
 
 export class LogDto {
-    @ApiProperty({
-        description: '日志标签列表',
-        example: ['fly', 'pve'],
-        type: [String],
-    })
+    @ApiPropertyOptional()
     @IsArray()
     @IsString({ each: true })
     @IsOptional()
