@@ -19,6 +19,7 @@ export class StatisticService {
     ) { }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
+        console.log('Fetching statistics with tags:', logDto);
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
             take: 100,
