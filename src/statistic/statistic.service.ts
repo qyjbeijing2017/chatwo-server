@@ -25,7 +25,7 @@ export class StatisticService {
             take: 100,
             order: { createdAt: 'DESC' },
             where: {
-                tags: account ? ArrayContains([...logDto.tags, account.custom_id || '']) : ArrayContains(logDto.tags),
+                tags: account ? ArrayContains([...(logDto.tags || []), account.custom_id || '']) : ArrayContains(logDto.tags || []),
                 createdAt: MoreThanOrEqual(new Date(logDto.afterThan || new Date().toISOString())),
             }
         });
