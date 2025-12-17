@@ -16,7 +16,7 @@ export class StatisticController {
     @Get('')
     async getStatistics(
         @Account() account: ApiAccount,
-        @Query('tag') logDto: LogDto,
+        @Query() logDto: LogDto,
     ) {
         return this.statisticService.getAllStatistics(logDto, account);
     }
