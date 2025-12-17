@@ -10,6 +10,14 @@ export class LogDto {
     })
     @IsArray()
     @IsString({ each: true })
+    @Transform(({ value }) => {
+        // 如果前端传 ?tags=fly,pve
+        if (typeof value === 'string') {
+            return value.split(',');
+        }
+        // 如果前端传 ?tags=fly&tags=pve，则 value 会是数组
+        return value;
+    })
     tags: string[];
 
     @ApiPropertyOptional()
