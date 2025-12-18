@@ -21,6 +21,7 @@ export class AutoPatchManager {
 
     async findOne(...args: Parameters<EntityManager['findOne']>) {
         const result = await this.manager.findOne(...args);
+        console.log('findOne result', result);
         if (result instanceof Patchable) {
             result.shot();
             console.log('observe', result);
