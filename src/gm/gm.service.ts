@@ -8,6 +8,8 @@ import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
 import { ArrayContains, DataSource, EntityManager, MoreThanOrEqual, Repository } from 'typeorm';
+import { AddSSDto } from './dto/addSS.dto';
+import { autoPatch } from 'src/utils/autoPatch';
 
 @Injectable()
 export class GmService {
@@ -186,5 +188,23 @@ export class GmService {
             }
             console.log(`Synced user ${user.name} from Nakama`);
         }
+    }
+
+    async addSS(dto: AddSSDto): Promise<Record<string, number>> {
+        return autoPatch(this.dataSource, async (manager) => {
+            const user = await manager.findOne(ChatwoUser, {
+                where: { nakamaId: dto.customId },
+            });
+            if (!user) {
+                throw new NotFoundException(`User with nakamaId ${dto.customId} not found`);
+            }
+            user.wallet['ss'] = (user.wallet['ss'] || 0) + dto.amount;
+            await manager.save(user);
+            return {
+                result: user.wallet,
+                tags: ['gm', 'addSS', dto.customId],
+                message: `Added ${dto.amount} SS to user ${dto.customId}, reason: ${dto.reason}`,
+            }
+        });
     }
 }
