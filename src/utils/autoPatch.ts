@@ -39,12 +39,16 @@ export class AutoPatchManager {
         }
         return result;
     }
+
+    create(...args: Parameters<EntityManager['create']>) {
+        return this.manager.create(...args);
+    }
 }
 
 export async function autoPatch<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<{ result: T, message: string, tags: string[] }>): Promise<T> {
     return startTransaction<T>(dataSource, async (manager) => {
         const autoPatchManager = new AutoPatchManager(manager);
-        const { result, message, tags } = await callback(autoPatchManager as unknown as EntityManager);
+        const { result, message, tags } = await callback(autoPatchManager as any as EntityManager);
         const data: {
             [key: string]: {
                 id: number;

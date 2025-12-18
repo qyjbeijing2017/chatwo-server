@@ -11,6 +11,7 @@ import {
 import { v4 } from 'uuid';
 import { ChatwoUser } from './user.entity';
 import { ChatwoContainer } from './container.entity';
+import { Patchable, ToPatchJson } from './patchable';
 
 export enum ItemTypeV1 {
   item = 4096,
@@ -37,10 +38,7 @@ export enum ItemType {
 }
 
 @Entity()
-export class ChatwoItem {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class ChatwoItem extends Patchable {
   @Column({ unique: true })
   nakamaId: string = v4(); // Default to a UUID
 
@@ -53,6 +51,7 @@ export class ChatwoItem {
   @Column()
   key: string; // Item key/identifier
 
+  @ToPatchJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
   @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: true })
   owner: ChatwoUser;
 

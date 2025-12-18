@@ -16,5 +16,21 @@ import { DropItemInDto } from './dto/drop-in.dto';
 export class ItemController {
   constructor(private readonly itemService: ItemService) { }
 
+  @ApiBearerAuth()
+  @Get('inChest')
+  async getChestItems(
+    @Account() account: ApiAccount,
+  ) {
+    return this.itemService.getChestItems(account);
+  }
 
+  @ApiBearerAuth()
+  @Post('dropIn/:nakamaId')
+  async dropItemIn(
+    @Account() account: ApiAccount,
+    @Param('nakamaId') nakamaId: string,
+    @Body() dto: DropItemInDto,
+  ) {
+    return this.itemService.dropItemIn(account, nakamaId, dto);
+  }
 }

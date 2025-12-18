@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { ChatwoUser } from './user.entity';
 import { ChatwoItem } from './item.entity';
+import { Patchable, ToPatchJson } from './patchable';
 
 
 export enum ContainerType {
@@ -19,13 +20,11 @@ export enum ContainerType {
 }
 
 @Entity()
-export class ChatwoContainer {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class ChatwoContainer extends Patchable {
     @Column({ default: ContainerType.chest })
     type: ContainerType;
 
+    @ToPatchJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
     @ManyToOne(() => ChatwoUser, (user) => user.containers, { nullable: true })
     owner: ChatwoUser;
 

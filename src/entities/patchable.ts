@@ -2,7 +2,7 @@ import { generate, observe, Observer } from "fast-json-patch";
 import { defineMetadata, getMetadata } from "src/utils/meta-data";
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export function toPatchJson(transformer: (val: any) => any) {
+export function ToPatchJson(transformer: (val: any) => any) {
     return function (target: Patchable, propertyKey: string) {
         const classConstructor = target.constructor;
         defineMetadata(
