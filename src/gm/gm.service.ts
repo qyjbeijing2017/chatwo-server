@@ -38,7 +38,6 @@ export class GmService {
 
     async syncFromNakama(user: ChatwoUser, manager: EntityManager): Promise<void> {
 
-
         const session = await this.nakamaService.login(user.nakamaId);
         const nakamaItems = await this.nakamaService.listItems(session);
 
@@ -55,6 +54,7 @@ export class GmService {
             });
             await manager.save(container);
         }
+
 
         user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
 
@@ -77,27 +77,32 @@ export class GmService {
             }
         }
 
-        console.log(`Syncing ${nakamaItems.length} items for user ${user.name}`);
-
         for (const nakamaItem of nakamaItems) {
             let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
-            console.log(`Processing item ${nakamaItem.nakamaId} for user ${user.name}`);
             if (!item) {
                 item = manager.create(ChatwoItem, {
                     ...nakamaItem,
-                    owner: user,
                 });
+                item.owner = user;
+                log.data.item = log.data.item || {};
+                log.data.item.added = log.data.item.added || [];
+                log.data.item.added.push({ ...nakamaItem });
             } else {
+                log.data.item = log.data.item || {};
+                log.data.item.update = log.data.item.update || {};
+                log.data.item.update[item.nakamaId] = {
+                    metadata: {
+                        before: item.meta,
+                        after: nakamaItem.meta,
+                    },
+                };
                 item.owner = user;
                 item.meta = nakamaItem.meta;
             }
-            console.log(`Assigning container to item ${nakamaItem.nakamaId} for user ${user.name}`);
             item.container = container;
             itmesNeedToSave.push(item);
             log.tags.push(nakamaItem.nakamaId!);
         }
-
-        console.log(`Checking for items to delete for user ${user.name}`);
 
         for (const item of user.items) {
             const nakamaItem = nakamaItems.find((ni) => ni.nakamaId === item.nakamaId);
@@ -119,6 +124,7 @@ export class GmService {
     }
 
     async syncOneFromNakama(nakamaId: string) {
+
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
