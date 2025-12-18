@@ -44,6 +44,54 @@ export class ItemService {
     return container;
   }
 
+  async gainItems(manager: EntityManager, account: ApiAccount, items: Record<string, number>) {
+    const result: ChatwoItem[] = [];
+    const user = await manager.findOne(ChatwoUser, {
+      where: { nakamaId: account.custom_id },
+    });
+    if (!user) {
+      throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+    }
+    const chest = await this.getContainer(manager, account, ContainerType.chest);
+    for (const key of Object.keys(items)) {
+      const itemConfig = configManager.itemMap.get(key);
+      if (!itemConfig) {
+        throw new NotFoundException(`Item config with key ${key} not found`);
+      }
+      if (itemConfig.type === ItemType.skin) {
+        const existingSkins = await manager.findOne(ChatwoItem, {
+          where: {
+            key,
+            owner: { nakamaId: account.custom_id },
+          },
+        });
+        if (existingSkins) {
+          continue; // Skip adding duplicate skins
+        }
+        const item = manager.create(ChatwoItem, {
+          key,
+          owner: user,
+          container: chest,
+        });
+        await manager.save(item);
+        result.push(item);
+      } else if (itemConfig.fromFile === 'items.csv') {
+        result.push(manager.create(ChatwoItem, {
+          key,
+        }));
+      } else {
+        const item = manager.create(ChatwoItem, {
+          key,
+          owner: user,
+        });
+        await manager.save(item);
+        result.push(item);
+      }
+
+    }
+    return result;
+  }
+
   async getChestItems(account: ApiAccount): Promise<ChatwoItem[]> {
     return this.itemRepository.find({
       where: {
@@ -70,7 +118,7 @@ export class ItemService {
     });
     const items: ChatwoItem[] = [];
     containers.forEach(c => {
-      items[c.type -1] = c.items[0];
+      items[c.type - 1] = c.items[0];
     });
     return items;
   }
