@@ -148,7 +148,7 @@ export class ItemService {
         throw new NotFoundException(`Item config with key ${item.key} not found`);
       }
       if (itemConfig.type === ItemType.item) {
-        manager.delete(ChatwoItem, { nakamaId: item.nakamaId });
+        await manager.delete(ChatwoItem, item);
       } else {
         item.container = null;
         await manager.save(item);

@@ -25,7 +25,13 @@ export class Patchable {
     @IgnoreInhJsonPath()
     snapShot: object = {};
 
+    @IgnoreInhJsonPath()
+    isDeleted: boolean = false;
+
     toJsonPatch() {
+        if(this.isDeleted) {
+            return {};
+        }
         let result: object = {};
         for (const key of Object.keys(this)) {
             const transformer = Reflect.getMetadata(PATCH_TRANSFORMER, this.constructor.prototype, key) as ((val: any) => any) | undefined;

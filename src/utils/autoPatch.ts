@@ -30,7 +30,7 @@ export class AutoPatchManager {
 
     async save(...args: Parameters<EntityManager['save']>) {
         const result = await this.manager.save(...args);
-        if(Array.isArray(result)) {
+        if (Array.isArray(result)) {
             for (const item of result) {
                 if (item instanceof Patchable) {
                     this.patchables.add(item);
@@ -45,11 +45,23 @@ export class AutoPatchManager {
     }
 
     delete(...args: Parameters<EntityManager['delete']>) {
+        const [, criteria] = args;
+        if (Array.isArray(criteria)) {
+            for (const item of criteria) {
+                if (item instanceof Patchable) {
+                    this.patchables.add(item);
+                    item.isDeleted = true;
+                }
+            }
+        }
+        if (criteria instanceof Patchable) {
+            this.patchables.add(criteria);
+            criteria.isDeleted = true;
+        }
         return this.manager.delete(...args);
     }
 
     create(...args: Parameters<EntityManager['create']>) {
-        console.log('create', ...args);
         return this.manager.create(...args);
     }
 }
@@ -66,14 +78,12 @@ export async function autoPatch<T>(dataSource: DataSource, callback: (manager: E
         } = {};
         for (const patchable of autoPatchManager.patchables) {
             const ops = patchable.patch();
-            console.log('patch ops', patchable, ops);
             if (ops.length > 0) {
                 data[patchable.constructor.name] = data[patchable.constructor.name] || [];
                 data[patchable.constructor.name].push({
                     id: patchable.id,
                     ops,
                 });
-                console.log('saving patchable', patchable, ops);
             }
         }
         const log = manager.create(ChatwoLog, {
