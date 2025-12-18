@@ -55,18 +55,16 @@ export class ItemService {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
 
-      console.log("sssssssssssssssssssssssssssss");
-
       let chest = await manager.findOne(ChatwoContainer, {
         where: {
-          owner: { nakamaId },
+          owner: { nakamaId: account.custom_id },
           type: ContainerType.chest,
         }
       })
 
       if (!chest) {
         chest = manager.create(ChatwoContainer, {
-          owner: { nakamaId },
+          owner: { nakamaId: account.custom_id },
           type: ContainerType.chest,
         });
         await manager.save(chest);
