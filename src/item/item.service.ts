@@ -143,8 +143,17 @@ export class ItemService {
       if (!item) {
         throw new NotFoundException(`No item equipped in pointerIndex ${pointerIndex}`);
       }
-      item.container = null;
-      await manager.save(item);
+      const itemConfig = configManager.itemMap.get(item.key);
+      if (!itemConfig) {
+        throw new NotFoundException(`Item config with key ${item.key} not found`);
+      }
+      if (itemConfig.type === ItemType.item) {
+        manager.delete(ChatwoItem, { nakamaId: item.nakamaId });
+      } else {
+        item.container = null;
+        await manager.save(item);
+      }
+
       return {
         result: item,
         message: `Unequipped item ${item.nakamaId}(${item.key}) from container ${pointerIndex}`,

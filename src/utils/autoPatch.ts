@@ -44,6 +44,10 @@ export class AutoPatchManager {
         return result;
     }
 
+    delete(...args: Parameters<EntityManager['delete']>) {
+        return this.manager.delete(...args);
+    }
+
     create(...args: Parameters<EntityManager['create']>) {
         console.log('create', ...args);
         return this.manager.create(...args);
