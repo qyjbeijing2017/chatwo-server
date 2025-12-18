@@ -4,11 +4,10 @@ import { PrimaryGeneratedColumn } from "typeorm";
 
 export function ToPatchJson(transformer: (val: any) => any) {
     return function (target: Patchable, propertyKey: string) {
-        const classConstructor = target.constructor;
         defineMetadata(
             'chatwo:toPatchJson',
             transformer,
-            classConstructor,
+            target.constructor,
             propertyKey,
         );
     };
@@ -22,6 +21,7 @@ export class Patchable {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @IgnorePatchJson()
     latestPatchJson: Observer<any> = observe({});
 
     toPatchJson() {

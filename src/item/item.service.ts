@@ -64,7 +64,7 @@ export class ItemService {
 
       if (!chest) {
         chest = manager.create(ChatwoContainer, {
-          owner: user,
+          owner: { nakamaId },
           type: ContainerType.chest,
         });
         await manager.save(chest);
