@@ -42,6 +42,6 @@ export class ChatwoUser extends Patchable {
   @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date | null;
 
-  @Column({ type: 'double', default: 0 })
-  flyDistance: number = 0;
+  @Column({ type: 'float8', default: 0 })
+  flyMeters: number = 0;
 }
