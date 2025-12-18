@@ -1,7 +1,6 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { configManager } from 'src/configV2/config';
-import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { ItemService } from 'src/item/item.service';
