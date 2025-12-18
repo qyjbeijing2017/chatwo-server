@@ -153,7 +153,7 @@ export class ItemService {
       if (!itemConfig) {
         throw new NotFoundException(`Item config with key ${item.key} not found`);
       }
-      if (itemConfig.type === ItemType.item) {
+      if (itemConfig.fromFile === 'items.csv') {
         await manager.delete(ChatwoItem, item);
       } else {
         item.container = null;
@@ -344,7 +344,7 @@ export class ItemService {
       if ((itemConfig.type & ItemType.dropable) === 0) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not dropable type`);
       }
-      if (itemConfig.type === ItemType.item) {
+      if (itemConfig.fromFile === 'items.csv') {
         manager.delete(ChatwoItem, item);
       } else {
         item.container = null;

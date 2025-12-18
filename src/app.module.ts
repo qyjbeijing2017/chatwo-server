@@ -15,6 +15,7 @@ import { StatisticModule } from './statistic/statistic.module';
 import { UserModule } from './user/user.module';
 import { ChatwoContainer } from './entities/container.entity';
 import { GmModule } from './gm/gm.module';
+import { StoreModule } from './store/store.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { GmModule } from './gm/gm.module';
     StatisticModule,
     UserModule,
     GmModule,
+    StoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],
