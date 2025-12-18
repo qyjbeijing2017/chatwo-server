@@ -45,8 +45,11 @@ export class ItemService {
         items: true,
       },
     });
-    containers.sort((a, b) => a.type - b.type);
-    return containers.map(c => c.items[0]);
+    const items: ChatwoItem[] = [];
+    containers.forEach(c => {
+      items[c.type -1] = c.items[0];
+    });
+    return items;
   }
 
   async equipItem(
