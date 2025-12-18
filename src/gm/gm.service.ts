@@ -14,6 +14,8 @@ export class GmService {
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
+        @InjectRepository(ChatwoUser)
+        private readonly userRepository: Repository<ChatwoUser>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
     ) { }
@@ -43,16 +45,16 @@ export class GmService {
         const itmesNeedToSave: ChatwoItem[] = [];
         const itmesNeedToDelete: ChatwoItem[] = [];
 
-        // let container = await manager.findOne(ChatwoContainer, {
-        //     where: { owner: { nakamaId: user.nakamaId }, type: ContainerType.chest },
-        // });
-        // if (!container) {
-        //     container = manager.create(ChatwoContainer, {
-        //         owner: user,
-        //         type: ContainerType.chest,
-        //     });
-        //     await manager.save(container);
-        // }
+        let container = await manager.findOne(ChatwoContainer, {
+            where: { owner: { nakamaId: user.nakamaId }, type: ContainerType.chest },
+        });
+        if (!container) {
+            container = manager.create(ChatwoContainer, {
+                owner: user,
+                type: ContainerType.chest,
+            });
+            await manager.save(container);
+        }
 
 
         user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
@@ -98,7 +100,7 @@ export class GmService {
                 item.owner = user;
                 item.meta = nakamaItem.meta;
             }
-            // item.container = container;
+            item.container = container;
             itmesNeedToSave.push(item);
             log.tags.push(nakamaItem.nakamaId!);
         }
@@ -161,24 +163,24 @@ export class GmService {
     }
 
     async syncAllFromNakama(): Promise<void> {
-        const queryRunner = this.dataSource.createQueryRunner();
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-        try {
-            const users = await queryRunner.manager.find(ChatwoUser, {
-                relations: {
-                    items: true,
-                },
-            });
-            for (const user of users) {
-                await this.syncFromNakama(user, queryRunner.manager);
+        const users = await this.userRepository.find();
+        for (const user of users) {
+            const queryRunner = this.dataSource.createQueryRunner();
+            await queryRunner.connect();
+            await queryRunner.startTransaction();
+            try {
+                const userEntity = await queryRunner.manager.findOne(ChatwoUser, {
+                    where: { id: user.id },
+                });
+                await this.syncFromNakama(userEntity!, queryRunner.manager);
+
+                await queryRunner.commitTransaction();
+                await queryRunner.release();
+            } catch (error) {
+                await queryRunner.rollbackTransaction();
+                await queryRunner.release();
+                throw error;
             }
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-        } catch (error) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
-            throw error;
         }
     }
 }
