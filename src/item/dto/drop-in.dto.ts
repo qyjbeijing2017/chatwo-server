@@ -5,4 +5,7 @@ export class DropItemInDto {
     @ApiProperty()
     @IsString()
     key: string;
+
+    @ApiPropertyOptional()
+    meta: any;
 }

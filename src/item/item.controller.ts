@@ -11,7 +11,6 @@ import { ItemService } from './item.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { Account } from 'src/auth/Account.decorator';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { Server } from 'src/auth/server.decorator';
 import { DropItemInDto } from './dto/drop-in.dto';
 
 @Controller('item')
@@ -27,6 +26,51 @@ export class ItemController {
   }
 
   @ApiBearerAuth()
+  @Get('equipped')
+  async getEquippedItems(
+    @Account() account: ApiAccount,
+  ) {
+    return this.itemService.getEquippedItems(account);
+  }
+
+  @ApiBearerAuth()
+  @Post('equip/:pointerIndex/:nakamaId')
+  async equipItem(
+    @Account() account: ApiAccount,
+    @Param('nakamaId') nakamaId: string,
+    @Param('pointerIndex', ParseIntPipe) pointerIndex: number,
+    @Body() dto: DropItemInDto,
+  ) {
+    return this.itemService.equipItem(account, nakamaId, pointerIndex, dto);
+  }
+
+  @ApiBearerAuth()
+  @Post('unequip/:pointerIndex')
+  async unequipItem(
+    @Account() account: ApiAccount,
+    @Param('pointerIndex', ParseIntPipe) pointerIndex: number,
+  ) {
+    return this.itemService.unequipItem(account, pointerIndex);
+  }
+
+  @ApiBearerAuth()
+  @Post('reset')
+  async resetItems(
+    @Account() account: ApiAccount,
+  ) {
+    return this.itemService.resetItems(account);
+  }
+
+  @ApiBearerAuth()
+  @Post('takeOut/:nakamaId')
+  async takeItemOut(
+    @Account() account: ApiAccount,
+    @Param('nakamaId') nakamaId: string,
+  ) {
+    return this.itemService.takeItemOut(account, nakamaId);
+  }
+
+  @ApiBearerAuth()
   @Post('dropIn/:nakamaId')
   async dropItemIn(
     @Account() account: ApiAccount,
@@ -36,7 +80,6 @@ export class ItemController {
     return this.itemService.dropItemIn(account, nakamaId, dto);
   }
 
-
   @ApiBearerAuth()
   @Get('container')
   async getContainers(
@@ -45,12 +88,12 @@ export class ItemController {
     return this.itemService.getContainers(account);
   }
 
-  @ApiBearerAuth()
-  @Delete('container/:containerId')
-  async deleteContainer(
-    @Account() account: ApiAccount,
-    @Param('containerId', ParseIntPipe) containerId: number,
-  ) {
-    return this.itemService.deleteContainer(account, containerId);
-  }
+  // @ApiBearerAuth()
+  // @Delete('container/:containerId')
+  // async deleteContainer(
+  //   @Account() account: ApiAccount,
+  //   @Param('containerId', ParseIntPipe) containerId: number,
+  // ) {
+  //   return this.itemService.deleteContainer(account, containerId);
+  // }
 }

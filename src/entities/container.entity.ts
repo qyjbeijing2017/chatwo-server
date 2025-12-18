@@ -17,6 +17,8 @@ export enum ContainerType {
     equipPoint3 = 3,
     equipPoint4 = 4,
     equipPoint5 = 5,
+    equipped_start = 1,
+    equipped_end = 5,
 }
 
 @Entity()
