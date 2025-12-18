@@ -20,7 +20,6 @@ export class GmService {
 
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
-        console.log('Fetching statistics with tags:', logDto);
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
             take: 100,
@@ -44,16 +43,16 @@ export class GmService {
         const itmesNeedToSave: ChatwoItem[] = [];
         const itmesNeedToDelete: ChatwoItem[] = [];
 
-        let container = await manager.findOne(ChatwoContainer, {
-            where: { owner: { nakamaId: user.nakamaId }, type: ContainerType.chest },
-        });
-        if (!container) {
-            container = manager.create(ChatwoContainer, {
-                owner: user,
-                type: ContainerType.chest,
-            });
-            await manager.save(container);
-        }
+        // let container = await manager.findOne(ChatwoContainer, {
+        //     where: { owner: { nakamaId: user.nakamaId }, type: ContainerType.chest },
+        // });
+        // if (!container) {
+        //     container = manager.create(ChatwoContainer, {
+        //         owner: user,
+        //         type: ContainerType.chest,
+        //     });
+        //     await manager.save(container);
+        // }
 
 
         user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
@@ -99,7 +98,7 @@ export class GmService {
                 item.owner = user;
                 item.meta = nakamaItem.meta;
             }
-            item.container = container;
+            // item.container = container;
             itmesNeedToSave.push(item);
             log.tags.push(nakamaItem.nakamaId!);
         }
