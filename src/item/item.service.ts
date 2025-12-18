@@ -30,7 +30,7 @@ export class ItemService {
         },
       },
       order: {
-        updatedAt: 'DESC',
+        updatedAt: 'ASC',
       }
     });
   }

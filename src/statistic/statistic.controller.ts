@@ -22,15 +22,6 @@ export class StatisticController {
     }
 
     @ApiBearerAuth()
-    @Get('gm')
-    @Server()
-    async getStatisticsGM(
-        @Query() logDto: LogDto,
-    ) {
-        return this.statisticService.getAllStatistics(logDto);
-    }
-
-    @ApiBearerAuth()
     @Post('fly-in')
     async flyIn(@Account() account: ApiAccount) {
         return this.statisticService.flyIn(account);

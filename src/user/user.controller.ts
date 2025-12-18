@@ -17,30 +17,6 @@ export class UserController {
   }
 
   @ApiBearerAuth()
-  @Server()
-  @Get('gm/:name')
-  async getUserByName(@Param('name') name: string) {
-    return this.userService.findByName(name);
-  }
-
-  @ApiBearerAuth()
-  @Server()
-  @Get('gm')
-  async getAllUsers() {
-    return this.userService.findAll();
-  }
-
-  @ApiBearerAuth()
-  @Server()
-  @Patch('gm/:name')
-  async updateUser(
-    @Param('name') name: string,
-    @Body() updateDto: UpdateUserDto,
-  ) {
-    return this.userService.update(name, updateDto);
-  }
-
-  @ApiBearerAuth()
   @Post('gm/syncFromNakama/:customId')
   @Server()
   async syncFromNakama(@Param('customId') customId: string) {
@@ -54,9 +30,4 @@ export class UserController {
     return this.userService.syncAllFromNakama();
   }
 
-  @ApiBearerAuth()
-  @Delete('gm/:customId')
-  async deleteUser(@Param('customId') customId: string) {
-    return this.userService.remove(customId);
-  }
 }
