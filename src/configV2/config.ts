@@ -1736,7 +1736,7 @@ export const configManager = new ConfigManager({
     ],
     "redeem": [
         {
-            "code": "1000supporter",
+            "code": "1000SUPPORTER",
             "gain": {
                 "Head_37_WhiteBlue 1000 Fans": 1,
                 "Head_38_BlackBrown 1000 Fans": 1,

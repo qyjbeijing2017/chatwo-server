@@ -57,6 +57,7 @@ export class StoreService {
 
     async redeemCode(account: ApiAccount, code: string) {
         return autoPatch(this.dataSource, async (manager) => {
+            code = code.trim().toUpperCase();
             const codeHistory = await manager.findOne(ChatwoLog, {
                 where: {
                     tags: ArrayContains([account.custom_id!, code, 'redeem']),
