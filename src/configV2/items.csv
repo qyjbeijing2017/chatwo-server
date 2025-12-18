@@ -1,4 +1,37 @@
-﻿key?key,name,InitInStorage?type=bool,type?type=enum&enum[4096]=item&enum[8192]=arm&enum[16384]=skin&enum[32768]=currency&enum[61440]=type&enum[8193]=blade&enum[16385]=head&enum[16486]=eye&enum[16387]=body&enum[16388]=vfx,sourcePath,description,packagedSIze?type=float
+﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
+SSS_Forging_Stone,Tier SSS Forging Stone,,item,,,
+SS_Forging_Stone,Tier SS Forging Stone,,item,,,
+S_Forging_Stone,Tier S Forging Stone,,item,,,
+A_Forging_Stone,Tier A Forging Stone,,item,,,
+B_Forging_Stone,Tier B Forging Stone,,item,,,
+C_Forging_Stone,Tier C Forging Stone,,item,RAssets/Prefabs/Items/Equipments/C_Forging_Stone,,
+,Water Wind Breaker VFX,,vfx,,,
+,Water Trial VFX,,vfx,,,
+,Rainbow Wind Breaker VFX,,vfx,,,
+,Rainbow Trial VFX,,vfx,,,
+,Funnel Cannon Wind Breaker VFX,,vfx,,,
+,Funnel Cannon Trial VFX,,vfx,,,
+,Pixel Style Wind Breaker VFX Orange,,vfx,,,
+,Pixel Style Wind Breaker VFX Purple,,vfx,,,
+,Pixel Style Wind Breaker VFX Green,,vfx,,,
+,Pixel Style Wind Breaker VFX Blue,,vfx,,,
+,Pixel Style Wind Breaker VFX Yellow,,vfx,,,
+,Pixel Style Wind Breaker VFX Red,,vfx,,,
+,Pixel Style Trail VFX Orange,,vfx,,,
+,Pixel Style Trail VFX Purple,,vfx,,,
+,Pixel Style Trail VFX Green,,vfx,,,
+,Pixel Style Trail VFX Blue,,vfx,,,
+,Pixel Style Trail VFX Yellow,,vfx,,,
+,Pixel Style Trail VFX Red,,vfx,,,
+,Flame Trail VFX,,vfx,,,
+,Flame Wind Breaker VFX,,vfx,,,
+,Flame Trail VFX,,vfx,,,
+,Goofy Head Orange,,head,,,
+,Goofy Head Purple,,head,,,
+#,Goofy Head Green,,head,,,
+,Goofy Head Blue,,head,,,
+,Goofy Head Yellow,,head,,,
+,Goofy Head Red,,head,,,
 #,Baguette Blade Temporary,,arm,,,0.1
 #,Sausage Blade Temporary,,arm,,,0.1
 #,Katana Blade Temporary,,arm,,,0.1
@@ -9,7 +42,6 @@ Head_38_BlackBrown 1000 Fans,BlackBrown 1000 Fans Head,,head,RAssets/Prefabs/Cha
 Head_37_WhiteBlue 1000 Fans,WhiteBlue 1000 Fans Head,,head,RAssets/Prefabs/Characters/Heads/Head_37_WhiteBlue 1000 Fans,,0.1
 Trail_4_Purple,Purple Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_4_Purple,,0.1
 Sprint_4_Purple,Purple Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/,,0.1
-"Sprint_5_Halloween Wind Breaker ",Halloween Wind Breaker VFX,,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_5_Red,,0.1
 Trail_5_Red,Red Trail VFX,True,vfx,RAssets/Prefabs/Characters/Trails/Trail_5_Red,,0.1
 Sprint_1_Blue,Blue Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_1_Blue,,0.1
 Sprint_5_Red,Red Wind Breaker VFX,True,vfx,RAssets/Prefabs/Characters/Sprints/Sprint_5_Red,,0.1
@@ -87,5 +119,5 @@ Equip_11_SpeedContainerL,Boost Engine (Large),,item,RAssets/Prefabs/Items/Equipm
 Equip_7_GlideModule,Glide Module,,item,RAssets/Prefabs/Items/Equipments/Equip_7_GlideModule,,0.1
 Equip_14_SprintModule,Dash Module,,item,RAssets/Prefabs/Items/Equipments/Equip_14_SprintModule,,0.1
 Equip_9_OverloadModule,Overload Module,,item,RAssets/Prefabs/Items/Equipments/Equip_9_OverloadModule,,0.1
-#sc,SC,,currency,,,0.1
-#ss,SS,,currency,,,0.1
+ss,SS,,currency,,,
+sc,SC,,currency,,,

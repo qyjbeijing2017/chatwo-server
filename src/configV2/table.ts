@@ -55,4 +55,7 @@ export function ConfigYaml() {
   });
 }
 
-export abstract class ConfigTable {}
+export abstract class ConfigTable {
+  fromFile: string = "";
+  [key: string]: any;
+}

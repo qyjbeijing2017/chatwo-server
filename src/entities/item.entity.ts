@@ -30,6 +30,7 @@ export enum ItemType {
   eye = 1 << 2,
   body = 1 << 3,
   vfx = 1 << 4,
+  currency = 1 << 5,
   skin = head | eye | body | vfx,
 }
 
