@@ -1733,5 +1733,35 @@ export const configManager = new ConfigManager({
             "speedMultiplier": 1,
             "fromFile": "hilt.csv"
         }
+    ],
+    "redeem": [
+        {
+            "code": "1000supporter",
+            "gain": {
+                "Head_37_WhiteBlue 1000 Fans": 1,
+                "Head_38_BlackBrown 1000 Fans": 1,
+                "Head_39_BrownGreen 1000 Fans": 1,
+                "Body_8_WhiteBlue 1000FansSkin": 1,
+                "Body_7_BlackBrown 1000FansSkin": 1,
+                "Body_9_BrownGreen 1000FansSkin": 1
+            },
+            "fromFile": "redeem.csv"
+        },
+        {
+            "code": "HALLOWEENDINO",
+            "gain": {
+                "Body_10_SkinFossli": 1,
+                "Head_42_Skin Fossl": 1
+            },
+            "fromFile": "redeem.csv"
+        },
+        {
+            "code": "HALLOWEENZOMBIE",
+            "gain": {
+                "Body_11_Zombie": 1,
+                "Head_43_Zombie": 1
+            },
+            "fromFile": "redeem.csv"
+        }
     ]
 });
