@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
@@ -12,6 +13,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { Account } from 'src/auth/Account.decorator';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { DropItemInDto } from './dto/drop-in.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 
 @Controller('item')
 export class ItemController {
@@ -51,6 +53,16 @@ export class ItemController {
     @Param('pointerIndex', ParseIntPipe) pointerIndex: number,
   ) {
     return this.itemService.unequipItem(account, pointerIndex);
+  }
+
+  @ApiBearerAuth()
+  @Patch(':nakamaId')
+  async updateItem(
+    @Account() account: ApiAccount,
+    @Param('nakamaId') nakamaId: string,
+    @Body() dto: UpdateItemDto,
+  ) {
+    return this.itemService.updateItem(account, nakamaId, dto);
   }
 
   @ApiBearerAuth()

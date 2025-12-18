@@ -8,6 +8,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { DropItemInDto } from './dto/drop-in.dto';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { autoPatch } from 'src/utils/autoPatch';
+import { UpdateItemDto } from './dto/update-item.dto';
 
 @Injectable()
 export class ItemService {
@@ -186,6 +187,7 @@ export class ItemService {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
       }
       item.container = equipContainer;
+      item.owner = user;
       await manager.save(item);
 
       return {
@@ -457,4 +459,34 @@ export class ItemService {
     await this.containerRepository.remove(container);
   }
 
+  async updateItem(
+    account: ApiAccount,
+    nakamaId: string,
+    dto: UpdateItemDto,
+  ): Promise<ChatwoItem> {
+    return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
+      const tags: string[] = ['item', 'update', nakamaId, account.custom_id!, ...dto.tags];
+      const item = await manager.findOne(ChatwoItem, {
+        where: {
+          nakamaId,
+        },
+        relations: {
+          owner: true,
+        }
+      });
+      if (!item) {
+        throw new NotFoundException(`Item with nakamaId ${nakamaId} not found`);
+      }
+      if(item.owner && item.owner.nakamaId !== account.custom_id) {
+        throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}`);
+      }
+      item.meta = dto.meta;
+      await manager.save(item);
+      return {
+        result: item,
+        message: `Updated item ${nakamaId}(${item.key})`,
+        tags,
+      }
+    });
+  }
 }

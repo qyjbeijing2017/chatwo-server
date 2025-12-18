@@ -4,12 +4,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateItemDto {
   @ApiProperty()
-  @IsOptional()
-  @IsString()
-  key?: string;
+  @IsString({ each: true })
+  tags: string[];
 
   @ApiProperty()
-  @IsOptional()
-  @IsNumber()
-  ownerId?: number;
+  meta: any;
 }
