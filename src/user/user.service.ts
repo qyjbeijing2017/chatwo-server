@@ -14,8 +14,6 @@ export class UserService {
     private readonly userRepository: Repository<ChatwoUser>,
     @InjectRepository(ChatwoLog)
     private readonly logRepository: Repository<ChatwoLog>,
-    @InjectRepository(ChatwoItem)
-    private readonly itemRepository: Repository<ChatwoItem>,
     private readonly dataSource: DataSource,
     private readonly nakamaService: NakamaService,
   ) { }
@@ -77,7 +75,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
     }
-    await this.userRepository.delete(user);
+    await this.userRepository.softRemove(user);
   }
 
   async update(
@@ -213,6 +211,8 @@ export class UserService {
       }
 
       await this.syncFromNakama(user, queryRunner.manager);
+      await queryRunner.commitTransaction();
+      await queryRunner.release();
 
       return {
         ...user,

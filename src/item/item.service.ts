@@ -1,9 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { ChatwoItem } from '../entities/item.entity';
 import { ChatwoUser } from '../entities/user.entity';
 import { configManager } from 'src/configV2/config';
+import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
+import { DropItemInDto } from './dto/drop-in.dto';
+import { startTransaction } from 'src/utils/transaction';
+import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 
 @Injectable()
 export class ItemService {
@@ -12,78 +16,27 @@ export class ItemService {
     private readonly itemRepository: Repository<ChatwoItem>,
     @InjectRepository(ChatwoUser)
     private readonly userRepository: Repository<ChatwoUser>,
+    @InjectRepository(ChatwoContainer)
+    private readonly containerRepository: Repository<ChatwoContainer>,
+    private readonly dataSource: DataSource,
   ) { }
 
-  async findOne(nakamaId: string, ownerCustomId: string): Promise<ChatwoItem> {
-    const item = await this.itemRepository.findOne({
+  async findAllInChest(account: ApiAccount): Promise<ChatwoItem[]> {
+    const container = await this.containerRepository.findOne({
       where: {
-        nakamaId,
+        type: ContainerType.chest,
         owner: {
-          nakamaId: ownerCustomId,
+          nakamaId: account.custom_id || '',
         },
+      },
+      relations: {
+        items: true,
       },
     })
-    if (!item) {
-      throw new NotFoundException('Item not found');
-    }
-    return item;
+    return container?.items || [];
   }
 
-  async initItemsForUser(user: ChatwoUser): Promise<ChatwoItem[]> {
-    const items = await this.itemRepository.find({
-      where: {
-        owner: {
-          nakamaId: user.nakamaId,
-        },
-      },
-    });
-    for (const itemConfig of configManager.items) {
-      if (itemConfig.InitInStorage) {
-        const hasItem = items.find(i => i.key === itemConfig.key);
-        if (!hasItem) {
-          const newItem = this.itemRepository.create({
-            key: itemConfig.key,
-            owner: user,
-          });
-          await this.itemRepository.save(newItem);
-          items.push(newItem);
-        }
-      }
-    }
-    return items.map(i => ({
-      ...i,
-      owner: null as any,
-    })) as ChatwoItem[];
-  }
-
-  async findAllByCustomId(ownerCustomId: string): Promise<ChatwoItem[]> {
-    const owner = await this.userRepository.findOne({
-      where: { nakamaId: ownerCustomId },
-    });
-    if (!owner) {
-      throw new NotFoundException(`User with nakamaId ${ownerCustomId} not found`);
-    }
-    return this.initItemsForUser(owner);
-  }
-
-  async findAllByOwner(ownerName: string): Promise<ChatwoItem[]> {
-    const owner = await this.userRepository.findOne({
-      where: { name: ownerName },
-    });
-    if (!owner) {
-      throw new NotFoundException(`User with name ${ownerName} not found`);
-    }
-    return this.initItemsForUser(owner);
-  }
-
-  async findAll(): Promise<ChatwoItem[]> {
-    return this.itemRepository.find();
-  }
-
-  async findAllWithDeleted(): Promise<ChatwoItem[]> {
-    return this.itemRepository.find({
-      withDeleted: true,
-    });
+  async resetItemsForAccount(account: ApiAccount): Promise<void> {
   }
 
 }

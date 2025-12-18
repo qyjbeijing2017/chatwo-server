@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import YAML from 'yaml';
 import { defineMetadata } from '../utils/meta-data';
+import { ChatwoConfigFileName } from './filesName';
 
 export function ConfigName(name: string) {
   return function (target: ConfigTable, propertyKey: string) {
@@ -56,6 +57,6 @@ export function ConfigYaml() {
 }
 
 export abstract class ConfigTable {
-  fromFile: string = "";
+  fromFile: ChatwoConfigFileName;
   [key: string]: any;
 }

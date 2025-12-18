@@ -4,9 +4,11 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { v4 } from 'uuid';
 import { ChatwoItem } from './item.entity';
+import { ChatwoContainer } from './container.entity';
 
 @Entity()
 export class ChatwoUser {
@@ -30,4 +32,10 @@ export class ChatwoUser {
 
   @OneToMany(() => ChatwoItem, (item) => item.owner)
   items: ChatwoItem[];
+
+  @OneToMany(() => ChatwoContainer, (container) => container.owner)
+  containers: ChatwoContainer[];
+
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
+  deletedAt: Date | null;
 }

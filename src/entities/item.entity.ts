@@ -6,9 +6,11 @@ import {
   ManyToOne,
   DeleteDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { v4 } from 'uuid';
 import { ChatwoUser } from './user.entity';
+import { ChatwoContainer } from './container.entity';
 
 export enum ItemTypeV1 {
   item = 4096,
@@ -34,16 +36,6 @@ export enum ItemType {
   skin = head | eye | body | vfx,
 }
 
-export enum ItemState {
-  outOfControl = 0,
-  equipped1 = 1,
-  equipped2 = 2,
-  equipped3 = 3,
-  equipped4 = 4,
-  equipped5 = 5,
-  inChest = 6,
-}
-
 @Entity()
 export class ChatwoItem {
   @PrimaryGeneratedColumn()
@@ -61,11 +53,11 @@ export class ChatwoItem {
   @Column()
   key: string; // Item key/identifier
 
-  @Column({ type: 'int', default: ItemState.inChest })
-  state: ItemState = ItemState.inChest; // Item state
-
-  @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: false })
+  @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: true })
   owner: ChatwoUser;
+
+  @ManyToOne(() => ChatwoContainer, (container) => container.items, { nullable: true })
+  container: ChatwoContainer;
 
   @Column({ type: 'jsonb', nullable: true })
   meta?: any;

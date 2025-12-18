@@ -11,7 +11,7 @@ export type ChatwoWalletAddition = Record<string, number>;
 export interface ChatwoItemUpdateLog {
   [key: string]: {
     owner?: {
-      before: string;
+      before?: string;
       after: string;
     };
     metadata?: {
@@ -24,6 +24,11 @@ export interface ChatwoItemLogData {
   update?: ChatwoItemUpdateLog;
   added?: Partial<ChatwoItem>[];
   removed?: string[];
+}
+
+export interface ChatwoDropLogData {
+  itemId: string;
+
 }
 
 @Entity()
@@ -43,8 +48,8 @@ export class ChatwoLog {
   @Column({ type: 'jsonb', default: {} })
   data: {
     wallet?: ChatwoWalletAddition;
-    item?: ChatwoItemLogData;
     fly?: number;
+    item?: ChatwoItemLogData;
   };
 
   @Column({ type: 'text', array: true, default: [] })

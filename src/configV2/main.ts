@@ -8,6 +8,7 @@ import { join } from 'path';
 import { parseCsv } from '../utils/csvReader';
 import { ConfigTable } from './table';
 import { getMetadata, hasMetadata } from '../utils/meta-data';
+import { ChatwoConfigFileName } from './filesName';
 
 function main() {
   const manager = new ConfigManager({});
@@ -19,7 +20,7 @@ function main() {
         'configManager:filePath',
         ConfigManager,
         propertyKey,
-      ) as string[];
+      ) as ChatwoConfigFileName[];
       const list: ConfigTable[] = [];
       for (const path of paths) {
         if (!existsSync(join(__dirname, path))) {

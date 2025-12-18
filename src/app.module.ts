@@ -13,6 +13,7 @@ import { ChatwoLog } from './entities/log.entity';
 import { ItemModule } from './item/item.module';
 import { StatisticModule } from './statistic/statistic.module';
 import { UserModule } from './user/user.module';
+import { ChatwoContainer } from './entities/container.entity';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { UserModule } from './user/user.module';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser, ChatwoItem, ChatwoLog],
+        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),
