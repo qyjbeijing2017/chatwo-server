@@ -59,7 +59,7 @@ export class ChatwoItem extends Patchable {
   owner: ChatwoUser;
 
   @ManyToOne(() => ChatwoContainer, (container) => container.items, { nullable: true })
-  container: ChatwoContainer;
+  container?: ChatwoContainer | null;
 
   @Column({ type: 'jsonb', nullable: true })
   meta?: any;

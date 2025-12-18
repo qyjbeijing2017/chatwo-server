@@ -123,4 +123,28 @@ export class ItemService {
     });
     return containers;
   }
+
+  async deleteContainer(
+    account: ApiAccount,
+    containerId: number,
+  ): Promise<void> {
+    const container = await this.containerRepository.findOne({
+      where: {
+        id: containerId,
+        owner: { nakamaId: account.custom_id },
+      },
+      relations: {
+        items: true,
+      },
+    });
+    if (!container) {
+      throw new NotFoundException(`Container with id ${containerId} not found`);
+    }
+    container.items.forEach((item) => {
+      item.container = null;
+    });
+    await this.itemRepository.save(container.items);
+    await this.containerRepository.remove(container);
+  }
+
 }

@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
@@ -41,5 +43,14 @@ export class ItemController {
     @Account() account: ApiAccount,
   ) {
     return this.itemService.getContainers(account);
+  }
+
+  @ApiBearerAuth()
+  @Delete('container/:containerId')
+  async deleteContainer(
+    @Account() account: ApiAccount,
+    @Param('containerId', ParseIntPipe) containerId: number,
+  ) {
+    return this.itemService.deleteContainer(account, containerId);
   }
 }
