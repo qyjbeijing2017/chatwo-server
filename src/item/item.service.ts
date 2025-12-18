@@ -165,8 +165,8 @@ export class ItemService {
       if (!itemConfig) {
         throw new NotFoundException(`Item config with key ${dto.key} not found`);
       }
-      if (itemConfig.type & ItemType.dropable) {
-        throw new BadRequestException(`Item with key ${dto.key} is dropable type`);
+      if ((itemConfig.type & ItemType.dropable) === 0) {
+        throw new BadRequestException(`Item with key ${dto.key} is not dropable type`);
       }
       const user = await manager.findOne(ChatwoUser, {
         where: {
@@ -326,7 +326,7 @@ export class ItemService {
       if (!itemConfig) {
         throw new NotFoundException(`Item config with key ${item.key} not found`);
       }
-      if (!(itemConfig.type & ItemType.dropable)) {
+      if ((itemConfig.type & ItemType.dropable) === 0) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not dropable type`);
       }
       if (itemConfig.type === ItemType.item) {
