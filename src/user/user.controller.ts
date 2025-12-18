@@ -15,19 +15,4 @@ export class UserController {
   async getUserStats(@Account() account: ApiAccount) {
     return this.userService.findByNakamaId(account.custom_id || '');
   }
-
-  @ApiBearerAuth()
-  @Post('gm/syncFromNakama/:customId')
-  @Server()
-  async syncFromNakama(@Param('customId') customId: string) {
-    return this.userService.syncOneFromNakama(customId);
-  }
-
-  @ApiBearerAuth()
-  @Post('gm/syncFromNakama')
-  @Server()
-  async syncAllFromNakama() {
-    return this.userService.syncAllFromNakama();
-  }
-
 }
