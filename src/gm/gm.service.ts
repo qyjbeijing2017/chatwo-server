@@ -20,7 +20,6 @@ export class GmService {
         private readonly nakamaService: NakamaService,
     ) { }
 
-
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
@@ -172,6 +171,9 @@ export class GmService {
             try {
                 const userEntity = await queryRunner.manager.findOne(ChatwoUser, {
                     where: { id: user.id },
+                    relations: {
+                        items: true,
+                    }
                 });
                 await this.syncFromNakama(userEntity!, queryRunner.manager);
 
