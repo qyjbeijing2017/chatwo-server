@@ -38,6 +38,8 @@ export class GmService {
 
     async syncFromNakama(user: ChatwoUser, manager: EntityManager): Promise<void> {
 
+        console.log(`Syncing user ${user.name} from Nakama`);
+
         const session = await this.nakamaService.login(user.nakamaId);
         const nakamaItems = await this.nakamaService.listItems(session);
 
@@ -54,7 +56,7 @@ export class GmService {
             });
             await manager.save(container);
         }
-
+        console.log(`Found ${nakamaItems.length} items in Nakama for user ${user.name}`);
 
         user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
 
@@ -76,6 +78,8 @@ export class GmService {
                 user.wallet[key] = value;
             }
         }
+
+        console.log(`Syncing ${nakamaItems.length} items for user ${user.name}`);
 
         for (const nakamaItem of nakamaItems) {
             let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
@@ -104,6 +108,8 @@ export class GmService {
             log.tags.push(nakamaItem.nakamaId!);
         }
 
+        console.log(`Checking for items to delete for user ${user.name}`);
+
         for (const item of user.items) {
             const nakamaItem = nakamaItems.find((ni) => ni.nakamaId === item.nakamaId);
             if (!nakamaItem) {
@@ -124,7 +130,7 @@ export class GmService {
     }
 
     async syncOneFromNakama(nakamaId: string) {
-
+        console.log(`Syncing user ${nakamaId} from Nakama`);
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
@@ -138,6 +144,7 @@ export class GmService {
             if (!user) {
                 throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
             }
+            console.log(`Found user ${user.name}, syncing...`);
 
             await this.syncFromNakama(user, queryRunner.manager);
             await queryRunner.commitTransaction();
