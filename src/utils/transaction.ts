@@ -1,7 +1,7 @@
 import { DataSource, EntityManager } from "typeorm";
 
 export async function startTransaction<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<T>): Promise<T> {
-    const queryRunner = this.dataSource.createQueryRunner();
+    const queryRunner = dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
