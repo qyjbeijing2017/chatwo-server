@@ -35,6 +35,7 @@ export enum ItemType {
   vfx = 1 << 4,
   currency = 1 << 5,
   skin = head | eye | body | vfx,
+  dropable = item | arm,
 }
 
 @Entity()

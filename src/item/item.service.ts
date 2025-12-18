@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { ChatwoItem } from '../entities/item.entity';
+import { ChatwoItem, ItemType } from '../entities/item.entity';
 import { ChatwoUser } from '../entities/user.entity';
 import { configManager } from 'src/configV2/config';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
@@ -46,6 +46,9 @@ export class ItemService {
       if (!itemConfig) {
         throw new NotFoundException(`Item config with key ${dto.key} not found`);
       }
+      if (itemConfig.type & ItemType.dropable) {
+        throw new BadRequestException(`Item with key ${dto.key} is dropable type`);
+      }
       const user = await manager.findOne(ChatwoUser, {
         where: {
           nakamaId: account.custom_id,
@@ -87,9 +90,9 @@ export class ItemService {
       if (item.container) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
       }
-      if (itemConfig.fromFile === "items.csv") {
+      if (itemConfig.type === ItemType.item) {
         item.owner = user;
-      } else {
+      } else if (itemConfig.type === ItemType.arm) {
         if (!item.owner) {
           throw new BadRequestException(`lock Item with nakamaId ${nakamaId} has no owner`);
         }
