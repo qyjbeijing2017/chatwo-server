@@ -2,12 +2,13 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
-import { ArrayContains, LessThan, MoreThanOrEqual, Raw, Repository } from 'typeorm';
+import { ArrayContains, DataSource, LessThan, MoreThanOrEqual, Raw, Repository } from 'typeorm';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { LogDto } from './dto/log.dto';
+import { autoPatch } from 'src/utils/autoPatch';
 
 @Injectable()
 export class StatisticService {
@@ -16,6 +17,7 @@ export class StatisticService {
         private readonly logRepository: Repository<ChatwoLog>,
         @InjectRepository(ChatwoUser)
         private readonly userRepository: Repository<ChatwoUser>,
+        private readonly dataSource: DataSource,
     ) { }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
@@ -40,13 +42,23 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
-        const log = this.logRepository.create({
-            message: `User ${account.user?.username} flew ${dto.meters} meters.`,
-            tags: [account.custom_id || '', 'fly'],
-            data: { fly: dto.meters },
+        return autoPatch(this.dataSource, async (manager) => {
+            const user = await manager.findOne(ChatwoUser, {
+                where: {
+                    nakamaId: account.custom_id,
+                }
+            });
+            if (!user) {
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+            }
+            user.flyMeters += dto.meters;
+            await manager.save(user);
+            return {
+                result: user,
+                message: `User ${account.user?.username} flew ${dto.meters} meters.`,
+                tags: [account.custom_id!, 'fly'],
+            }
         });
-        await this.logRepository.save(log);
-        return log;
     }
 
     async pve(account: ApiAccount, dto: KilledDto) {
