@@ -24,7 +24,7 @@ export class ChatwoContainer extends Patchable {
     @Column({ default: ContainerType.chest })
     type: ContainerType;
 
-    @TransformToPathJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
+    @IgnoreInhJsonPath()
     @ManyToOne(() => ChatwoUser, (user) => user.containers, { nullable: true })
     owner: ChatwoUser;
 

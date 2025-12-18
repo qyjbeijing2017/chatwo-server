@@ -57,9 +57,9 @@ export class ItemService {
 
       let chest = await manager.findOne(ChatwoContainer, {
         where: {
-          owner: { nakamaId: account.custom_id },
+          owner: user,
           type: ContainerType.chest,
-        }
+        },
       })
 
       if (!chest) {
