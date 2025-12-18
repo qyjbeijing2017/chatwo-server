@@ -23,4 +23,14 @@ export class GmController {
     async syncFromNakamaGM() {
         return this.gmService.syncAllFromNakama();
     }
+
+
+    @ApiBearerAuth()
+    @Post('syncOneFromNakama/:customId')
+    @Server()
+    async syncOneFromNakamaGM(
+        @Query('customId') customId: string,
+    ) {
+        return this.gmService.syncOneFromNakama(customId);
+    }
 }
