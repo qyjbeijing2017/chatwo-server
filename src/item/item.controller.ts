@@ -33,4 +33,13 @@ export class ItemController {
   ) {
     return this.itemService.dropItemIn(account, nakamaId, dto);
   }
+
+
+  @ApiBearerAuth()
+  @Get('container')
+  async getContainers(
+    @Account() account: ApiAccount,
+  ) {
+    return this.itemService.getContainers(account);
+  }
 }

@@ -111,4 +111,16 @@ export class ItemService {
       }
     });
   }
+
+  async getContainers(account: ApiAccount): Promise<ChatwoContainer[]> {
+    const containers = await this.containerRepository.find({
+      where: {
+        owner: { nakamaId: account.custom_id },
+      },
+      relations: {
+        items: true,
+      },
+    });
+    return containers;
+  }
 }
