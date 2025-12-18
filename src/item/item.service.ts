@@ -339,7 +339,7 @@ export class ItemService {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not dropable type`);
       }
       if (itemConfig.type === ItemType.item) {
-        manager.delete(ChatwoItem, { nakamaId });
+        manager.delete(ChatwoItem, item);
       } else {
         item.container = null;
         await manager.save(item);

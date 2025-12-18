@@ -13,7 +13,6 @@ export class AutoPatchManager {
         for (const item of result) {
             if (item instanceof Patchable) {
                 item.shot();
-                console.log('observe', item);
             }
         }
         return result;
@@ -23,7 +22,6 @@ export class AutoPatchManager {
         const result = await this.manager.findOne(...args);
         if (result instanceof Patchable) {
             result.shot();
-            console.log('observe', result);
         }
         return result;
     }
@@ -34,32 +32,30 @@ export class AutoPatchManager {
             for (const item of result) {
                 if (item instanceof Patchable) {
                     this.patchables.add(item);
-                    console.log('patchable', item);
                 }
             }
         } else if (result instanceof Patchable) {
             this.patchables.add(result);
-            console.log('patchable', result);
         }
         return result;
     }
 
     delete(...args: Parameters<EntityManager['delete']>) {
         const [, criteria] = args;
-        console.log(`delete`, criteria);
         if (Array.isArray(criteria)) {
-            for (const item of criteria) {
-                if (item instanceof Patchable) {
-                    this.patchables.add(item);
-                    item.isDeleted = true;
-                    console.log('mark deleted', item);
+            const criteriaAfter = criteria.map(c => {
+                if (c instanceof Patchable) {
+                    c.isDeleted = true;
+                    this.patchables.add(c);
+                    return { id: c.id };
                 }
-            }
-        }
-        if (criteria instanceof Patchable) {
-            this.patchables.add(criteria);
+                return c;
+            });
+            args[1] = criteriaAfter;
+        } else if (criteria instanceof Patchable) {
             criteria.isDeleted = true;
-            console.log('mark deleted', criteria);
+            this.patchables.add(criteria);
+            args[1] = { id: criteria.id };
         }
         return this.manager.delete(...args);
     }
