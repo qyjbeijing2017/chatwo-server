@@ -1,37 +1,38 @@
-import { generate, observe, Observer } from "fast-json-patch";
-import { defineMetadata, getMetadata } from "src/utils/meta-data";
+import { compare } from "fast-json-patch";
 import { PrimaryGeneratedColumn } from "typeorm";
 
-export function ToPatchJson(transformer: (val: any) => any) {
-    return function (target: Patchable, propertyKey: string) {
-        defineMetadata(
-            'chatwo:toPatchJson',
+const PATCH_TRANSFORMER = Symbol('PATCH_TRANSFORMER');
+
+export function TransformToPathJson(transformer: (val: any) => any) {
+    return function (target: any, propertyKey: string) {
+        Reflect.defineMetadata(
+            PATCH_TRANSFORMER,
             transformer,
-            target.constructor,
+            target,
             propertyKey,
         );
     };
 }
 
-export function IgnorePatchJson() {
-    return ToPatchJson(() => undefined);
+export function IgnoreInhJsonPath() {
+    return TransformToPathJson(() => undefined);
 }
 
 export class Patchable {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @IgnorePatchJson()
-    latestPatchJson: Observer<any> = observe({});
+    @IgnoreInhJsonPath()
+    snapShot: object = {};
 
-    toPatchJson() {
+    toJsonPatch() {
         let result: object = {};
         for (const key of Object.keys(this)) {
-            const transformer = getMetadata('chatwo:toPatchJson', this.constructor, key) as ((val: any) => any) | undefined;
+            const transformer = Reflect.getMetadata(PATCH_TRANSFORMER, this.constructor.prototype, key) as ((val: any) => any) | undefined;
             if (transformer) {
                 result[key] = transformer(this[key]);
             } else if (this[key] instanceof Patchable) {
-                result[key] = this[key].toPatchJson();
+                result[key] = this[key].toJsonPatch();
             } else {
                 result[key] = this[key];
             }
@@ -39,12 +40,13 @@ export class Patchable {
         return result;
     }
 
-    observer() {
-        this.latestPatchJson = observe(this.toPatchJson());
-        return this.latestPatchJson;
+    shot() {
+        this.snapShot = this.toJsonPatch();
+        return this.snapShot;
     }
 
-    patch(observer: Observer<any> = this.latestPatchJson) {
-        return generate(observer);
+    patch(before: object = this.snapShot) {
+        const after = this.toJsonPatch();
+        return compare(before, after, true);
     }
 }

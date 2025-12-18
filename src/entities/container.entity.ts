@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { ChatwoUser } from './user.entity';
 import { ChatwoItem } from './item.entity';
-import { IgnorePatchJson, Patchable, ToPatchJson } from './patchable';
+import { IgnoreInhJsonPath, Patchable, TransformToPathJson } from './patchable';
 
 
 export enum ContainerType {
@@ -24,11 +24,11 @@ export class ChatwoContainer extends Patchable {
     @Column({ default: ContainerType.chest })
     type: ContainerType;
 
-    @ToPatchJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
+    @TransformToPathJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
     @ManyToOne(() => ChatwoUser, (user) => user.containers, { nullable: true })
     owner: ChatwoUser;
 
-    @IgnorePatchJson()
+    @IgnoreInhJsonPath()
     @OneToMany(() => ChatwoItem, (item) => item.container)
     items: ChatwoItem[];
 }

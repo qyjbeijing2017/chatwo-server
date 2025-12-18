@@ -9,19 +9,19 @@ import {
 import { v4 } from 'uuid';
 import { ChatwoItem } from './item.entity';
 import { ChatwoContainer } from './container.entity';
-import { IgnorePatchJson, Patchable } from './patchable';
+import { IgnoreInhJsonPath, Patchable } from './patchable';
 
 @Entity()
 export class ChatwoUser extends Patchable {
-  @IgnorePatchJson()
+  @IgnoreInhJsonPath()
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @IgnorePatchJson()
+  @IgnoreInhJsonPath()
   @Column({ unique: true })
   nakamaId: string = v4(); // Default to a UUID
 
-  @IgnorePatchJson()
+  @IgnoreInhJsonPath()
   @Column({ unique: true, nullable: true })
   oculusId: string;
 
@@ -31,11 +31,11 @@ export class ChatwoUser extends Patchable {
   @Column({ type: 'jsonb', default: '{}' })
   wallet: Record<string, number> = {};
 
-  @IgnorePatchJson()
+  @IgnoreInhJsonPath()
   @OneToMany(() => ChatwoItem, (item) => item.owner)
   items: ChatwoItem[];
 
-  @IgnorePatchJson()
+  @IgnoreInhJsonPath()
   @OneToMany(() => ChatwoContainer, (container) => container.owner)
   containers: ChatwoContainer[];
 

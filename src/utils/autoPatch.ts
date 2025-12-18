@@ -12,7 +12,7 @@ export class AutoPatchManager {
         const result = await this.manager.find(...args);
         for (const item of result) {
             if (item instanceof Patchable) {
-                item.observer();
+                item.shot();
                 console.log('observe', item);
             }
         }
@@ -22,7 +22,7 @@ export class AutoPatchManager {
     async findOne(...args: Parameters<EntityManager['findOne']>) {
         const result = await this.manager.findOne(...args);
         if (result instanceof Patchable) {
-            result.observer();
+            result.shot();
             console.log('observe', result);
         }
         return result;
