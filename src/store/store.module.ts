@@ -6,10 +6,12 @@ import { ChatwoUser } from 'src/entities/user.entity';
 import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
+import { ItemService } from 'src/item/item.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem]),
+    ItemService,
   ],
   controllers: [StoreController],
   providers: [StoreService]

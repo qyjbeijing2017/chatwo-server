@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, DataSource, IsNull, Not, Repository } from 'typeorm';
+import { Between, DataSource, EntityManager, IsNull, Not, Repository } from 'typeorm';
 import { ChatwoItem, ItemType } from '../entities/item.entity';
 import { ChatwoUser } from '../entities/user.entity';
 import { configManager } from 'src/configV2/config';
@@ -20,6 +20,29 @@ export class ItemService {
     private readonly containerRepository: Repository<ChatwoContainer>,
     private readonly dataSource: DataSource,
   ) { }
+
+  async getContainer(manager: EntityManager, account: ApiAccount, type: ContainerType = ContainerType.chest): Promise<ChatwoContainer> {
+    let container = await manager.findOne(ChatwoContainer, {
+      where: {
+        owner: { nakamaId: account.custom_id },
+        type,
+      },
+    });
+    if (!container) {
+      const user = await this.userRepository.findOne({
+        where: { nakamaId: account.custom_id },
+      });
+      if (!user) {
+        throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+      }
+      container = this.containerRepository.create({
+        owner: user,
+        type,
+      });
+      await this.containerRepository.save(container);
+    }
+    return container;
+  }
 
   async getChestItems(account: ApiAccount): Promise<ChatwoItem[]> {
     return this.itemRepository.find({
@@ -79,20 +102,22 @@ export class ItemService {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
 
-      let equipContainer = await manager.findOne(ChatwoContainer, {
-        where: {
-          owner: { nakamaId: account.custom_id },
-          type: pointerIndex,
-        },
-      })
+      // let equipContainer = await manager.findOne(ChatwoContainer, {
+      //   where: {
+      //     owner: { nakamaId: account.custom_id },
+      //     type: pointerIndex,
+      //   },
+      // })
 
-      if (!equipContainer) {
-        equipContainer = manager.create(ChatwoContainer, {
-          owner: user,
-          type: pointerIndex,
-        });
-        await manager.save(equipContainer);
-      }
+      // if (!equipContainer) {
+      //   equipContainer = manager.create(ChatwoContainer, {
+      //     owner: user,
+      //     type: pointerIndex,
+      //   });
+      //   await manager.save(equipContainer);
+      // }
+
+      let equipContainer = await this.getContainer(manager, account, pointerIndex);
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
@@ -192,20 +217,22 @@ export class ItemService {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
 
-      let chest = await manager.findOne(ChatwoContainer, {
-        where: {
-          owner: { nakamaId: account.custom_id },
-          type: ContainerType.chest,
-        },
-      })
+      // let chest = await manager.findOne(ChatwoContainer, {
+      //   where: {
+      //     owner: { nakamaId: account.custom_id },
+      //     type: ContainerType.chest,
+      //   },
+      // })
 
-      if (!chest) {
-        chest = manager.create(ChatwoContainer, {
-          owner: user,
-          type: ContainerType.chest,
-        });
-        await manager.save(chest);
-      }
+      // if (!chest) {
+      //   chest = manager.create(ChatwoContainer, {
+      //     owner: user,
+      //     type: ContainerType.chest,
+      //   });
+      //   await manager.save(chest);
+      // }
+
+      const chest = await this.getContainer(manager, account, ContainerType.chest);
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
@@ -288,19 +315,20 @@ export class ItemService {
           throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
         }
 
-        let chest = await manager.findOne(ChatwoContainer, {
-          where: {
-            owner: { nakamaId: account.custom_id },
-            type: ContainerType.chest,
-          },
-        })
-        if (!chest) {
-          chest = manager.create(ChatwoContainer, {
-            owner: user,
-            type: ContainerType.chest,
-          });
-          await manager.save(chest);
-        }
+        // let chest = await manager.findOne(ChatwoContainer, {
+        //   where: {
+        //     owner: { nakamaId: account.custom_id },
+        //     type: ContainerType.chest,
+        //   },
+        // })
+        // if (!chest) {
+        //   chest = manager.create(ChatwoContainer, {
+        //     owner: user,
+        //     type: ContainerType.chest,
+        //   });
+        //   await manager.save(chest);
+        // }
+        const chest = await this.getContainer(manager, account, ContainerType.chest);
         for (const item of ownerItems) {
           item.container = chest;
           tags.push(item.nakamaId!);
