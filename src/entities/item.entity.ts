@@ -34,6 +34,16 @@ export enum ItemType {
   skin = head | eye | body | vfx,
 }
 
+export enum ItemState {
+  outOfControl = 0,
+  equipped1 = 1,
+  equipped2 = 2,
+  equipped3 = 3,
+  equipped4 = 4,
+  equipped5 = 5,
+  inChest = 6,
+}
+
 @Entity()
 export class ChatwoItem {
   @PrimaryGeneratedColumn()
@@ -51,8 +61,8 @@ export class ChatwoItem {
   @Column()
   key: string; // Item key/identifier
 
-  @Column({ type: 'int' })
-  type: ItemType; // Item type
+  @Column({ type: 'int', default: ItemState.inChest })
+  state: ItemState = ItemState.inChest; // Item state
 
   @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: false })
   owner: ChatwoUser;

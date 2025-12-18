@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Client, Session } from '@heroiclabs/nakama-js';
-import { ChatwoItem, ItemType } from 'src/entities/item.entity';
-import { configManager } from 'src/configV2/config';
+import { ChatwoItem } from 'src/entities/item.entity';
 
 @Injectable()
 export class NakamaService {
@@ -56,7 +55,6 @@ export class NakamaService {
       .map((item) => ({
         nakamaId: item.id,
         key: item.key,
-        type: configManager.itemMap.get(item.key)?.type ?? ItemType.item,
         createdAt: new Date(item.createdAt),
         meta: item.meta,
       }));

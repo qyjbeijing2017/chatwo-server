@@ -11,10 +11,5 @@ export class UpdateItemDto {
   @ApiProperty()
   @IsOptional()
   @IsNumber()
-  type?: ItemType;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsNumber()
   ownerId?: number;
 }

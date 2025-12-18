@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
   DeleteDateColumn,
 } from 'typeorm';
 import { ChatwoItem } from './item.entity';

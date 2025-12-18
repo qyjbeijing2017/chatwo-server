@@ -221,7 +221,6 @@ export class UserService {
           nakamaId: item.nakamaId,
           meta: item.meta,
           key: item.key,
-          type: item.type,
           createdAt: item.createdAt,
           updatedAt: item.updatedAt,
         })) as ChatwoItem[],

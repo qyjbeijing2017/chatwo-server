@@ -43,7 +43,6 @@ export class ItemService {
         if (!hasItem) {
           const newItem = this.itemRepository.create({
             key: itemConfig.key,
-            type: itemConfig.type,
             owner: user,
           });
           await this.itemRepository.save(newItem);
