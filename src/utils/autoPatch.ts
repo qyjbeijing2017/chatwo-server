@@ -46,17 +46,20 @@ export class AutoPatchManager {
 
     delete(...args: Parameters<EntityManager['delete']>) {
         const [, criteria] = args;
+        console.log(`delete`, criteria);
         if (Array.isArray(criteria)) {
             for (const item of criteria) {
                 if (item instanceof Patchable) {
                     this.patchables.add(item);
                     item.isDeleted = true;
+                    console.log('mark deleted', item);
                 }
             }
         }
         if (criteria instanceof Patchable) {
             this.patchables.add(criteria);
             criteria.isDeleted = true;
+            console.log('mark deleted', criteria);
         }
         return this.manager.delete(...args);
     }
