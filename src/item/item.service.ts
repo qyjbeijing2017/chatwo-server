@@ -28,6 +28,9 @@ export class ItemService {
           type: ContainerType.chest,
           owner: { nakamaId: account.custom_id },
         },
+      },
+      order: {
+        updatedAt: 'DESC',
       }
     });
   }
