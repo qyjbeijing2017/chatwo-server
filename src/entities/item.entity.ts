@@ -54,7 +54,7 @@ export class ChatwoItem extends Patchable {
   @Column()
   key: string; // Item key/identifier
 
-  @TransformToPathJson((user: ChatwoUser) => ({ nakamaId: user.nakamaId }))
+  @TransformToPathJson((user: ChatwoUser) => (user ? { nakamaId: user.nakamaId } : undefined))
   @ManyToOne(() => ChatwoUser, (user) => user.items, { nullable: true })
   owner?: ChatwoUser | null;
 
