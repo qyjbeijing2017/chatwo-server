@@ -11,7 +11,7 @@ import {
 import { v4 } from 'uuid';
 import { ChatwoUser } from './user.entity';
 import { ChatwoContainer } from './container.entity';
-import { Patchable, ToPatchJson } from './patchable';
+import { IgnorePatchJson, Patchable, ToPatchJson } from './patchable';
 
 export enum ItemTypeV1 {
   item = 4096,
@@ -42,9 +42,11 @@ export class ChatwoItem extends Patchable {
   @Column({ unique: true })
   nakamaId: string = v4(); // Default to a UUID
 
+  @IgnorePatchJson()
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
+  @IgnorePatchJson()
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 

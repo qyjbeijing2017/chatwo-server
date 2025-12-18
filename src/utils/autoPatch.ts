@@ -13,6 +13,7 @@ export class AutoPatchManager {
         for (const item of result) {
             if (item instanceof Patchable) {
                 item.observer();
+                console.log('observe', item);
             }
         }
         return result;
@@ -22,6 +23,7 @@ export class AutoPatchManager {
         const result = await this.manager.findOne(...args);
         if (result instanceof Patchable) {
             result.observer();
+            console.log('observe', result);
         }
         return result;
     }
@@ -32,10 +34,12 @@ export class AutoPatchManager {
             for (const item of result) {
                 if (item instanceof Patchable) {
                     this.patchables.add(item);
+                    console.log('patchable', item);
                 }
             }
         } else if (result instanceof Patchable) {
             this.patchables.add(result);
+            console.log('patchable', result);
         }
         return result;
     }
@@ -57,12 +61,14 @@ export async function autoPatch<T>(dataSource: DataSource, callback: (manager: E
         } = {};
         for (const patchable of autoPatchManager.patchables) {
             const ops = patchable.patch();
+            console.log('patch ops', patchable, ops);
             if (ops.length > 0) {
                 data[patchable.constructor.name] = data[patchable.constructor.name] || [];
                 data[patchable.constructor.name].push({
                     id: patchable.id,
                     ops,
                 });
+                console.log('saving patchable', patchable, ops);
             }
         }
         const log = manager.create(ChatwoLog, {

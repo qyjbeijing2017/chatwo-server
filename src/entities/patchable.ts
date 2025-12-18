@@ -1,6 +1,6 @@
 import { generate, observe, Observer } from "fast-json-patch";
 import { defineMetadata, getMetadata } from "src/utils/meta-data";
-import { Entity, PrimaryGeneratedColumn } from "typeorm";
+import { PrimaryGeneratedColumn } from "typeorm";
 
 export function ToPatchJson(transformer: (val: any) => any) {
     return function (target: Patchable, propertyKey: string) {
@@ -12,6 +12,10 @@ export function ToPatchJson(transformer: (val: any) => any) {
             propertyKey,
         );
     };
+}
+
+export function IgnorePatchJson() {
+    return ToPatchJson(() => undefined);
 }
 
 export class Patchable {

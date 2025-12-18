@@ -6,7 +6,6 @@ import { ChatwoUser } from '../entities/user.entity';
 import { configManager } from 'src/configV2/config';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { DropItemInDto } from './dto/drop-in.dto';
-import { startTransaction } from 'src/utils/transaction';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { autoPatch } from 'src/utils/autoPatch';
 

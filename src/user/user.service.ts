@@ -194,7 +194,7 @@ export class UserService {
     await manager.save(log);
   }
 
-  async syncOneFromNakama(nakamaId: string): Promise<ChatwoUser> {
+  async syncOneFromNakama(nakamaId: string) {
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -223,7 +223,7 @@ export class UserService {
           key: item.key,
           createdAt: item.createdAt,
           updatedAt: item.updatedAt,
-        })) as ChatwoItem[],
+        })),
       }
     } catch (error) {
       await queryRunner.rollbackTransaction();
