@@ -187,7 +187,6 @@ export class ItemService {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
       }
       item.container = equipContainer;
-      item.owner = user;
       await manager.save(item);
 
       return {
