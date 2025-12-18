@@ -13,4 +13,8 @@ export class AddSSDto {
     @ApiProperty()
     @IsInt()
     reason: number;
+
+    @ApiPropertyOptional()
+    @IsString({ each: true })
+    tags?: string[];
 }

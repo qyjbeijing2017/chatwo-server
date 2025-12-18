@@ -202,7 +202,7 @@ export class GmService {
             await manager.save(user);
             return {
                 result: user.wallet,
-                tags: ['gm', 'addSS', dto.customId],
+                tags: ['gm', 'addSS', dto.customId, ...(dto.tags || [])],
                 message: `Added ${dto.amount} SS to user ${dto.customId}, reason: ${dto.reason}`,
             }
         });
