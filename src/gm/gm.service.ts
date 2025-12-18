@@ -165,6 +165,7 @@ export class GmService {
     async syncAllFromNakama(): Promise<void> {
         const users = await this.userRepository.find();
         for (const user of users) {
+            console.log(`Syncing user ${user.name} from Nakama`);
             const queryRunner = this.dataSource.createQueryRunner();
             await queryRunner.connect();
             await queryRunner.startTransaction();
@@ -181,6 +182,7 @@ export class GmService {
                 await queryRunner.release();
                 throw error;
             }
+            console.log(`Synced user ${user.name} from Nakama`);
         }
     }
 }
