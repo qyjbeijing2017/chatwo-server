@@ -1,12 +1,10 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   ManyToOne,
   DeleteDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 import { v4 } from 'uuid';
 import { ChatwoUser } from './user.entity';
@@ -27,13 +25,13 @@ export enum ItemTypeV1 {
 }
 
 export enum ItemType {
-  item = 0,
-  arm = 1,
-  head = 1 << 1,
-  eye = 1 << 2,
-  body = 1 << 3,
-  vfx = 1 << 4,
-  currency = 1 << 5,
+  item = 1,
+  arm = 1 << 1,
+  head = 1 << 2,
+  eye = 1 << 3,
+  body = 1 << 4,
+  vfx = 1 << 5,
+  currency = 1 << 6,
   skin = head | eye | body | vfx,
   dropable = item | arm,
 }
