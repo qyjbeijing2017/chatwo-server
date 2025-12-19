@@ -59,7 +59,7 @@ export class ItemService {
       if (!itemConfig) {
         throw new NotFoundException(`Item config with key ${key} not found`);
       }
-      if (itemConfig.type === ItemType.skin) {
+      if ((itemConfig.type & ItemType.skin) !== 0) {
         const existingSkins = await manager.findOne(ChatwoItem, {
           where: {
             key,
