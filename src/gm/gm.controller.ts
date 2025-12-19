@@ -4,6 +4,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { Server } from 'src/auth/server.decorator';
 import { LogDto } from 'src/statistic/dto/log.dto';
 import { AddSSDto } from './dto/addSS.dto';
+import { Account } from 'src/auth/Account.decorator';
+import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 
 @Controller('gm')
 export class GmController {
@@ -37,10 +39,10 @@ export class GmController {
 
     @ApiBearerAuth()
     @Post('addSS')
-    @Server()
     async addSSGM(
+        @Account() account: ApiAccount  ,
         @Body() dto: AddSSDto,
     ) {
-        return this.gmService.addSS(dto);
+        return this.gmService.addSS(account,dto);
     }
 }

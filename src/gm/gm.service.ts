@@ -190,20 +190,20 @@ export class GmService {
         }
     }
 
-    async addSS(dto: AddSSDto): Promise<Record<string, number>> {
+    async addSS(account: ApiAccount, dto: AddSSDto): Promise<Record<string, number>> {
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
-                where: { nakamaId: dto.customId },
+                where: { nakamaId: account.custom_id! },
             });
             if (!user) {
-                throw new NotFoundException(`User with nakamaId ${dto.customId} not found`);
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
             }
             user.wallet['ss'] = (user.wallet['ss'] || 0) + dto.amount;
             await manager.save(user);
             return {
                 result: user.wallet,
-                tags: ['gm', 'addSS', dto.customId, ...(dto.tags || [])],
-                message: `Added ${dto.amount} SS to user ${dto.customId}, reason: ${dto.reason}`,
+                tags: ['gm', 'addSS', account.custom_id!, ...(dto.tags || [])],
+                message: `Added ${dto.amount} SS to user ${account.custom_id!}, reason: ${dto.reason}`,
             }
         });
     }
