@@ -153,7 +153,6 @@ export class ItemService {
       }
 
       let equipContainer = await this.getContainer(manager, account, pointerIndex, true);
-      console.log('equipContainer', equipContainer);
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
@@ -170,7 +169,7 @@ export class ItemService {
         key: dto.key,
         meta: dto.meta,
       });
-      if (item.container?.items?.length) {
+      if (equipContainer?.items[0]) {
         throw new BadRequestException(`Item with nakamaId ${equipContainer.items[0].nakamaId} is already in a container`);
       }
       item.container = equipContainer;
