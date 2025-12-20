@@ -22,12 +22,13 @@ export class ItemService {
     private readonly dataSource: DataSource,
   ) { }
 
-  async getContainer(manager: EntityManager, account: ApiAccount, type: ContainerType = ContainerType.chest): Promise<ChatwoContainer> {
+  async getContainer(manager: EntityManager, account: ApiAccount, type: ContainerType = ContainerType.chest, withItems: boolean = false): Promise<ChatwoContainer> {
     let container = await manager.findOne(ChatwoContainer, {
       where: {
         owner: { nakamaId: account.custom_id },
         type,
       },
+      relations: withItems ? { items: true } : {},
     });
     if (!container) {
       const user = await this.userRepository.findOne({
@@ -151,22 +152,7 @@ export class ItemService {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
 
-      // let equipContainer = await manager.findOne(ChatwoContainer, {
-      //   where: {
-      //     owner: { nakamaId: account.custom_id },
-      //     type: pointerIndex,
-      //   },
-      // })
-
-      // if (!equipContainer) {
-      //   equipContainer = manager.create(ChatwoContainer, {
-      //     owner: user,
-      //     type: pointerIndex,
-      //   });
-      //   await manager.save(equipContainer);
-      // }
-
-      let equipContainer = await this.getContainer(manager, account, pointerIndex);
+      let equipContainer = await this.getContainer(manager, account, pointerIndex, true);
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
@@ -183,8 +169,8 @@ export class ItemService {
         key: dto.key,
         meta: dto.meta,
       });
-      if (item.container) {
-        throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
+      if (item.container?.items?.length) {
+        throw new BadRequestException(`Item with nakamaId ${equipContainer.items[0].nakamaId} is already in a container`);
       }
       item.container = equipContainer;
       await manager.save(item);
