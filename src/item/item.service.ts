@@ -153,6 +153,7 @@ export class ItemService {
       }
 
       let equipContainer = await this.getContainer(manager, account, pointerIndex, true);
+      console.log('equipContainer', equipContainer);
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
