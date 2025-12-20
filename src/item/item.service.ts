@@ -251,22 +251,6 @@ export class ItemService {
       if (!user) {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
-
-      // let chest = await manager.findOne(ChatwoContainer, {
-      //   where: {
-      //     owner: { nakamaId: account.custom_id },
-      //     type: ContainerType.chest,
-      //   },
-      // })
-
-      // if (!chest) {
-      //   chest = manager.create(ChatwoContainer, {
-      //     owner: user,
-      //     type: ContainerType.chest,
-      //   });
-      //   await manager.save(chest);
-      // }
-
       const chest = await this.getContainer(manager, account, ContainerType.chest);
 
       const item = await manager.findOne(ChatwoItem, {
@@ -287,9 +271,9 @@ export class ItemService {
       if (item.container) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
       }
-      if (itemConfig.type === ItemType.item) {
+      if (itemConfig.fromFile === 'items.csv') {
         item.owner = user;
-      } else if (itemConfig.type === ItemType.arm) {
+      } else {
         if (!item.owner) {
           throw new BadRequestException(`lock Item with nakamaId ${nakamaId} has no owner`);
         }
