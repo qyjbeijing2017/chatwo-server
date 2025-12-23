@@ -449,7 +449,7 @@ export class ItemService {
       if(item.owner && item.owner.nakamaId !== account.custom_id) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}`);
       }
-      item.meta = dto.meta;
+      item.meta = Object.assign(item.meta || {}, dto.meta);
       await manager.save(item);
       return {
         result: item,
