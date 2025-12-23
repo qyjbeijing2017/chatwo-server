@@ -37,6 +37,18 @@ export class StatisticService {
         }
     }
 
+    async dsl() {
+        this.logRepository.findOne({
+            select: {
+                id: true,
+            },
+            where: {
+                
+            }
+        });
+        return {};
+    }
+
     async flyIn(account: ApiAccount) {
 
     }
@@ -85,5 +97,14 @@ export class StatisticService {
         });
         await this.logRepository.save(log);
         return log;
+    }
+
+    async deleteStatistics(id: number) {
+        const log = await this.logRepository.findOneBy({ id });
+        if (!log) {
+            throw new NotFoundException(`Log with id ${id} not found`);
+        }
+        await this.logRepository.remove(log);
+        return { message: `Log with id ${id} deleted.` };
     }
 }

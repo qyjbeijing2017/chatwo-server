@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { StatisticService } from './statistic.service';
 import { Server } from 'src/auth/server.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -43,5 +43,12 @@ export class StatisticController {
     @Post('pvp')
     async pvp(@Account() account: ApiAccount, @Body() body: KilledDto) {
         return this.statisticService.pvp(account, body);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Delete(':id')
+    async deleteStatistics(@Param('id', ParseIntPipe) id: number) {
+        return this.statisticService.deleteStatistics(id);
     }
 }
