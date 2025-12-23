@@ -18,6 +18,7 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY package.json ./
 COPY --from=builder /app/node_modules ./node_modules
+COPY src/dsl src/dsl
 COPY .env ./
 
 CMD ["node", "dist/main.js"]
