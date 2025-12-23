@@ -207,4 +207,13 @@ export class GmService {
             }
         });
     }
+
+    async deleteStatistics(id: number) {
+        const log = await this.logRepository.findOneBy({ id });
+        if (!log) {
+            throw new NotFoundException(`Log with id ${id} not found`);
+        }
+        await this.logRepository.remove(log);
+        return { message: `Log with id ${id} deleted.` };
+    }
 }

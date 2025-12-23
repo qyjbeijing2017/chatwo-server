@@ -44,11 +44,4 @@ export class StatisticController {
     async pvp(@Account() account: ApiAccount, @Body() body: KilledDto) {
         return this.statisticService.pvp(account, body);
     }
-
-    @ApiBearerAuth()
-    @Server()
-    @Delete(':id')
-    async deleteStatistics(@Param('id', ParseIntPipe) id: number) {
-        return this.statisticService.deleteStatistics(id);
-    }
 }

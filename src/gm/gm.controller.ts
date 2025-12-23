@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { GmService } from './gm.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { Server } from 'src/auth/server.decorator';
@@ -40,9 +40,16 @@ export class GmController {
     @ApiBearerAuth()
     @Post('addSS')
     async addSSGM(
-        @Account() account: ApiAccount  ,
+        @Account() account: ApiAccount,
         @Body() dto: AddSSDto,
     ) {
-        return this.gmService.addSS(account,dto);
+        return this.gmService.addSS(account, dto);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Delete('statistics/:id')
+    async deleteStatistics(@Param('id', ParseIntPipe) id: number) {
+        return this.gmService.deleteStatistics(id);
     }
 }
