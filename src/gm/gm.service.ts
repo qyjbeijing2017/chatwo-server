@@ -7,20 +7,105 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
-import { ArrayContains, DataSource, EntityManager, MoreThanOrEqual, Repository } from 'typeorm';
+import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
+import { ChatwoAstContext, exec, WhereOperator } from 'src/dsl';
 
 @Injectable()
 export class GmService {
+    readonly dslContext: ChatwoAstContext;
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
         @InjectRepository(ChatwoUser)
         private readonly userRepository: Repository<ChatwoUser>,
+        @InjectRepository(ChatwoItem)
+        private readonly itemRepository: Repository<ChatwoItem>,
+        @InjectRepository(ChatwoContainer)
+        private readonly containerRepository: Repository<ChatwoContainer>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
-    ) { }
+    ) {
+        this.dslContext = {
+            async query(from, select, where, join, orderBy, limit, offset) {
+                switch (from) {
+                    case 'log':
+                        return logRepository.find({
+                            select: select,
+                            where: where,
+                            order: orderBy,
+                            skip: offset,
+                            take: limit,
+                            relations: join,
+                        });
+                    case 'user':
+                        return userRepository.find({
+                            select: select,
+                            where: where,
+                            order: orderBy,
+                            skip: offset,
+                            take: limit,
+                            relations: join,
+                        });
+                    case 'item':
+                        return itemRepository.find({
+                            select: select,
+                            where: where,
+                            order: orderBy,
+                            skip: offset,
+                            take: limit,
+                            relations: join,
+                        });
+                    case 'container':
+                        return containerRepository.find({
+                            select: select,
+                            where: where,
+                            order: orderBy,
+                            skip: offset,
+                            take: limit,
+                            relations: join,
+                        });
+                    default:
+                        throw new Error(`Unknown from type: ${from}`);
+                }
+            },
+            async queryWhere(operator, value) {
+                switch (operator) {
+                    case WhereOperator.EQUALS:
+                        return value;
+                    case WhereOperator.NOT_EQUALS:
+                        return Not(value);
+                    case WhereOperator.GREATER_THAN:
+                        return MoreThan(value);
+                    case WhereOperator.LESS_THAN:
+                        return LessThan(value);
+                    case WhereOperator.GREATER_THAN_OR_EQUAL:
+                        return MoreThanOrEqual(value);
+                    case WhereOperator.LESS_THAN_OR_EQUAL:
+                        return LessThanOrEqual(value);
+                    case WhereOperator.LIKE:
+                        return Like(value);
+                    case WhereOperator.ILIKE:
+                        return ILike(value);
+                    case WhereOperator.IN:
+                        return In(value);
+                    case WhereOperator.CONTAINS:
+                        return ArrayContains(value);
+                    case WhereOperator.CONTAINED_BY:
+                        return ArrayContainedBy(value);
+                    case WhereOperator.ISNULL:
+                        return IsNull();
+                    case WhereOperator.BETWEEN:
+                        return Between(value[0], value[1]);
+                    case WhereOperator.ANY:
+                        return Any(value);
+                    default:
+                        throw new Error(`Unknown operator: ${operator}`);
+                }
+            },
+        }
+    }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         const [result, total] = await this.logRepository.findAndCount({
@@ -215,5 +300,13 @@ export class GmService {
         }
         await this.logRepository.remove(log);
         return { message: `Log with id ${id} deleted.` };
+    }
+
+    async dslQuery(query: string): Promise<{
+        result: any;
+    }> {
+        return {
+            result: exec(query, this.dslContext),
+        }
     }
 }

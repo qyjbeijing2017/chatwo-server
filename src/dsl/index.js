@@ -2776,10 +2776,10 @@ var AbstractProduction = class {
   constructor(_definition) {
     this._definition = _definition;
   }
-  accept(visitor) {
-    visitor.visit(this);
+  accept(visitor2) {
+    visitor2.visit(this);
     forEach_default(this.definition, (prod) => {
-      prod.accept(visitor);
+      prod.accept(visitor2);
     });
   }
 };
@@ -2797,8 +2797,8 @@ var NonTerminal = class extends AbstractProduction {
     }
     return [];
   }
-  accept(visitor) {
-    visitor.visit(this);
+  accept(visitor2) {
+    visitor2.visit(this);
   }
 };
 var Rule = class extends AbstractProduction {
@@ -2870,8 +2870,8 @@ var Terminal = class {
     this.idx = 1;
     assign_default(this, pickBy_default(options, (v) => v !== void 0));
   }
-  accept(visitor) {
-    visitor.visit(this);
+  accept(visitor2) {
+    visitor2.visit(this);
   }
 };
 function serializeGrammar(topRules) {
@@ -6652,9 +6652,9 @@ function lookAheadSequenceFromAlternatives(altsDefs, k) {
   return finalResult;
 }
 function getLookaheadPathsForOr(occurrence, ruleGrammar, k, orProd) {
-  const visitor = new InsideDefinitionFinderVisitor(occurrence, PROD_TYPE.ALTERNATION, orProd);
-  ruleGrammar.accept(visitor);
-  return lookAheadSequenceFromAlternatives(visitor.result, k);
+  const visitor2 = new InsideDefinitionFinderVisitor(occurrence, PROD_TYPE.ALTERNATION, orProd);
+  ruleGrammar.accept(visitor2);
+  return lookAheadSequenceFromAlternatives(visitor2.result, k);
 }
 function getLookaheadPathsForOptionalProd(occurrence, ruleGrammar, prodType, k) {
   const insideDefVisitor = new InsideDefinitionFinderVisitor(occurrence, prodType);
@@ -9103,7 +9103,7 @@ var Parser = class _Parser {
   /**
    *  @deprecated use the **instance** method with the same name instead
    */
-  static performSelfAnalysis(parserInstance) {
+  static performSelfAnalysis(parserInstance2) {
     throw Error("The **static** `performSelfAnalysis` method has been deprecated.	\nUse the **instance** method with the same name instead.");
   }
   performSelfAnalysis() {
@@ -9208,51 +9208,95 @@ applyMixins(Parser, [
   GastRecorder,
   PerformanceTracer
 ]);
+var CstParser = class extends Parser {
+  constructor(tokenVocabulary, config = DEFAULT_PARSER_CONFIG) {
+    const configClone = clone_default(config);
+    configClone.outputCst = true;
+    super(tokenVocabulary, configClone);
+  }
+};
 
 // src/lexer.ts
 var Identifier = createToken({ name: "Identifier", pattern: /[a-zA-Z]\w*/ });
 var Select = createToken({
   name: "Select",
-  pattern: /SELECT/,
-  longer_alt: Identifier
+  pattern: /SELECT/
 });
 var From = createToken({
   name: "From",
-  pattern: /FROM/,
-  longer_alt: Identifier
+  pattern: /FROM/
 });
 var Where = createToken({
   name: "Where",
-  pattern: /WHERE/,
-  longer_alt: Identifier
+  pattern: /WHERE/
 });
-var Skip = createToken({
-  name: "Skip",
-  pattern: /SKIP/,
-  longer_alt: Identifier
+var OFFSET = createToken({
+  name: "OFFSET",
+  pattern: /OFFSET/
 });
 var Join = createToken({
   name: "Join",
-  pattern: /JOIN/,
-  longer_alt: Identifier
+  pattern: /JOIN/
 });
 var Order = createToken({
   name: "Order",
-  pattern: /ORDER/,
-  longer_alt: Identifier
+  pattern: /ORDER\s+BY/
 });
 var ASC = createToken({
   name: "ASC",
-  pattern: /ASC/,
-  longer_alt: Identifier
+  pattern: /ASC/
 });
 var DESC = createToken({
   name: "DESC",
-  pattern: /DESC/,
-  longer_alt: Identifier
+  pattern: /DESC/
 });
+var LIKE = createToken({
+  name: "LIKE",
+  pattern: /LIKE/
+});
+var ILIKE = createToken({
+  name: "ILIKE",
+  pattern: /ILIKE/
+});
+var LIMIT = createToken({
+  name: "LIMIT",
+  pattern: /LIMIT/
+});
+var AND = createToken({
+  name: "AND",
+  pattern: /AND/
+});
+var OR = createToken({
+  name: "OR",
+  pattern: /OR/
+});
+var BETERRN = createToken({
+  name: "BETERRN",
+  pattern: /BETERRN/
+});
+var IN2 = createToken({
+  name: "IN",
+  pattern: /IN/
+});
+var CONTAINS = createToken({
+  name: "CONTAINS",
+  pattern: /@>/
+});
+var CONTAINED_BY = createToken({
+  name: "CONTAINED_BY",
+  pattern: /<@/
+});
+var ISNULL = createToken({
+  name: "ISNULL",
+  pattern: /ISNULL/
+});
+var ANY = createToken({
+  name: "ANY",
+  pattern: /ANY/
+});
+var BooleanLiteral = createToken({ name: "BooleanLiteral", pattern: /true|false/ });
 var NumberLiteral = createToken({ name: "NumberLiteral", pattern: /\d+(\.\d+)?/ });
-var StringLiteral = createToken({ name: "StringLiteral", pattern: /"([^"\\]*(\\.[^"\\]*)*)"/ });
+var StringLiteral = createToken({ name: "StringLiteral", pattern: /"(?:[^"\\]|\\.)*"/ });
 var GreaterThan = createToken({ name: "GreaterThan", pattern: />/ });
 var LessThan = createToken({ name: "LessThan", pattern: /</ });
 var Equals = createToken({ name: "Equals", pattern: /=/ });
@@ -9267,18 +9311,19 @@ var Subtract = createToken({ name: "Subtract", pattern: /-/ });
 var Multiply = createToken({ name: "Multiply", pattern: /\*/ });
 var Divide = createToken({ name: "Divide", pattern: /\// });
 var Modulus = createToken({ name: "Modulus", pattern: /%/ });
-var Power = createToken({ name: "Power", pattern: /\^/ });
+var Power = createToken({ name: "Power", pattern: /\*\*/ });
 var BitwiseAnd = createToken({ name: "BitwiseAnd", pattern: /&/ });
 var BitwiseOr = createToken({ name: "BitwiseOr", pattern: /\|/ });
+var BitwiseXor = createToken({ name: "BitwiseXor", pattern: /\^/ });
 var Not = createToken({ name: "Not", pattern: /!/ });
-var GreaterThanEquals = createToken({ name: "GreaterThanEquals", pattern: />=/, longer_alt: GreaterThan });
-var LessThanEquals = createToken({ name: "LessThanEquals", pattern: /<=/, longer_alt: LessThan });
-var EqualsEquals = createToken({ name: "EqualsEquals", pattern: /==/, longer_alt: Equals });
-var NotEquals = createToken({ name: "NotEquals", pattern: /!=/, longer_alt: Not });
-var Increment = createToken({ name: "Increment", pattern: /\+\+/, longer_alt: Add });
-var Decrement = createToken({ name: "Decrement", pattern: /--/, longer_alt: Subtract });
-var LeftShift = createToken({ name: "LeftShift", pattern: /<</, longer_alt: LessThan });
-var RightShift = createToken({ name: "RightShift", pattern: />>/, longer_alt: GreaterThan });
+var GreaterThanEquals = createToken({ name: "GreaterThanEquals", pattern: />=/ });
+var LessThanEquals = createToken({ name: "LessThanEquals", pattern: /<=/ });
+var EqualsEquals = createToken({ name: "EqualsEquals", pattern: /==/ });
+var NotEquals = createToken({ name: "NotEquals", pattern: /!=/ });
+var Increment = createToken({ name: "Increment", pattern: /\+\+/ });
+var Decrement = createToken({ name: "Decrement", pattern: /--/ });
+var LeftShift = createToken({ name: "LeftShift", pattern: /<</ });
+var RightShift = createToken({ name: "RightShift", pattern: />>/ });
 var And = createToken({ name: "And", pattern: /&&/ });
 var Or = createToken({ name: "Or", pattern: /\|\|/ });
 var WhiteSpace = createToken({
@@ -9292,11 +9337,23 @@ var chatwoDSLTokens = [
   Select,
   From,
   Where,
-  Skip,
+  OFFSET,
   Join,
   Order,
   ASC,
   DESC,
+  LIKE,
+  ILIKE,
+  BETERRN,
+  LIMIT,
+  AND,
+  OR,
+  IN2,
+  ANY,
+  CONTAINS,
+  CONTAINED_BY,
+  ISNULL,
+  BooleanLiteral,
   // The Identifier must appear after the keywords because all keywords are valid identifiers.
   Identifier,
   NumberLiteral,
@@ -9307,11 +9364,16 @@ var chatwoDSLTokens = [
   NotEquals,
   And,
   Or,
+  Not,
+  Increment,
+  Decrement,
   LeftShift,
   RightShift,
+  Power,
   Equals,
   BitwiseAnd,
   BitwiseOr,
+  BitwiseXor,
   GreaterThan,
   LessThan,
   LeftBracket,
@@ -9324,12 +9386,887 @@ var chatwoDSLTokens = [
   Subtract,
   Multiply,
   Divide,
-  Modulus,
-  Power
+  Modulus
 ];
 var chatwoDSLLexer = new Lexer(chatwoDSLTokens);
+
+// src/parser.ts
+var ChatwoDSLParser = class extends CstParser {
+  constructor() {
+    super(chatwoDSLTokens);
+    this.performSelfAnalysis();
+  }
+  positionExpression = this.RULE("positionExpression", () => {
+    this.AT_LEAST_ONE_SEP({
+      SEP: Dot,
+      DEF: () => this.CONSUME(Identifier, { LABEL: "position" })
+    });
+  });
+  orderByParser = this.RULE("orderByParser", () => {
+    this.SUBRULE(this.positionExpression);
+    this.OPTION(
+      () => this.OR([
+        { ALT: () => this.CONSUME(ASC, { LABEL: "order" }) },
+        { ALT: () => this.CONSUME(DESC, { LABEL: "order" }) }
+      ])
+    );
+  });
+  orderByClause = this.RULE("orderByClause", () => {
+    this.CONSUME(Order);
+    this.AT_LEAST_ONE_SEP({
+      SEP: Comma,
+      DEF: () => {
+        this.SUBRULE(this.orderByParser);
+      }
+    });
+  });
+  joinClause = this.RULE("joinClause", () => {
+    this.CONSUME(Join);
+    this.AT_LEAST_ONE_SEP({
+      SEP: Comma,
+      DEF: () => this.SUBRULE(this.positionExpression)
+    });
+  });
+  whereExpression = this.RULE("whereExpression", () => {
+    this.SUBRULE(this.positionExpression);
+    this.OR([
+      { ALT: () => this.CONSUME(Equals, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(NotEquals, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(GreaterThan, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(LessThan, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(GreaterThanEquals, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(LessThanEquals, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(LIKE, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(ILIKE, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(IN2, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(CONTAINS, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(CONTAINED_BY, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(BETERRN, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(ISNULL, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) }
+    ]);
+    this.OPTION(
+      () => this.SUBRULE(this.expression)
+    );
+  });
+  whereAndExpression = this.RULE("whereAndExpression", () => {
+    this.AT_LEAST_ONE_SEP({
+      SEP: AND,
+      DEF: () => this.SUBRULE(this.whereExpression)
+    });
+  });
+  whereClause = this.RULE("whereClause", () => {
+    this.CONSUME(Where);
+    this.AT_LEAST_ONE_SEP({
+      SEP: OR,
+      DEF: () => this.SUBRULE(this.whereAndExpression)
+    });
+  });
+  fromClause = this.RULE("fromClause", () => {
+    this.CONSUME(From);
+    this.CONSUME(Identifier, { LABEL: "tableName" });
+  });
+  selectClause = this.RULE("selectClause", () => {
+    this.CONSUME(Select);
+    this.OR([
+      {
+        ALT: () => {
+          this.CONSUME(Multiply);
+        }
+      },
+      {
+        ALT: () => {
+          this.AT_LEAST_ONE_SEP({
+            SEP: Comma,
+            DEF: () => this.SUBRULE(this.positionExpression)
+          });
+        }
+      }
+    ]);
+  });
+  offsetClause = this.RULE("offsetClause", () => {
+    this.CONSUME(OFFSET);
+    this.SUBRULE(this.expression);
+  });
+  limitClause = this.RULE("limitClause", () => {
+    this.CONSUME(LIMIT);
+    this.SUBRULE(this.expression);
+  });
+  subquery = this.RULE("subquery", () => {
+    this.CONSUME(LeftBracket);
+    this.SUBRULE(this.selectClause);
+    this.SUBRULE(this.fromClause);
+    this.OPTION(() => {
+      this.SUBRULE(this.whereClause);
+    });
+    this.OPTION1(() => {
+      this.SUBRULE(this.orderByClause);
+    });
+    this.OPTION2(() => {
+      this.SUBRULE(this.joinClause);
+    });
+    this.OPTION3(() => {
+      this.SUBRULE(this.limitClause);
+    });
+    this.OPTION4(() => {
+      this.SUBRULE(this.offsetClause);
+    });
+    this.CONSUME(RightBracket);
+  });
+  primaryExpression = this.RULE("primaryExpression", () => {
+    this.OR([
+      { ALT: () => this.CONSUME(NumberLiteral, { LABEL: "number" }) },
+      { ALT: () => this.CONSUME(StringLiteral, { LABEL: "string" }) },
+      { ALT: () => this.CONSUME(BooleanLiteral, { LABEL: "boolean" }) },
+      { ALT: () => this.CONSUME(Identifier, { LABEL: "identifier" }) },
+      {
+        GATE: () => this.LA(2).tokenType === Select,
+        ALT: () => this.SUBRULE(this.subquery, { LABEL: "subquery" })
+      },
+      {
+        ALT: () => {
+          this.CONSUME(LeftBracket);
+          this.SUBRULE(this.expression, { LABEL: "expression" });
+          this.CONSUME(RightBracket);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(LeftSquareBracket);
+          this.AT_LEAST_ONE_SEP({
+            SEP: Comma,
+            DEF: () => this.SUBRULE1(this.expression, { LABEL: "element" })
+          });
+          this.CONSUME(RightSquareBracket);
+        }
+      }
+    ]);
+  });
+  postfixParser = this.RULE("postfixParser", () => {
+    this.OR([
+      {
+        // 函数调用: ( arg1, arg2 )
+        ALT: () => {
+          this.CONSUME(LeftBracket, { LABEL: "operator" });
+          this.MANY_SEP({
+            SEP: Comma,
+            DEF: () => this.SUBRULE(this.expression, { LABEL: "argument" })
+            // 参数本身可以是任意表达式
+          });
+          this.CONSUME(RightBracket);
+        }
+      },
+      {
+        // 属性访问: .member
+        ALT: () => {
+          this.CONSUME(Dot, { LABEL: "operator" });
+          this.CONSUME(Identifier, { LABEL: "member" });
+        }
+      },
+      {
+        // 数组索引: [index]
+        ALT: () => {
+          this.CONSUME(LeftSquareBracket, { LABEL: "operator" });
+          this.SUBRULE1(this.expression, { LABEL: "index" });
+          this.CONSUME(RightSquareBracket);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Increment, { LABEL: "operator" });
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Decrement, { LABEL: "operator" });
+        }
+      }
+    ]);
+  });
+  postfixExpression = this.RULE("postfixExpression", () => {
+    this.SUBRULE(this.primaryExpression);
+    this.MANY(() => {
+      this.SUBRULE(this.postfixParser);
+    });
+  });
+  unaryExpression = this.RULE("unaryExpression", () => {
+    this.OR([
+      {
+        ALT: () => {
+          this.CONSUME(Add, { LABEL: "operator" });
+          this.SUBRULE(this.unaryExpression);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Subtract, { LABEL: "operator" });
+          this.SUBRULE1(this.unaryExpression);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Increment, { LABEL: "operator" });
+          this.SUBRULE2(this.unaryExpression);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Decrement, { LABEL: "operator" });
+          this.SUBRULE3(this.unaryExpression);
+        }
+      },
+      {
+        ALT: () => {
+          this.CONSUME(Not, { LABEL: "operator" });
+          this.SUBRULE4(this.unaryExpression);
+        }
+      },
+      { ALT: () => this.SUBRULE(this.postfixExpression) }
+    ]);
+  });
+  powerExpression = this.RULE("powerExpression", () => {
+    this.SUBRULE(this.unaryExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.CONSUME(Power, { LABEL: "operator" });
+      this.SUBRULE1(this.unaryExpression, { LABEL: "right" });
+    });
+  });
+  multiplicativeExpression = this.RULE("multiplicativeExpression", () => {
+    this.SUBRULE(this.powerExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME1(Multiply, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME1(Divide, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME1(Modulus, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.powerExpression, { LABEL: "right" });
+    });
+  });
+  additiveExpression = this.RULE("additiveExpression", () => {
+    this.SUBRULE(this.multiplicativeExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME1(Add, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME1(Subtract, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.multiplicativeExpression, { LABEL: "right" });
+    });
+  });
+  relationalExpression = this.RULE("relationalExpression", () => {
+    this.SUBRULE(this.additiveExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME(GreaterThan, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(LessThan, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(GreaterThanEquals, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(LessThanEquals, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(EqualsEquals, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(NotEquals, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.additiveExpression, { LABEL: "right" });
+    });
+  });
+  shiftExpression = this.RULE("shiftExpression", () => {
+    this.SUBRULE(this.relationalExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME(LeftShift, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(RightShift, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.relationalExpression, { LABEL: "right" });
+    });
+  });
+  equalExpression = this.RULE("equalExpression", () => {
+    this.SUBRULE(this.shiftExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME(EqualsEquals, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(NotEquals, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.shiftExpression, { LABEL: "right" });
+    });
+  });
+  bitwiseExpression = this.RULE("bitwiseExpression", () => {
+    this.SUBRULE(this.equalExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.OR([
+        { ALT: () => this.CONSUME(BitwiseAnd, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(BitwiseOr, { LABEL: "operator" }) },
+        { ALT: () => this.CONSUME(BitwiseXor, { LABEL: "operator" }) }
+      ]), this.SUBRULE1(this.equalExpression, { LABEL: "right" });
+    });
+  });
+  andExpression = this.RULE("andExpression", () => {
+    this.SUBRULE(this.bitwiseExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.CONSUME(And, { LABEL: "operator" });
+      this.SUBRULE1(this.bitwiseExpression, { LABEL: "right" });
+    });
+  });
+  orExpression = this.RULE("orExpression", () => {
+    this.SUBRULE(this.andExpression, { LABEL: "left" });
+    this.MANY(() => {
+      this.CONSUME(Or, { LABEL: "operator" });
+      this.SUBRULE1(this.andExpression, { LABEL: "right" });
+    });
+  });
+  expression = this.RULE("expression", () => {
+    this.SUBRULE(this.orExpression);
+  });
+};
+
+// src/ast/node.ts
+var ChatwoAstNode = class {
+  execute(context) {
+    throw new Error("Method not implemented.");
+  }
+};
+
+// src/ast/binary.ts
+var BinaryOperator = /* @__PURE__ */ ((BinaryOperator2) => {
+  BinaryOperator2["Add"] = "+";
+  BinaryOperator2["Subtract"] = "-";
+  BinaryOperator2["Multiply"] = "*";
+  BinaryOperator2["Divide"] = "/";
+  BinaryOperator2["Modulus"] = "%";
+  BinaryOperator2["Power"] = "**";
+  BinaryOperator2["BitwiseAnd"] = "&";
+  BinaryOperator2["BitwiseOr"] = "|";
+  BinaryOperator2["BitwiseXor"] = "^";
+  BinaryOperator2["Or"] = "||";
+  BinaryOperator2["And"] = "&&";
+  BinaryOperator2["GreaterThan"] = ">";
+  BinaryOperator2["LessThan"] = "<";
+  BinaryOperator2["GreaterThanEquals"] = ">=";
+  BinaryOperator2["LessThanEquals"] = "<=";
+  BinaryOperator2["EqualsEquals"] = "==";
+  BinaryOperator2["NotEquals"] = "!=";
+  BinaryOperator2["LeftShift"] = "<<";
+  BinaryOperator2["RightShift"] = ">>";
+  return BinaryOperator2;
+})(BinaryOperator || {});
+var ChatwoAstBinaryOperation = class extends ChatwoAstNode {
+  constructor(left, operator, right) {
+    super();
+    this.left = left;
+    this.operator = operator;
+    this.right = right;
+  }
+  async execute(context) {
+    const left = this.left instanceof ChatwoAstNode ? await this.left.execute(context) : this.left;
+    const right = this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right;
+    switch (this.operator) {
+      case "+" /* Add */:
+        return left + right;
+      case "-" /* Subtract */:
+        return left - right;
+      case "*" /* Multiply */:
+        return left * right;
+      case "/" /* Divide */:
+        return left / right;
+      case "%" /* Modulus */:
+        return left % right;
+      case "**" /* Power */:
+        return left ** right;
+      case "&" /* BitwiseAnd */:
+        return left & right;
+      case "|" /* BitwiseOr */:
+        return left | right;
+      case "||" /* Or */:
+        return left || right;
+      case "&&" /* And */:
+        return left && right;
+      case ">" /* GreaterThan */:
+        return left > right;
+      case "<" /* LessThan */:
+        return left < right;
+      case ">=" /* GreaterThanEquals */:
+        return left >= right;
+      case "<=" /* LessThanEquals */:
+        return left <= right;
+      case "==" /* EqualsEquals */:
+        return left == right;
+      case "!=" /* NotEquals */:
+        return left != right;
+      case "<<" /* LeftShift */:
+        return left << right;
+      case ">>" /* RightShift */:
+        return left >> right;
+      case "^" /* BitwiseXor */:
+        return left ^ right;
+      default:
+        throw new Error(`Unknown operator: ${this.operator}`);
+    }
+  }
+};
+
+// src/ast/unary.ts
+var UnaryOperator = /* @__PURE__ */ ((UnaryOperator3) => {
+  UnaryOperator3["Positive"] = "+";
+  UnaryOperator3["Negate"] = "-";
+  UnaryOperator3["Not"] = "!";
+  UnaryOperator3["Increment"] = "++";
+  UnaryOperator3["Decrement"] = "--";
+  return UnaryOperator3;
+})(UnaryOperator || {});
+var ChatwoAstUnaryOperation = class extends ChatwoAstNode {
+  constructor(operand, operator) {
+    super();
+    this.operand = operand;
+    this.operator = operator;
+  }
+  async execute(context) {
+    const value = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+    switch (this.operator) {
+      case "+" /* Positive */:
+        return +value;
+      case "-" /* Negate */:
+        return -value;
+      case "!" /* Not */:
+        return !value;
+      case "++" /* Increment */:
+        return value + 1;
+      case "--" /* Decrement */:
+        return value - 1;
+      default:
+        throw new Error(`Unsupported unary operator: ${this.operator}`);
+    }
+  }
+};
+
+// src/ast/postfix.ts
+var PostfixOperator = /* @__PURE__ */ ((PostfixOperator3) => {
+  PostfixOperator3["call"] = "(";
+  PostfixOperator3["index"] = "[";
+  PostfixOperator3["member"] = ".";
+  PostfixOperator3["increment"] = "++";
+  PostfixOperator3["decrement"] = "--";
+  return PostfixOperator3;
+})(PostfixOperator || {});
+var ChatwoAstPostfixOperation = class extends ChatwoAstNode {
+  constructor(operand, operator, index, args, member) {
+    super();
+    this.operand = operand;
+    this.operator = operator;
+    this.index = index;
+    this.args = args;
+    this.member = member;
+    if (this.operator === "." /* member */ && !this.member) {
+      throw new Error("Member name must be provided for member access operator.");
+    }
+    if (this.operator === "[" /* index */ && this.index === void 0) {
+      throw new Error("Index must be provided for index operator.");
+    }
+  }
+  async execute(context) {
+    switch (this.operator) {
+      case "(" /* call */:
+        const func = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+        const evaluatedArgs = await Promise.all(this.args?.map((arg) => arg instanceof ChatwoAstNode ? arg.execute(context) : arg) || []);
+        return func(...evaluatedArgs);
+      case "[" /* index */:
+        const obj = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+        const idx = this.index instanceof ChatwoAstNode ? await this.index.execute(context) : this.index;
+        return obj[idx];
+      case "." /* member */:
+        const object = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+        return object[this.member];
+      case "++" /* increment */:
+        const incValue = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+        return incValue + 1;
+      case "--" /* decrement */:
+        const decValue = this.operand instanceof ChatwoAstNode ? await this.operand.execute(context) : this.operand;
+        return decValue - 1;
+      default:
+        throw new Error(`Unsupported postfix operator: ${this.operator}`);
+    }
+  }
+};
+
+// src/ast/identifier.ts
+var ChatwoAstIdentifier = class extends ChatwoAstNode {
+  constructor(name) {
+    super();
+    this.name = name;
+  }
+  async execute(context) {
+    return context[this.name];
+  }
+};
+
+// src/ast/query.ts
+var ChatwoAstQuery = class extends ChatwoAstNode {
+  constructor(from, select, where, join, orderBy, limit, offset) {
+    super();
+    this.from = from;
+    this.select = select;
+    this.where = where;
+    this.join = join;
+    this.orderBy = orderBy;
+    this.limit = limit;
+    this.offset = offset;
+  }
+  async execute(context) {
+    const whereResults = [];
+    for (const where of this.where || []) {
+      whereResults.push(await where.execute(context));
+    }
+    const limit = this.limit instanceof ChatwoAstNode ? await this.limit.execute(context) : this.limit;
+    if (limit !== void 0 && (typeof limit !== "number" || limit < 0)) {
+      throw new Error(`Limit must be a non-negative number, got: ${limit}`);
+    }
+    const offset = this.offset instanceof ChatwoAstNode ? await this.offset.execute(context) : this.offset;
+    if (offset !== void 0 && (typeof offset !== "number" || offset < 0)) {
+      throw new Error(`Offset must be a non-negative number, got: ${offset}`);
+    }
+    return context.query(
+      this.from,
+      this.select ? await this.select.execute() : void 0,
+      this.where ? whereResults : void 0,
+      this.join ? await this.join.execute() : void 0,
+      this.orderBy ? await this.orderBy.execute() : void 0,
+      limit,
+      offset
+    );
+  }
+};
+
+// src/ast/position.ts
+var ChatwoAstPosition = class extends ChatwoAstNode {
+  constructor(positions) {
+    super();
+    this.positions = positions;
+  }
+  async execute() {
+    throw new Error("Position nodes cannot be executed directly.");
+  }
+  setState(context, value) {
+    let currentNode = context;
+    const positions = this.positions.concat();
+    while (positions.length > 1) {
+      const pos = positions.shift();
+      if (currentNode[pos] === void 0) {
+        currentNode[pos] = {};
+      }
+      currentNode = currentNode[pos];
+    }
+    currentNode[positions[0]] = value;
+    return context;
+  }
+};
+
+// src/ast/state.ts
+var ChatwoAstState = class extends ChatwoAstNode {
+  constructor(state) {
+    super();
+    this.state = state;
+    for (const item of this.state) {
+      item.position.setState(this.root, item.value);
+    }
+  }
+  root = {};
+  async execute() {
+    return this.root;
+  }
+};
+
+// src/ast/where.ts
+var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
+  WhereOperator3["EQUALS"] = "=";
+  WhereOperator3["NOT_EQUALS"] = "!=";
+  WhereOperator3["GREATER_THAN"] = ">";
+  WhereOperator3["LESS_THAN"] = "<";
+  WhereOperator3["GREATER_THAN_OR_EQUAL"] = ">=";
+  WhereOperator3["LESS_THAN_OR_EQUAL"] = "<=";
+  WhereOperator3["LIKE"] = "LIKE";
+  WhereOperator3["ILIKE"] = "ILIKE";
+  WhereOperator3["IN"] = "IN";
+  WhereOperator3["CONTAINS"] = "@>";
+  WhereOperator3["CONTAINED_BY"] = "<@";
+  WhereOperator3["ISNULL"] = "ISNULL";
+  WhereOperator3["BETWEEN"] = "BETERRN";
+  WhereOperator3["ANY"] = "ANY";
+  return WhereOperator3;
+})(WhereOperator || {});
+var ChatwoAstWhereState = class extends ChatwoAstNode {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
+  async execute(context) {
+    const rootContext = {};
+    for (const item of this.state) {
+      const value = item.value instanceof ChatwoAstNode ? await item.value.execute(context) : item.value;
+      item.position.setState(rootContext, context.queryWhere(item.operator, value));
+    }
+    return rootContext;
+  }
+};
+
+// src/visiter.ts
+var parserInstance = new ChatwoDSLParser();
+var BaseSQLVisitorWithDefaults = parserInstance.getBaseCstVisitorConstructorWithDefaults();
+var ChatwoDSLVisitor = class extends BaseSQLVisitorWithDefaults {
+  createBinary(ctx) {
+    const left = this.visit(ctx.left[0]);
+    if (ctx.operator === void 0 || ctx.right === void 0 || ctx.operator.length === 0) {
+      return left;
+    }
+    const right = ctx.right.length > 1 ? this.createBinary({
+      left: [ctx.right[0]],
+      operator: ctx.operator.slice(1),
+      right: ctx.right.slice(1)
+    }) : this.visit(ctx.right[0]);
+    if (typeof left !== "object" && typeof right !== "object") {
+      switch (ctx.operator[0].image) {
+        case "+" /* Add */:
+          return left + right;
+        case "-" /* Subtract */:
+          return left - right;
+        case "*" /* Multiply */:
+          return left * right;
+        case "/" /* Divide */:
+          return left / right;
+        case "%" /* Modulus */:
+          return left % right;
+        case "**" /* Power */:
+          return Math.pow(Number(left), Number(right));
+        case "&" /* BitwiseAnd */:
+          return Number(left) & Number(right);
+        case "|" /* BitwiseOr */:
+          return Number(left) | Number(right);
+        case "||" /* Or */:
+          return Boolean(left) || Boolean(right);
+        case "&&" /* And */:
+          return Boolean(left) && Boolean(right);
+        case ">" /* GreaterThan */:
+          return left > right;
+        case "<" /* LessThan */:
+          return left < right;
+        case ">=" /* GreaterThanEquals */:
+          return left >= right;
+        case "<=" /* LessThanEquals */:
+          return left <= right;
+        case "==" /* EqualsEquals */:
+          return left == right;
+        case "!=" /* NotEquals */:
+          return left != right;
+        case "<<" /* LeftShift */:
+          return Number(left) << Number(right);
+        case ">>" /* RightShift */:
+          return Number(left) >> Number(right);
+        default:
+          throw new Error(`Unsupported binary operator: ${ctx.operator[0].image}`);
+      }
+    }
+    return new ChatwoAstBinaryOperation(
+      left,
+      ctx.operator[0].image,
+      right
+    );
+  }
+  positionExpression(ctx) {
+    return new ChatwoAstPosition(
+      ctx.position.map((token) => token.image)
+    );
+  }
+  selectClause(ctx) {
+    return ctx.positionExpression ? new ChatwoAstState(
+      ctx.positionExpression.map((item) => ({
+        position: this.visit(item),
+        value: true
+      }))
+    ) : void 0;
+  }
+  fromClause(ctx) {
+    return ctx.tableName[0].image;
+  }
+  whereExpression(ctx) {
+    return {
+      position: this.visit(ctx.positionExpression[0]),
+      operator: ctx.operator[0].image,
+      value: ctx.expression ? this.visit(ctx.expression[0]) : void 0
+    };
+  }
+  whereAndExpression(ctx) {
+    return new ChatwoAstWhereState(ctx.whereExpression.map((item) => this.visit(item)));
+  }
+  whereClause(ctx) {
+    return ctx.whereAndExpression.map((item) => this.visit(item));
+  }
+  joinClause(ctx) {
+    return new ChatwoAstState(
+      ctx.positionExpression.map((item) => ({
+        position: this.visit(item),
+        value: true
+      }))
+    );
+  }
+  orderByParser(ctx) {
+    return {
+      position: this.visit(ctx.positionExpression[0]),
+      value: ctx.order ? ctx.order[0].image.toUpperCase() : "ASC"
+    };
+  }
+  orderByClause(ctx) {
+    return new ChatwoAstState(ctx.orderByParser.map((item) => this.visit(item)));
+  }
+  offsetClause(ctx) {
+    return this.visit(ctx.expression[0]);
+  }
+  limitClause(ctx) {
+    return this.visit(ctx.expression[0]);
+  }
+  subquery(ctx) {
+    return new ChatwoAstQuery(
+      this.visit(ctx.fromClause[0]),
+      this.visit(ctx.selectClause[0]),
+      ctx.whereClause ? this.visit(ctx.whereClause[0]) : void 0,
+      ctx.joinClause ? this.visit(ctx.joinClause[0]) : void 0,
+      ctx.orderByClause ? this.visit(ctx.orderByClause[0]) : void 0,
+      ctx.limitClause ? this.visit(ctx.limitClause[0]) : void 0,
+      ctx.offsetClause ? this.visit(ctx.offsetClause[0]) : void 0
+    );
+  }
+  primaryExpression(ctx) {
+    if (ctx.number) {
+      return Number(ctx.number[0].image);
+    }
+    if (ctx.string) {
+      return ctx.string[0].image.slice(1, -1);
+    }
+    if (ctx.boolean) {
+      return ctx.boolean[0].image === "true";
+    }
+    if (ctx.identifier) {
+      return new ChatwoAstIdentifier(ctx.identifier[0].image);
+    }
+    if (ctx.subquery) {
+      return this.visit(ctx.subquery[0]);
+    }
+    if (ctx.expression) {
+      return this.visit(ctx.expression[0]);
+    }
+    throw new Error("Invalid primary expression");
+  }
+  postfixParser(ctx) {
+    return {
+      operator: ctx.operator[0].image,
+      index: ctx.index ? this.visit(ctx.index[0]) : void 0,
+      argument: ctx.argument ? ctx.argument.map((arg) => this.visit(arg)) : void 0,
+      member: ctx.member ? ctx.member[0].image : void 0
+    };
+  }
+  postfixExpression(ctx) {
+    let operand = this.visit(ctx.primaryExpression[0]);
+    let postfixparser;
+    while (ctx.postfixParser && ctx.postfixParser.length > 0) {
+      postfixparser = this.visit(ctx.postfixParser.shift());
+      operand = new ChatwoAstPostfixOperation(
+        operand,
+        postfixparser.operator,
+        postfixparser.index,
+        postfixparser.argument,
+        postfixparser.member
+      );
+    }
+    return operand;
+  }
+  unaryExpression(ctx) {
+    if (ctx.postfixExpression) {
+      return this.visit(ctx.postfixExpression[0]);
+    }
+    return new ChatwoAstUnaryOperation(
+      this.visit(ctx.unaryExpression[0]),
+      ctx.operator[0].image
+    );
+  }
+  powerExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  multiplicativeExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  additiveExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  relationalExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  shiftExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  equalExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  bitwiseExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  andExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  orExpression(ctx) {
+    return this.createBinary(ctx);
+  }
+  expression(ctx) {
+    return this.visit(ctx.orExpression[0]);
+  }
+};
+
+// src/ast/array.ts
+var ChatwoAstArray = class extends ChatwoAstNode {
+  constructor(elements) {
+    super();
+    this.elements = elements;
+  }
+  async execute(context) {
+    return Promise.all(this.elements.map(
+      (element) => element instanceof ChatwoAstNode ? element.execute(context) : element
+    ));
+  }
+};
+
+// src/index.ts
+var parser = new ChatwoDSLParser();
+var visitor = new ChatwoDSLVisitor();
+function parserToCST(expression) {
+  const result = chatwoDSLLexer.tokenize(expression);
+  parser.input = result.tokens;
+  const cst = parser.expression();
+  if (parser.errors.length > 0) {
+    for (const err of parser.errors) {
+      console.error(err.message);
+    }
+    throw new Error("Parsing errors detected!\n");
+  }
+  return cst;
+}
+function parseToAST(cst) {
+  if (typeof cst === "string") {
+    cst = parserToCST(cst);
+  }
+  const ast = visitor.visit(cst);
+  return ast;
+}
+async function exec(ast, context) {
+  if (typeof ast === "string") {
+    ast = parseToAST(ast);
+  }
+  return ast.execute(context);
+}
 export {
-  chatwoDSLLexer as ChatwoLexer
+  BinaryOperator,
+  ChatwoAstArray,
+  ChatwoAstBinaryOperation,
+  ChatwoAstIdentifier,
+  ChatwoAstNode,
+  ChatwoAstPosition,
+  ChatwoAstPostfixOperation,
+  ChatwoAstQuery,
+  ChatwoAstState,
+  ChatwoAstUnaryOperation,
+  ChatwoAstWhereState,
+  PostfixOperator,
+  UnaryOperator,
+  WhereOperator,
+  exec,
+  parseToAST,
+  parserToCST
 };
 /*! Bundled license information:
 

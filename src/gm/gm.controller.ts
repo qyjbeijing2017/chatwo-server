@@ -52,4 +52,11 @@ export class GmController {
     async deleteStatistics(@Param('id', ParseIntPipe) id: number) {
         return this.gmService.deleteStatistics(id);
     }
+
+    @ApiBearerAuth()
+    @Server()
+    @Get('dsl/:query')
+    async dslQuery(@Param('query') query: string) {
+        return this.gmService.dslQuery(query);
+    }
 }
