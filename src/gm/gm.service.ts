@@ -305,6 +305,7 @@ export class GmService {
     async dslQuery(query: string): Promise<{
         result: any;
     }> {
+        console.log(`Executing DSL query: ${query}`);
         return {
             result: exec(query, this.dslContext),
         }
