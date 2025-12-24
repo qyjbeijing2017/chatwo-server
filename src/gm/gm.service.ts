@@ -29,14 +29,16 @@ export class GmService {
     ) {
         this.dslContext = {
             async query(from, select, where, join, orderBy, limit, offset) {
+                const take = Math.min(Number(limit) || 100, 100);
+                const skip = Number(offset) || 0;
                 switch (from) {
                     case 'log':
                         return logRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
-                            skip: offset,
-                            take: Math.min(limit, 100),
+                            skip,
+                            take,
                             relations: join,
                         });
                     case 'user':
@@ -44,8 +46,8 @@ export class GmService {
                             select: select,
                             where: where,
                             order: orderBy,
-                            skip: offset,
-                            take: Math.min(limit, 100),
+                            skip,
+                            take,
                             relations: join,
                         });
                     case 'item':
@@ -53,8 +55,8 @@ export class GmService {
                             select: select,
                             where: where,
                             order: orderBy,
-                            skip: offset,
-                            take: Math.min(limit, 100),
+                            skip,
+                            take,
                             relations: join,
                         });
                     case 'container':
@@ -62,8 +64,8 @@ export class GmService {
                             select: select,
                             where: where,
                             order: orderBy,
-                            skip: offset,
-                            take: Math.min(limit, 100),
+                            skip,
+                            take,
                             relations: join,
                         });
                     default:
