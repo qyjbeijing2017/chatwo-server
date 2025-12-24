@@ -73,6 +73,7 @@ export class GmService {
             },
             async queryWhere(operator, value) {
                 console.log(`DSL QueryWhere - operator: ${operator}, value: ${JSON.stringify(value)}`);
+                return "Jacson";
                 switch (operator) {
                     case "=":
                         return value;
