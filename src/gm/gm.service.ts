@@ -10,7 +10,7 @@ import { LogDto } from 'src/statistic/dto/log.dto';
 import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
-import type { ChatwoAstContext, WhereOperator } from 'src/dsl';
+import type { ChatwoAstContext } from 'src/dsl';
 
 @Injectable()
 export class GmService {
@@ -34,7 +34,7 @@ export class GmService {
                 console.log('DSL Query:', { from, select, where, join, orderBy, limit: take, offset: skip });
                 switch (from) {
                     case 'log':
-                        return logRepository.find({
+                        return logRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -43,7 +43,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'user':
-                        return userRepository.find({
+                        return userRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -52,7 +52,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'item':
-                        return itemRepository.find({
+                        return itemRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -61,7 +61,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'container':
-                        return containerRepository.find({
+                        return containerRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
