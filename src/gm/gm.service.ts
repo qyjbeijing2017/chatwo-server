@@ -318,6 +318,7 @@ export class GmService {
                 result,
             }
         } catch (error) {
+            console.error('DSL Query Error:', error);
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }
     }
