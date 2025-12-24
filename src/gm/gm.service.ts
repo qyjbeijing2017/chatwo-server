@@ -308,7 +308,7 @@ export class GmService {
         console.log(`Executing DSL query: ${query}`);
         const exec = (await import(`../dsl`)).exec;
         return {
-            result: exec(query, this.dslContext),
+            result: 123,
         }
     }
 }
