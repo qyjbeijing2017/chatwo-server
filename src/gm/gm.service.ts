@@ -106,6 +106,7 @@ export class GmService {
                         return Any(value);
                     case "RAW":
                         return Raw((alias) => {
+                            console.log('RAW alias:', alias);
                             const val = value.replace('<alias>', alias);
                             console.log('RAW value:', val);
                             return val;
