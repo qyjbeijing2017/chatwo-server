@@ -31,10 +31,9 @@ export class GmService {
             async query(from, select, where, join, orderBy, limit, offset) {
                 const take = Math.min(Number(limit) || 100, 100);
                 const skip = Number(offset) || 0;
-                console.log(`DSL Query Where:`, JSON.stringify(where, null, 2));
                 switch (from) {
                     case 'log':
-                        return logRepository.findAndCount({
+                        return this.logRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -43,7 +42,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'user':
-                        return userRepository.findAndCount({
+                        return this.userRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -52,7 +51,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'item':
-                        return itemRepository.findAndCount({
+                        return this.itemRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -61,7 +60,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'container':
-                        return containerRepository.findAndCount({
+                        return this.containerRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
