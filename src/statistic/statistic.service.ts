@@ -31,7 +31,7 @@ export class StatisticService {
         const skip = Number(offset) || 0;
         switch (from) {
             case 'log':
-                const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where;
+                const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where ?? {};
                 if (Array.isArray(logWhere)) {
                     for (const condition of logWhere) {
                         condition.tags = condition.tags ? And(ArrayContains([context.account.custom_id]), condition.tags as any) : ArrayContains([context.account.custom_id]);
@@ -48,7 +48,7 @@ export class StatisticService {
                     relations: join,
                 });
             case 'user':
-                const userWhere: FindOptionsWhere<ChatwoUser> | FindOptionsWhere<ChatwoUser>[] = where;
+                const userWhere: FindOptionsWhere<ChatwoUser> | FindOptionsWhere<ChatwoUser>[] = where ?? {};
                 if (Array.isArray(userWhere)) {
                     for (const condition of userWhere) {
                         condition.nakamaId = context.account.custom_id;
@@ -65,7 +65,7 @@ export class StatisticService {
                     relations: join,
                 });
             case 'item':
-                const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where;
+                const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where ?? {};
                 if (Array.isArray(itemWhere)) {
                     for (const condition of itemWhere) {
                         condition.owner = condition.owner ?? {};
@@ -84,7 +84,7 @@ export class StatisticService {
                     relations: join,
                 });
             case 'container':
-                const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where;
+                const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where  ?? {};
                 if (Array.isArray(containerWhere)) {
                     for (const condition of containerWhere) {
                         condition.owner = condition.owner ?? {};
