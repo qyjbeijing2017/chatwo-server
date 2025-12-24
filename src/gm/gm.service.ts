@@ -33,7 +33,7 @@ export class GmService {
                 const skip = Number(offset) || 0;
                 switch (from) {
                     case 'log':
-                        return this.logRepository.find({
+                        return logRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -42,7 +42,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'user':
-                        return this.userRepository.find({
+                        return userRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -51,7 +51,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'item':
-                        return this.itemRepository.find({
+                        return itemRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
@@ -60,7 +60,7 @@ export class GmService {
                             relations: join,
                         });
                     case 'container':
-                        return this.containerRepository.find({
+                        return containerRepository.find({
                             select: select,
                             where: where,
                             order: orderBy,
