@@ -31,39 +31,39 @@ export class GmService {
             async query(from, select, where, join, orderBy, limit, offset) {
                 switch (from) {
                     case 'log':
-                        return logRepository.find({
+                        return logRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
                             skip: offset,
-                            take: limit,
+                            take: Math.min(limit, 100),
                             relations: join,
                         });
                     case 'user':
-                        return userRepository.find({
+                        return userRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
                             skip: offset,
-                            take: limit,
+                            take: Math.min(limit, 100),
                             relations: join,
                         });
                     case 'item':
-                        return itemRepository.find({
+                        return itemRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
                             skip: offset,
-                            take: limit,
+                            take: Math.min(limit, 100),
                             relations: join,
                         });
                     case 'container':
-                        return containerRepository.find({
+                        return containerRepository.findAndCount({
                             select: select,
                             where: where,
                             order: orderBy,
                             skip: offset,
-                            take: limit,
+                            take: Math.min(limit, 100),
                             relations: join,
                         });
                     default:
