@@ -10,7 +10,7 @@ import { LogDto } from 'src/statistic/dto/log.dto';
 import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
-import { ChatwoAstContext, exec, WhereOperator } from 'src/dsl';
+import type { ChatwoAstContext, WhereOperator } from 'src/dsl';
 
 @Injectable()
 export class GmService {
@@ -306,6 +306,7 @@ export class GmService {
         result: any;
     }> {
         console.log(`Executing DSL query: ${query}`);
+        const exec = (await import('src/dsl')).exec;
         return {
             result: exec(query, this.dslContext),
         }
