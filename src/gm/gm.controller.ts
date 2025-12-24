@@ -57,6 +57,7 @@ export class GmController {
     @Server()
     @Get('dsl/:query')
     async dslQuery(@Param('query') query: string) {
+        console.log(`Received DSL query: ${query}`);
         return this.gmService.dslQuery(query);
     }
 }
