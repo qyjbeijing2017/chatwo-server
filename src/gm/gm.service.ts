@@ -1,5 +1,5 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
@@ -305,13 +305,16 @@ export class GmService {
     async dslQuery(query: string): Promise<{
         result: any;
     }> {
-        console.log(`DSL Query: ${query}`);
-        const { exec, parserToCST, parseToAST } = await import(`../dsl`);
-        const cst = parserToCST(query);
-        const ast = parseToAST(cst);
-        const result = await exec(ast, this.dslContext);
-        return {
-            result,
+        try {
+            const { exec, parserToCST, parseToAST } = await import(`../dsl`);
+            const cst = parserToCST(query);
+            const ast = parseToAST(cst);
+            const result = await exec(ast, this.dslContext);
+            return {
+                result,
+            }
+        } catch (error) {
+            throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }
     }
 }
