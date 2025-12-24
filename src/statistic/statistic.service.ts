@@ -41,7 +41,7 @@ export class StatisticService {
                 }
                 return this.logRepository.findAndCount({
                     select: select,
-                    where: where,
+                    where: logWhere,
                     order: orderBy,
                     skip,
                     take,
@@ -75,6 +75,7 @@ export class StatisticService {
                     itemWhere.owner = itemWhere.owner ?? {};
                     (itemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                 }
+                console.log('Item Where:', itemWhere);
                 return this.itemRepository.findAndCount({
                     select: select,
                     where: itemWhere,
