@@ -103,7 +103,7 @@ export class GmService {
                     case "ANY":
                         return Any(value);
                     case "RAW":
-                        return Raw((alias)=>value.replace('<alias>', alias));
+                        return Raw((alias) => value.replace('<alias>', alias));
                     default:
                         throw new Error(`Unknown operator: ${operator}`);
                 }
@@ -313,6 +313,7 @@ export class GmService {
             const { exec, parserToCST, parseToAST } = await import(`../dsl`);
             const cst = parserToCST(query);
             const ast = parseToAST(cst);
+            console.log('DSL AST:', JSON.stringify(ast, null, 2));
             const result = await exec(ast, this.dslContext);
             return {
                 result,
