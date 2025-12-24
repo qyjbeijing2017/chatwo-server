@@ -9998,6 +9998,19 @@ var ChatwoAstWhereState = class extends ChatwoAstNode {
   }
 };
 
+// src/ast/array.ts
+var ChatwoAstArray = class extends ChatwoAstNode {
+  constructor(elements) {
+    super();
+    this.elements = elements;
+  }
+  async execute(context) {
+    return Promise.all(this.elements.map(
+      (element) => element instanceof ChatwoAstNode ? element.execute(context) : element
+    ));
+  }
+};
+
 // src/visiter.ts
 var parserInstance = new ChatwoDSLParser();
 var BaseSQLVisitorWithDefaults = parserInstance.getBaseCstVisitorConstructorWithDefaults();
@@ -10142,6 +10155,11 @@ var ChatwoDSLVisitor = class extends BaseSQLVisitorWithDefaults {
     if (ctx.expression) {
       return this.visit(ctx.expression[0]);
     }
+    if (ctx.element) {
+      return new ChatwoAstArray(
+        ctx.element.map((item) => this.visit(item))
+      );
+    }
     throw new Error("Invalid primary expression");
   }
   postfixParser(ctx) {
@@ -10205,19 +10223,6 @@ var ChatwoDSLVisitor = class extends BaseSQLVisitorWithDefaults {
   }
   expression(ctx) {
     return this.visit(ctx.orExpression[0]);
-  }
-};
-
-// src/ast/array.ts
-var ChatwoAstArray = class extends ChatwoAstNode {
-  constructor(elements) {
-    super();
-    this.elements = elements;
-  }
-  async execute(context) {
-    return Promise.all(this.elements.map(
-      (element) => element instanceof ChatwoAstNode ? element.execute(context) : element
-    ));
   }
 };
 
