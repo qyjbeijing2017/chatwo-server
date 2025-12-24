@@ -306,6 +306,7 @@ export class GmService {
     async dslQuery(query: string): Promise<{
         result: any;
     }> {
+        console.log(`DSL Query Received: ${query}`);
         try {
             const { exec, parserToCST, parseToAST } = await import(`../dsl`);
             const cst = parserToCST(query);
