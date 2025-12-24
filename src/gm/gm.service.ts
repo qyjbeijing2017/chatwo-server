@@ -72,33 +72,33 @@ export class GmService {
             },
             async queryWhere(operator, value) {
                 switch (operator) {
-                    case WhereOperator.EQUALS:
+                    case "=":
                         return value;
-                    case WhereOperator.NOT_EQUALS:
+                    case "!=":
                         return Not(value);
-                    case WhereOperator.GREATER_THAN:
+                    case ">":
                         return MoreThan(value);
-                    case WhereOperator.LESS_THAN:
+                    case "<":
                         return LessThan(value);
-                    case WhereOperator.GREATER_THAN_OR_EQUAL:
+                    case ">=":
                         return MoreThanOrEqual(value);
-                    case WhereOperator.LESS_THAN_OR_EQUAL:
+                    case "<=":
                         return LessThanOrEqual(value);
-                    case WhereOperator.LIKE:
+                    case "LIKE":
                         return Like(value);
-                    case WhereOperator.ILIKE:
+                    case "ILIKE":
                         return ILike(value);
-                    case WhereOperator.IN:
+                    case "IN":
                         return In(value);
-                    case WhereOperator.CONTAINS:
+                    case "@>":
                         return ArrayContains(value);
-                    case WhereOperator.CONTAINED_BY:
+                    case "<@":
                         return ArrayContainedBy(value);
-                    case WhereOperator.ISNULL:
+                    case "ISNULL":
                         return IsNull();
-                    case WhereOperator.BETWEEN:
+                    case "BETWEEN":
                         return Between(value[0], value[1]);
-                    case WhereOperator.ANY:
+                    case "ANY":
                         return Any(value);
                     default:
                         throw new Error(`Unknown operator: ${operator}`);

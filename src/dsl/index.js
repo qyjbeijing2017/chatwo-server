@@ -9979,7 +9979,7 @@ var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
   WhereOperator3["CONTAINS"] = "@>";
   WhereOperator3["CONTAINED_BY"] = "<@";
   WhereOperator3["ISNULL"] = "ISNULL";
-  WhereOperator3["BETWEEN"] = "BETERRN";
+  WhereOperator3["BETWEEN"] = "BETWEEN";
   WhereOperator3["ANY"] = "ANY";
   return WhereOperator3;
 })(WhereOperator || {});

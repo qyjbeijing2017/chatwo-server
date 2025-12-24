@@ -24,7 +24,7 @@ declare enum WhereOperator {
     CONTAINS = "@>",
     CONTAINED_BY = "<@",
     ISNULL = "ISNULL",
-    BETWEEN = "BETERRN",
+    BETWEEN = "BETWEEN",
     ANY = "ANY"
 }
 declare class ChatwoAstWhereState extends ChatwoAstNode {
