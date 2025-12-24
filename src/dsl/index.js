@@ -9294,6 +9294,10 @@ var ANY = createToken({
   name: "ANY",
   pattern: /ANY/
 });
+var RAW = createToken({
+  name: "RAW",
+  pattern: /RAW/
+});
 var BooleanLiteral = createToken({ name: "BooleanLiteral", pattern: /true|false/ });
 var NumberLiteral = createToken({ name: "NumberLiteral", pattern: /\d+(\.\d+)?/ });
 var StringLiteral = createToken({ name: "StringLiteral", pattern: /"(?:[^"\\]|\\.)*"/ });
@@ -9350,6 +9354,7 @@ var chatwoDSLTokens = [
   OR,
   IN2,
   ANY,
+  RAW,
   CONTAINS,
   CONTAINED_BY,
   ISNULL,
@@ -9443,7 +9448,8 @@ var ChatwoDSLParser = class extends CstParser {
       { ALT: () => this.CONSUME(CONTAINED_BY, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(BETERRN, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(ISNULL, { LABEL: "operator" }) },
-      { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) }
+      { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(RAW, { LABEL: "operator" }) }
     ]);
     this.OPTION(
       () => this.SUBRULE(this.expression)
@@ -9981,6 +9987,7 @@ var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
   WhereOperator3["ISNULL"] = "ISNULL";
   WhereOperator3["BETWEEN"] = "BETWEEN";
   WhereOperator3["ANY"] = "ANY";
+  WhereOperator3["RAW"] = "RAW";
   return WhereOperator3;
 })(WhereOperator || {});
 var ChatwoAstWhereState = class extends ChatwoAstNode {

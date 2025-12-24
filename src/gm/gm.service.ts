@@ -7,7 +7,7 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
-import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Repository } from 'typeorm';
+import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import type { ChatwoAstContext, WhereOperator } from 'src/dsl';
@@ -102,6 +102,8 @@ export class GmService {
                         return Between(value[0], value[1]);
                     case "ANY":
                         return Any(value);
+                    case "RAW":
+                        return Raw(value);
                     default:
                         throw new Error(`Unknown operator: ${operator}`);
                 }
