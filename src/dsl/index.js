@@ -9999,7 +9999,9 @@ var ChatwoAstWhereState = class extends ChatwoAstNode {
   async execute(context) {
     const rootContext = {};
     for (const item of this.state) {
+      console.log("Executing where clause:", item);
       const value = item.value instanceof ChatwoAstNode ? await item.value.execute(context) : item.value;
+      console.log("Where clause value:", value);
       item.position.setState(rootContext, context.queryWhere(context, item.operator, value));
     }
     return rootContext;
