@@ -29,6 +29,7 @@ export class GmService {
     ) {
         this.dslContext = {
             async query(from, select, where, join, orderBy, limit, offset) {
+                console.log(`DSL Query - from: ${from}, select: ${JSON.stringify(select)}, where: ${JSON.stringify(where)}, join: ${JSON.stringify(join)}, orderBy: ${JSON.stringify(orderBy)}, limit: ${limit}, offset: ${offset}`);
                 switch (from) {
                     case 'log':
                         return logRepository.find({
