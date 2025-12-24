@@ -66,6 +66,7 @@ export class StatisticService {
                 });
             case 'item':
                 const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where ?? {};
+                console.log('Initial Item Where:', itemWhere);
                 if (Array.isArray(itemWhere)) {
                     for (const condition of itemWhere) {
                         condition.owner = condition.owner ?? {};
@@ -109,6 +110,7 @@ export class StatisticService {
     }
 
     queryWhere(context, operator, value) {
+        console.log('Query Where:', context, operator, value);
         switch (operator) {
             case "=":
                 return value;
