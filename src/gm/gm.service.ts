@@ -29,7 +29,6 @@ export class GmService {
     ) {
         this.dslContext = {
             async query(from, select, where, join, orderBy, limit, offset) {
-                console.log(`DSL Query - from: ${from}, select: ${JSON.stringify(select)}, where: ${JSON.stringify(where)}, join: ${JSON.stringify(join)}, orderBy: ${JSON.stringify(orderBy)}, limit: ${limit}, offset: ${offset}`);
                 switch (from) {
                     case 'log':
                         return logRepository.find({
@@ -71,9 +70,7 @@ export class GmService {
                         throw new Error(`Unknown from type: ${from}`);
                 }
             },
-            async queryWhere(operator, value) {
-                console.log(`DSL QueryWhere - operator: ${operator}, value: ${JSON.stringify(value)}`);
-                return "Jacson";
+            queryWhere(operator, value) {
                 switch (operator) {
                     case "=":
                         return value;
@@ -308,7 +305,6 @@ export class GmService {
     async dslQuery(query: string): Promise<{
         result: any;
     }> {
-        console.log(`DSL Query Received: ${query}`);
         try {
             const { exec, parserToCST, parseToAST } = await import(`../dsl`);
             const cst = parserToCST(query);
