@@ -103,7 +103,7 @@ export class GmService {
                     case "ANY":
                         return Any(value);
                     case "RAW":
-                        return Raw(value);
+                        return Raw((alias)=>value.replace('alias', alias));
                     default:
                         throw new Error(`Unknown operator: ${operator}`);
                 }
