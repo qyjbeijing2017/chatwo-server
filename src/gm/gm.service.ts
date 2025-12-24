@@ -31,6 +31,7 @@ export class GmService {
             async query(from, select, where, join, orderBy, limit, offset) {
                 const take = Math.min(Number(limit) || 100, 100);
                 const skip = Number(offset) || 0;
+                console.log('DSL Query:', { from, select, where, join, orderBy, limit: take, offset: skip });
                 switch (from) {
                     case 'log':
                         return logRepository.find({
@@ -73,6 +74,7 @@ export class GmService {
                 }
             },
             queryWhere(operator, value) {
+                console.log('DSL Query Where:', { operator, value });
                 switch (operator) {
                     case "=":
                         return value;
@@ -103,7 +105,11 @@ export class GmService {
                     case "ANY":
                         return Any(value);
                     case "RAW":
-                        return Raw((alias) => value.replace('<alias>', alias));
+                        return Raw((alias) => {
+                            const val = value.replace('<alias>', alias);
+                            console.log('RAW value:', val);
+                            return val;
+                        });
                     default:
                         throw new Error(`Unknown operator: ${operator}`);
                 }
