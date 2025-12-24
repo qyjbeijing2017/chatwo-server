@@ -145,7 +145,7 @@ declare class ChatwoAstUnaryOperation extends ChatwoAstNode {
 }
 
 declare function parserToCST(expression: string): CstNode;
-declare function parseToAST(cst: string | CstNode): ChatwoAstNode;
-declare function exec(ast: string | ChatwoAstNode, context: ChatwoAstContext): Promise<any>;
+declare function parseToAST(cst: CstNode): ChatwoAstNode;
+declare function exec(ast: ChatwoAstNode, context: ChatwoAstContext): Promise<any>;
 
 export { BinaryOperator, ChatwoAstArray, ChatwoAstBinaryOperation, type ChatwoAstContext, ChatwoAstIdentifier, ChatwoAstNode, ChatwoAstPosition, ChatwoAstPostfixOperation, ChatwoAstQuery, ChatwoAstState, ChatwoAstUnaryOperation, ChatwoAstWhereState, PostfixOperator, UnaryOperator, WhereOperator, exec, parseToAST, parserToCST };

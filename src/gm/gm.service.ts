@@ -305,10 +305,13 @@ export class GmService {
     async dslQuery(query: string): Promise<{
         result: any;
     }> {
-        console.log(`Executing DSL query: ${query}`);
-        const exec = (await import(`../dsl`)).exec;
+        console.log(`DSL Query: ${query}`);
+        const { exec, parserToCST, parseToAST } = await import(`../dsl`);
+        const cst = parserToCST(query);
+        const ast = parseToAST(cst);
+        const result = await exec(ast, this.dslContext);
         return {
-            result: 123,
+            result,
         }
     }
 }

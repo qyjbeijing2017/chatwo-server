@@ -10237,17 +10237,14 @@ function parserToCST(expression) {
   return cst;
 }
 function parseToAST(cst) {
-  if (typeof cst === "string") {
-    cst = parserToCST(cst);
-  }
   const ast = visitor.visit(cst);
   return ast;
 }
 async function exec(ast, context) {
-  if (typeof ast === "string") {
-    ast = parseToAST(ast);
+  if (ast instanceof ChatwoAstNode) {
+    return ast.execute(context);
   }
-  return ast.execute(context);
+  return ast;
 }
 export {
   BinaryOperator,
