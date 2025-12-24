@@ -66,7 +66,6 @@ export class StatisticService {
                 });
             case 'item':
                 const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where ?? {};
-                console.log('Initial Item Where:', itemWhere);
                 if (Array.isArray(itemWhere)) {
                     for (const condition of itemWhere) {
                         condition.owner = condition.owner ?? {};
@@ -76,7 +75,6 @@ export class StatisticService {
                     itemWhere.owner = itemWhere.owner ?? {};
                     (itemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                 }
-                console.log('Item Where:', itemWhere);
                 return this.itemRepository.findAndCount({
                     select: select,
                     where: itemWhere,
@@ -110,7 +108,6 @@ export class StatisticService {
     }
 
     queryWhere(context, operator, value) {
-        console.log('Query Where:', context, operator, value);
         switch (operator) {
             case "=":
                 return value;
@@ -161,7 +158,6 @@ export class StatisticService {
 
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
-        console.log('Fetching statistics with tags:', logDto);
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
             take: 100,
