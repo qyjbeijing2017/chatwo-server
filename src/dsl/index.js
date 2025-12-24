@@ -9921,6 +9921,7 @@ var ChatwoAstQuery = class extends ChatwoAstNode {
       throw new Error(`Offset must be a non-negative number, got: ${offset}`);
     }
     return context.query(
+      context,
       this.from,
       this.select ? await this.select.execute() : void 0,
       this.where ? whereResults : void 0,
@@ -9999,7 +10000,7 @@ var ChatwoAstWhereState = class extends ChatwoAstNode {
     const rootContext = {};
     for (const item of this.state) {
       const value = item.value instanceof ChatwoAstNode ? await item.value.execute(context) : item.value;
-      item.position.setState(rootContext, context.queryWhere(item.operator, value));
+      item.position.setState(rootContext, context.queryWhere(context, item.operator, value));
     }
     return rootContext;
   }

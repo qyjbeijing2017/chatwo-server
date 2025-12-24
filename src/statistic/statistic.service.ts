@@ -1,14 +1,16 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
-import { ArrayContains, DataSource, LessThan, MoreThanOrEqual, Raw, Repository } from 'typeorm';
+import { And, Any, ArrayContainedBy, ArrayContains, Between, DataSource, FindOptionsWhere, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { LogDto } from './dto/log.dto';
 import { autoPatch } from 'src/utils/autoPatch';
+import { ChatwoItem } from 'src/entities/item.entity';
+import { ChatwoContainer } from 'src/entities/container.entity';
 
 @Injectable()
 export class StatisticService {
@@ -17,8 +19,143 @@ export class StatisticService {
         private readonly logRepository: Repository<ChatwoLog>,
         @InjectRepository(ChatwoUser)
         private readonly userRepository: Repository<ChatwoUser>,
+        @InjectRepository(ChatwoItem)
+        private readonly itemRepository: Repository<ChatwoItem>,
+        @InjectRepository(ChatwoContainer)
+        private readonly containerRepository: Repository<ChatwoContainer>,
         private readonly dataSource: DataSource,
     ) { }
+
+    async query(context, from, select, where, join, orderBy, limit, offset) {
+        const take = Math.min(Number(limit) || 100, 100);
+        const skip = Number(offset) || 0;
+        switch (from) {
+            case 'log':
+                const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where;
+                if (Array.isArray(logWhere)) {
+                    for (const condition of logWhere) {
+                        condition.tags = condition.tags ? And(ArrayContains([context.account.custom_id]), condition.tags as any) : ArrayContains([context.account.custom_id]);
+                    }
+                } else {
+                    logWhere.tags = logWhere.tags ? And(ArrayContains([context.account.custom_id]), logWhere.tags as any) : ArrayContains([context.account.custom_id]);
+                }
+                return this.logRepository.findAndCount({
+                    select: select,
+                    where: where,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'user':
+                const userWhere: FindOptionsWhere<ChatwoUser> | FindOptionsWhere<ChatwoUser>[] = where;
+                if (Array.isArray(userWhere)) {
+                    for (const condition of userWhere) {
+                        condition.nakamaId = context.account.custom_id;
+                    }
+                } else {
+                    userWhere.nakamaId = context.account.custom_id;
+                }
+                return this.userRepository.findAndCount({
+                    select: select,
+                    where: userWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'item':
+                const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where;
+                if (Array.isArray(itemWhere)) {
+                    for (const condition of itemWhere) {
+                        condition.owner = condition.owner ?? {};
+                        (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                } else {
+                    itemWhere.owner = itemWhere.owner ?? {};
+                    (itemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                }
+                return this.itemRepository.findAndCount({
+                    select: select,
+                    where: itemWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'container':
+                const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where;
+                if (Array.isArray(containerWhere)) {
+                    for (const condition of containerWhere) {
+                        condition.owner = condition.owner ?? {};
+                        (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                } else {
+                    containerWhere.owner = containerWhere.owner ?? {};
+                    (containerWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                }
+                return this.containerRepository.findAndCount({
+                    select: select,
+                    where: containerWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            default:
+                throw new Error(`Unknown from type: ${from}`);
+        }
+    }
+
+    queryWhere(context, operator, value) {
+        switch (operator) {
+            case "=":
+                return value;
+            case "!=":
+                return Not(value);
+            case ">":
+                return MoreThan(value);
+            case "<":
+                return LessThan(value);
+            case ">=":
+                return MoreThanOrEqual(value);
+            case "<=":
+                return LessThanOrEqual(value);
+            case "LIKE":
+                return Like(value);
+            case "ILIKE":
+                return ILike(value);
+            case "IN":
+                return In(value);
+            case "@>":
+                return ArrayContains(value);
+            case "<@":
+                return ArrayContainedBy(value);
+            case "ISNULL":
+                return IsNull();
+            case "BETWEEN":
+                return Between(value[0], value[1]);
+            case "ANY":
+                return Any(value);
+            case "RAW":
+                return Raw((alias) => {
+                    const positions = alias.split('.');
+                    const aliasReplaced = positions.map((pos, index) => {
+                        if (!pos.startsWith('"')) {
+                            return `"${pos}"`;
+                        } else {
+                            return pos;
+                        }
+                    })
+                    const aliasNew = aliasReplaced.join('.');
+                    const val = value.replace('<alias>', aliasNew);
+                    return val;
+                });
+            default:
+                throw new Error(`Unknown operator: ${operator}`);
+        }
+    }
+
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         console.log('Fetching statistics with tags:', logDto);
@@ -43,7 +180,7 @@ export class StatisticService {
                 id: true,
             },
             where: {
-                
+
             }
         });
         return {};
@@ -97,5 +234,23 @@ export class StatisticService {
         });
         await this.logRepository.save(log);
         return log;
+    }
+
+    async dslQuery(account: ApiAccount, query: string) {
+        try {
+            const { exec, parserToCST, parseToAST } = await import(`../dsl`);
+            const cst = parserToCST(query);
+            const ast = parseToAST(cst);
+            const result = await exec(ast, {
+                query: this.query.bind(this),
+                queryWhere: this.queryWhere.bind(this),
+                account: account,
+            });
+            return {
+                result,
+            }
+        } catch (error) {
+            throw new BadRequestException(`DSL Query Error: ${error.message}`);
+        }
     }
 }

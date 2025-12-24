@@ -10,11 +10,9 @@ import { LogDto } from 'src/statistic/dto/log.dto';
 import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
-import type { ChatwoAstContext } from 'src/dsl';
 
 @Injectable()
 export class GmService {
-    readonly dslContext: ChatwoAstContext;
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
@@ -26,104 +24,99 @@ export class GmService {
         private readonly containerRepository: Repository<ChatwoContainer>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
-    ) {
-        this.dslContext = {
-            async query(from, select, where, join, orderBy, limit, offset) {
-                const take = Math.min(Number(limit) || 100, 100);
-                const skip = Number(offset) || 0;
-                console.log('DSL Query:', { from, select, where, join, orderBy, limit: take, offset: skip });
-                switch (from) {
-                    case 'log':
-                        return logRepository.findAndCount({
-                            select: select,
-                            where: where,
-                            order: orderBy,
-                            skip,
-                            take,
-                            relations: join,
-                        });
-                    case 'user':
-                        return userRepository.findAndCount({
-                            select: select,
-                            where: where,
-                            order: orderBy,
-                            skip,
-                            take,
-                            relations: join,
-                        });
-                    case 'item':
-                        return itemRepository.findAndCount({
-                            select: select,
-                            where: where,
-                            order: orderBy,
-                            skip,
-                            take,
-                            relations: join,
-                        });
-                    case 'container':
-                        return containerRepository.findAndCount({
-                            select: select,
-                            where: where,
-                            order: orderBy,
-                            skip,
-                            take,
-                            relations: join,
-                        });
-                    default:
-                        throw new Error(`Unknown from type: ${from}`);
-                }
-            },
-            queryWhere(operator, value) {
-                console.log('DSL Query Where:', { operator, value });
-                switch (operator) {
-                    case "=":
-                        return value;
-                    case "!=":
-                        return Not(value);
-                    case ">":
-                        return MoreThan(value);
-                    case "<":
-                        return LessThan(value);
-                    case ">=":
-                        return MoreThanOrEqual(value);
-                    case "<=":
-                        return LessThanOrEqual(value);
-                    case "LIKE":
-                        return Like(value);
-                    case "ILIKE":
-                        return ILike(value);
-                    case "IN":
-                        return In(value);
-                    case "@>":
-                        return ArrayContains(value);
-                    case "<@":
-                        return ArrayContainedBy(value);
-                    case "ISNULL":
-                        return IsNull();
-                    case "BETWEEN":
-                        return Between(value[0], value[1]);
-                    case "ANY":
-                        return Any(value);
-                    case "RAW":
-                        return Raw((alias) => {
-                            console.log('RAW alias:', alias);
-                            const positions = alias.split('.');
-                            const aliasReplaced = positions.map((pos, index) => {
-                                if(!pos.startsWith('"')) {
-                                    return `"${pos}"`;
-                                } else {
-                                    return pos;
-                                }
-                            })
-                            const aliasNew = aliasReplaced.join('.');
-                            const val = value.replace('<alias>', aliasNew);
-                            console.log('RAW value:', val);
-                            return val;
-                        });
-                    default:
-                        throw new Error(`Unknown operator: ${operator}`);
-                }
-            },
+    ) {}
+
+    async query(context, from, select, where, join, orderBy, limit, offset) {
+        const take = Math.min(Number(limit) || 100, 100);
+        const skip = Number(offset) || 0;
+        switch (from) {
+            case 'log':
+                return this.logRepository.findAndCount({
+                    select: select,
+                    where: where,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'user':
+                return this.userRepository.findAndCount({
+                    select: select,
+                    where: where,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'item':
+                return this.itemRepository.findAndCount({
+                    select: select,
+                    where: where,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            case 'container':
+                return this.containerRepository.findAndCount({
+                    select: select,
+                    where: where,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+            default:
+                throw new Error(`Unknown from type: ${from}`);
+        }
+    }
+
+    queryWhere(context, operator, value) {
+        switch (operator) {
+            case "=":
+                return value;
+            case "!=":
+                return Not(value);
+            case ">":
+                return MoreThan(value);
+            case "<":
+                return LessThan(value);
+            case ">=":
+                return MoreThanOrEqual(value);
+            case "<=":
+                return LessThanOrEqual(value);
+            case "LIKE":
+                return Like(value);
+            case "ILIKE":
+                return ILike(value);
+            case "IN":
+                return In(value);
+            case "@>":
+                return ArrayContains(value);
+            case "<@":
+                return ArrayContainedBy(value);
+            case "ISNULL":
+                return IsNull();
+            case "BETWEEN":
+                return Between(value[0], value[1]);
+            case "ANY":
+                return Any(value);
+            case "RAW":
+                return Raw((alias) => {
+                    const positions = alias.split('.');
+                    const aliasReplaced = positions.map((pos, index) => {
+                        if (!pos.startsWith('"')) {
+                            return `"${pos}"`;
+                        } else {
+                            return pos;
+                        }
+                    })
+                    const aliasNew = aliasReplaced.join('.');
+                    const val = value.replace('<alias>', aliasNew);
+                    return val;
+                });
+            default:
+                throw new Error(`Unknown operator: ${operator}`);
         }
     }
 
@@ -329,12 +322,14 @@ export class GmService {
             const { exec, parserToCST, parseToAST } = await import(`../dsl`);
             const cst = parserToCST(query);
             const ast = parseToAST(cst);
-            const result = await exec(ast, this.dslContext);
+            const result = await exec(ast, {
+                query: this.query.bind(this),
+                queryWhere: this.queryWhere.bind(this),
+            });
             return {
                 result,
             }
         } catch (error) {
-            console.error('DSL Query Error:', error);
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }
     }

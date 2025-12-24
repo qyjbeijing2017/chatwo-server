@@ -44,4 +44,13 @@ export class StatisticController {
     async pvp(@Account() account: ApiAccount, @Body() body: KilledDto) {
         return this.statisticService.pvp(account, body);
     }
+
+    @ApiBearerAuth()
+    @Get('dsl/:query')
+    async getDslStatistics(
+        @Account() account: ApiAccount,
+        @Param('query') query: string,
+    ) {
+        return this.statisticService.dslQuery(account, query);
+    }
 }

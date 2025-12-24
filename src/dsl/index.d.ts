@@ -43,8 +43,8 @@ declare class ChatwoAstWhereState extends ChatwoAstNode {
 }
 
 interface ChatwoAstContext {
-    queryWhere: (operator: WhereOperator, value?: any) => any;
-    query: (from: string, select: any, where?: any, join?: any, orderBy?: any, limit?: any, offset?: any) => Promise<any[]>;
+    queryWhere: (context: ChatwoAstContext, operator: WhereOperator, value?: any) => any;
+    query: (context: ChatwoAstContext, from: string, select: any, where?: any, join?: any, orderBy?: any, limit?: any, offset?: any) => Promise<any[]>;
     [key: string]: any;
 }
 
