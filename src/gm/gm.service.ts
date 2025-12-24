@@ -31,6 +31,7 @@ export class GmService {
             async query(from, select, where, join, orderBy, limit, offset) {
                 const take = Math.min(Number(limit) || 100, 100);
                 const skip = Number(offset) || 0;
+                console.log(`DSL Query Where:`, JSON.stringify(where, null, 2));
                 switch (from) {
                     case 'log':
                         return logRepository.findAndCount({
@@ -103,7 +104,6 @@ export class GmService {
                     case "ANY":
                         return Any(value);
                     case "RAW":
-                        console.log('RAW value:', value);
                         return Raw((alias) => value.replace('<alias>', alias));
                     default:
                         throw new Error(`Unknown operator: ${operator}`);
@@ -314,7 +314,6 @@ export class GmService {
             const { exec, parserToCST, parseToAST } = await import(`../dsl`);
             const cst = parserToCST(query);
             const ast = parseToAST(cst);
-            console.log('DSL AST:', JSON.stringify(ast, null, 2));
             const result = await exec(ast, this.dslContext);
             return {
                 result,
