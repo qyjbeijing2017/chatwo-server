@@ -107,7 +107,16 @@ export class GmService {
                     case "RAW":
                         return Raw((alias) => {
                             console.log('RAW alias:', alias);
-                            const val = value.replace('<alias>', alias);
+                            const positions = alias.split('.');
+                            const aliasReplaced = positions.map((pos, index) => {
+                                if(!pos.startsWith('"')) {
+                                    return `"${pos}"`;
+                                } else {
+                                    return pos;
+                                }
+                            })
+                            const aliasNew = aliasReplaced.join('.');
+                            const val = value.replace('<alias>', aliasNew);
                             console.log('RAW value:', val);
                             return val;
                         });
