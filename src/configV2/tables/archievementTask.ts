@@ -12,7 +12,8 @@ export class ArchievementTaskConfig extends ConfigTable {
   Award: {
     [key: string]: number;
   } = {};
-  Condition: string = 'false';
+  Progress: string = 'false';
+  Test: string = '';
 
   constructor() {
     super();

@@ -44,4 +44,7 @@ export class ChatwoUser extends Patchable {
 
   @Column({ type: 'float8', default: 0 })
   flyMeters: number = 0;
+
+  @Column()
+  tutorialCompleted: boolean = false;
 }

@@ -53,4 +53,12 @@ export class StatisticController {
     ) {
         return this.statisticService.dslQuery(account, query);
     }
+
+    @ApiBearerAuth()
+    @Post('tutorial')
+    async tutorial(
+        @Account() account: ApiAccount,
+    ) {
+        return this.statisticService.completeTutorial(account);
+    }
 }

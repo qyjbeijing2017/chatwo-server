@@ -18,13 +18,15 @@ export class TaskController {
         @Account() account: ApiAccount,
         @Param('taskId') taskId: string,
     ) {
-        return null;
+        return this.taskService.getTask(account, taskId);
     }
 
     @ApiBearerAuth()
     @Get()
-    async getAllTaskState() {
-        return null;
+    async getAllTaskState(
+        @Account() account: ApiAccount,
+    ) {
+        return this.taskService.getAllTask(account);
     }
 
 

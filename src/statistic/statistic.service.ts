@@ -84,7 +84,7 @@ export class StatisticService {
                     relations: join,
                 });
             case 'container':
-                const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where  ?? {};
+                const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where ?? {};
                 if (Array.isArray(containerWhere)) {
                     for (const condition of containerWhere) {
                         condition.owner = condition.owner ?? {};
@@ -237,19 +237,49 @@ export class StatisticService {
 
     async dslQuery(account: ApiAccount, query: string) {
         try {
-            const { exec, parserToCST, parseToAST } = await import(`../dsl`);
-            const cst = parserToCST(query);
-            const ast = parseToAST(cst);
-            const result = await exec(ast, {
-                query: this.query.bind(this),
-                queryWhere: this.queryWhere.bind(this),
-                account: account,
-            });
+            const result = await this.execDsl(query, account);
             return {
                 result,
             }
         } catch (error) {
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }
+    }
+
+    createContext(account: ApiAccount, other: { [key: string]: any } = {}) {
+        return {
+            query: this.query.bind(this),
+            queryWhere: this.queryWhere.bind(this),
+            account,
+            ...other,
+        };
+    }
+
+    async execDsl(dsl: string, account: ApiAccount, extraContext: { [key: string]: any } = {}) {
+        const context = this.createContext(account, extraContext);
+        const { exec, parserToCST, parseToAST } = await import(`../dsl`);
+        const cst = parserToCST(dsl);
+        const ast = parseToAST(cst);
+        return exec(ast, context);
+    }
+
+    async completeTutorial(account: ApiAccount) {
+        return autoPatch(this.dataSource, async (manager) => {
+            const user = await manager.findOne(ChatwoUser, {
+                where: {
+                    nakamaId: account.custom_id,
+                }
+            });
+            if (!user) {
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+            }
+            user.tutorialCompleted = true;
+            await manager.save(user);
+            return {
+                result: user,
+                message: `User ${account.user?.username} completed the tutorial.`,
+                tags: [account.custom_id!, 'tutorial'],
+            }
+        });
     }
 }

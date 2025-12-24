@@ -1,20 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ChatwoAstContext } from 'src/dsl';
-import { ChatwoContainer } from 'src/entities/container.entity';
-import { ChatwoItem } from 'src/entities/item.entity';
-import { ChatwoLog } from 'src/entities/log.entity';
-import { ChatwoUser } from 'src/entities/user.entity';
-import { And, Any, ArrayContainedBy, ArrayContains, Between, FindOptionsWhere, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
+import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { configManager } from 'src/configV2/config';
+import { StatisticService } from 'src/statistic/statistic.service';
 
 @Injectable()
 export class TaskService {
-    constructor() {
+    constructor(
+        private readonly statisticService: StatisticService,
+    ) {
     }
 
-    async getTask(taskId: string) {
-
+    async getTask(account: ApiAccount, taskId: string) {
+        const config = configManager.archievementTaskMap.get(taskId);
+        if (!config) {
+            throw new NotFoundException(`Task with id ${taskId} not found`);
+        }
+        const progress = await this.statisticService.execDsl(config.Progress, account);
+        const isComplete = await this.statisticService.execDsl(config.Test, account, { progress });
+        return {
+            name: taskId,
+            progress,
+            isComplete,
+        }
     }
 
-
+    async getAllTask(account: ApiAccount) {
+        const configs = configManager.archievementTask;
+        const results: {
+            name: string;
+            progress: any;
+            isComplete: any;
+        }[] = [];
+        for (const config of configs) {
+            results.push(await this.getTask(account, config.Name));
+        }
+        return results;
+    }
 }
