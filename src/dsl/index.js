@@ -9992,9 +9992,7 @@ var ChatwoAstWhereState = class extends ChatwoAstNode {
     const rootContext = {};
     for (const item of this.state) {
       const value = item.value instanceof ChatwoAstNode ? await item.value.execute(context) : item.value;
-      console.log(`Executing WhereState - operator: ${item.operator}, value: ${JSON.stringify(value)}`);
       item.position.setState(rootContext, context.queryWhere(item.operator, value));
-      console.log(`Set state at position with value: ${JSON.stringify(rootContext)}`);
     }
     return rootContext;
   }
