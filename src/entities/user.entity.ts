@@ -46,4 +46,7 @@ export class ChatwoUser extends Patchable {
 
   @Column({ type: 'boolean', default: false })
   tutorialCompleted: boolean = false;
+
+  @Column({ type: 'int8', default: 0 })
+  breakBladeTimes: number;
 }

@@ -61,4 +61,12 @@ export class StatisticController {
     ) {
         return this.statisticService.completeTutorial(account);
     }
+
+    @ApiBearerAuth()
+    @Delete('breakBlade')
+    async breakBlade(
+        @Account() account: ApiAccount,
+    ) {
+        return this.statisticService.breakBlade(account);
+    }
 }

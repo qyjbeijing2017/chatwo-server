@@ -29,7 +29,6 @@ export class StatisticService {
     ) { }
 
     async query(context, from, select, where, join, orderBy, limit, offset) {
-        console.log('Executing query:', { from, select, where, join, orderBy, limit, offset });
         const take = Math.min(Number(limit) || 100, 100);
         const skip = Number(offset) || 0;
         switch (from) {
@@ -178,7 +177,6 @@ export class StatisticService {
         }
     }
 
-
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
@@ -212,23 +210,16 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
-        return autoPatch(this.dataSource, async (manager) => {
-            const user = await manager.findOne(ChatwoUser, {
-                where: {
-                    nakamaId: account.custom_id,
-                }
-            });
-            if (!user) {
-                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
-            }
-            user.flyMeters += dto.meters;
-            await manager.save(user);
-            return {
-                result: user,
-                message: `User ${account.user?.username} flew ${dto.meters} meters.`,
-                tags: [account.custom_id!, 'fly'],
+        const user = await this.userRepository.findOne({
+            where: {
+                nakamaId: account.custom_id,
             }
         });
+        if (!user) {
+            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+        }
+        user.flyMeters += dto.meters;
+        return await this.userRepository.save(user);
     }
 
     async pve(account: ApiAccount, dto: KilledDto) {
@@ -303,5 +294,18 @@ export class StatisticService {
                 tags: [account.custom_id!, 'tutorial'],
             }
         });
+    }
+
+    async breakBlade(account: ApiAccount) {
+        const user = await this.userRepository.findOne({
+            where: {
+                nakamaId: account.custom_id,
+            }
+        });
+        if (!user) {
+            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+        }
+        user.breakBladeTimes += 1;
+        return await this.userRepository.save(user);
     }
 }
