@@ -9,9 +9,11 @@ import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { LogDto } from './dto/log.dto';
 import { autoPatch } from 'src/utils/autoPatch';
-import { ChatwoItem } from 'src/entities/item.entity';
+import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
+import { getMetadata } from 'src/utils/meta-data';
+import { Item } from 'src/configV2/tables/Items';
 
 @Injectable()
 export class StatisticService {
@@ -185,6 +187,18 @@ export class StatisticService {
         }
     }
 
+    getAllItemKeysFromType(type: string): string[] {
+        const transformer = getMetadata('configTable:transformer', Item, 'type') as (val: string) => ItemType;
+        const itemType = transformer(type);
+        const keys: string[] = [];
+        for (const item of configManager.items) {
+            if (item.type === itemType) {
+                keys.push(item.key);
+            }
+        }
+        return keys;
+    }
+
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         const [result, total] = await this.logRepository.findAndCount({
             skip: logDto.skip || 0,
@@ -199,6 +213,10 @@ export class StatisticService {
             result,
             total,
         }
+    }
+
+    async date(value: string | number | Date) {
+        return new Date(value);
     }
 
     async dsl() {
@@ -278,6 +296,8 @@ export class StatisticService {
         return {
             query: this.query.bind(this),
             queryWhere: this.queryWhere.bind(this),
+            getAllItemKeysFromType: this.getAllItemKeysFromType.bind(this),
+            date: this.date.bind(this),
             account,
             ...other,
         };
