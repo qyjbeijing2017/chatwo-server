@@ -10,6 +10,7 @@ import { LogDto } from 'src/statistic/dto/log.dto';
 import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
+import { StatisticService } from 'src/statistic/statistic.service';
 
 @Injectable()
 export class GmService {
@@ -24,120 +25,8 @@ export class GmService {
         private readonly containerRepository: Repository<ChatwoContainer>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
+        private readonly statisticsService: StatisticService,
     ) { }
-
-    async query(context, from, select, where, join, orderBy, limit, offset) {
-        const take = Math.min(Number(limit) || 100, 100);
-        const skip = Number(offset) || 0;
-        switch (from) {
-            case 'log':
-                const [logResult, logCount] = await this.logRepository.findAndCount({
-                    select: select,
-                    where: where,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: logResult,
-                    total: logCount,
-                }
-            case 'user':
-                const [userResult, userCount] = await this.userRepository.findAndCount({
-                    select: select,
-                    where: where,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                for (const user of userResult) {
-                    (user as any).friends = await this.nakamaService.login(user.nakamaId).then(session => this.nakamaService.friendsList(session));
-                }
-                return {
-                    results: userResult,
-                    total: userCount,
-                }
-            case 'item':
-                const [itemResult, itemCount] = await this.itemRepository.findAndCount({
-                    select: select,
-                    where: where,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: itemResult,
-                    total: itemCount,
-                }
-            case 'container':
-                const [containerResult, containerCount] = await this.containerRepository.findAndCount({
-                    select: select,
-                    where: where,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: containerResult,
-                    total: containerCount,
-                }
-            default:
-                throw new Error(`Unknown from type: ${from}`);
-        }
-    }
-
-    queryWhere(context, operator, value) {
-        switch (operator) {
-            case "=":
-                return value;
-            case "!=":
-                return Not(value);
-            case ">":
-                return MoreThan(value);
-            case "<":
-                return LessThan(value);
-            case ">=":
-                return MoreThanOrEqual(value);
-            case "<=":
-                return LessThanOrEqual(value);
-            case "LIKE":
-                return Like(value);
-            case "ILIKE":
-                return ILike(value);
-            case "IN":
-                return In(value);
-            case "@>":
-                return ArrayContains(value);
-            case "<@":
-                return ArrayContainedBy(value);
-            case "ISNULL":
-                return IsNull();
-            case "BETWEEN":
-                return Between(value[0], value[1]);
-            case "ANY":
-                return Any(value);
-            case "RAW":
-                return Raw((alias) => {
-                    const positions = alias.split('.');
-                    const aliasReplaced = positions.map((pos, index) => {
-                        if (!pos.startsWith('"')) {
-                            return `"${pos}"`;
-                        } else {
-                            return pos;
-                        }
-                    })
-                    const aliasNew = aliasReplaced.join('.');
-                    const val = value.replace('<alias>', aliasNew);
-                    return val;
-                });
-            default:
-                throw new Error(`Unknown operator: ${operator}`);
-        }
-    }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
         const [result, total] = await this.logRepository.findAndCount({
@@ -338,16 +227,7 @@ export class GmService {
         result: any;
     }> {
         try {
-            const { exec, parserToCST, parseToAST } = await import(`../dsl`);
-            const cst = parserToCST(query);
-            const ast = parseToAST(cst);
-            const result = await exec(ast, {
-                query: this.query.bind(this),
-                queryWhere: this.queryWhere.bind(this),
-            });
-            return {
-                result,
-            }
+            return this.statisticsService.execDsl(query);
         } catch (error) {
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }

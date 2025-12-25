@@ -34,12 +34,14 @@ export class StatisticService {
         switch (from) {
             case 'log':
                 const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where ?? {};
-                if (Array.isArray(logWhere)) {
-                    for (const condition of logWhere) {
-                        condition.tags = condition.tags ? And(ArrayContains([context.account.custom_id]), condition.tags as any) : ArrayContains([context.account.custom_id]);
+                if (context.account) {
+                    if (Array.isArray(logWhere)) {
+                        for (const condition of logWhere) {
+                            condition.tags = condition.tags ? And(ArrayContains([context.account.custom_id]), condition.tags as any) : ArrayContains([context.account.custom_id]);
+                        }
+                    } else {
+                        logWhere.tags = logWhere.tags ? And(ArrayContains([context.account.custom_id]), logWhere.tags as any) : ArrayContains([context.account.custom_id]);
                     }
-                } else {
-                    logWhere.tags = logWhere.tags ? And(ArrayContains([context.account.custom_id]), logWhere.tags as any) : ArrayContains([context.account.custom_id]);
                 }
                 const [logResult, logCount] = await this.logRepository.findAndCount({
                     select: select,
@@ -55,12 +57,14 @@ export class StatisticService {
                 }
             case 'user':
                 const userWhere: FindOptionsWhere<ChatwoUser> | FindOptionsWhere<ChatwoUser>[] = where ?? {};
-                if (Array.isArray(userWhere)) {
-                    for (const condition of userWhere) {
-                        condition.nakamaId = context.account.custom_id;
+                if (context.account) {
+                    if (Array.isArray(userWhere)) {
+                        for (const condition of userWhere) {
+                            condition.nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        userWhere.nakamaId = context.account.custom_id;
                     }
-                } else {
-                    userWhere.nakamaId = context.account.custom_id;
                 }
                 const [userResult, userCount] = await this.userRepository.findAndCount({
                     select: select,
@@ -79,14 +83,16 @@ export class StatisticService {
                 };
             case 'item':
                 const itemWhere: FindOptionsWhere<ChatwoItem> | FindOptionsWhere<ChatwoItem>[] = where ?? {};
-                if (Array.isArray(itemWhere)) {
-                    for (const condition of itemWhere) {
-                        condition.owner = condition.owner ?? {};
-                        (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                if (context.account) {
+                    if (Array.isArray(itemWhere)) {
+                        for (const condition of itemWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        itemWhere.owner = itemWhere.owner ?? {};
+                        (itemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                     }
-                } else {
-                    itemWhere.owner = itemWhere.owner ?? {};
-                    (itemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                 }
                 const [itemResult, itemCount] = await this.itemRepository.findAndCount({
                     select: select,
@@ -102,14 +108,16 @@ export class StatisticService {
                 };
             case 'container':
                 const containerWhere: FindOptionsWhere<ChatwoContainer> | FindOptionsWhere<ChatwoContainer>[] = where ?? {};
-                if (Array.isArray(containerWhere)) {
-                    for (const condition of containerWhere) {
-                        condition.owner = condition.owner ?? {};
-                        (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                if (context.account) {
+                    if (Array.isArray(containerWhere)) {
+                        for (const condition of containerWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        containerWhere.owner = containerWhere.owner ?? {};
+                        (containerWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                     }
-                } else {
-                    containerWhere.owner = containerWhere.owner ?? {};
-                    (containerWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
                 }
                 const [containerResult, containerCount] = await this.containerRepository.findAndCount({
                     select: select,
@@ -266,7 +274,7 @@ export class StatisticService {
         }
     }
 
-    createContext(account: ApiAccount, other: { [key: string]: any } = {}) {
+    createContext(account: ApiAccount | null, other: { [key: string]: any } = {}) {
         return {
             query: this.query.bind(this),
             queryWhere: this.queryWhere.bind(this),
@@ -275,7 +283,7 @@ export class StatisticService {
         };
     }
 
-    async execDsl(dsl: string, account: ApiAccount, extraContext: { [key: string]: any } = {}) {
+    async execDsl(dsl: string, account: ApiAccount | null = null, extraContext: { [key: string]: any } = {}) {
         const context = this.createContext(account, extraContext);
         const { exec, parserToCST, parseToAST } = await import(`../dsl`);
         const cst = parserToCST(dsl);
