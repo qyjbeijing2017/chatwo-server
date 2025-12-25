@@ -210,16 +210,23 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
-        const user = await this.userRepository.findOne({
-            where: {
-                nakamaId: account.custom_id,
+        return autoPatch(this.dataSource, async (manager) => {
+            const user = await manager.findOne(ChatwoUser, {
+                where: {
+                    nakamaId: account.custom_id,
+                }
+            });
+            if (!user) {
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+            }
+            user.flyMeters += dto.meters;
+            await manager.save(user);
+            return {
+                result: user,
+                message: `User ${account.user?.username} flew ${dto.meters} meters.`,
+                tags: [account.custom_id!, 'fly'],
             }
         });
-        if (!user) {
-            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
-        }
-        user.flyMeters += dto.meters;
-        return await this.userRepository.save(user);
     }
 
     async pve(account: ApiAccount, dto: KilledDto) {
