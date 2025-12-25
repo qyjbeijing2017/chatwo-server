@@ -3,6 +3,78 @@ import { ConfigManager } from "./manager";
 export const configManager = new ConfigManager({
     "items": [
         {
+            "key": "Frost_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Frost Shard",
+            "type": 1,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Verdant_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Verdant Core",
+            "type": 1,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Silver_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Silver Ore",
+            "type": 1,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Iron_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Iron Ore",
+            "type": 1,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Copper_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Copper Ore",
+            "type": 1,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Earth_Ore",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Earth Ore",
+            "type": 1,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "sc",
+            "InitInStorage": false,
+            "description": "",
+            "name": "SC",
+            "type": 64,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "ss",
+            "InitInStorage": false,
+            "description": "",
+            "name": "SS",
+            "type": 64,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
             "key": "SSS_Forging_Stone",
             "InitInStorage": false,
             "description": "",
@@ -53,7 +125,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "Tier C Forging Stone",
             "type": 1,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
         {
@@ -1038,24 +1110,6 @@ export const configManager = new ConfigManager({
             "fromFile": "items.csv"
         },
         {
-            "key": "ss",
-            "InitInStorage": false,
-            "description": "",
-            "name": "SS",
-            "type": 64,
-            "packagedSIze": null,
-            "fromFile": "items.csv"
-        },
-        {
-            "key": "sc",
-            "InitInStorage": false,
-            "description": "",
-            "name": "SC",
-            "type": 64,
-            "packagedSIze": null,
-            "fromFile": "items.csv"
-        },
-        {
             "key": "C_Tutorial_Hilt",
             "InitInStorage": false,
             "description": "",
@@ -1406,7 +1460,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 100
             },
-            "Condition": "tutoral",
+            "Progress": "(SELECT * FROM user).results[0].tutorialCompleted",
+            "Test": "Progress",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1415,7 +1470,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "fly.meters > 200",
+            "Progress": "(SELECT * FROM user).results[0].flyMeters",
+            "Test": "Progress > 200",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1424,7 +1480,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "friends.count > 1",
+            "Progress": "(SELECT * FROM user).results[0].friends.length",
+            "Test": "Progress > 1",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1433,7 +1490,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "pve.monsters.Spider > 25",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Spider\"]).total",
+            "Test": "Progress > 25",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1442,7 +1500,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "blades.breakTimes > 50",
+            "Progress": "(SELECT * FROM user).results[0].breakBladeTimes",
+            "Test": "Progress > 50",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1451,7 +1510,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 500
             },
-            "Condition": "blades.maxLevel > 5",
+            "Progress": "blades.maxLevel > 5",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1460,7 +1520,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 300
             },
-            "Condition": "purchases.hilt > 1",
+            "Progress": "purchases.hilt > 1",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1469,7 +1530,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 100
             },
-            "Condition": "blades.count > 5",
+            "Progress": "blades.count > 5",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1478,7 +1540,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 500
             },
-            "Condition": "blade.maxLevel > 10",
+            "Progress": "blade.maxLevel > 10",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1487,14 +1550,16 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "pve.monsters[”Wood Guardian”] > 10",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Wood Guardian\"]).total",
+            "Test": "Progress > 10",
             "fromFile": "archievementTask.csv"
         },
         {
             "Name": "KilledMimicChest1",
             "Type": "once",
             "Award": null,
-            "Condition": "pve.monsters[”Mimic Chest”] > 1",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Mimic Chest\"]).total",
+            "Test": "Progress > 1",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1503,7 +1568,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "pvp.killed > 5",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", user.custom_id]).total",
+            "Test": "Progress > 1",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1512,7 +1578,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 1000
             },
-            "Condition": "pve.bossKilled > 1",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"boss\"]).total",
+            "Test": "Progress > 1",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1521,14 +1588,16 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 1000
             },
-            "Condition": "blades.maxLevel > 30",
+            "Progress": "blades.maxLevel > 30",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
             "Name": "OwnSeasonLimitedWeapon1",
             "Type": "once",
             "Award": null,
-            "Condition": "blades.seasonLimitedCount > 1",
+            "Progress": "blades.seasonLimitedCount > 1",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1537,7 +1606,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "pve.dailyKilled > 10",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\"]).total",
+            "Test": "Progress > 10",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1546,7 +1616,8 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "pvp.dailyCount > 10",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", user.custom_id]).total",
+            "Test": "Progress > 10",
             "fromFile": "archievementTask.csv"
         },
         {
@@ -1555,28 +1626,32 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Condition": "fly.meters > 500",
+            "Progress": "(SELECT * FROM user).results[0].flyMeters",
+            "Test": "Progress > 500",
             "fromFile": "archievementTask.csv"
         },
         {
             "Name": "KilledBoss10",
             "Type": "longterm",
             "Award": null,
-            "Condition": "pve.bossKilled > 10",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"boss\"]).total",
+            "Test": "Progress > 10",
             "fromFile": "archievementTask.csv"
         },
         {
             "Name": "OwnArmLv30_10",
             "Type": "longterm",
             "Award": null,
-            "Condition": "blades.lv30Count > 10",
+            "Progress": "blades.lv30Count > 10",
+            "Test": "",
             "fromFile": "archievementTask.csv"
         },
         {
             "Name": "AddFriend100",
             "Type": "longterm",
             "Award": null,
-            "Condition": "friends.count > 100",
+            "Progress": "(SELECT * FROM user).results[0].friends.length",
+            "Test": "Progress > 100",
             "fromFile": "archievementTask.csv"
         }
     ],

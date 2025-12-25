@@ -1,10 +1,18 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
+Frost_Ore,Frost Shard,,item,RAssets/Prefabs/Items/Ores/Frost_Ore,,0.1
+Verdant_Ore,Verdant Core,,item,,,
+Silver_Ore,Silver Ore,,item,RAssets/Prefabs/Items/Ores/Silver_Ore,,0.1
+Iron_Ore,Iron Ore,,item,RAssets/Prefabs/Items/Ores/Iron_Ore,,0.1
+Copper_Ore,Copper Ore,,item,RAssets/Prefabs/Items/Ores/Copper_Ore,,0.1
+Earth_Ore,Earth Ore,,item,RAssets/Prefabs/Items/Ores/Earth_Ore,,0.1
+sc,SC,,currency,,,
+ss,SS,,currency,,,
 SSS_Forging_Stone,Tier SSS Forging Stone,,item,,,
 SS_Forging_Stone,Tier SS Forging Stone,,item,,,
 S_Forging_Stone,Tier S Forging Stone,,item,,,
 A_Forging_Stone,Tier A Forging Stone,,item,,,
 B_Forging_Stone,Tier B Forging Stone,,item,,,
-C_Forging_Stone,Tier C Forging Stone,,item,RAssets/Prefabs/Items/Equipments/C_Forging_Stone,,
+C_Forging_Stone,Tier C Forging Stone,,item,RAssets/Prefabs/Items/Equipments/C_Forging_Stone,,0.1
 ,Water Wind Breaker VFX,,vfx,,,
 ,Water Trial VFX,,vfx,,,
 ,Rainbow Wind Breaker VFX,,vfx,,,
@@ -119,5 +127,3 @@ Equip_11_SpeedContainerL,Boost Engine (Large),,item,RAssets/Prefabs/Items/Equipm
 Equip_7_GlideModule,Glide Module,,item,RAssets/Prefabs/Items/Equipments/Equip_7_GlideModule,,0.1
 Equip_14_SprintModule,Dash Module,,item,RAssets/Prefabs/Items/Equipments/Equip_14_SprintModule,,0.1
 Equip_9_OverloadModule,Overload Module,,item,RAssets/Prefabs/Items/Equipments/Equip_9_OverloadModule,,0.1
-ss,SS,,currency,,,
-sc,SC,,currency,,,
