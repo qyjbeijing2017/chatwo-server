@@ -40,7 +40,7 @@ export class GmService {
                     relations: join,
                 });
                 return {
-                    result: logResult,
+                    results: logResult,
                     total: logCount,
                 }
             case 'user':
@@ -56,7 +56,7 @@ export class GmService {
                     (user as any).friends = await this.nakamaService.login(user.nakamaId).then(session => this.nakamaService.friendsList(session));
                 }
                 return {
-                    result: userResult,
+                    results: userResult,
                     total: userCount,
                 }
             case 'item':
@@ -69,7 +69,7 @@ export class GmService {
                     relations: join,
                 });
                 return {
-                    result: itemResult,
+                    results: itemResult,
                     total: itemCount,
                 }
             case 'container':
@@ -82,7 +82,7 @@ export class GmService {
                     relations: join,
                 });
                 return {
-                    result: containerResult,
+                    results: containerResult,
                     total: containerCount,
                 }
             default:
