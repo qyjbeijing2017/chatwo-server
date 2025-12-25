@@ -59,4 +59,16 @@ export class NakamaService {
         meta: item.meta,
       }));
   }
+
+  async friendsList(session: Session) {
+    let { friends, cursor } = await this.client.listFriends(session);
+    const allFriends = [...(friends || [])];
+    while (cursor) {
+      const resp = await this.client.listFriends(session, undefined, 100, cursor);
+      friends = resp.friends;
+      cursor = resp.cursor;
+      allFriends.push(...(friends || []));
+    }
+    return allFriends;
+  }
 }

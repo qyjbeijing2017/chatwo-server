@@ -24,14 +24,14 @@ export class GmService {
         private readonly containerRepository: Repository<ChatwoContainer>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
-    ) {}
+    ) { }
 
     async query(context, from, select, where, join, orderBy, limit, offset) {
         const take = Math.min(Number(limit) || 100, 100);
         const skip = Number(offset) || 0;
         switch (from) {
             case 'log':
-                return this.logRepository.findAndCount({
+                const [logResult, logCount] = await this.logRepository.findAndCount({
                     select: select,
                     where: where,
                     order: orderBy,
@@ -39,8 +39,12 @@ export class GmService {
                     take,
                     relations: join,
                 });
+                return {
+                    result: logResult,
+                    total: logCount,
+                }
             case 'user':
-                return this.userRepository.findAndCount({
+                const [userResult, userCount] = await this.userRepository.findAndCount({
                     select: select,
                     where: where,
                     order: orderBy,
@@ -48,8 +52,15 @@ export class GmService {
                     take,
                     relations: join,
                 });
+                for (const user of userResult) {
+                    (user as any).friends = await this.nakamaService.login(user.nakamaId).then(session => this.nakamaService.friendsList(session));
+                }
+                return {
+                    result: userResult,
+                    total: userCount,
+                }
             case 'item':
-                return this.itemRepository.findAndCount({
+                const [itemResult, itemCount] = await this.itemRepository.findAndCount({
                     select: select,
                     where: where,
                     order: orderBy,
@@ -57,8 +68,12 @@ export class GmService {
                     take,
                     relations: join,
                 });
+                return {
+                    result: itemResult,
+                    total: itemCount,
+                }
             case 'container':
-                return this.containerRepository.findAndCount({
+                const [containerResult, containerCount] = await this.containerRepository.findAndCount({
                     select: select,
                     where: where,
                     order: orderBy,
@@ -66,6 +81,10 @@ export class GmService {
                     take,
                     relations: join,
                 });
+                return {
+                    result: containerResult,
+                    total: containerCount,
+                }
             default:
                 throw new Error(`Unknown from type: ${from}`);
         }
