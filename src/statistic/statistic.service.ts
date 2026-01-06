@@ -235,6 +235,9 @@ export class StatisticService {
                         sign = 'IS NOT NULL';
                         break;
                 }
+                if (sign === 'IS NULL' || sign === 'IS NOT NULL') {
+                    return Raw((alias) => `(${alias} #>> '{${keys}}') ${sign}`);
+                }
                 return Raw((alias) => `(${alias} #>> '{${keys}}')${transformTo} ${sign} :val`, { val: value[3] ?? '' });
             default:
                 throw new Error(`Unknown operator: ${operator}`);
