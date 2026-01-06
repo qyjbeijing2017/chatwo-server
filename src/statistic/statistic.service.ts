@@ -217,9 +217,6 @@ export class StatisticService {
                 let keys = whitePath(value[1]);
                 let sign = '=';
                 switch (value[2]) {
-                    case '=':
-                        sign = '=';
-                        break;
                     case '!=':
                         sign = '!=';
                         break;
@@ -241,7 +238,7 @@ export class StatisticService {
                         sign = 'IS NOT NULL';
                         break;
                 }
-                return Raw((alias) => `(${alias} #>> '{${keys}}') ${sign} :val`, { val: value[3] ?? '' });
+                return Raw((alias) => `(${alias} #>> '{${keys}}')::${transformTo} ${sign} :val`, { val: value[3] ?? '' });
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
