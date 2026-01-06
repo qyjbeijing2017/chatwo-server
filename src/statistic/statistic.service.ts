@@ -17,17 +17,17 @@ import { Item } from 'src/configV2/tables/Items';
 import { getServerTime, todayStart } from 'src/utils/serverTime';
 
 const WHITE_PATH_MAP: Record<string, string> = {
-  exp: 'exp',
-  bladeKey: 'bladeKey',
-  isOn: 'isOn',
-  energy: 'energy',
+    exp: 'exp',
+    bladeKey: 'bladeKey',
+    isOn: 'isOn',
+    energy: 'energy',
 };
 
 function whitePath(key: string) {
-  if (!WHITE_PATH_MAP[key]) {
-    throw new BadRequestException('invalid path');
-  }
-  return WHITE_PATH_MAP[key];
+    if (!WHITE_PATH_MAP[key]) {
+        throw new BadRequestException('invalid path');
+    }
+    return WHITE_PATH_MAP[key];
 }
 
 @Injectable()
@@ -234,9 +234,15 @@ export class StatisticService {
                     case 'IS NOT NULL':
                         sign = 'IS NOT NULL';
                         break;
+                    case 'IN':
+                        sign = 'IN';
+                        break;
                 }
                 if (sign === 'IS NULL' || sign === 'IS NOT NULL') {
                     return Raw((alias) => `(${alias} #>> '{${keys}}') ${sign}`);
+                }
+                if (sign === 'IN') {
+                    return Raw((alias) => `(${alias} #>> '{${keys}}') ${sign} (:...val)`, { val: value[3] ?? [] });
                 }
                 return Raw((alias) => `(${alias} #>> '{${keys}}')${transformTo} ${sign} :val`, { val: value[3] ?? '' });
             default:
