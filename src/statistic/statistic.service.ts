@@ -309,6 +309,10 @@ export class StatisticService {
         return serverTime.toDate();
     }
 
+    toSqlStringArray(array: string[]) {
+        return `ARRAY[${array.map(item => `'${item}'`).join(', ')}]`;
+    }
+
     createContext(account: ApiAccount | null, other: { [key: string]: any } = {}) {
         return {
             query: this.query.bind(this),
@@ -317,12 +321,13 @@ export class StatisticService {
             date: this.date.bind(this),
             KeysFromItemType: this.KeysFromItemType.bind(this),
             friendList: this.friendList.bind(this),
-            getServerTime: getServerTime,
-            todayStart: this.todayStart.bind(this),
+            toSqlStringArray: this.toSqlStringArray.bind(this),
+            getServerTime,
             account,
             ...other,
         };
     }
+
 
     async execDsl(dsl: string, account: ApiAccount | null = null, extraContext: { [key: string]: any } = {}) {
         const context = this.createContext(account, extraContext);

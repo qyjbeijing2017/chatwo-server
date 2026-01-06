@@ -6,10 +6,20 @@ import { LogDto } from 'src/statistic/dto/log.dto';
 import { AddSSDto } from './dto/addSS.dto';
 import { Account } from 'src/auth/Account.decorator';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
+import { Public } from 'src/auth/public.decorator';
+import { getServerTime } from 'src/utils/serverTime';
 
 @Controller('gm')
 export class GmController {
     constructor(private readonly gmService: GmService) { }
+
+    @Get('serverTime')
+    @Public()
+    async getServerTimeGM() {
+        return {
+            serverTime: getServerTime().toISOString(),
+        }
+    }
 
     @ApiBearerAuth()
     @Get('statistics')
