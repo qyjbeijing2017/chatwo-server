@@ -35,6 +35,19 @@ export enum ItemType {
   skin = head | eye | body | vfx,
   dropable = item | arm,
 }
+const itemTypeMap = new Map<string, ItemType>([
+  ['item', ItemType.item],
+  ['arm', ItemType.arm],
+  ['head', ItemType.head],
+  ['eye', ItemType.eye],
+  ['body', ItemType.body],
+  ['vfx', ItemType.vfx],
+  ['currency', ItemType.currency],
+  ['skin', ItemType.skin],
+]);
+export function keyToItemType(key: string): ItemType {
+  return itemTypeMap.get(key) || ItemType.item;
+}
 
 @Entity()
 export class ChatwoItem extends Patchable {

@@ -9,7 +9,7 @@ import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { LogDto } from './dto/log.dto';
 import { autoPatch } from 'src/utils/autoPatch';
-import { ChatwoItem, ItemType } from 'src/entities/item.entity';
+import { ChatwoItem, ItemType, keyToItemType } from 'src/entities/item.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { getMetadata } from 'src/utils/meta-data';
@@ -215,8 +215,13 @@ export class StatisticService {
         }
     }
 
-    async date(value: string | number | Date) {
+    date(value: string | number | Date) {
         return new Date(value);
+    }
+
+    KeysFromItemType(type: string) {
+        const itemType = keyToItemType(type);
+        return Array.from(configManager.itemMap.values()).filter(item => (item.type & itemType) !== 0).map(item => item.key);
     }
 
     async dsl() {
@@ -298,6 +303,7 @@ export class StatisticService {
             queryWhere: this.queryWhere.bind(this),
             getAllItemKeysFromType: this.getAllItemKeysFromType.bind(this),
             date: this.date.bind(this),
+            KeysFromItemType: this.KeysFromItemType.bind(this),
             account,
             ...other,
         };
