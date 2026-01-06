@@ -17,9 +17,10 @@ import { Item } from 'src/configV2/tables/Items';
 import { getServerTime } from 'src/utils/serverTime';
 
 const WHITE_PATH_MAP: Record<string, string> = {
-  gold: 'gold',
-  sword: 'items,sword',
-  shield: 'items,shield',
+  exp: 'exp',
+  bladeKey: 'bladeKey',
+  isOn: 'isOn',
+  energy: 'energy',
 };
 
 function whitePath(key: string) {
