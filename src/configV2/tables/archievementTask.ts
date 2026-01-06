@@ -1,4 +1,4 @@
-import { ConfigTable, ConfigYaml } from '../table';
+import { ConfigInt, ConfigTable, ConfigYaml } from '../table';
 
 export enum ArchievementTaskType {
   once = 0,
@@ -13,10 +13,11 @@ export class ArchievementTaskConfig extends ConfigTable {
     [key: string]: number;
   } = {};
   Progress: string = 'false';
-  Test: string = '';
+  Test: number = 0;
 
   constructor() {
     super();
     ConfigYaml()(this, 'Award');
+    ConfigInt()(this, 'Test');
   }
 }

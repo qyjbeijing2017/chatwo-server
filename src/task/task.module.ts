@@ -7,11 +7,13 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
 import { StatisticModule } from 'src/statistic/statistic.module';
+import { ItemModule } from 'src/item/item.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem]),
     StatisticModule,
+    ItemModule,
   ],
   providers: [TaskService],
   controllers: [TaskController]

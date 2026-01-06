@@ -14,7 +14,7 @@ import { ChatwoContainer } from 'src/entities/container.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { getMetadata } from 'src/utils/meta-data';
 import { Item } from 'src/configV2/tables/Items';
-import { getServerTime } from 'src/utils/serverTime';
+import { getServerTime, todayStart } from 'src/utils/serverTime';
 
 const WHITE_PATH_MAP: Record<string, string> = {
   exp: 'exp',
@@ -311,7 +311,7 @@ export class StatisticService {
         if (!user) {
             throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
         }
-        const today = this.todayStart();
+        const today = todayStart();
         if (!user.lastFlyMeterUpdate || user.lastFlyMeterUpdate < today) {
             return 0;
         }
@@ -329,7 +329,7 @@ export class StatisticService {
                 throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
             }
             user.flyMeters += dto.meters;
-            const today = this.todayStart();
+            const today = todayStart();
             if (!user.lastFlyMeterUpdate || user.lastFlyMeterUpdate < today) {
                 user.todayFlyMeters = dto.meters;
             } else {
@@ -382,12 +382,6 @@ export class StatisticService {
         }
     }
 
-    todayStart() {
-        const serverTime = getServerTime();
-        serverTime.startOf('day');
-        return serverTime.toDate();
-    }
-
     toSqlStringArray(array: string[]) {
         return `ARRAY[${array.map(item => `'${item}'`).join(', ')}]`;
     }
@@ -402,7 +396,7 @@ export class StatisticService {
             friendList: this.friendList.bind(this),
             toSqlStringArray: this.toSqlStringArray.bind(this),
             getServerTime,
-            todayStart: this.todayStart.bind(this),
+            todayStart,
             todayFlyMeters: this.todayFlyMeters.bind(this),
             account,
             ...other,

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { TaskService } from './task.service';
 import { Account } from 'src/auth/Account.decorator';
@@ -29,5 +29,12 @@ export class TaskController {
         return this.taskService.getAllTask(account);
     }
 
-
+    @ApiBearerAuth()
+    @Post(':taskId')
+    async finishTask(
+        @Account() account: ApiAccount,
+        @Param('taskId') taskId: string,
+    ) {
+        return this.taskService.finishedTask(account, taskId);
+    }
 }
