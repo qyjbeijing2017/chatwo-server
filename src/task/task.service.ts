@@ -86,7 +86,7 @@ export class TaskService {
             const items = await this.itemService.gainItems(
                 manager,
                 account,
-                config.Gain
+                config.Award
             );
             tags.push(...items.map(i => i.nakamaId));
             return {
