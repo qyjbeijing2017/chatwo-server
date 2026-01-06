@@ -246,6 +246,22 @@ export class StatisticService {
 
     }
 
+    async todayFlyMeters(account: ApiAccount) {
+        const user = await this.userRepository.findOne({
+            where: {
+                nakamaId: account.custom_id,
+            }
+        });
+        if (!user) {
+            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+        }
+        const today = this.todayStart();
+        if (!user.lastFlyMeterUpdate || user.lastFlyMeterUpdate < today) {
+            return 0;
+        }
+        return user.todayFlyMeters;
+    }
+
     async fly(account: ApiAccount, dto: FlyDto) {
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
@@ -257,6 +273,13 @@ export class StatisticService {
                 throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
             }
             user.flyMeters += dto.meters;
+            const today = this.todayStart();
+            if (!user.lastFlyMeterUpdate || user.lastFlyMeterUpdate < today) {
+                user.todayFlyMeters = dto.meters;
+            } else {
+                user.todayFlyMeters += dto.meters;
+            }
+            user.lastFlyMeterUpdate = new Date();
             await manager.save(user);
             return {
                 result: user,
@@ -324,11 +347,11 @@ export class StatisticService {
             toSqlStringArray: this.toSqlStringArray.bind(this),
             getServerTime,
             todayStart: this.todayStart.bind(this),
+            todayFlyMeters: this.todayFlyMeters.bind(this),
             account,
             ...other,
         };
     }
-
 
     async execDsl(dsl: string, account: ApiAccount | null = null, extraContext: { [key: string]: any } = {}) {
         const context = this.createContext(account, extraContext);

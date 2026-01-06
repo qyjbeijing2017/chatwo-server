@@ -49,4 +49,10 @@ export class ChatwoUser extends Patchable {
 
   @Column({ type: 'int8', default: 0 })
   breakBladeTimes: number;
+
+  @Column({ type: 'timestamp', nullable: true })
+  lastFlyMeterUpdate: Date | null;
+
+  @Column({ type: 'float4', default: 0 })
+  todayFlyMeters: number = 0;
 }
