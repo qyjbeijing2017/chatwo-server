@@ -202,16 +202,13 @@ export class StatisticService {
             case "@>&&":
                 return And(ArrayContains(value[0]), Raw((alias) => `${alias} && :value`, { value: value[1] }));
             case "JSONB":
-                let transformTo = 'text';
+                let transformTo = '';
                 switch (value[0]) {
-                    case 'string':
-                        transformTo = 'text';
-                        break;
                     case 'number':
-                        transformTo = 'float8';
+                        transformTo = '::float8';
                         break;
                     case 'boolean':
-                        transformTo = 'bool';
+                        transformTo = '::bool';
                         break;
                 }
                 let keys = whitePath(value[1]);
@@ -238,7 +235,7 @@ export class StatisticService {
                         sign = 'IS NOT NULL';
                         break;
                 }
-                return Raw((alias) => `(${alias} #>> '{${keys}}')::${transformTo} ${sign} :val`, { val: value[3] ?? '' });
+                return Raw((alias) => `(${alias} #>> '{${keys}}')${transformTo} ${sign} :val`, { val: value[3] ?? '' });
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
