@@ -76,9 +76,9 @@ export class StatisticService {
                     take,
                     relations: join,
                 });
-                for (const user of userResult) {
-                    (user as any).friends = await this.nakamaService.login(user.nakamaId).then(session => this.nakamaService.friendsList(session));
-                }
+                // for (const user of userResult) {
+                //     (user as any).friends = await this.nakamaService.login(user.nakamaId).then(session => this.nakamaService.friendsList(session));
+                // }
                 return {
                     results: userResult,
                     total: userCount,
@@ -224,6 +224,11 @@ export class StatisticService {
         return Array.from(configManager.itemMap.values()).filter(item => (item.type & itemType) !== 0).map(item => item.key);
     }
 
+    async friendList(account: ApiAccount) {
+        const session = await this.nakamaService.login(account.custom_id || '');
+        return this.nakamaService.friendsList(session);
+    }
+
     async dsl() {
         this.logRepository.findOne({
             select: {
@@ -304,6 +309,7 @@ export class StatisticService {
             getAllItemKeysFromType: this.getAllItemKeysFromType.bind(this),
             date: this.date.bind(this),
             KeysFromItemType: this.KeysFromItemType.bind(this),
+            friendList: this.friendList.bind(this),
             account,
             ...other,
         };
