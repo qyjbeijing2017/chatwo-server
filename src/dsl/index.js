@@ -9302,6 +9302,10 @@ var CONTAINS_AND_BY = createToken({
   name: "CONTAINS_AND_BY",
   pattern: /@>&&/
 });
+var JSONB = createToken({
+  name: "JSONB",
+  pattern: /JSONB/
+});
 var BooleanLiteral = createToken({ name: "BooleanLiteral", pattern: /true|false/ });
 var NumberLiteral = createToken({ name: "NumberLiteral", pattern: /\d+(\.\d+)?/ });
 var StringLiteral = createToken({ name: "StringLiteral", pattern: /"(?:[^"\\]|\\.)*"/ });
@@ -9362,6 +9366,7 @@ var chatwoDSLTokens = [
   CONTAINS_AND_BY,
   CONTAINS,
   CONTAINED_BY,
+  JSONB,
   ISNULL,
   BooleanLiteral,
   // The Identifier must appear after the keywords because all keywords are valid identifiers.
@@ -9456,7 +9461,8 @@ var ChatwoDSLParser = class extends CstParser {
       { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(RAW, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(And, { LABEL: "operator" }) },
-      { ALT: () => this.CONSUME(CONTAINS_AND_BY, { LABEL: "operator" }) }
+      { ALT: () => this.CONSUME(CONTAINS_AND_BY, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(JSONB, { LABEL: "operator" }) }
     ]);
     this.OPTION(
       () => this.SUBRULE(this.expression)
@@ -9998,6 +10004,7 @@ var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
   WhereOperator3["RAW"] = "RAW";
   WhereOperator3["And"] = "&&";
   WhereOperator3["CONTAINS_AND_BY"] = "@>&&";
+  WhereOperator3["JSONB"] = "JSONB";
   return WhereOperator3;
 })(WhereOperator || {});
 var ChatwoAstWhereState = class extends ChatwoAstNode {

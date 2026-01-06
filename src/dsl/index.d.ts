@@ -28,7 +28,8 @@ declare enum WhereOperator {
     ANY = "ANY",
     RAW = "RAW",
     And = "&&",
-    CONTAINS_AND_BY = "@>&&"
+    CONTAINS_AND_BY = "@>&&",
+    JSONB = "JSONB"
 }
 declare class ChatwoAstWhereState extends ChatwoAstNode {
     state: {

@@ -16,6 +16,19 @@ import { getMetadata } from 'src/utils/meta-data';
 import { Item } from 'src/configV2/tables/Items';
 import { getServerTime } from 'src/utils/serverTime';
 
+const WHITE_PATH_MAP: Record<string, string> = {
+  gold: 'gold',
+  sword: 'items,sword',
+  shield: 'items,shield',
+};
+
+function whitePath(key: string) {
+  if (!WHITE_PATH_MAP[key]) {
+    throw new BadRequestException('invalid path');
+  }
+  return WHITE_PATH_MAP[key];
+}
+
 @Injectable()
 export class StatisticService {
     constructor(
@@ -187,6 +200,47 @@ export class StatisticService {
                 return Raw((alias) => `${alias} && :value`, { value });
             case "@>&&":
                 return And(ArrayContains(value[0]), Raw((alias) => `${alias} && :value`, { value: value[1] }));
+            case "JSONB":
+                let transformTo = 'text';
+                switch (value[0]) {
+                    case 'string':
+                        transformTo = 'text';
+                        break;
+                    case 'number':
+                        transformTo = 'float8';
+                        break;
+                    case 'boolean':
+                        transformTo = 'bool';
+                        break;
+                }
+                let keys = whitePath(value[1]);
+                let sign = '=';
+                switch (value[2]) {
+                    case '=':
+                        sign = '=';
+                        break;
+                    case '!=':
+                        sign = '!=';
+                        break;
+                    case '>':
+                        sign = '>';
+                        break;
+                    case '<':
+                        sign = '<';
+                    case '>=':
+                        sign = '>=';
+                        break;
+                    case '<=':
+                        sign = '<=';
+                        break;
+                    case 'IS NULL':
+                        sign = 'IS NULL';
+                        break;
+                    case 'IS NOT NULL':
+                        sign = 'IS NOT NULL';
+                        break;
+                }
+                return Raw((alias) => `(${alias} #>> '{${keys}}') ${sign} :val`, { val: value[3] ?? '' });
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
