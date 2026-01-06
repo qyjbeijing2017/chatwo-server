@@ -14,6 +14,7 @@ import { ChatwoContainer } from 'src/entities/container.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { getMetadata } from 'src/utils/meta-data';
 import { Item } from 'src/configV2/tables/Items';
+import { getServerTime } from 'src/utils/serverTime';
 
 @Injectable()
 export class StatisticService {
@@ -302,6 +303,12 @@ export class StatisticService {
         }
     }
 
+    todayStart() {
+        const serverTime = getServerTime();
+        serverTime.startOf('day');
+        return serverTime.toDate();
+    }
+
     createContext(account: ApiAccount | null, other: { [key: string]: any } = {}) {
         return {
             query: this.query.bind(this),
@@ -310,6 +317,8 @@ export class StatisticService {
             date: this.date.bind(this),
             KeysFromItemType: this.KeysFromItemType.bind(this),
             friendList: this.friendList.bind(this),
+            getServerTime: getServerTime,
+            todayStart: this.todayStart.bind(this),
             account,
             ...other,
         };
