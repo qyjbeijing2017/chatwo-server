@@ -185,6 +185,8 @@ export class StatisticService {
             //     });
             case "&&":
                 return Raw((alias) => `${alias} && :value`, { value });
+            case "@>&&":
+                return And(ArrayContains(value[0]), Raw((alias) => `${alias} && :value`, { value: value[1] }));
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }

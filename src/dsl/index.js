@@ -9298,6 +9298,10 @@ var RAW = createToken({
   name: "RAW",
   pattern: /RAW/
 });
+var CONTAINS_AND_BY = createToken({
+  name: "CONTAINS_AND_BY",
+  pattern: /@>&&/
+});
 var BooleanLiteral = createToken({ name: "BooleanLiteral", pattern: /true|false/ });
 var NumberLiteral = createToken({ name: "NumberLiteral", pattern: /\d+(\.\d+)?/ });
 var StringLiteral = createToken({ name: "StringLiteral", pattern: /"(?:[^"\\]|\\.)*"/ });
@@ -9355,6 +9359,7 @@ var chatwoDSLTokens = [
   IN2,
   ANY,
   RAW,
+  CONTAINS_AND_BY,
   CONTAINS,
   CONTAINED_BY,
   ISNULL,
@@ -9450,7 +9455,8 @@ var ChatwoDSLParser = class extends CstParser {
       { ALT: () => this.CONSUME(ISNULL, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(RAW, { LABEL: "operator" }) },
-      { ALT: () => this.CONSUME(And, { LABEL: "operator" }) }
+      { ALT: () => this.CONSUME(And, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(CONTAINS_AND_BY, { LABEL: "operator" }) }
     ]);
     this.OPTION(
       () => this.SUBRULE(this.expression)
@@ -9991,6 +9997,7 @@ var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
   WhereOperator3["ANY"] = "ANY";
   WhereOperator3["RAW"] = "RAW";
   WhereOperator3["And"] = "&&";
+  WhereOperator3["CONTAINS_AND_BY"] = "@>&&";
   return WhereOperator3;
 })(WhereOperator || {});
 var ChatwoAstWhereState = class extends ChatwoAstNode {
