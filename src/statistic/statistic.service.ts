@@ -323,6 +323,7 @@ export class StatisticService {
             friendList: this.friendList.bind(this),
             toSqlStringArray: this.toSqlStringArray.bind(this),
             getServerTime,
+            todayStart: this.todayStart.bind(this),
             account,
             ...other,
         };
