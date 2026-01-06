@@ -26,7 +26,8 @@ declare enum WhereOperator {
     ISNULL = "ISNULL",
     BETWEEN = "BETWEEN",
     ANY = "ANY",
-    RAW = "RAW"
+    RAW = "RAW",
+    And = "&&"
 }
 declare class ChatwoAstWhereState extends ChatwoAstNode {
     state: {

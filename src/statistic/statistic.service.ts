@@ -169,20 +169,22 @@ export class StatisticService {
                 return Between(value[0], value[1]);
             case "ANY":
                 return Any(value);
-            case "RAW":
-                return Raw((alias) => {
-                    const positions = alias.split('.');
-                    const aliasReplaced = positions.map((pos, index) => {
-                        if (!pos.startsWith('"')) {
-                            return `"${pos}"`;
-                        } else {
-                            return pos;
-                        }
-                    })
-                    const aliasNew = aliasReplaced.join('.');
-                    const val = value.replace('<alias>', aliasNew);
-                    return val;
-                });
+            // case "RAW":
+            //     return Raw((alias) => {
+            //         const positions = alias.split('.');
+            //         const aliasReplaced = positions.map((pos, index) => {
+            //             if (!pos.startsWith('"')) {
+            //                 return `"${pos}"`;
+            //             } else {
+            //                 return pos;
+            //             }
+            //         })
+            //         const aliasNew = aliasReplaced.join('.');
+            //         const val = value.replace('<alias>', aliasNew);
+            //         return val;
+            //     });
+            case "&&":
+                return Raw((alias) => `${alias} && :value`, { value });
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }

@@ -9449,7 +9449,8 @@ var ChatwoDSLParser = class extends CstParser {
       { ALT: () => this.CONSUME(BETERRN, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(ISNULL, { LABEL: "operator" }) },
       { ALT: () => this.CONSUME(ANY, { LABEL: "operator" }) },
-      { ALT: () => this.CONSUME(RAW, { LABEL: "operator" }) }
+      { ALT: () => this.CONSUME(RAW, { LABEL: "operator" }) },
+      { ALT: () => this.CONSUME(And, { LABEL: "operator" }) }
     ]);
     this.OPTION(
       () => this.SUBRULE(this.expression)
@@ -9989,6 +9990,7 @@ var WhereOperator = /* @__PURE__ */ ((WhereOperator3) => {
   WhereOperator3["BETWEEN"] = "BETWEEN";
   WhereOperator3["ANY"] = "ANY";
   WhereOperator3["RAW"] = "RAW";
+  WhereOperator3["And"] = "&&";
   return WhereOperator3;
 })(WhereOperator || {});
 var ChatwoAstWhereState = class extends ChatwoAstNode {
