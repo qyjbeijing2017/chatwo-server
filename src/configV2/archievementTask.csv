@@ -4,18 +4,18 @@ Fly200,Fly for 200 meters,once,ss: 200,(SELECT * FROM user).results[0].flyMeters
 AddFriend1,"Add 1 Friend (purchase a Friend Stone, pair with other, collect stars from metors)",once,ss: 200,friendList(account).length,1
 KilledSpider25,Kill 25 spiders,once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", ""Spider""]).total",25
 BreakBlade50,Break and reforge your blade 50 times,once,ss: 200,(SELECT * FROM user).results[0].breakBladeTimes,50
-UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,ss: 500,"((SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 700]).total",1
+UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,ss: 500,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 700]).total",1
 PurchaseHilt1,"Purchase a hilt ",once,ss: 300,"(SELECT * FROM log WHERE tags @>&& [[""store""], KeysFromItemType(""arm"")]).total",1
 DrawBlade1,Draw your first blade and assemble a brand new Soul-Arm,once,ss: 100,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB [""string"", ""bladeKey"", ""IS NOT NULL""]).total",1
 UpgradeArmLv10,Upgrade any Soul-Arm to Lv. 10,once,ss: 500,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 2280]).total",1
 KilledWoodGuardian10,Kill 10 Wood Guardian,once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", ""Wood Guardian""]).total",10
 KilledMimicChest1,Kill 1 Mimic Chest,once,,"(SELECT * FROM log WHERE tags @> [""pve"", ""Mimic Chest""]).total",1
-DefeatSpiritborne5,Defeat 5 Spiritborne (players),once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", user.custom_id]).total",1
+DefeatSpiritborne5,Defeat 5 Spiritborne (players),once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", account.custom_id]).total",1
 KilledBoss1,1st Boss Kill,once,ss: 1000,"(SELECT * FROM log WHERE tags @> [""pve"", ""boss""]).total",1
 UpgradeArm30,Upgrade any Soul-Arm to Lv. 30,once,ss: 1000,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 50000]).total",1
-OwnSeasonLimitedWeapon1,Own 1 season limited weapon,once,,(SELECT * FROM item WHERE key IN [””]).total,1
+OwnSeasonLimitedWeapon1,Own 1 season limited weapon,once,,"(SELECT * FROM item WHERE meta JSONB [""string"", ""bladeKey"", ""IN"", [”Tang_lv20_9”,”Katana_lv20_9”]]).total",1
 KilledMonsters10,Kill 10 monsters,daily,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve""] AND createdAt > todayStart()).total",10
-"DefeatSpiritborne5 ",Defeat 5 Spiritborne,daily,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", user.custom_id] AND createdAt > todayStart()).total",10
+"DefeatSpiritborne5 ",Defeat 5 Spiritborne,daily,ss: 200,"(SELECT * FROM log WHERE tags @> [""pvp"", account.custom_id] AND createdAt > todayStart()).total",10
 Fly500,Fly for 500 meters,daily,ss: 200,todayFlyMeters(account),500
 KilledBoss10,Kill 10 boss,longterm,,"(SELECT * FROM log WHERE tags @> [""pve"", ""boss""]).total",10
 OwnArmLv30_10,Own 10 Lv. 30 Soul-Arms,longterm,,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 50000]).total",10

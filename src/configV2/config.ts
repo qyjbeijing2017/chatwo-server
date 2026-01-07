@@ -1510,7 +1510,7 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 500
             },
-            "Progress": "((SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 700]).total",
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 700]).total",
             "Test": 1,
             "fromFile": "archievementTask.csv"
         },
@@ -1568,7 +1568,7 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", user.custom_id]).total",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", account.custom_id]).total",
             "Test": 1,
             "fromFile": "archievementTask.csv"
         },
@@ -1596,7 +1596,7 @@ export const configManager = new ConfigManager({
             "Name": "OwnSeasonLimitedWeapon1",
             "Type": "once",
             "Award": null,
-            "Progress": "(SELECT * FROM item WHERE key IN [””]).total",
+            "Progress": "(SELECT * FROM item WHERE meta JSONB [\"string\", \"bladeKey\", \"IN\", [”Tang_lv20_9”,”Katana_lv20_9”]]).total",
             "Test": 1,
             "fromFile": "archievementTask.csv"
         },
@@ -1616,7 +1616,7 @@ export const configManager = new ConfigManager({
             "Award": {
                 "ss": 200
             },
-            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", user.custom_id] AND createdAt > todayStart()).total",
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pvp\", account.custom_id] AND createdAt > todayStart()).total",
             "Test": 10,
             "fromFile": "archievementTask.csv"
         },
