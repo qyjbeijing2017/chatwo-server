@@ -241,6 +241,10 @@ export class GmService {
         return this.itemService.gainItems(manager, account, gain);
     }
 
+    jsonParse(string: string): any {
+        return JSON.parse(string);
+    }
+
     async code(dto: CodeDto): Promise<{
         results: string[];
     }> {
@@ -266,6 +270,7 @@ export class GmService {
                         deleteItem: async (something: any) => {
                             return manager.delete(ChatwoItem, something);
                         },
+                        jsonParse: (string: string) => this.jsonParse(string),
                     });
                     results.push(result);
                 } catch (error) {
