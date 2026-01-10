@@ -12,6 +12,7 @@ import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
 import { CodeDto } from './dto/code.dto';
+import { ItemService } from 'src/item/item.service';
 
 @Injectable()
 export class GmService {
@@ -27,6 +28,7 @@ export class GmService {
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly statisticsService: StatisticService,
+        private readonly itemService: ItemService,
     ) { }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
@@ -234,25 +236,49 @@ export class GmService {
         }
     }
 
+    gain(string: string, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
+        const gain = JSON.parse(string);
+        return this.itemService.gainItems(manager, account, gain);
+    }
+
     async code(dto: CodeDto): Promise<{
         results: string[];
     }> {
-        const session = await this.nakamaService.login(dto.customId);
-        const account = await this.nakamaService.getAccount(session);
-        if (!account.user) {
-            throw new NotFoundException(`User with customId ${dto.customId} not found`);
-        }
-        const results: any[] = [];
-        for (const line of dto.lines) {
-            try {
-                const result = await this.statisticsService.execDsl(line);
-                results.push(result);
-            } catch (error) {
-                results.push(error);
+        return autoPatch(this.dataSource, async (manager) => {
+            const tags: string[] = [];
+            const session = await this.nakamaService.login(dto.customId);
+            const account = await this.nakamaService.getAccount(session);
+            if (!account.user) {
+                throw new NotFoundException(`User with customId ${dto.customId} not found`);
             }
-        }
-        return {
-            results,
-        }
+            const results: any[] = [];
+            for (const line of dto.lines) {
+                try {
+                    const result = await this.statisticsService.execDsl(line, account, {
+                        gain: async (string: string) => {
+                            const items = await this.gain(string, account, manager);
+                            tags.push(...items.map(i => i.nakamaId));
+                            return items;
+                        },
+                        deleteLog: async (something: any) => {
+                            return manager.delete(ChatwoLog, something);
+                        },
+                        deleteItem: async (something: any) => {
+                            return manager.delete(ChatwoItem, something);
+                        },
+                    });
+                    results.push(result);
+                } catch (error) {
+                    results.push(error);
+                }
+            }
+            return {
+                result: {
+                    results,
+                },
+                message: `Executed DSL lines for user ${dto.customId}`,
+                tags,
+            }
+        });
     }
 }
