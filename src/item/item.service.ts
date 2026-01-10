@@ -46,6 +46,8 @@ export class ItemService {
     return container;
   }
 
+
+
   async gainItems(manager: EntityManager, account: ApiAccount, items: Record<string, number>) {
     const result: ChatwoItem[] = [];
     const user = await manager.findOne(ChatwoUser, {
@@ -77,6 +79,11 @@ export class ItemService {
         });
         await manager.save(item);
         result.push(item);
+      } else if ((itemConfig.type & ItemType.currency) !== 0) {
+        const wallet = user.wallet || {};
+        wallet[key] = (wallet[key] || 0) + items[key];
+        user.wallet = wallet;
+        await manager.save(user);
       } else if (itemConfig.fromFile === 'items.csv') {
         result.push(manager.create(ChatwoItem, {
           key,
@@ -446,7 +453,7 @@ export class ItemService {
       if (!item) {
         throw new NotFoundException(`Item with nakamaId ${nakamaId} not found`);
       }
-      if(item.owner && item.owner.nakamaId !== account.custom_id) {
+      if (item.owner && item.owner.nakamaId !== account.custom_id) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}`);
       }
       item.meta = Object.assign(item.meta || {}, dto.meta);
