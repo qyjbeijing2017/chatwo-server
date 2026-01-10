@@ -77,4 +77,11 @@ export class GmController {
     async code(@Body() dto: CodeDto) {
         return this.gmService.code(dto);
     }
+
+    @ApiBearerAuth()
+    @Server()
+    @Delete('log/:id')
+    async deleteLog(@Param('id', ParseIntPipe) id: number) {
+        return this.gmService.deleteLog(id);
+    }
 }

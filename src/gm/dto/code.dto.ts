@@ -9,5 +9,5 @@ export class CodeDto {
     @ApiProperty()
     @IsArray()
     @IsString({ each: true })
-    lines: string[];
+    lines: string;
 }
