@@ -302,7 +302,7 @@ export class GmService {
             if (!log) {
                 throw new NotFoundException(`Log with id ${id} not found`);
             }
-            await manager.remove(log);
+            await manager.delete(ChatwoLog, log);
             return {
                 result: {
                     message: `Log with id ${id} deleted.`,
