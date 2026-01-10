@@ -290,11 +290,26 @@ export class GmService {
     async deleteLog(id: number): Promise<{
         message: string;
     }> {
-        const log = await this.logRepository.findOneBy({ id });
-        if (!log) {
-            throw new NotFoundException(`Log with id ${id} not found`);
-        }
-        await this.logRepository.remove(log);
-        return { message: `Log with id ${id} deleted.` };
+        // const log = await this.logRepository.findOneBy({ id });
+        // if (!log) {
+        //     throw new NotFoundException(`Log with id ${id} not found`);
+        // }
+        // await this.logRepository.remove(log);
+        // return { message: `Log with id ${id} deleted.` };
+        return autoPatch(this.dataSource, async (manager) => {
+            const tags: string[] = ['gm', 'deleteLog', `logId/${id}`];
+            const log = await manager.findOne(ChatwoLog, { where: { id } });
+            if (!log) {
+                throw new NotFoundException(`Log with id ${id} not found`);
+            }
+            await manager.remove(log);
+            return {
+                result: {
+                    message: `Log with id ${id} deleted.`,
+                },
+                message: `Log with id ${id} deleted.`,
+                tags,
+            }
+        });
     }
 }
