@@ -236,9 +236,8 @@ export class GmService {
         }
     }
 
-    gain(string: string, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
-        const gain = JSON.parse(string);
-        return this.itemService.gainItems(manager, account, gain);
+    gain(key: string, amount: number, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
+        return this.itemService.gainItems(manager, account, { [key]: amount });
     }
 
     jsonParse(string: string): any {
@@ -259,8 +258,8 @@ export class GmService {
             for (const line of dto.lines) {
                 try {
                     const result = await this.statisticsService.execDsl(line, account, {
-                        gain: async (string: string) => {
-                            const items = await this.gain(string, account, manager);
+                        gain: async (key: string, amount: number) => {
+                            const items = await this.gain(key, amount, account, manager);
                             tags.push(...items.map(i => i.nakamaId));
                             return items;
                         },
