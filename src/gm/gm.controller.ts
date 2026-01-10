@@ -8,6 +8,7 @@ import { Account } from 'src/auth/Account.decorator';
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Public } from 'src/auth/public.decorator';
 import { getServerTime } from 'src/utils/serverTime';
+import { CodeDto } from './dto/code.dto';
 
 @Controller('gm')
 export class GmController {
@@ -68,5 +69,12 @@ export class GmController {
     @Get('dsl/:query')
     async dslQuery(@Param('query') query: string) {
         return this.gmService.dslQuery(query);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Post('code')
+    async code(@Body() dto: CodeDto) {
+        return this.gmService.code(dto);
     }
 }

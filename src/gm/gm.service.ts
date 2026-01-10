@@ -11,6 +11,7 @@ import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManage
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
+import { CodeDto } from './dto/code.dto';
 
 @Injectable()
 export class GmService {
@@ -230,6 +231,28 @@ export class GmService {
             return this.statisticsService.execDsl(query);
         } catch (error) {
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
+        }
+    }
+
+    async code(dto: CodeDto): Promise<{
+        results: string[];
+    }> {
+        const session = await this.nakamaService.login(dto.customId);
+        const account = await this.nakamaService.getAccount(session);
+        if (!account.user) {
+            throw new NotFoundException(`User with customId ${dto.customId} not found`);
+        }
+        const results: any[] = [];
+        for (const line of dto.lines) {
+            try {
+                const result = await this.statisticsService.execDsl(line);
+                results.push(result);
+            } catch (error) {
+                results.push(error);
+            }
+        }
+        return {
+            results,
         }
     }
 }
