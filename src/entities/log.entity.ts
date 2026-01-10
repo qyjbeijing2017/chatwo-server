@@ -42,9 +42,6 @@ export class ChatwoLog {
   @Column()
   message: string; // Log message
 
-  @DeleteDateColumn({ type: 'timestamp', nullable: true })
-  deletedAt?: Date;
-
   @Column({ type: 'jsonb', default: {} })
   data: {
     wallet?: ChatwoWalletAddition;
