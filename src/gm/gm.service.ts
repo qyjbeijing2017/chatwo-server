@@ -265,7 +265,9 @@ export class GmService {
                             return items;
                         },
                         deleteLog: async (something: any) => {
-                            return manager.delete(ChatwoLog, something);
+                            return this.logRepository.delete({
+                                id: something.id,
+                            });
                         },
                         deleteItem: async (something: any) => {
                             return manager.delete(ChatwoItem, something);
@@ -282,32 +284,6 @@ export class GmService {
                     results,
                 },
                 message: `Executed DSL lines for user ${dto.customId}`,
-                tags,
-            }
-        });
-    }
-
-    async deleteLog(id: number): Promise<{
-        message: string;
-    }> {
-        // const log = await this.logRepository.findOneBy({ id });
-        // if (!log) {
-        //     throw new NotFoundException(`Log with id ${id} not found`);
-        // }
-        // await this.logRepository.remove(log);
-        // return { message: `Log with id ${id} deleted.` };
-        return autoPatch(this.dataSource, async (manager) => {
-            const tags: string[] = ['gm', 'deleteLog', `logId/${id}`];
-            const log = await manager.findOne(ChatwoLog, { where: { id } });
-            if (!log) {
-                throw new NotFoundException(`Log with id ${id} not found`);
-            }
-            await manager.delete(ChatwoLog, log);
-            return {
-                result: {
-                    message: `Log with id ${id} deleted.`,
-                },
-                message: `Log with id ${id} deleted.`,
                 tags,
             }
         });
