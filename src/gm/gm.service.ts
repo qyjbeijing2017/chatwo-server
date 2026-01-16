@@ -237,7 +237,7 @@ export class GmService {
     }
 
     gain(key: string, amount: number, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
-        return this.itemService.gainItems(manager, account, { [key]: amount });
+        return this.itemService.gainItems(manager, account, { [key]: amount }, true);
     }
 
     jsonParse(string: string): any {

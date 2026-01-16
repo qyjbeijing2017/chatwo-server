@@ -46,9 +46,7 @@ export class ItemService {
     return container;
   }
 
-
-
-  async gainItems(manager: EntityManager, account: ApiAccount, items: Record<string, number>) {
+  async gainItems(manager: EntityManager, account: ApiAccount, items: Record<string, number>, inChest: boolean = false) {
     const result: ChatwoItem[] = [];
     const user = await manager.findOne(ChatwoUser, {
       where: { nakamaId: account.custom_id },
@@ -85,16 +83,27 @@ export class ItemService {
         user.wallet = wallet;
         await manager.save(user);
       } else if (itemConfig.fromFile === 'items.csv') {
-        result.push(manager.create(ChatwoItem, {
-          key,
-        }));
+        for (let i = 0; i < items[key]; i++) {
+          const item = manager.create(ChatwoItem, {
+            key,
+            owner: inChest ? user : null,
+            container: inChest ? chest : null,
+          });
+          if (inChest) {
+            await manager.save(item);
+          }
+          result.push(item);
+        }
       } else {
-        const item = manager.create(ChatwoItem, {
-          key,
-          owner: user,
-        });
-        await manager.save(item);
-        result.push(item);
+        for (let i = 0; i < items[key]; i++) {
+          const item = manager.create(ChatwoItem, {
+            key,
+            owner: user,
+            container: inChest ? chest : null,
+          });
+          await manager.save(item);
+          result.push(item);
+        }
       }
 
     }
