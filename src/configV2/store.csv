@@ -1,4 +1,5 @@
 ﻿key,gain,cost
+C_Tutorial_Hilt,C_Tutorial_Hilt: 1,ss: 0
 A Relic Default Hilt,A_Relic_Hilt: 1,ss: 10000
 B Relic Default Hilt,B_Relic_Hilt: 1,ss: 3000
 C Relic Default Hilt,C_Relic_Hilt: 1,ss: 1000

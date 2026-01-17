@@ -1202,6 +1202,16 @@ export const configManager = new ConfigManager({
     ],
     "store": [
         {
+            "key": "C_Tutorial_Hilt",
+            "gain": {
+                "C_Tutorial_Hilt": 1
+            },
+            "cost": {
+                "ss": 0
+            },
+            "fromFile": "store.csv"
+        },
+        {
             "key": "A Relic Default Hilt",
             "gain": {
                 "A_Relic_Hilt": 1
