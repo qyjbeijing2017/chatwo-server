@@ -1,6 +1,8 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
+Head_44_Kinght,Knight Head,,head,RAssets/Prefabs/Characters/Heads/Head_44_Kinght,,0.1
+Body_12_Knight,Knight Body,,body,RAssets/Prefabs/Characters/Bodys/Body_12_Knight,,0.1
 Frost_Ore,Frost Shard,,item,RAssets/Prefabs/Items/Ores/Frost_Ore,,0.1
-Verdant_Ore,Verdant Core,,item,,,
+Verdant_Ore,Verdant Core,,item,RAssets/Prefabs/Items/Ores/Verdant_Ore,,0.1
 Silver_Ore,Silver Ore,,item,RAssets/Prefabs/Items/Ores/Silver_Ore,,0.1
 Iron_Ore,Iron Ore,,item,RAssets/Prefabs/Items/Ores/Iron_Ore,,0.1
 Copper_Ore,Copper Ore,,item,RAssets/Prefabs/Items/Ores/Copper_Ore,,0.1

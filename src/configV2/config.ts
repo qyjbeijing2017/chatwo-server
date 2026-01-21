@@ -3,6 +3,24 @@ import { ConfigManager } from "./manager";
 export const configManager = new ConfigManager({
     "items": [
         {
+            "key": "Head_44_Kinght",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_12_Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
             "key": "Frost_Ore",
             "InitInStorage": false,
             "description": "",
@@ -17,7 +35,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "Verdant Core",
             "type": 1,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
         {
