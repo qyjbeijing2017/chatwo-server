@@ -3,7 +3,7 @@ import { ConfigManager } from "./manager";
 export const configManager = new ConfigManager({
     "items": [
         {
-            "key": "Head_44_Kinght",
+            "key": "Head_44_Knight",
             "InitInStorage": false,
             "description": "",
             "name": "Knight Head",
