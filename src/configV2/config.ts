@@ -1220,6 +1220,17 @@ export const configManager = new ConfigManager({
     ],
     "store": [
         {
+            "key": "Knight",
+            "gain": {
+                "Head_44_Knight": 1,
+                "Body_12_Knight": 1
+            },
+            "cost": {
+                "ss": 0
+            },
+            "fromFile": "store.csv"
+        },
+        {
             "key": "C_Tutorial_Hilt",
             "gain": {
                 "C_Tutorial_Hilt": 1
