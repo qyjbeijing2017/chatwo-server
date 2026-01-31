@@ -1223,7 +1223,17 @@ export const configManager = new ConfigManager({
             "key": "Knight",
             "gain": {
                 "Head_44_Knight": 1,
-                "Body_12_Knight": 1
+                "Head_B Knight": 1,
+                "Head_G Knight": 1,
+                "Head_O Knight": 1,
+                "Head_P Knight": 1,
+                "Head_Y Knight": 1,
+                "Body_12_Knight": 1,
+                "Body_B Knight": 1,
+                "Body_G Knight": 1,
+                "Body_O Knight": 1,
+                "Body_P Knight": 1,
+                "Body_Y Knight": 1
             },
             "cost": {
                 "ss": 0
