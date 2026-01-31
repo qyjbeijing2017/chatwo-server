@@ -3,6 +3,96 @@ import { ConfigManager } from "./manager";
 export const configManager = new ConfigManager({
     "items": [
         {
+            "key": "Head_Y Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight Y Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_P Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight P Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_O Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight O Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_G Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight G Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_B Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight B Head",
+            "type": 4,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_Y Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight Y Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_P Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight P Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_O Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight O Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_G Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight G Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_B Knight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Knight B Body",
+            "type": 16,
+            "packagedSIze": 0.1,
+            "fromFile": "items.csv"
+        },
+        {
             "key": "Head_44_Knight",
             "InitInStorage": false,
             "description": "",

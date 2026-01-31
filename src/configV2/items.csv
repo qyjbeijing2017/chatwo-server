@@ -1,4 +1,14 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
+Head_Y Knight,Knight Y Head,,head,RAssets/Prefabs/Characters/Heads/Head_Y Knight,,0.1
+Head_P Knight,Knight P Head,,head,RAssets/Prefabs/Characters/Heads/Head_P Knight,,0.1
+Head_O Knight,Knight O Head,,head,RAssets/Prefabs/Characters/Heads/Head_O Knight,,0.1
+Head_G Knight,Knight G Head,,head,RAssets/Prefabs/Characters/Heads/Head_G Knight,,0.1
+Head_B Knight,Knight B Head,,head,RAssets/Prefabs/Characters/Heads/Head_B Knight,,0.1
+Body_Y Knight,Knight Y Body,,body,RAssets/Prefabs/Characters/Bodys/Body_Y Knight,,0.1
+Body_P Knight,Knight P Body,,body,RAssets/Prefabs/Characters/Bodys/Body_P Knight,,0.1
+Body_O Knight,Knight O Body,,body,RAssets/Prefabs/Characters/Bodys/Body_O Knight,,0.1
+Body_G Knight,Knight G Body,,body,RAssets/Prefabs/Characters/Bodys/Body_G Knight,,0.1
+Body_B Knight,Knight B Body,,body,RAssets/Prefabs/Characters/Bodys/Body_B Knight,,0.1
 Head_44_Knight,Knight Head,,head,RAssets/Prefabs/Characters/Heads/Head_44_Knight,,0.1
 Body_12_Knight,Knight Body,,body,RAssets/Prefabs/Characters/Bodys/Body_12_Knight,,0.1
 Frost_Ore,Frost Shard,,item,RAssets/Prefabs/Items/Ores/Frost_Ore,,0.1
