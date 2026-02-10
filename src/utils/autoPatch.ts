@@ -65,10 +65,10 @@ export class AutoPatchManager {
     }
 }
 
-export async function autoPatch<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<{ result: T, message: string, tags: string[] }>): Promise<T> {
+export async function autoPatch<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<{ result: T, message: string, tags: string[], finally?: () => void | Promise<void> }>): Promise<T> {
     return startTransaction<T>(dataSource, async (manager) => {
         const autoPatchManager = new AutoPatchManager(manager);
-        const { result, message, tags } = await callback(autoPatchManager as any as EntityManager);
+        const { result, message, tags, finally: finallyCallback } = await callback(autoPatchManager as any as EntityManager);
         const data: {
             [key: string]: {
                 id: number;
@@ -91,6 +91,11 @@ export async function autoPatch<T>(dataSource: DataSource, callback: (manager: E
             data,
         });
         await manager.save(log);
+
+        if (finallyCallback) {
+            await finallyCallback();
+        }
+
         return result;
     });
 }

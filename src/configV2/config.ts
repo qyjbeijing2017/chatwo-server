@@ -1977,5 +1977,26 @@ export const configManager = new ConfigManager({
             },
             "fromFile": "redeem.csv"
         }
+    ],
+    "purchases": [
+        {
+            "sku": "Test_Add_On",
+            "name": "Test_Addon",
+            "type": "Consumable",
+            "gain": {
+                "sc": 500
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Druable_test",
+            "name": "Druable Test",
+            "type": "Durable",
+            "gain": {
+                "sc": 1000,
+                "Equip_16_Tube": 1
+            },
+            "fromFile": "purchase.csv"
+        }
     ]
 });

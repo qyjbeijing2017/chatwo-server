@@ -22,6 +22,43 @@ export class ItemService {
     private readonly dataSource: DataSource,
   ) { }
 
+
+  async costItems(manager: EntityManager, account: ApiAccount, costs: Record<string, number>) {
+    const user = await manager.findOne(ChatwoUser, {
+      where: { nakamaId: account.custom_id },
+    });
+    if (!user) {
+      throw new Error(`User with nakamaId ${account.custom_id} not found`);
+    }
+    for (const cost in costs) {
+      const itemConfig = configManager.itemMap.get(cost);
+      if (!itemConfig) {
+        throw new NotFoundException(`Item config with key ${cost} not found`);
+      }
+      if ((itemConfig.type & ItemType.currency) !== 0) {
+        const wallet = user.wallet || {};
+        if (wallet[cost] === undefined || wallet[cost] < costs[cost]) {
+          throw new Error(`Not enough ${cost} to buy item`);
+        }
+        wallet[cost] -= costs[cost];
+        user.wallet = wallet;
+        await manager.save(user);
+      } else {
+        const userItems = await manager.find(ChatwoItem, {
+          where: {
+            key: cost,
+            owner: { nakamaId: account.custom_id },
+          },
+        });
+        if (userItems.length < costs[cost]) {
+          throw new Error(`Not enough ${cost} items to buy item`);
+        }
+        const itemsToRemove = userItems.slice(0, costs[cost]);
+        await manager.remove(itemsToRemove);
+      }
+    }
+  }
+
   async getContainer(manager: EntityManager, account: ApiAccount, type: ContainerType = ContainerType.chest, withItems: boolean = false): Promise<ChatwoContainer> {
     let container = await manager.findOne(ChatwoContainer, {
       where: {

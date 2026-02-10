@@ -17,6 +17,7 @@ import { ChatwoContainer } from './entities/container.entity';
 import { GmModule } from './gm/gm.module';
 import { StoreModule } from './store/store.module';
 import { TaskModule } from './task/task.module';
+import { PurchaseModule } from './purchase/purchase.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { TaskModule } from './task/task.module';
     GmModule,
     StoreModule,
     TaskModule,
+    PurchaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,6 +9,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { Public } from 'src/auth/public.decorator';
 import { getServerTime } from 'src/utils/serverTime';
 import { CodeDto } from './dto/code.dto';
+import { RefundDto } from './dto/refund.dto';
 
 @Controller('gm')
 export class GmController {
@@ -76,6 +77,15 @@ export class GmController {
     @Post('code')
     async code(@Body() dto: CodeDto) {
         return this.gmService.code(dto);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Post('refund')
+    async refundGM(
+        @Body() dto: RefundDto,
+    ) {
+        return this.gmService.refund(dto);
     }
 
 }

@@ -13,6 +13,8 @@ import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
 import { CodeDto } from './dto/code.dto';
 import { ItemService } from 'src/item/item.service';
+import { PurchaseService } from 'src/purchase/purchase.service';
+import { RefundDto } from './dto/refund.dto';
 
 @Injectable()
 export class GmService {
@@ -29,6 +31,7 @@ export class GmService {
         private readonly nakamaService: NakamaService,
         private readonly statisticsService: StatisticService,
         private readonly itemService: ItemService,
+        private readonly purchaseService: PurchaseService,
     ) { }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
@@ -286,5 +289,11 @@ export class GmService {
                 tags,
             }
         });
+    }
+
+    async refund(dto: RefundDto) {
+        const session = await this.nakamaService.login(dto.customId);
+        const account = await this.nakamaService.getAccount(session);
+        return this.purchaseService.refund(account, dto.sku, dto.reason);
     }
 }

@@ -7,6 +7,7 @@ import { ArchievementTaskConfig } from './tables/archievementTask';
 import { Hilt } from './tables/hilt';
 import { Item } from './tables/Items';
 import { Monster } from './tables/monster';
+import { Purchase } from './tables/purchase';
 import { Redeem } from './tables/redeem';
 import { Store } from './tables/store';
 
@@ -31,12 +32,14 @@ export class ConfigManager {
   monsters: Monster[] = [];
   hilts: Hilt[] = [];
   redeem: Redeem[] = [];
+  purchases: Purchase[] = [];
   itemMap: Map<string, Item> = new Map();
   storeMap: Map<string, Store> = new Map();
   archievementTaskMap: Map<string, ArchievementTaskConfig> = new Map();
   monsterMap: Map<string, Monster> = new Map();
   hiltMap: Map<string, Hilt> = new Map();
   redeemMap: Map<string, Redeem> = new Map();
+  purchaseMap: Map<string, Purchase> = new Map();
 
   constructor(data: ConfigManagerData) {
     ConfigParse(Item, 'items.csv', 'arm.csv')(this, 'items');
@@ -48,6 +51,7 @@ export class ConfigManager {
     ConfigParse(Monster, 'monster.csv')(this, 'monsters');
     ConfigParse(Hilt, 'hilt.csv')(this, 'hilts');
     ConfigParse(Redeem, 'redeem.csv')(this, 'redeem');
+    ConfigParse(Purchase, 'purchase.csv')(this, 'purchases');
     // 赋值
     for (const key in data) {
       (this as any)[key] = data[key];
@@ -76,6 +80,10 @@ export class ConfigManager {
     
     for (const redeem of this.redeem) {
       this.redeemMap.set(redeem.code, redeem);
+    }
+
+    for (const purchase of this.purchases) {
+      this.purchaseMap.set(purchase.sku, purchase);
     }
   }
 }

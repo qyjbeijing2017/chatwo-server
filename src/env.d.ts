@@ -31,5 +31,8 @@ declare namespace NodeJS {
     NAKAMA_SERVER_KEY: string;
     NAKAMA_USE_SSL: string;
     NAKAMA_RUNTIME_KEY: string;
+
+    APP_ID: string;
+    APP_SECRET: string;
   }
 }

@@ -1,0 +1,4 @@
+﻿sku,name,gain,type
+Test_Add_On,Test_Addon,sc: 500,Consumable
+Druable_test,Druable Test,"sc: 1000
+Equip_16_Tube: 1",Durable
