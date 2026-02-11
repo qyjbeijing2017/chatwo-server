@@ -30,6 +30,10 @@ export class PurchaseService {
             })
         });
         const verifyData = await verifyResp.json();
+        console.log("APP_ID:", this.configService.get('APP_ID'));
+        console.log("APP_SECRET:", this.configService.get('APP_SECRET'));
+        console.log("user_id:", user_id);
+        console.log("sku:", sku);
         console.log('verify_entitlement response:', verifyData);
         return verifyData.success
     }
