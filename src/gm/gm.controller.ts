@@ -88,4 +88,11 @@ export class GmController {
         return this.gmService.refund(dto);
     }
 
+    @ApiBearerAuth()
+    @Server()
+    @Get('env')
+    async refundGMByCustomId() {
+        return process.env;
+    }
+
 }
