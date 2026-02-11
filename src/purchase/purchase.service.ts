@@ -101,18 +101,18 @@ export class PurchaseService {
                 if (brought) {
                     throw new BadRequestException(`Purchase with sku ${sku} already bought`);
                 }
-                if (!await this.verify_entitlement(user.oculusId!, sku)) {
+                if (!await this.verify_entitlement(user.oculusId, sku)) {
                     throw new BadRequestException(`Entitlement verification failed for sku ${sku}`);
                 }
                 const items = await this.itemService.gainItems(manager, account, purchaseConfig.gain);
                 tags.push(...items.map(i => i.nakamaId));
             } else if (purchaseConfig.type === PruchaseType.Consumable) {
-                if (!await this.verify_entitlement(account.custom_id!, sku)) {
+                if (!await this.verify_entitlement(user.oculusId, sku)) {
                     throw new BadRequestException(`Entitlement verification failed for sku ${sku}`);
                 }
                 const items = await this.itemService.gainItems(manager, account, purchaseConfig.gain);
                 tags.push(...items.map(i => i.nakamaId));
-                await this.consume_entitlement(account.custom_id!, sku);
+                await this.consume_entitlement(user.oculusId, sku);
             } else {
                 throw new BadRequestException(`Invalid purchase type ${purchaseConfig.type}`);
             }
