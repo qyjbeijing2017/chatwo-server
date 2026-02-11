@@ -30,6 +30,7 @@ export class PurchaseService {
             })
         });
         const verifyData = await verifyResp.json();
+        console.log('verify_entitlement response:', verifyData);
         return verifyData.success
     }
 
