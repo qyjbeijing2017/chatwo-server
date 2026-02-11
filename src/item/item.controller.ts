@@ -70,7 +70,8 @@ export class ItemController {
   async resetItems(
     @Account() account: ApiAccount,
   ) {
-    return this.itemService.resetItems(account);
+    await this.itemService.resetItems(account);
+    await this.itemService.initItemsForNewUser(account);
   }
 
   @ApiBearerAuth()

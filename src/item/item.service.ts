@@ -1,6 +1,6 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, DataSource, EntityManager, IsNull, Not, Repository } from 'typeorm';
+import { Between, DataSource, EntityManager, In, IsNull, Not, Repository } from 'typeorm';
 import { ChatwoItem, ItemType } from '../entities/item.entity';
 import { ChatwoUser } from '../entities/user.entity';
 import { configManager } from 'src/configV2/config';
@@ -510,5 +510,35 @@ export class ItemService {
         tags,
       }
     });
+  }
+
+  async initItemsForNewUser(
+    account: ApiAccount,
+  ): Promise<void> {
+    const user = await this.userRepository.findOne({
+      where: {
+        nakamaId: account.custom_id,
+      }
+    });
+    if (!user) {
+      throw new UnauthorizedException(`User with nakamaId ${account.custom_id} not found`);
+    }
+    const chest = await this.getContainer(this.dataSource.manager, account, ContainerType.chest);
+    const starterItems = configManager.items.filter(i => i.InitInStorage);
+    const items = await this.itemRepository.find({
+      where: {
+        key: In(starterItems.map(i => i.key)),
+        owner: { nakamaId: account.custom_id },
+      },
+    })
+    const needToAdd = starterItems.filter(i => !items.some(item => item.key === i.key));
+    for (const itemConfig of needToAdd) {
+      const item = this.itemRepository.create({
+        key: itemConfig.key,
+        owner: user,
+        container: chest,
+      });
+      await this.itemRepository.save(item);
+    }
   }
 }
