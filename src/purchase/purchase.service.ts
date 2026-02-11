@@ -20,6 +20,9 @@ export class PurchaseService {
     ) { }
 
     async verify_entitlement(user_id: string, sku: string): Promise<boolean> {
+        console.log(`Verifying entitlement for user ${user_id} and sku ${sku}`);
+        console.log(`Using access token: OC|${this.configService.get('APP_ID')}|${this.configService.get('APP_SECRET')}`);
+
         const verifyResp = await fetch(`https://graph.oculus.com/${this.configService.get('APP_ID')}/verify_entitlement`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -30,6 +33,7 @@ export class PurchaseService {
             })
         });
         const verifyData = await verifyResp.json();
+        console.log(`Verify entitlement response: ${JSON.stringify(verifyData)}`);
         return verifyData.success
     }
 
