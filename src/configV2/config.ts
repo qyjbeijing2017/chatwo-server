@@ -2555,7 +2555,8 @@ export const configManager = new ConfigManager({
                 "sc": 3000,
                 "Head_YinYangKnight": 1,
                 "Body_YinYangKnight": 1,
-                "Eyes_G_Devil": 1
+                "Eyes_G_Devil": 1,
+                "A_SevenBranchedSword_Hilt": 1
             },
             "fromFile": "purchase.csv"
         }
