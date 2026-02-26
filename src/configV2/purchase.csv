@@ -1,4 +1,15 @@
-﻿sku,name,gain,type
-Test_Add_On,Test_Addon,sc: 500,Consumable
+﻿sku,name,gain,type,money
+Test_Add_On,Test Addon,sc: 500,Consumable,0
 Druable_test,Druable Test,"sc: 1000
-Equip_16_Tube: 1",Durable
+Equip_16_Tube: 1",Durable,0
+Starter_Package,Starter Pack,"sc: 2000
+Head_YellowKnightKing: 1 
+Body_YellowKnightKing: 1",Durable,9.99
+Mini_Soul_Coin_Pack,Mini Soul Coin Pack,sc: 1000,Consumable,4.99
+Small_Soul_Coin_Pack,Small Soul Coin Pack,sc: 2200,Consumable,9.99
+Medium_Soul_Coin_Pack,Medium Soul Coin Pack,sc: 5000,Consumable,19.99
+Large_Soul_Coin_Pack,Large Soul Coin Pack,sc: 11000,Consumable,39.99
+YinYang_Knight_Pack,YinYang Knight Pack,"sc: 3000 
+Head_YinYangKnight: 1
+Body_YinYangKnight: 1
+Eyes_G_Devil: 1",Durable,29.99

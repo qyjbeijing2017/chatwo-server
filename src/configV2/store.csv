@@ -1,4 +1,38 @@
 ﻿key,gain,cost
+11000 Soul Stars,ss: 11000,sc: 1000
+Small Red Eyes,Eyes_SmallRed: 1,sc: 700
+Green Devil Eyes,Eyes_G_Devil: 1,sc: 500
+Red Devil Eyes,Eyes_R_Devil: 1,sc: 500
+Eyes Heart,Eyes_1_Heart: 1,ss: 1500
+Eyes Goofy 4 Single,Eyes_4_GoofySingle: 1,ss: 700
+Eyes Goofy 3,Eyes_3_Goofy: 1,ss: 600
+Eyes Goofy 2,Eyes_2_Goofy: 1,ss: 600
+Toilet Janitor,"Head_ToiletJanitor: 1
+Body_ToiletJanitor: 1",sc: 2500
+Fish Stick,A_FishStick_Hilt: 1,sc: 1200
+Anglerfish,"Head_Anglerfish: 1
+Body_Anglerfish: 1
+Eyes_SmallRed: 1",sc: 2800
+Seven-Branched Sword,A_SevenBranchedSword_Hilt: 1,sc: 1800
+# YinYang Knight,"Head_YinYangKnight: 1
+Body_YinYangKnight: 1
+Eyes_G_Devil: 1",sc: 3800
+Red Samurai,"Head_RedSamurai: 1
+Body_RedSamurai: 1
+Eyes_R_Devil: 1",sc: 3200
+The Six-Rings,A_SixRing_Hilt: 1,sc: 1500
+Dino Egg Head,Head_DinoEgg: 1,ss: 3000
+Demogorgon Head,Head_StrangerThingsMonster: 1,ss: 20000
+Elite Knight 003,"Head_3_EliteKnight: 1
+Body_3_EliteKnight: 1",ss: 7000
+Elite Knight 002,"Head_2_EliteKnight: 1
+Body_2_EliteKnight: 1",ss: 5000
+Elite Knight 001,"Head_1_EliteKnight: 1
+Body_1_EliteKnight: 1",ss: 5000
+White Knight,"Head_1_WhiteKnight: 1
+Body_1_WhiteKnight: 1",ss: 10000
+Black Knight,"Head_1_BlackKnight: 1
+Body_1_BlackKnight: 1",ss: 10000
 Knight,"Head_44_Knight: 1
 Head_B Knight: 1
 Head_G Knight: 1

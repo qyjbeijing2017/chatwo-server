@@ -3,6 +3,267 @@ import { ConfigManager } from "./manager";
 export const configManager = new ConfigManager({
     "items": [
         {
+            "key": "Eyes_SmallRed",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Small Red Eyes",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_G_Devil",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Green Devil Eyes",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_R_Devil",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Red Devil Eyes",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_1_Heart",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Heart Eyes 001",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_4_GoofySingle",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Goofy Eyes 004",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_3_Goofy",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Goofy Eyes 003",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Eyes_2_Goofy",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Goofy Eyes 002",
+            "type": 8,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_ToiletJanitor",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Toilet Janitor Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_ToiletJanitor",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Toilet Janitor Body",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_Anglerfish",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Anglerfish Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_Anglerfish",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Anglerfish Body",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_YinYangKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Yin Yang Knight Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_YinYangKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Yin Yang Knight Body",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_RedSamurai",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Red Samurai Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_RedSamurai",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Red Samurai Body",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_DinoEgg",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Dino Egg Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_StrangerThingsMonster",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Stranger Things Monster Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_3_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Head 003",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_3_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Body 003",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_2_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Head 002",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_2_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Body 002",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_1_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Head 001",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_1_EliteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Elite Knight Body 001",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_1_WhiteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "White Knight Head 001",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_1_WhiteKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "White Knight Body 001",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_1_BlackKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Black Knight Head 001",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_1_BlackKnight",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Black Knight Body 001",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Head_YellowKnightKing",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Yellow Knight King Head",
+            "type": 4,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
+            "key": "Body_YellowKnightKing",
+            "InitInStorage": false,
+            "description": "",
+            "name": "Yellow Knight King Body",
+            "type": 16,
+            "packagedSIze": null,
+            "fromFile": "items.csv"
+        },
+        {
             "key": "Head_Y Knight",
             "InitInStorage": false,
             "description": "",
@@ -115,7 +376,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Frost Shard",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -124,7 +384,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Verdant Core",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -133,7 +392,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Silver Ore",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -142,7 +400,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Iron Ore",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -151,7 +408,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Copper Ore",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -160,7 +416,6 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Earth Ore",
-            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1218,12 +1473,39 @@ export const configManager = new ConfigManager({
             "fromFile": "items.csv"
         },
         {
+            "key": "A_FishStick_Hilt",
+            "InitInStorage": false,
+            "description": "",
+            "name": "A Fish Stick Hilt",
+            "type": 2,
+            "packagedSIze": 0.1,
+            "fromFile": "arm.csv"
+        },
+        {
+            "key": "A_SevenBranchedSword_Hilt",
+            "InitInStorage": false,
+            "description": "",
+            "name": "A Seven Branched Sword Hilt",
+            "type": 2,
+            "packagedSIze": 0.1,
+            "fromFile": "arm.csv"
+        },
+        {
+            "key": "A_SixRing_Hilt",
+            "InitInStorage": false,
+            "description": "",
+            "name": "A Six-Ring Hilt",
+            "type": 2,
+            "packagedSIze": 0.1,
+            "fromFile": "arm.csv"
+        },
+        {
             "key": "C_Tutorial_Hilt",
             "InitInStorage": false,
             "description": "",
             "name": "C Tutorial Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1232,7 +1514,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "A Relic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1241,7 +1523,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "B Relic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1250,7 +1532,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "C Relic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1259,7 +1541,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "A Mystic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1268,7 +1550,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "B Mystic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1277,7 +1559,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "C Mystic Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1286,7 +1568,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "A Techno Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1295,7 +1577,7 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "B Techno Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
         {
@@ -1304,11 +1586,231 @@ export const configManager = new ConfigManager({
             "description": "",
             "name": "C Techno Default Hilt",
             "type": 2,
-            "packagedSIze": null,
+            "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         }
     ],
     "store": [
+        {
+            "key": "11000 Soul Stars",
+            "gain": {
+                "ss": 11000
+            },
+            "cost": {
+                "sc": 1000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Small Red Eyes",
+            "gain": {
+                "Eyes_SmallRed": 1
+            },
+            "cost": {
+                "sc": 700
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Green Devil Eyes",
+            "gain": {
+                "Eyes_G_Devil": 1
+            },
+            "cost": {
+                "sc": 500
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Red Devil Eyes",
+            "gain": {
+                "Eyes_R_Devil": 1
+            },
+            "cost": {
+                "sc": 500
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Eyes Heart",
+            "gain": {
+                "Eyes_1_Heart": 1
+            },
+            "cost": {
+                "ss": 1500
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Eyes Goofy 4 Single",
+            "gain": {
+                "Eyes_4_GoofySingle": 1
+            },
+            "cost": {
+                "ss": 700
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Eyes Goofy 3",
+            "gain": {
+                "Eyes_3_Goofy": 1
+            },
+            "cost": {
+                "ss": 600
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Eyes Goofy 2",
+            "gain": {
+                "Eyes_2_Goofy": 1
+            },
+            "cost": {
+                "ss": 600
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Toilet Janitor",
+            "gain": {
+                "Head_ToiletJanitor": 1,
+                "Body_ToiletJanitor": 1
+            },
+            "cost": {
+                "sc": 2500
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Fish Stick",
+            "gain": {
+                "A_FishStick_Hilt": 1
+            },
+            "cost": {
+                "sc": 1200
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Anglerfish",
+            "gain": {
+                "Head_Anglerfish": 1,
+                "Body_Anglerfish": 1,
+                "Eyes_SmallRed": 1
+            },
+            "cost": {
+                "sc": 2800
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Seven-Branched Sword",
+            "gain": {
+                "A_SevenBranchedSword_Hilt": 1
+            },
+            "cost": {
+                "sc": 1800
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Red Samurai",
+            "gain": {
+                "Head_RedSamurai": 1,
+                "Body_RedSamurai": 1,
+                "Eyes_R_Devil": 1
+            },
+            "cost": {
+                "sc": 3200
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "The Six-Rings",
+            "gain": {
+                "A_SixRing_Hilt": 1
+            },
+            "cost": {
+                "sc": 1500
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Dino Egg Head",
+            "gain": {
+                "Head_DinoEgg": 1
+            },
+            "cost": {
+                "ss": 3000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Demogorgon Head",
+            "gain": {
+                "Head_StrangerThingsMonster": 1
+            },
+            "cost": {
+                "ss": 20000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Elite Knight 003",
+            "gain": {
+                "Head_3_EliteKnight": 1,
+                "Body_3_EliteKnight": 1
+            },
+            "cost": {
+                "ss": 7000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Elite Knight 002",
+            "gain": {
+                "Head_2_EliteKnight": 1,
+                "Body_2_EliteKnight": 1
+            },
+            "cost": {
+                "ss": 5000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Elite Knight 001",
+            "gain": {
+                "Head_1_EliteKnight": 1,
+                "Body_1_EliteKnight": 1
+            },
+            "cost": {
+                "ss": 5000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "White Knight",
+            "gain": {
+                "Head_1_WhiteKnight": 1,
+                "Body_1_WhiteKnight": 1
+            },
+            "cost": {
+                "ss": 10000
+            },
+            "fromFile": "store.csv"
+        },
+        {
+            "key": "Black Knight",
+            "gain": {
+                "Head_1_BlackKnight": 1,
+                "Body_1_BlackKnight": 1
+            },
+            "cost": {
+                "ss": 10000
+            },
+            "fromFile": "store.csv"
+        },
         {
             "key": "Knight",
             "gain": {
@@ -1981,7 +2483,7 @@ export const configManager = new ConfigManager({
     "purchases": [
         {
             "sku": "Test_Add_On",
-            "name": "Test_Addon",
+            "name": "Test Addon",
             "type": "Consumable",
             "gain": {
                 "sc": 500
@@ -1995,6 +2497,65 @@ export const configManager = new ConfigManager({
             "gain": {
                 "sc": 1000,
                 "Equip_16_Tube": 1
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Starter_Package",
+            "name": "Starter Pack",
+            "type": "Durable",
+            "gain": {
+                "sc": 2000,
+                "Head_YellowKnightKing": 1,
+                "Body_YellowKnightKing": 1
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Mini_Soul_Coin_Pack",
+            "name": "Mini Soul Coin Pack",
+            "type": "Consumable",
+            "gain": {
+                "sc": 1000
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Small_Soul_Coin_Pack",
+            "name": "Small Soul Coin Pack",
+            "type": "Consumable",
+            "gain": {
+                "sc": 2200
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Medium_Soul_Coin_Pack",
+            "name": "Medium Soul Coin Pack",
+            "type": "Consumable",
+            "gain": {
+                "sc": 5000
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "Large_Soul_Coin_Pack",
+            "name": "Large Soul Coin Pack",
+            "type": "Consumable",
+            "gain": {
+                "sc": 11000
+            },
+            "fromFile": "purchase.csv"
+        },
+        {
+            "sku": "YinYang_Knight_Pack",
+            "name": "YinYang Knight Pack",
+            "type": "Durable",
+            "gain": {
+                "sc": 3000,
+                "Head_YinYangKnight": 1,
+                "Body_YinYangKnight": 1,
+                "Eyes_G_Devil": 1
             },
             "fromFile": "purchase.csv"
         }

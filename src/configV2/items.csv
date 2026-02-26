@@ -1,4 +1,33 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
+Eyes_SmallRed,Small Red Eyes,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_SmallRed,,
+Eyes_G_Devil,Green Devil Eyes,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_G_Devil,,
+Eyes_R_Devil,Red Devil Eyes,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_R_Devil,,
+Eyes_1_Heart,Heart Eyes 001,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_1_Heart,,
+Eyes_4_GoofySingle,Goofy Eyes 004,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_4_GoofySingle,,
+Eyes_3_Goofy,Goofy Eyes 003,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_3_Goofy,,
+Eyes_2_Goofy,Goofy Eyes 002,,eye,RAssets/Prefabs/Characters/Eyes/Eyes_2_Goofy,,
+Head_ToiletJanitor,Toilet Janitor Head,,head,RAssets/Prefabs/Characters/Heads/Head_ToiletJanitor,,
+Body_ToiletJanitor,Toilet Janitor Body,,body,RAssets/Prefabs/Characters/Bodys/Body_ToiletJanitor,,
+Head_Anglerfish,Anglerfish Head,,head,RAssets/Prefabs/Characters/Heads/Head_Anglerfish,,
+Body_Anglerfish,Anglerfish Body,,body,RAssets/Prefabs/Characters/Bodys/Body_Anglerfish,,
+Head_YinYangKnight,Yin Yang Knight Head,,head,RAssets/Prefabs/Characters/Heads/Head_YinYangKnight,,
+Body_YinYangKnight,Yin Yang Knight Body,,body,RAssets/Prefabs/Characters/Bodys/Body_YinYangKnight,,
+Head_RedSamurai,Red Samurai Head,,head,RAssets/Prefabs/Characters/Heads/Head_RedSamurai,,
+Body_RedSamurai,Red Samurai Body,,body,RAssets/Prefabs/Characters/Bodys/Body_RedSamurai,,
+Head_DinoEgg,Dino Egg Head,,head,RAssets/Prefabs/Characters/Heads/Head_DinoEgg,,
+Head_StrangerThingsMonster,Stranger Things Monster Head,,head,RAssets/Prefabs/Characters/Heads/Head_StrangerThingsMonster,,
+Head_3_EliteKnight,Elite Knight Head 003,,head,RAssets/Prefabs/Characters/Heads/Head_3_EliteKnight,,
+Body_3_EliteKnight,Elite Knight Body 003,,body,RAssets/Prefabs/Characters/Bodys/Body_3_EliteKnight,,
+Head_2_EliteKnight,Elite Knight Head 002,,head,RAssets/Prefabs/Characters/Heads/Head_2_EliteKnight,,
+Body_2_EliteKnight,Elite Knight Body 002,,body,RAssets/Prefabs/Characters/Bodys/Body_2_EliteKnight,,
+Head_1_EliteKnight,Elite Knight Head 001,,head,RAssets/Prefabs/Characters/Heads/Head_1_EliteKnight,,
+Body_1_EliteKnight,Elite Knight Body 001,,body,RAssets/Prefabs/Characters/Bodys/Body_1_EliteKnight,,
+Head_1_WhiteKnight,White Knight Head 001,,head,RAssets/Prefabs/Characters/Heads/Head_1_WhiteKnight,,
+Body_1_WhiteKnight,White Knight Body 001,,body,RAssets/Prefabs/Characters/Bodys/Body_1_WhiteKnight,,
+Head_1_BlackKnight,Black Knight Head 001,,head,RAssets/Prefabs/Characters/Heads/Head_1_BlackKnight,,
+Body_1_BlackKnight,Black Knight Body 001,,body,RAssets/Prefabs/Characters/Bodys/Body_1_BlackKnight,,
+Head_YellowKnightKing,Yellow Knight King Head,,head,RAssets/Prefabs/Characters/Heads/Head_YellowKnightKing,,
+Body_YellowKnightKing,Yellow Knight King Body,,body,RAssets/Prefabs/Characters/Bodys/Body_YellowKnightKing,,
 Head_Y Knight,Knight Y Head,,head,RAssets/Prefabs/Characters/Heads/Head_Y Knight,,0.1
 Head_P Knight,Knight P Head,,head,RAssets/Prefabs/Characters/Heads/Head_P Knight,,0.1
 Head_O Knight,Knight O Head,,head,RAssets/Prefabs/Characters/Heads/Head_O Knight,,0.1
@@ -11,12 +40,12 @@ Body_G Knight,Knight G Body,,body,RAssets/Prefabs/Characters/Bodys/Body_G Knight
 Body_B Knight,Knight B Body,,body,RAssets/Prefabs/Characters/Bodys/Body_B Knight,,0.1
 Head_44_Knight,Knight Head,,head,RAssets/Prefabs/Characters/Heads/Head_44_Knight,,0.1
 Body_12_Knight,Knight Body,,body,RAssets/Prefabs/Characters/Bodys/Body_12_Knight,,0.1
-Frost_Ore,Frost Shard,,item,RAssets/Prefabs/Items/Ores/Frost_Ore,,0.1
-Verdant_Ore,Verdant Core,,item,RAssets/Prefabs/Items/Ores/Verdant_Ore,,0.1
-Silver_Ore,Silver Ore,,item,RAssets/Prefabs/Items/Ores/Silver_Ore,,0.1
-Iron_Ore,Iron Ore,,item,RAssets/Prefabs/Items/Ores/Iron_Ore,,0.1
-Copper_Ore,Copper Ore,,item,RAssets/Prefabs/Items/Ores/Copper_Ore,,0.1
-Earth_Ore,Earth Ore,,item,RAssets/Prefabs/Items/Ores/Earth_Ore,,0.1
+Frost_Ore,Frost Shard,,ore,RAssets/Prefabs/Items/Ores/Frost_Ore,,0.1
+Verdant_Ore,Verdant Core,,ore,RAssets/Prefabs/Items/Ores/Verdant_Ore,,0.1
+Silver_Ore,Silver Ore,,ore,RAssets/Prefabs/Items/Ores/Silver_Ore,,0.1
+Iron_Ore,Iron Ore,,ore,RAssets/Prefabs/Items/Ores/Iron_Ore,,0.1
+Copper_Ore,Copper Ore,,ore,RAssets/Prefabs/Items/Ores/Copper_Ore,,0.1
+Earth_Ore,Earth Ore,,ore,RAssets/Prefabs/Items/Ores/Earth_Ore,,0.1
 sc,SC,,currency,,,
 ss,SS,,currency,,,
 SSS_Forging_Stone,Tier SSS Forging Stone,,item,,,

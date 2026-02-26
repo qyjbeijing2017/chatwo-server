@@ -1,11 +1,14 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
-C_Tutorial_Hilt,C Tutorial Hilt,,arm,,,
-A_Relic_Hilt,A Relic Default Hilt,,arm,,,
-B_Relic_Hilt,B Relic Default Hilt,,arm,,,
-C_Relic_Hilt,C Relic Default Hilt,,arm,,,
-A_Mystic_Hilt,A Mystic Default Hilt,,arm,,,
-B_Mystic_Hilt,B Mystic Default Hilt,,arm,,,
-C_Mystic_Hilt,C Mystic Default Hilt,,arm,,,
-A_Techno_Hilt,A Techno Default Hilt,,arm,,,
-B_Techno_Hilt,B Techno Default Hilt,,arm,,,
-C_Techno_Hilt,C Techno Default Hilt,,arm,,,
+A_FishStick_Hilt,A Fish Stick Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_FishStick_Hilt,,0.1
+A_SevenBranchedSword_Hilt,A Seven Branched Sword Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_SevenBranchedSword_Hilt,,0.1
+A_SixRing_Hilt,A Six-Ring Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_SixRing_Hilt,,0.1
+C_Tutorial_Hilt,C Tutorial Hilt,,arm,RAssets/Prefabs/Items/Hilts/C_Tutorial_Hilt,,0.1
+A_Relic_Hilt,A Relic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_Relic_Hilt,,0.1
+B_Relic_Hilt,B Relic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/B_Relic_Hilt,,0.1
+C_Relic_Hilt,C Relic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/C_Relic_Hilt,,0.1
+A_Mystic_Hilt,A Mystic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_Mystic_Hilt,,0.1
+B_Mystic_Hilt,B Mystic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/B_Mystic_Hilt,,0.1
+C_Mystic_Hilt,C Mystic Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/C_Mystic_Hilt,,0.1
+A_Techno_Hilt,A Techno Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/A_Techno_Hilt,,0.1
+B_Techno_Hilt,B Techno Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/B_Techno_Hilt,,0.1
+C_Techno_Hilt,C Techno Default Hilt,,arm,RAssets/Prefabs/Items/Hilts/C_Techno_Hilt,,0.1
