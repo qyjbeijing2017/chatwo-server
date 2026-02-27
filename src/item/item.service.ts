@@ -9,7 +9,7 @@ import { DropItemInDto } from './dto/drop-in.dto';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { autoPatch } from 'src/utils/autoPatch';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { forceRefreshToChest, StoreGainInfo, storeGainInfoToCount } from 'src/configV2/tables/store';
+import { forceRefreshToChest, StoreGainInfo, storeGainInfoMeta, storeGainInfoToCount } from 'src/configV2/tables/store';
 
 @Injectable()
 export class ItemService {
@@ -131,6 +131,7 @@ export class ItemService {
             key,
             owner: user,
             container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
+            meta: storeGainInfoMeta(items[key]),
           });
           await manager.save(item);
           result.push(item);
@@ -142,6 +143,7 @@ export class ItemService {
             key,
             owner: inChest ? user : null,
             container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
+            meta: storeGainInfoMeta(items[key]),
           });
           if (inChest) {
             await manager.save(item);

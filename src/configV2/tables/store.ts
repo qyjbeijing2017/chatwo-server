@@ -41,3 +41,7 @@ export function forceRefreshToChest(info: StoreGainInfo): boolean {
   return typeof info === 'object' && info.gainTo === 'Chest';
 }
 
+export function storeGainInfoMeta(info: StoreGainInfo): Record<string, any> {
+  return typeof info === 'object' && info.meta ? info.meta : {};
+}
+
