@@ -122,6 +122,8 @@ export class ItemService {
         result.push(item);
       } else if ((itemConfig.type & ItemType.currency) !== 0) {
         const wallet = user.wallet || {};
+        // 谨慎谨慎，（wallet[key] || 0)务必注意没有key的情况，否则会导致NaN，并且不会抛出错误，导致用户无法获得货币！！！！！！！！！！！！！！！！！！！！！！！！！
+        // caution caution, (wallet[key] || 0) is necessary to handle the case where the key does not exist, otherwise it will result in NaN and will not throw an error, causing users to not receive currency！！！！！！！！！！！！！！！
         wallet[key] = (wallet[key] || 0) + storeGainInfoToCount(items[key]);
         user.wallet = wallet;
         await manager.save(user);
