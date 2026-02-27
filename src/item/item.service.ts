@@ -130,7 +130,7 @@ export class ItemService {
           const item = manager.create(ChatwoItem, {
             key,
             owner: user,
-            container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
+            container: (inChest || forceRefreshToChest(items[key])) ? chest : null,
             meta: storeGainInfoMeta(items[key]),
           });
           await manager.save(item);
@@ -142,7 +142,7 @@ export class ItemService {
           const item = manager.create(ChatwoItem, {
             key,
             owner: inChest ? user : null,
-            container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
+            container: (inChest || forceRefreshToChest(items[key])) ? chest : null,
             meta: storeGainInfoMeta(items[key]),
           });
           if (inChest) {
