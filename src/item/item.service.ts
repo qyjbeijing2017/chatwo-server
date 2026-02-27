@@ -122,7 +122,7 @@ export class ItemService {
         result.push(item);
       } else if ((itemConfig.type & ItemType.currency) !== 0) {
         const wallet = user.wallet || {};
-        wallet[key] = wallet[key] + storeGainInfoToCount(items[key]);
+        wallet[key] = (wallet[key] || 0) + storeGainInfoToCount(items[key]);
         user.wallet = wallet;
         await manager.save(user);
       } else if ((itemConfig.type & ItemType.ownable) !== 0) {
