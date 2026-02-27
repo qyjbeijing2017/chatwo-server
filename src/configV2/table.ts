@@ -50,6 +50,19 @@ export function ConfigEnum(enumObj: { [key: string]: any }) {
   });
 }
 
+export function ConfigFlagEnum(enumObj: { [key: string]: any }) {
+  return ConfigTransform((val: string) => {
+    const parts = val.split(',').map((part) => part.trim());
+    let result = 0;
+    for (const part of parts) {
+      if (enumObj[part] !== undefined) {
+        result |= enumObj[part];
+      }
+    }
+    return result;
+  });
+}
+
 export function ConfigYaml() {
   return ConfigTransform((val: string) => {
     return YAML.parse(val);

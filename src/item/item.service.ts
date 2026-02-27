@@ -9,6 +9,7 @@ import { DropItemInDto } from './dto/drop-in.dto';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { autoPatch } from 'src/utils/autoPatch';
 import { UpdateItemDto } from './dto/update-item.dto';
+import { forceRefreshToChest, StoreGainInfo, storeGainInfoToCount } from 'src/configV2/tables/store';
 
 @Injectable()
 export class ItemService {
@@ -83,7 +84,12 @@ export class ItemService {
     return container;
   }
 
-  async gainItems(manager: EntityManager, account: ApiAccount, items: Record<string, number>, inChest: boolean = false) {
+  async gainItems(
+    manager: EntityManager,
+    account: ApiAccount,
+    items: Record<string, StoreGainInfo>,
+    inChest: boolean = false
+  ) {
     const result: ChatwoItem[] = [];
     const user = await manager.findOne(ChatwoUser, {
       where: { nakamaId: account.custom_id },
@@ -116,29 +122,30 @@ export class ItemService {
         result.push(item);
       } else if ((itemConfig.type & ItemType.currency) !== 0) {
         const wallet = user.wallet || {};
-        wallet[key] = (wallet[key] || 0) + items[key];
+        wallet[key] = wallet[key] + storeGainInfoToCount(items[key]);
         user.wallet = wallet;
         await manager.save(user);
-      } else if (itemConfig.fromFile === 'items.csv') {
-        for (let i = 0; i < items[key]; i++) {
+      } else if ((itemConfig.type & ItemType.ownable) !== 0) {
+        for (let i = 0; i < storeGainInfoToCount(items[key]); i++) {
+          const item = manager.create(ChatwoItem, {
+            key,
+            owner: user,
+            container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
+          });
+          await manager.save(item);
+          result.push(item);
+        }
+
+      } else {
+        for (let i = 0; i < storeGainInfoToCount(items[key]); i++) {
           const item = manager.create(ChatwoItem, {
             key,
             owner: inChest ? user : null,
-            container: inChest ? chest : null,
+            container: (inChest && forceRefreshToChest(items[key])) ? chest : null,
           });
           if (inChest) {
             await manager.save(item);
           }
-          result.push(item);
-        }
-      } else {
-        for (let i = 0; i < items[key]; i++) {
-          const item = manager.create(ChatwoItem, {
-            key,
-            owner: user,
-            container: inChest ? chest : null,
-          });
-          await manager.save(item);
           result.push(item);
         }
       }
@@ -286,6 +293,7 @@ export class ItemService {
     nakamaId: string,
     dto: DropItemInDto,
   ): Promise<ChatwoItem> {
+
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
       const tags: string[] = ['item', 'drop-in', dto.key, nakamaId, account.custom_id!];
 
@@ -304,7 +312,7 @@ export class ItemService {
       if (!user) {
         throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
       }
-      const chest = await this.getContainer(manager, account, ContainerType.chest);
+
 
       const item = await manager.findOne(ChatwoItem, {
         where: {
@@ -321,27 +329,41 @@ export class ItemService {
         key: dto.key,
         meta: dto.meta,
       });
+
       if (item.container) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is already in a container`);
       }
-      if (itemConfig.fromFile === 'items.csv') {
-        item.owner = user;
-      } else {
+
+      let lockedFailed = false;
+
+      if (itemConfig.type & ItemType.ownable) {
         if (!item.owner) {
           throw new BadRequestException(`lock Item with nakamaId ${nakamaId} has no owner`);
         }
         if (item.owner.nakamaId !== account.custom_id) {
-          item.owner = user;
-          tags.push(item.owner.nakamaId!, 'change-owner');
+          if (itemConfig.type & ItemType.lock) {
+            lockedFailed = true;
+          } else {
+            item.owner = user;
+            tags.push(item.owner.nakamaId!, 'change-owner');
+          }
         }
+      } else {
+        item.owner = user;
       }
-      item.container = chest;
+
+      item.container = await this.getContainer(manager, {
+        custom_id: item.owner.nakamaId,
+      }, ContainerType.chest);
       await manager.save(item);
 
       return {
         result: item,
-        message: `Dropped item ${nakamaId}(${dto.key}) into container ${nakamaId}`,
+        message: `Dropped item ${nakamaId}(${dto.key}) into container ${item.container.id}`,
         tags,
+        finally: lockedFailed ? async () => {
+          throw new BadRequestException(`${itemConfig.name} is locked and cannot be dropped in by other users`);
+        } : undefined,
       }
     });
   }

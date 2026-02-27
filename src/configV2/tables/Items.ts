@@ -1,5 +1,5 @@
 import { ItemType } from '../../entities/item.entity';
-import { ConfigBool, ConfigEnum, ConfigFloat, ConfigKey, ConfigTable } from '../table';
+import { ConfigBool, ConfigEnum, ConfigFlagEnum, ConfigFloat, ConfigKey, ConfigTable } from '../table';
 
 export class Item extends ConfigTable {
   key: string = '';
@@ -12,7 +12,7 @@ export class Item extends ConfigTable {
   constructor() {
     super();
     ConfigKey()(this, 'key');
-    ConfigEnum({
+    ConfigFlagEnum({
       item: ItemType.item,
       arm: ItemType.arm,
       head: ItemType.head,
@@ -20,6 +20,12 @@ export class Item extends ConfigTable {
       body: ItemType.body,
       vfx: ItemType.vfx,
       currency: ItemType.currency,
+      ownable: ItemType.ownable,
+      lock: ItemType.lock,
+      ownableArm: ItemType.ownableArm,
+      lockOwnableArm: ItemType.lockOwnableArm,
+      skin: ItemType.skin,
+      dropable: ItemType.dropable,
     })(this, 'type');
     ConfigFloat()(this, 'packagedSIze');
     ConfigBool()(this, 'InitInStorage');

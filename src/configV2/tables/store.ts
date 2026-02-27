@@ -1,12 +1,20 @@
 import { ConfigKey, ConfigTable, ConfigYaml } from '../table';
 
+export type StoreGainInfo = number | {
+  amount?: number;
+  gainTo?: 'Drop' | 'Chest';
+  meta?: {
+    [key: string]: any;
+  };
+};
+
 export class Store extends ConfigTable {
   key: string = '';
   gain: {
-    [key: string]: number;
+    [key: string]: StoreGainInfo
   } = {};
   cost: {
-    [key: string]: number;
+    [key: string]: number
   } = {};
 
   constructor() {
@@ -16,3 +24,20 @@ export class Store extends ConfigTable {
     ConfigYaml()(this, 'cost');
   }
 }
+
+export function storeGainToCost(gain: Record<string, StoreGainInfo>): Record<string, number> {
+  const cost: Record<string, number> = {};
+  for (const key in gain) {
+    cost[key] = typeof gain[key] === 'number' ? gain[key] : gain[key].amount || 1;
+  }
+  return cost;
+}
+
+export function storeGainInfoToCount(info: StoreGainInfo): number {
+  return typeof info === 'number' ? info : info.amount || 1;
+}
+
+export function forceRefreshToChest(info: StoreGainInfo): boolean {
+  return typeof info === 'object' && info.gainTo === 'Chest';
+}
+

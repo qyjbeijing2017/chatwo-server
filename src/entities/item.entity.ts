@@ -32,6 +32,10 @@ export enum ItemType {
   body = 1 << 4,
   vfx = 1 << 5,
   currency = 1 << 6,
+  ownable = 1 << 7,
+  lock = 1 << 8,
+  ownableArm = arm | ownable,
+  lockOwnableArm = arm | ownable | lock,
   skin = head | eye | body | vfx,
   dropable = item | arm,
 }
@@ -44,6 +48,10 @@ const itemTypeMap = new Map<string, ItemType>([
   ['vfx', ItemType.vfx],
   ['currency', ItemType.currency],
   ['skin', ItemType.skin],
+  ['ownable', ItemType.ownable],
+  ['lock', ItemType.lock],
+  ['ownableArm', ItemType.ownableArm],
+  ['lockOwnableArm', ItemType.lockOwnableArm],
 ]);
 export function keyToItemType(key: string): ItemType {
   return itemTypeMap.get(key) || ItemType.item;

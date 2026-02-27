@@ -140,7 +140,11 @@ export class PurchaseService {
             if (!brought) {
                 throw new NotFoundException(`Purchase with sku ${sku} not found for user ${account.custom_id}`);
             }
-            await this.itemService.costItems(manager, account, config.gain);
+            const cost: Record<string, number> = {};
+            for (const key in config.gain) {
+                cost[key] = (typeof config.gain[key] === 'number' ? config.gain[key] : config.gain[key].amount) || 1;
+            }
+            await this.itemService.costItems(manager, account, cost);
             brought.tags.push('refund');
             await manager.save(brought);
             await this.refund_iap_entitlement(account.custom_id!, sku, reason);

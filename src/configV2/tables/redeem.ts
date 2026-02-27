@@ -1,9 +1,10 @@
 import { ConfigKey, ConfigTable, ConfigYaml } from '../table';
+import { StoreGainInfo } from './store';
 
 export class Redeem extends ConfigTable {
     code: string = '';
     gain: {
-        [key: string]: number;
+        [key: string]: StoreGainInfo
     } = {};
     constructor() {
         super();

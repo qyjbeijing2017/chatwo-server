@@ -1,4 +1,5 @@
 import { ConfigEnum, ConfigTable, ConfigYaml } from '../table';
+import { StoreGainInfo } from './store';
 
 export enum PruchaseType {
   Durable = 'Durable',
@@ -11,7 +12,7 @@ export class Purchase extends ConfigTable {
   name: string = '';
   type: PruchaseType = PruchaseType.Durable;
   gain: {
-    [key: string]: number;
+    [key: string]: StoreGainInfo
   } = {};
   constructor() {
     super();

@@ -376,6 +376,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Frost Shard",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -384,6 +385,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Verdant Core",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -392,6 +394,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Silver Ore",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -400,6 +403,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Iron Ore",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -408,6 +412,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Copper Ore",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -416,6 +421,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Earth Ore",
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1477,7 +1483,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Fish Stick Hilt",
-            "type": 2,
+            "type": 386,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1486,7 +1492,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Seven Branched Sword Hilt",
-            "type": 2,
+            "type": 386,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1495,7 +1501,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Six-Ring Hilt",
-            "type": 2,
+            "type": 386,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1504,7 +1510,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Tutorial Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1513,7 +1519,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Relic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1522,7 +1528,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Relic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1531,7 +1537,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Relic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1540,7 +1546,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Mystic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1549,7 +1555,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Mystic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1558,7 +1564,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Mystic Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1567,7 +1573,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Techno Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1576,7 +1582,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Techno Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1585,7 +1591,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Techno Default Hilt",
-            "type": 2,
+            "type": 130,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         }
@@ -1685,7 +1691,14 @@ export const configManager = new ConfigManager({
         {
             "key": "Fish Stick",
             "gain": {
-                "A_FishStick_Hilt": 1
+                "A_FishStick_Hilt": {
+                    "gainTo": "Chest",
+                    "meta": {
+                        "exp": 0,
+                        "bladeKey": "Fish Fang mace",
+                        "variantIndex": 0
+                    }
+                }
             },
             "cost": {
                 "sc": 1200
@@ -1707,7 +1720,14 @@ export const configManager = new ConfigManager({
         {
             "key": "Seven-Branched Sword",
             "gain": {
-                "A_SevenBranchedSword_Hilt": 1
+                "A_SevenBranchedSword_Hilt": {
+                    "gainTo": "Chest",
+                    "meta": {
+                        "exp": 0,
+                        "bladeKey": "Seven Branched sword",
+                        "variantIndex": 0
+                    }
+                }
             },
             "cost": {
                 "sc": 1800
@@ -1729,7 +1749,14 @@ export const configManager = new ConfigManager({
         {
             "key": "The Six-Rings",
             "gain": {
-                "A_SixRing_Hilt": 1
+                "A_SixRing_Hilt": {
+                    "gainTo": "Chest",
+                    "meta": {
+                        "exp": 0,
+                        "bladeKey": "Six Ring",
+                        "variantIndex": 0
+                    }
+                }
             },
             "cost": {
                 "sc": 1500
@@ -2556,7 +2583,14 @@ export const configManager = new ConfigManager({
                 "Head_YinYangKnight": 1,
                 "Body_YinYangKnight": 1,
                 "Eyes_G_Devil": 1,
-                "A_SevenBranchedSword_Hilt": 1
+                "A_SevenBranchedSword_Hilt": {
+                    "gainTo": "Chest",
+                    "meta": {
+                        "exp": 0,
+                        "bladeKey": "Seven Branched sword",
+                        "variantIndex": 0
+                    }
+                }
             },
             "fromFile": "purchase.csv"
         }
