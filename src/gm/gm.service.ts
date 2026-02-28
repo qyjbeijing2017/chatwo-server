@@ -15,6 +15,7 @@ import { CodeDto } from './dto/code.dto';
 import { ItemService } from 'src/item/item.service';
 import { PurchaseService } from 'src/purchase/purchase.service';
 import { RefundDto } from './dto/refund.dto';
+import { StoreGainInfo } from 'src/configV2/tables/store';
 
 @Injectable()
 export class GmService {
@@ -239,7 +240,7 @@ export class GmService {
         }
     }
 
-    gain(key: string, amount: number, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
+    gain(key: string, amount: StoreGainInfo, account: ApiAccount, manager: EntityManager): Promise<ChatwoItem[]> {
         return this.itemService.gainItems(manager, account, { [key]: amount }, true);
     }
 
@@ -261,7 +262,7 @@ export class GmService {
             for (const line of dto.lines) {
                 try {
                     const result = await this.statisticsService.execDsl(line, account, {
-                        gain: async (key: string, amount: number) => {
+                        gain: async (key: string, amount: StoreGainInfo) => {
                             const items = await this.gain(key, amount, account, manager);
                             tags.push(...items.map(i => i.nakamaId));
                             return items;

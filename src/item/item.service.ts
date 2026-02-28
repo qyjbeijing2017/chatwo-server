@@ -528,6 +528,21 @@ export class ItemService {
       if (item.owner && item.owner.nakamaId !== account.custom_id) {
         throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}`);
       }
+
+      // meta protected
+      const itemConfig = configManager.itemMap.get(item.key);
+      if (!itemConfig) {
+        throw new NotFoundException(`Item config with key ${item.key} not found`);
+      }
+      if (itemConfig.type & ItemType.arm) {
+        if (item.meta.bladeKey && item.meta.bladeKey !== dto.meta?.bladeKey) {
+          throw new BadRequestException(`Item with nakamaId ${nakamaId} has bladeKey ${item.meta.bladeKey} which cannot be changed to ${dto.meta?.bladeKey}`);
+        }
+        if (item.meta.variantIndex && item.meta.variantIndex !== dto.meta?.variantIndex) {
+          throw new BadRequestException(`Item with nakamaId ${nakamaId} has variantIndex ${item.meta.variantIndex} which cannot be changed to ${dto.meta?.variantIndex}`);
+        }
+      }
+
       item.meta = Object.assign(item.meta || {}, dto.meta);
       await manager.save(item);
       return {
