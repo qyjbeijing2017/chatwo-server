@@ -277,7 +277,25 @@ export class GmService {
                             return manager.delete(ChatwoItem, something);
                         },
                         jsonParse: (string: string) => this.jsonParse(string),
-                        qsParse: (string: string) => QSParse(string),
+                        qsParse: (string: string) => QSParse(string, {
+                            decoder: (str, defaultDecoder, charset, type) => {
+                                const value = defaultDecoder(str, defaultDecoder, charset);
+
+                                if (type === 'value') {
+                                    // 数字判断
+                                    if (/^-?\d+(\.\d+)?$/.test(value)) {
+                                        return Number(value);
+                                    }
+
+                                    // 布尔判断
+                                    if (value === 'true') return true;
+                                    if (value === 'false') return false;
+                                    if (value === 'null') return null;
+                                }
+
+                                return value;
+                            },
+                        }),
                     });
                     results.push(result);
                 } catch (error) {
