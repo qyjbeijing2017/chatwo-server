@@ -376,7 +376,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Frost Shard",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -385,7 +385,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Verdant Core",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -394,7 +394,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Silver Ore",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -403,7 +403,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Iron Ore",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -412,7 +412,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Copper Ore",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -421,7 +421,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Earth Ore",
-            "type": 0,
+            "type": 512,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
