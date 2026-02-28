@@ -7,7 +7,7 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
-import { Any, ArrayContainedBy, ArrayContains, Between, DataSource, EntityManager, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
+import { ArrayContains, DataSource, EntityManager, MoreThanOrEqual, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
@@ -16,6 +16,7 @@ import { ItemService } from 'src/item/item.service';
 import { PurchaseService } from 'src/purchase/purchase.service';
 import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
+import { parse as QSParse } from 'qs';
 
 @Injectable()
 export class GmService {
@@ -276,6 +277,7 @@ export class GmService {
                             return manager.delete(ChatwoItem, something);
                         },
                         jsonParse: (string: string) => this.jsonParse(string),
+                        qsParse: (string: string) => QSParse(string),
                     });
                     results.push(result);
                 } catch (error) {
