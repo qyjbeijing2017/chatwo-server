@@ -38,6 +38,7 @@ export class ItemService {
       }
       if ((itemConfig.type & ItemType.currency) !== 0) {
         const wallet = user.wallet || {};
+        if (costs[cost] <= 0) continue;
         if (wallet[cost] === undefined || wallet[cost] < costs[cost]) {
           throw new Error(`Not enough ${cost} to buy item`);
         }

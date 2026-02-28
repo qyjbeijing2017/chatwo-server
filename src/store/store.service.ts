@@ -22,6 +22,7 @@ export class StoreService {
             throw new Error(`User with nakamaId ${account.custom_id} not found`);
         }
         for (const cost in costs) {
+            if (costs[cost] <= 0) continue;
             if (user.wallet[cost] === undefined || user.wallet[cost] < costs[cost]) {
                 throw new Error(`Not enough ${cost} to buy item`);
             }

@@ -296,6 +296,19 @@ export class GmService {
                                 return value;
                             },
                         }),
+                        updateMeta: async (nakamaId: string, meta: Record<string, any>) => {
+                            const item = await manager.findOne(ChatwoItem, {
+                                where: { nakamaId },
+                            });
+                            if (!item) {
+                                throw new NotFoundException(`Item with nakamaId ${nakamaId} not found`);
+                            }
+                            item.meta = {
+                                ...item.meta,
+                                ...meta,
+                            };
+                            await manager.save(item);
+                        }
                     });
                     results.push(result);
                 } catch (error) {
