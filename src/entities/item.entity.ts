@@ -34,11 +34,13 @@ export enum ItemType {
   currency = 1 << 6,
   ownable = 1 << 7,
   lock = 1 << 8,
+  ore = 1 << 9,
   ownableArm = arm | ownable,
   lockOwnableArm = arm | ownable | lock,
   skin = head | eye | body | vfx,
-  dropable = item | arm,
+  dropable = item | arm | ore,
 }
+
 const itemTypeMap = new Map<string, ItemType>([
   ['item', ItemType.item],
   ['arm', ItemType.arm],
@@ -50,6 +52,7 @@ const itemTypeMap = new Map<string, ItemType>([
   ['skin', ItemType.skin],
   ['ownable', ItemType.ownable],
   ['lock', ItemType.lock],
+  ['ore', ItemType.ore],
   ['ownableArm', ItemType.ownableArm],
   ['lockOwnableArm', ItemType.lockOwnableArm],
 ]);

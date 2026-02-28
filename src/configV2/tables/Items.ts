@@ -26,6 +26,7 @@ export class Item extends ConfigTable {
       lockOwnableArm: ItemType.lockOwnableArm,
       skin: ItemType.skin,
       dropable: ItemType.dropable,
+      ore: ItemType.ore,
     })(this, 'type');
     ConfigFloat()(this, 'packagedSIze');
     ConfigBool()(this, 'InitInStorage');
