@@ -338,9 +338,6 @@ export class GmService {
                             });
                             return items;
                         },
-                        arrayMapOperation: (array: any[], op: any) => {
-                            return array.map(item => item[op]);
-                        },
                         fun: async (dsl: string) => {
                             return async (...args: any[]) => {
                                 await this.statisticsService.execDsl(dsl, account, {
@@ -348,21 +345,31 @@ export class GmService {
                                 });
                             }
                         },
-                        arrayMap(array: any[], funcDsl: string) {
-                            return array.map((item, index) => {
-                                return this.statisticsService.execDsl(funcDsl, account, {
+                        arrayMap: async (array: any[], funcDsl: string) => {
+                            let newArray: any[] = [];
+                            for (let index = 0; index < array.length; index++) {
+                                const item = array[index];
+                                const result = await this.statisticsService.execDsl(funcDsl, account, {
                                     item,
                                     index,
                                 });
-                            });
+                                newArray.push(result);
+                            }
+                            return newArray;
                         },
-                        arrayFilter(array: any[], funcDsl: string) {
-                            return array.filter((item, index) => {
-                                return this.statisticsService.execDsl(funcDsl, account, {
+                        arrayFilter: async (array: any[], funcDsl: string) => {
+                            let newArray: any[] = [];
+                            for (let index = 0; index < array.length; index++) {
+                                const item = array[index];
+                                const result = await this.statisticsService.execDsl(funcDsl, account, {
                                     item,
                                     index,
                                 });
-                            });
+                                if (result) {
+                                    newArray.push(item);
+                                }
+                            }
+                            return newArray;
                         }
                     });
                     results.push(result);
