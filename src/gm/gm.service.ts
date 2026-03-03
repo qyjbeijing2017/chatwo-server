@@ -7,7 +7,7 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
-import { ArrayContains, DataSource, EntityManager, MoreThanOrEqual, Repository } from 'typeorm';
+import { ArrayContains, DataSource, EntityManager, In, MoreThanOrEqual, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
@@ -17,7 +17,6 @@ import { PurchaseService } from 'src/purchase/purchase.service';
 import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
-import { arrayBuffer } from 'stream/consumers';
 import { configManager } from 'src/configV2/config';
 
 @Injectable()
@@ -303,7 +302,6 @@ export class GmService {
                                 return value;
                             },
                         }),
-                        keysFromItemType: (key: string) => this.keysFromItemType(key),
                         updateMeta: async (nakamaId: string, meta: Record<string, any>) => {
                             const item = await manager.findOne(ChatwoItem, {
                                 where: { nakamaId },
@@ -320,7 +318,7 @@ export class GmService {
                         updateMetas: async (nakamaIds: string[], meta: Record<string, any>) => {
                             const items = await manager.find(ChatwoItem, {
                                 where: {
-                                    nakamaId: ArrayContains(nakamaIds),
+                                    nakamaId: In(nakamaIds),
                                 },
                             });
                             for (const item of items) {
@@ -332,11 +330,10 @@ export class GmService {
                             await manager.save(items);
                         },
                         getItemsByType: async (type: string) => {
-
                             const items = await manager.find(ChatwoItem, {
                                 where: {
                                     owner: { nakamaId: account.custom_id! },
-                                    key: ArrayContains(this.keysFromItemType(type)),
+                                    key: In(this.keysFromItemType(type)),
                                 },
                             });
                             return items;
