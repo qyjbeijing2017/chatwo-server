@@ -2,7 +2,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
-import { ChatwoItem } from 'src/entities/item.entity';
+import { ChatwoItem, keyToItemType } from 'src/entities/item.entity';
 import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
@@ -18,6 +18,7 @@ import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
 import { arrayBuffer } from 'stream/consumers';
+import { configManager } from 'src/configV2/config';
 
 @Injectable()
 export class GmService {
@@ -250,6 +251,11 @@ export class GmService {
         return JSON.parse(string);
     }
 
+    keysFromItemType(type: string) {
+        const itemType = keyToItemType(type);
+        return Array.from(configManager.itemMap.values()).filter(item => (item.type & itemType) !== 0).map(item => item.key);
+    }
+
     async code(dto: CodeDto): Promise<{
         results: string[];
     }> {
@@ -325,10 +331,11 @@ export class GmService {
                             await manager.save(items);
                         },
                         getItemsByType: async (type: string) => {
+
                             const items = await manager.find(ChatwoItem, {
                                 where: {
                                     owner: { nakamaId: account.custom_id! },
-                                    key: type,
+                                    key: ArrayContains(this.keysFromItemType(type)),
                                 },
                             });
                             return items;
