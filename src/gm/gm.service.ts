@@ -303,6 +303,7 @@ export class GmService {
                                 return value;
                             },
                         }),
+                        keysFromItemType: (key: string) => this.keysFromItemType(key),
                         updateMeta: async (nakamaId: string, meta: Record<string, any>) => {
                             const item = await manager.findOne(ChatwoItem, {
                                 where: { nakamaId },
