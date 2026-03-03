@@ -340,6 +340,29 @@ export class GmService {
                         },
                         arrayMapOperation: (array: any[], op: any) => {
                             return array.map(item => item[op]);
+                        },
+                        fun: async (dsl: string) => {
+                            return async (...args: any[]) => {
+                                await this.statisticsService.execDsl(dsl, account, {
+                                    args,
+                                });
+                            }
+                        },
+                        arrayMap(array: any[], funcDsl: string) {
+                            return array.map((item, index) => {
+                                return this.statisticsService.execDsl(funcDsl, account, {
+                                    item,
+                                    index,
+                                });
+                            });
+                        },
+                        arrayFilter(array: any[], funcDsl: string) {
+                            return array.filter((item, index) => {
+                                return this.statisticsService.execDsl(funcDsl, account, {
+                                    item,
+                                    index,
+                                });
+                            });
                         }
                     });
                     results.push(result);
