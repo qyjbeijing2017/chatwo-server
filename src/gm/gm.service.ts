@@ -17,6 +17,7 @@ import { PurchaseService } from 'src/purchase/purchase.service';
 import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
+import { arrayBuffer } from 'stream/consumers';
 
 @Injectable()
 export class GmService {
@@ -308,6 +309,32 @@ export class GmService {
                                 ...meta,
                             };
                             await manager.save(item);
+                        },
+                        updateMetas: async (nakamaIds: string[], meta: Record<string, any>) => {
+                            const items = await manager.find(ChatwoItem, {
+                                where: {
+                                    nakamaId: ArrayContains(nakamaIds),
+                                },
+                            });
+                            for (const item of items) {
+                                item.meta = {
+                                    ...item.meta,
+                                    ...meta,
+                                };
+                            }
+                            await manager.save(items);
+                        },
+                        getItemsByType: async (type: string) => {
+                            const items = await manager.find(ChatwoItem, {
+                                where: {
+                                    owner: { nakamaId: account.custom_id! },
+                                    key: type,
+                                },
+                            });
+                            return items;
+                        },
+                        arrayMapOperation: (array: any[], op: any) => {
+                            return array.map(item => item[op]);
                         }
                     });
                     results.push(result);

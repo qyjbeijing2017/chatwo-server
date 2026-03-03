@@ -536,10 +536,10 @@ export class ItemService {
         throw new NotFoundException(`Item config with key ${item.key} not found`);
       }
       if (itemConfig.type & ItemType.arm) {
-        if (item.meta.bladeKey && item.meta.bladeKey !== dto.meta?.bladeKey) {
+        if (item.meta.bladeKey && dto.meta?.bladeKey && item.meta.bladeKey !== dto.meta?.bladeKey) {
           throw new BadRequestException(`Item with nakamaId ${nakamaId} has bladeKey ${item.meta.bladeKey} which cannot be changed to ${dto.meta?.bladeKey}`);
         }
-        if (item.meta.variantIndex && item.meta.variantIndex !== dto.meta?.variantIndex) {
+        if (item.meta.variantIndex && dto.meta?.variantIndex && item.meta.variantIndex !== dto.meta?.variantIndex) {
           throw new BadRequestException(`Item with nakamaId ${nakamaId} has variantIndex ${item.meta.variantIndex} which cannot be changed to ${dto.meta?.variantIndex}`);
         }
       }
