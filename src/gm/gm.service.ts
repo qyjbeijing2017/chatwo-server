@@ -340,9 +340,10 @@ export class GmService {
                         },
                         fun: async (dsl: string) => {
                             return async (...args: any[]) => {
-                                await this.statisticsService.execDsl(dsl, account, {
+                                const result = await this.statisticsService.execDsl(dsl, account, {
                                     args,
                                 });
+                                return result;
                             }
                         },
                         arrayMap: async (array: any[], funcDsl: string) => {
