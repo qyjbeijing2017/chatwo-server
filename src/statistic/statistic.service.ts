@@ -15,6 +15,7 @@ import { NakamaService } from 'src/nakama/nakama.service';
 import { getMetadata } from 'src/utils/meta-data';
 import { Item } from 'src/configV2/tables/Items';
 import { getServerTime, todayStart } from 'src/utils/serverTime';
+import { ChatwoBug } from 'src/entities/bug.entity';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -30,6 +31,10 @@ function whitePath(key: string) {
     return WHITE_PATH_MAP[key];
 }
 
+export interface DslOptions {
+    openBug?: boolean;
+}
+
 @Injectable()
 export class StatisticService {
     constructor(
@@ -41,6 +46,8 @@ export class StatisticService {
         private readonly itemRepository: Repository<ChatwoItem>,
         @InjectRepository(ChatwoContainer)
         private readonly containerRepository: Repository<ChatwoContainer>,
+        @InjectRepository(ChatwoBug)
+        private readonly bugRepository: Repository<ChatwoBug>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
     ) { }
@@ -148,6 +155,24 @@ export class StatisticService {
                     results: containerResult,
                     total: containerCount,
                 };
+            case 'bug':
+                if (context.options?.debug) {
+                    const bugWhere: FindOptionsWhere<ChatwoBug> | FindOptionsWhere<ChatwoBug>[] = where ?? {};
+                    const [containerResult, containerCount] = await this.bugRepository.findAndCount({
+                        select: select,
+                        where: bugWhere,
+                        order: orderBy,
+                        skip,
+                        take,
+                        relations: join,
+                    });
+                    return {
+                        results: containerResult,
+                        total: containerCount,
+                    };
+                } else {
+                    throw new Error('Table bug is not open for query');
+                }
             default:
                 throw new Error(`Unknown from type: ${from}`);
         }
@@ -392,7 +417,7 @@ export class StatisticService {
         return `ARRAY[${array.map(item => `'${item}'`).join(', ')}]`;
     }
 
-    createContext(account: ApiAccount | null, other: { [key: string]: any } = {}) {
+    createContext(account: ApiAccount | null, other: { [key: string]: any } = {}, options: DslOptions) {
         return {
             query: this.query.bind(this),
             queryWhere: this.queryWhere.bind(this),
@@ -406,11 +431,12 @@ export class StatisticService {
             todayFlyMeters: this.todayFlyMeters.bind(this),
             account,
             ...other,
+            options,
         };
     }
 
-    async execDsl(dsl: string, account: ApiAccount | null = null, extraContext: { [key: string]: any } = {}) {
-        const context = this.createContext(account, extraContext);
+    async execDsl(dsl: string, account: ApiAccount | null = null, extraContext: { [key: string]: any } = {}, options: DslOptions = {}) {
+        const context = this.createContext(account, extraContext, options);
         const { exec, parserToCST, parseToAST } = await import(`../dsl`);
         const cst = parserToCST(dsl);
         const ast = parseToAST(cst);

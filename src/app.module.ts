@@ -18,6 +18,8 @@ import { GmModule } from './gm/gm.module';
 import { StoreModule } from './store/store.module';
 import { TaskModule } from './task/task.module';
 import { PurchaseModule } from './purchase/purchase.module';
+import { BugReportModule } from './bug-report/bug-report.module';
+import { ChatwoBug } from './entities/bug.entity';
 
 @Module({
   imports: [
@@ -36,7 +38,7 @@ import { PurchaseModule } from './purchase/purchase.module';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer],
+        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer, ChatwoBug],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),
@@ -50,6 +52,7 @@ import { PurchaseModule } from './purchase/purchase.module';
     StoreModule,
     TaskModule,
     PurchaseModule,
+    BugReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

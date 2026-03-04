@@ -236,7 +236,7 @@ export class GmService {
         result: any;
     }> {
         try {
-            return this.statisticsService.execDsl(query);
+            return this.statisticsService.execDsl(query, null, {}, { openBug: true });
         } catch (error) {
             throw new BadRequestException(`DSL Query Error: ${error.message}`);
         }
@@ -342,7 +342,7 @@ export class GmService {
                             return async (...args: any[]) => {
                                 const result = await this.statisticsService.execDsl(dsl, account, {
                                     args,
-                                });
+                                }, { openBug: true });
                                 return result;
                             }
                         },
@@ -372,7 +372,7 @@ export class GmService {
                             }
                             return newArray;
                         }
-                    });
+                    }, { openBug: true });
                     results.push(result);
                 } catch (error) {
                     results.push(error);
