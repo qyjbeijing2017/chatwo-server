@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { Public } from 'src/auth/public.decorator';
 import { BugReportService } from './bug-report.service';
 import { BugDto } from './bug.dto';
@@ -8,7 +8,7 @@ export class BugReportController {
     constructor(private readonly bugReportService: BugReportService) {}
     @Post()
     @Public()
-    async reportBug(dto: BugDto) {
+    async reportBug(@Body()dto: BugDto) {
         return this.bugReportService.reportBug(dto);
     }
 }
