@@ -156,7 +156,7 @@ export class StatisticService {
                     total: containerCount,
                 };
             case 'bug':
-                if (context.options?.debug) {
+                if (context.options?.openBug) {
                     const bugWhere: FindOptionsWhere<ChatwoBug> | FindOptionsWhere<ChatwoBug>[] = where ?? {};
                     const [containerResult, containerCount] = await this.bugRepository.findAndCount({
                         select: select,
