@@ -237,17 +237,16 @@ export class TaskService {
         // task create if not exist
         if (!dailycraftingTasks) {
             const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
-            this.logger.log(`Found ${craftingTaskConfig.length} daily crafting task configs when handling sign-in event for task refresh`);
             if (craftingTaskConfig.length <= 0) {
                 this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
-                this.logger.log(`Creating daily crafting task with key ${config.key} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
+                this.logger.log(`config: ${JSON.stringify(config)} when handling sign-in event for task refresh`);
                 const craftingTask = this.taskRepository.create({
-                    key: config.key,
+                    key: config.Name,
                     owner: user,
                 });
-                this.logger.log(`Saving daily crafting task with key ${config.key} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
+                this.logger.log(`Saving daily crafting task with key ${config.Name} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
                 await this.taskRepository.save(craftingTask);
             }
         }
@@ -258,8 +257,9 @@ export class TaskService {
                 this.logger.error(`No combat daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = combatTaskConfig[Math.floor(Math.random() * combatTaskConfig.length)];
+                this.logger.log(`config: ${JSON.stringify(config)} when handling sign-in event for task refresh`);
                 const combatTask = this.taskRepository.create({
-                    key: config.key,
+                    key: config.Name,
                     owner: user,
                 });
                 await this.taskRepository.save(combatTask);
@@ -273,7 +273,7 @@ export class TaskService {
             } else {
                 const config = socialTaskConfig[Math.floor(Math.random() * socialTaskConfig.length)];
                 const socialTask = this.taskRepository.create({
-                    key: config.key,
+                    key: config.Name,
                     owner: user,
                 });
                 await this.taskRepository.save(socialTask);
@@ -288,7 +288,7 @@ export class TaskService {
         for (const config of weeklyTaskConfig) {
             if (!weeklyTasks[config.key]) {
                 const weeklyTask = this.taskRepository.create({
-                    key: config.key,
+                    key: config.Name,
                     owner: user,
                 });
                 await this.taskRepository.save(weeklyTask);
