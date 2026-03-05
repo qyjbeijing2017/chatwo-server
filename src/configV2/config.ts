@@ -2126,7 +2126,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitVerdantCoreDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Collect and submit 5 Verdant Cores\n  check: key == \"Verdant_Ore\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Collect and submit 5 Verdant Cores",
+                    "check": "key == \"Verdant_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 500
             },
@@ -2136,7 +2142,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitFrostShardDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Collect and submit 5 Frost Shards\n  check: key == \"Frost_Ore\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Collect and submit 5 Frost Shards",
+                    "check": "key == \"Frost_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 500
             },
@@ -2146,7 +2158,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitSilverDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 15\n  description: Collect and submit 15 Silver Ore\n  check: key == \"Silver_Ore\"",
+            "Submit": [
+                {
+                    "total": 15,
+                    "description": "Collect and submit 15 Silver Ore",
+                    "check": "key == \"Silver_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2156,7 +2174,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitIronDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 20\n  description: Collect and submit 20 Iron Ore\n  check: key == \"Iron_Ore\"",
+            "Submit": [
+                {
+                    "total": 20,
+                    "description": "Collect and submit 20 Iron Ore",
+                    "check": "key == \"Iron_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2166,7 +2190,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitCopperDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 20\n  description: Collect and submit 20 Copper Ore\n  check: key == \"Copper_Ore\"",
+            "Submit": [
+                {
+                    "total": 20,
+                    "description": "Collect and submit 20 Copper Ore",
+                    "check": "key == \"Copper_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2176,7 +2206,13 @@ export const configManager = new ConfigManager({
             "Name": "SubmitRockDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 30\n  description: Collect and submit 30 Rocks\n  check: key == \"Earth_Ore\"",
+            "Submit": [
+                {
+                    "total": 30,
+                    "description": "Collect and submit 30 Rocks",
+                    "check": "key == \"Earth_Ore\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2186,7 +2222,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeLightsaberDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Lightsaber\n  check: meta.bladeKey == \"Lightsaber\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Forge and submit a Lightsaber",
+                    "check": "meta.bladeKey == \"Lightsaber\""
+                }
+            ],
             "Award": {
                 "ss": 500
             },
@@ -2196,7 +2238,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeRapierDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Rapier\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Forge and submit a Rapier",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2206,7 +2254,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeScimitarDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 8\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 8,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2216,7 +2270,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeKatanaDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 7\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 7,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2226,7 +2286,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeJianDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 6\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 6,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2236,7 +2302,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeMorningStarDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2246,7 +2318,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeTangDaoDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 4\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 4,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2256,7 +2334,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeBaseballBatDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 3\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 3,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2266,7 +2350,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeBaguetteDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 2\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 2,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2276,7 +2366,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeLollipopDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2286,7 +2382,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeFryingPanDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 0\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 0,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2296,7 +2398,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeRulerDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Forge and submit a Ruler",
+                    "check": "meta.bladeKey == \"Ruler\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2306,7 +2414,13 @@ export const configManager = new ConfigManager({
             "Name": "ForgeSausageSaberDaily",
             "Type": 1,
             "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Sausage Saber\n  check: meta.bladeKey == \"Sausage Saber\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Forge and submit a Sausage Saber",
+                    "check": "meta.bladeKey == \"Sausage Saber\""
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2316,7 +2430,15 @@ export const configManager = new ConfigManager({
             "Name": "KilledMonstersDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 30\n  description: Kill 30 monsters\n  events:\n    user.moster-killed: 1",
+            "Submit": [
+                {
+                    "total": 30,
+                    "description": "Kill 30 monsters",
+                    "events": {
+                        "user.moster-killed": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 3000
             },
@@ -2326,7 +2448,15 @@ export const configManager = new ConfigManager({
             "Name": "FlyDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 1000\n  description: Fly for 1000 meters\n  events:\n    user.fly: meters",
+            "Submit": [
+                {
+                    "total": 1000,
+                    "description": "Fly for 1000 meters",
+                    "events": {
+                        "user.fly": "meters"
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1000
             },
@@ -2336,7 +2466,15 @@ export const configManager = new ConfigManager({
             "Name": "KillSnowGuardianDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Snowbound Guardian\n  events:\n    user.monster-killed: monsterId == \"Snowbound Guardian\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 5 Snowbound Guardian",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Snowbound Guardian\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 500
             },
@@ -2346,7 +2484,15 @@ export const configManager = new ConfigManager({
             "Name": "KillWraithDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Frostshade Wraiths\n  events:\n    user.monster-killed: monsterId == \"Frostshade Wraith\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 5 Frostshade Wraiths",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Frostshade Wraith\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 450
             },
@@ -2356,7 +2502,15 @@ export const configManager = new ConfigManager({
             "Name": "KillWolfDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Frostfang Wolves\n  events:\n    user.monster-killed: monsterId == \"Frostfang Wolf\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 5 Frostfang Wolves",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Frostfang Wolf\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 400
             },
@@ -2366,7 +2520,15 @@ export const configManager = new ConfigManager({
             "Name": "KillBatDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 10 Corvyn Bats\n  events:\n    user.monster-killed: monsterId == \"Corvyn Bat\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 10 Corvyn Bats",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Corvyn Bat\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2376,7 +2538,15 @@ export const configManager = new ConfigManager({
             "Name": "KillMimicDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Mimic Chests\n  events:\n    user.monster-killed: monsterId == \"Mimic Chest\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 5 Mimic Chests",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Mimic Chest\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 500
             },
@@ -2386,7 +2556,15 @@ export const configManager = new ConfigManager({
             "Name": "KillWoodGuardianDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Wood Guardians\n  events:\n    user.monster-killed: monsterId == \"Wood Guardian\"",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Defeat 5 Wood Guardians",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Wood Guardian\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 450
             },
@@ -2396,7 +2574,15 @@ export const configManager = new ConfigManager({
             "Name": "KillBeeDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 10\n  description: Defeat 10 Venom Bees\n  events:\n    user.monster-killed: monsterId == \"Venom Bee\"",
+            "Submit": [
+                {
+                    "total": 10,
+                    "description": "Defeat 10 Venom Bees",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Venom Bee\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 350
             },
@@ -2406,7 +2592,15 @@ export const configManager = new ConfigManager({
             "Name": "KillSpiderDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 20\n  description: Defeat 20 Spiders\n  events:\n    user.monster-killed: monsterId == \"Spider\"",
+            "Submit": [
+                {
+                    "total": 20,
+                    "description": "Defeat 20 Spiders",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Spider\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2416,7 +2610,15 @@ export const configManager = new ConfigManager({
             "Name": "AddFriendDaily",
             "Type": 1,
             "Category": "social",
-            "Submit": "-\n  total: 1\n  description: Add 1 new friend\n  events:\n    user.add-friend: 1",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Add 1 new friend",
+                    "events": {
+                        "user.add-friend": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2426,7 +2628,15 @@ export const configManager = new ConfigManager({
             "Name": "TeleportPlayersDaily",
             "Type": 1,
             "Category": "social",
-            "Submit": "-\n  total: 3\n  description: Teleport to 3 different players\n  events:\n    user.teleport: teleportDifferent(destination)",
+            "Submit": [
+                {
+                    "total": 3,
+                    "description": "Teleport to 3 different players",
+                    "events": {
+                        "user.teleport": "teleportDifferent(destination)"
+                    }
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2436,7 +2646,15 @@ export const configManager = new ConfigManager({
             "Name": "DuelPlayersDaily",
             "Type": 1,
             "Category": "social",
-            "Submit": "-\n  total: 3\n  description: Win 3 duels against other players\n  events:\n    user.pvp: 1",
+            "Submit": [
+                {
+                    "total": 3,
+                    "description": "Win 3 duels against other players",
+                    "events": {
+                        "user.pvp": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 300
             },
@@ -2446,7 +2664,15 @@ export const configManager = new ConfigManager({
             "Name": "KillFrostveilDragonDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 1\n  description: Defeat Glaciron, the Frostveil Dragon\n  events:\n    user.monster-killed: monsterId == \"Glaciron, the Frostveil Serpent\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Defeat Glaciron, the Frostveil Dragon",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Glaciron, the Frostveil Serpent\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1500
             },
@@ -2456,7 +2682,15 @@ export const configManager = new ConfigManager({
             "Name": "KillCosmoDevourDaily",
             "Type": 1,
             "Category": "combat",
-            "Submit": "-\n  total: 1\n  description: Defeat Glaciron, the Frostveil Dragon\n  events:\n    user.monster-killed: monsterId == \"Cosmo Devour\"",
+            "Submit": [
+                {
+                    "total": 1,
+                    "description": "Defeat Glaciron, the Frostveil Dragon",
+                    "events": {
+                        "user.monster-killed": "monsterId == \"Cosmo Devour\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1200
             },
@@ -2466,7 +2700,15 @@ export const configManager = new ConfigManager({
             "Name": "AddFriendWeekly",
             "Type": 2,
             "Category": "social",
-            "Submit": "-\n  total: 5\n  description: Add 5 new friends\n  events:\n    user.add-friend: 1",
+            "Submit": [
+                {
+                    "total": 5,
+                    "description": "Add 5 new friends",
+                    "events": {
+                        "user.add-friend": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1000
             },
@@ -2476,7 +2718,15 @@ export const configManager = new ConfigManager({
             "Name": "DuelPlayersWeekly",
             "Type": 2,
             "Category": "combat",
-            "Submit": "-\n  total: 20\n  description: Win 20 duels against other players\n  events:\n    user.duel: 1",
+            "Submit": [
+                {
+                    "total": 20,
+                    "description": "Win 20 duels against other players",
+                    "events": {
+                        "user.duel": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1000
             },
@@ -2486,7 +2736,15 @@ export const configManager = new ConfigManager({
             "Name": "Defeat 100 mobs",
             "Type": 2,
             "Category": "combat",
-            "Submit": "-\n  total: 100\n  description: Defeat 100 monsters\n  events:\n    user.moster-killed: 1",
+            "Submit": [
+                {
+                    "total": 100,
+                    "description": "Defeat 100 monsters",
+                    "events": {
+                        "user.moster-killed": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1000
             },
@@ -2496,7 +2754,15 @@ export const configManager = new ConfigManager({
             "Name": "Forge 10 swords",
             "Type": 2,
             "Category": "crafting",
-            "Submit": "-\n  total: 10\n  description: Defeat 100 monsters\n  events:\n    user.forge: 1",
+            "Submit": [
+                {
+                    "total": 10,
+                    "description": "Defeat 100 monsters",
+                    "events": {
+                        "user.forge": 1
+                    }
+                }
+            ],
             "Award": {
                 "ss": 1000
             },
@@ -2506,7 +2772,15 @@ export const configManager = new ConfigManager({
             "Name": "Defeat bosses 10 times",
             "Type": 2,
             "Category": "combat",
-            "Submit": "-\n  total: 10\n  description: Defeat bosses 10 times.\n  events:\n    user.moster-killed: getMonsterConfigByKey(monsterId).Type == \"Boss\"",
+            "Submit": [
+                {
+                    "total": 10,
+                    "description": "Defeat bosses 10 times.",
+                    "events": {
+                        "user.moster-killed": "getMonsterConfigByKey(monsterId).Type == \"Boss\""
+                    }
+                }
+            ],
             "Award": {
                 "ss": 10000
             },

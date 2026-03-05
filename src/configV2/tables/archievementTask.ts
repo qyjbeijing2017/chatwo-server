@@ -41,5 +41,6 @@ export class ArchievementTaskConfig extends ConfigTable {
       daily: ArchievementTaskType.daily,
       Weekly: ArchievementTaskType.weekly,
     })(this, 'Type');
+    ConfigYaml()(this, 'Submit');
   }
 }

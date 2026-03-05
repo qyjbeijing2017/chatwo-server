@@ -345,14 +345,12 @@ export class GmService {
                             await manager.delete(ChatwoTask, tasks);
                         },
                         createTask: async (key: string) => {
-                            this.logger.log(`Creating task with key ${key} for user ${account.custom_id}`);
                             const user = await manager.findOne(ChatwoUser, {
                                 where: { nakamaId: account.custom_id! },
                             });
                             if (!user) {
                                 throw new NotFoundException(`User with nakamaId ${account.custom_id!} not found`);
                             }
-                            this.logger.log(`User found: ${user.name}`);
                             const config = configManager.archievementTaskMap.get(key);
                             if (!config) {
                                 throw new NotFoundException(`Task config with key ${key} not found`);
@@ -361,9 +359,7 @@ export class GmService {
                                 key,
                                 owner: user,
                             });
-                            this.logger.log(`Saving task with key ${key} for user ${account.custom_id}`);
                             await manager.save(task);
-                            this.logger.log(`Task with key ${key} for user ${account.custom_id} saved with id ${task.id}`);
                             return task;
                         },
                         getItemsByType: async (type: string) => {
