@@ -2123,393 +2123,203 @@ export const configManager = new ConfigManager({
     ],
     "archievementTask": [
         {
-            "Name": "SubmitVerdantCoreDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Collect and submit 5 Verdant Cores\n  check: key == \"Verdant_Ore\"",
+            "Name": "Tutorial",
+            "Type": "once",
+            "Award": {
+                "ss": 100
+            },
+            "Progress": "(SELECT * FROM user).results[0].tutorialCompleted",
+            "Test": 1,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "Fly200",
+            "Type": "once",
+            "Award": {
+                "ss": 200
+            },
+            "Progress": "(SELECT * FROM user).results[0].flyMeters",
+            "Test": 200,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "AddFriend1",
+            "Type": "once",
+            "Award": {
+                "ss": 200
+            },
+            "Progress": "friendList(account).length",
+            "Test": 1,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "KilledSpider25",
+            "Type": "once",
+            "Award": {
+                "ss": 200
+            },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Spider\"]).total",
+            "Test": 25,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "BreakBlade50",
+            "Type": "once",
+            "Award": {
+                "ss": 200
+            },
+            "Progress": "(SELECT * FROM user).results[0].breakBladeTimes",
+            "Test": 50,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "UpgradeArm50",
+            "Type": "once",
             "Award": {
                 "ss": 500
             },
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 700]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "SubmitFrostShardDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Collect and submit 5 Frost Shards\n  check: key == \"Frost_Ore\"",
+            "Name": "PurchaseHilt1",
+            "Type": "once",
+            "Award": {
+                "ss": 300
+            },
+            "Progress": "(SELECT * FROM log WHERE tags @>&& [[\"store\"], KeysFromItemType(\"arm\")]).total",
+            "Test": 1,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "DrawBlade1",
+            "Type": "once",
+            "Award": {
+                "ss": 100
+            },
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB [\"string\", \"bladeKey\", \"IS NOT NULL\"]).total",
+            "Test": 1,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "UpgradeArmLv10",
+            "Type": "once",
             "Award": {
                 "ss": 500
             },
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 2280]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "SubmitSilverDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 15\n  description: Collect and submit 15 Silver Ore\n  check: key == \"Silver_Ore\"",
+            "Name": "KilledWoodGuardian10",
+            "Type": "once",
             "Award": {
-                "ss": 300
+                "ss": 200
             },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Wood Guardian\"]).total",
+            "Test": 10,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "SubmitIronDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 20\n  description: Collect and submit 20 Iron Ore\n  check: key == \"Iron_Ore\"",
+            "Name": "KilledMimicChest1",
+            "Type": "once",
+            "Award": null,
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"Mimic Chest\"]).total",
+            "Test": 1,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "DefeatSpiritborne5",
+            "Type": "once",
             "Award": {
-                "ss": 300
+                "ss": 200
             },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", account.custom_id]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "SubmitCopperDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 20\n  description: Collect and submit 20 Copper Ore\n  check: key == \"Copper_Ore\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "SubmitRockDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 30\n  description: Collect and submit 30 Rocks\n  check: key == \"Earth_Ore\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeLightsaberDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Lightsaber\n  check: meta.bladeKey == \"Lightsaber\"",
-            "Award": {
-                "ss": 500
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeRapierDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Rapier\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeScimitarDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 8\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeKatanaDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 7\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeJianDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 6\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeMorningStarDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 5\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeTangDaoDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 4\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeBaseballBatDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 3\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeBaguetteDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 2\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeLollipopDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeFryingPanDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 0\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeRulerDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Ruler\n  check: meta.bladeKey == \"Ruler\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "ForgeSausageSaberDaily",
-            "Type": 1,
-            "Category": "crafting",
-            "Submit": "-\n  total: 1\n  description: Forge and submit a Sausage Saber\n  check: meta.bladeKey == \"Sausage Saber\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KilledMonstersDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 30\n  description: Kill 30 monsters\n  events:\n    user.moster-killed: 1",
-            "Award": {
-                "ss": 3000
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "FlyDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 1000\n  description: Fly for 1000 meters\n  events:\n    user.fly: meters",
+            "Name": "KilledBoss1",
+            "Type": "once",
             "Award": {
                 "ss": 1000
             },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"boss\"]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "KillSnowGuardianDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Snowbound Guardian\n  events:\n    user.monster-killed: monsterId == \"Snowbound Guardian\"",
-            "Award": {
-                "ss": 500
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillWraithDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Frostshade Wraiths\n  events:\n    user.monster-killed: monsterId == \"Frostshade Wraith\"",
-            "Award": {
-                "ss": 450
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillWolfDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Frostfang Wolves\n  events:\n    user.monster-killed: monsterId == \"Frostfang Wolf\"",
-            "Award": {
-                "ss": 400
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillBatDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 10 Corvyn Bats\n  events:\n    user.monster-killed: monsterId == \"Corvyn Bat\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillMimicDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Mimic Chests\n  events:\n    user.monster-killed: monsterId == \"Mimic Chest\"",
-            "Award": {
-                "ss": 500
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillWoodGuardianDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 5\n  description: Defeat 5 Wood Guardians\n  events:\n    user.monster-killed: monsterId == \"Wood Guardian\"",
-            "Award": {
-                "ss": 450
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillBeeDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 10\n  description: Defeat 10 Venom Bees\n  events:\n    user.monster-killed: monsterId == \"Venom Bee\"",
-            "Award": {
-                "ss": 350
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillSpiderDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 20\n  description: Defeat 20 Spiders\n  events:\n    user.monster-killed: monsterId == \"Spider\"",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "AddFriendDaily",
-            "Type": 1,
-            "Category": "social",
-            "Submit": "-\n  total: 1\n  description: Add 1 new friend\n  events:\n    user.add-friend: 1",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "TeleportPlayersDaily",
-            "Type": 1,
-            "Category": "social",
-            "Submit": "-\n  total: 3\n  description: Teleport to 3 different players\n  events:\n    user.teleport: teleportDifferent(destination)",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "DuelPlayersDaily",
-            "Type": 1,
-            "Category": "social",
-            "Submit": "-\n  total: 3\n  description: Win 3 duels against other players\n  events:\n    user.pvp: 1",
-            "Award": {
-                "ss": 300
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillFrostveilDragonDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 1\n  description: Defeat Glaciron, the Frostveil Dragon\n  events:\n    user.monster-killed: monsterId == \"Glaciron, the Frostveil Serpent\"",
-            "Award": {
-                "ss": 1500
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillCosmoDevourDaily",
-            "Type": 1,
-            "Category": "combat",
-            "Submit": "-\n  total: 1\n  description: Defeat Glaciron, the Frostveil Dragon\n  events:\n    user.monster-killed: monsterId == \"Cosmo Devour\"",
-            "Award": {
-                "ss": 1200
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "AddFriendWeekly",
-            "Type": 2,
-            "Category": "social",
-            "Submit": "-\n  total: 5\n  description: Add 5 new friends\n  events:\n    user.add-friend: 1",
+            "Name": "UpgradeArm30",
+            "Type": "once",
             "Award": {
                 "ss": 1000
             },
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 50000]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "DuelPlayersWeekly",
-            "Type": 2,
-            "Category": "combat",
-            "Submit": "-\n  total: 20\n  description: Win 20 duels against other players\n  events:\n    user.duel: 1",
-            "Award": {
-                "ss": 1000
-            },
+            "Name": "OwnSeasonLimitedWeapon1",
+            "Type": "once",
+            "Award": null,
+            "Progress": "(SELECT * FROM item WHERE meta JSONB [\"string\", \"bladeKey\", \"IN\", [”Tang_lv20_9”,”Katana_lv20_9”]]).total",
+            "Test": 1,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "Defeat 100 mobs",
-            "Type": 2,
-            "Category": "combat",
-            "Submit": "-\n  total: 100\n  description: Defeat 100 monsters\n  events:\n    user.moster-killed: 1",
+            "Name": "KilledMonsters10",
+            "Type": "daily",
             "Award": {
-                "ss": 1000
+                "ss": 200
             },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\"] AND createdAt > todayStart()).total",
+            "Test": 10,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "Forge 10 swords",
-            "Type": 2,
-            "Category": "crafting",
-            "Submit": "-\n  total: 10\n  description: Defeat 100 monsters\n  events:\n    user.forge: 1",
+            "Name": "DefeatSpiritborne5",
+            "Type": "daily",
             "Award": {
-                "ss": 1000
+                "ss": 200
             },
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pvp\", account.custom_id] AND createdAt > todayStart()).total",
+            "Test": 10,
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "Defeat bosses 10 times",
-            "Type": 2,
-            "Category": "combat",
-            "Submit": "-\n  total: 10\n  description: Defeat bosses 10 times.\n  events:\n    user.moster-killed: getMonsterConfigByKey(monsterId).Type == \"Boss\"",
+            "Name": "Fly500",
+            "Type": "daily",
             "Award": {
-                "ss": 10000
+                "ss": 200
             },
+            "Progress": "todayFlyMeters(account)",
+            "Test": 500,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "KilledBoss10",
+            "Type": "longterm",
+            "Award": null,
+            "Progress": "(SELECT * FROM log WHERE tags @> [\"pve\", \"boss\"]).total",
+            "Test": 10,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "OwnArmLv30_10",
+            "Type": "longterm",
+            "Award": null,
+            "Progress": "(SELECT * FROM item WHERE key IN KeysFromItemType(\"arm\") AND meta JSONB  [\"number\", \"exp\", \">=\", 50000]).total",
+            "Test": 10,
+            "fromFile": "archievementTask.csv"
+        },
+        {
+            "Name": "AddFriend100",
+            "Type": "longterm",
+            "Award": null,
+            "Progress": "friendList(account).length",
+            "Test": 100,
             "fromFile": "archievementTask.csv"
         }
     ],

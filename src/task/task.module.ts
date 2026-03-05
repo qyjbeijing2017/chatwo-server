@@ -8,11 +8,10 @@ import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
 import { StatisticModule } from 'src/statistic/statistic.module';
 import { ItemModule } from 'src/item/item.module';
-import { ChatwoTask } from 'src/entities/task.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoTask]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem]),
     StatisticModule,
     ItemModule,
   ],

@@ -9,7 +9,6 @@ import { v4 } from 'uuid';
 import { ChatwoItem } from './item.entity';
 import { ChatwoContainer } from './container.entity';
 import { IgnoreInhJsonPath, Patchable } from './patchable';
-import { ChatwoTask } from './task.entity';
 
 @Entity()
 export class ChatwoUser extends Patchable {
@@ -56,7 +55,4 @@ export class ChatwoUser extends Patchable {
 
   @Column({ type: 'float4', default: 0 })
   todayFlyMeters: number = 0;
-
-  @OneToMany(() => ChatwoTask, (mission) => mission.owner)
-  missions: ChatwoTask[];
 }

@@ -13,7 +13,7 @@ import { ChatwoConfigFileName } from './filesName';
 function main() {
   const manager = new ConfigManager({});
   const data = {} as ConfigManagerData;
-
+  
   for (const propertyKey of Object.keys(manager)) {
     if (hasMetadata('configManager:filePath', ConfigManager, propertyKey)) {
       const paths = getMetadata(
@@ -35,17 +35,14 @@ function main() {
           ConfigManager,
           propertyKey,
         ) as new () => ConfigTable;
-        let lineNumber = 1; // 用于错误提示，记录行号
-        let columnNumber = 1; // 用于错误提示，记录列号
         for (const line of array) {
           if (line[0].startsWith('#')) {
             continue; // 跳过注释行
           }
           const instance = new ConfigType();
           instance.fromFile = path;
-          columnNumber = 1;
           for (const key in instance) {
-            if (key === 'fromFile') {
+            if(key === 'fromFile') {
               continue;
             }
             const name = getMetadata('configTable:name', ConfigType, key) || key;
@@ -56,18 +53,12 @@ function main() {
             if (index === -1) {
               throw new Error(`Config column not found: ${name} in file ${path}`);
             }
-            try {
-              const transformer =
-                getMetadata('configTable:transformer', ConfigType, key) ||
-                ((val: string) => val);
+            const transformer =
+              getMetadata('configTable:transformer', ConfigType, key) ||
+              ((val: string) => val);
 
-              instance[key] = transformer(line[index!])
-              columnNumber++;
-            } catch (e) {
-              throw new Error(`Failed to transform value for key ${key} in file ${path}: ${e.message}, value: ${line[index!]}, line number: ${lineNumber}, column number: ${columnNumber}`);
-            }
+            instance[key] = transformer(line[index!])
           }
-          lineNumber++;
           list.push(instance);
         }
       }

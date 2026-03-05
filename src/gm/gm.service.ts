@@ -18,7 +18,6 @@ import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
 import { configManager } from 'src/configV2/config';
-import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
 
 @Injectable()
 export class GmService {
@@ -31,8 +30,6 @@ export class GmService {
         private readonly itemRepository: Repository<ChatwoItem>,
         @InjectRepository(ChatwoContainer)
         private readonly containerRepository: Repository<ChatwoContainer>,
-        @InjectRepository(ChatwoTask)
-        private readonly taskRepository: Repository<ChatwoTask>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly statisticsService: StatisticService,
@@ -331,31 +328,6 @@ export class GmService {
                                 };
                             }
                             await manager.save(items);
-                        },
-                        deleteAllTask: async () => {
-                            const tasks = await this.taskRepository.find({
-                                where: {
-                                    owner: { 
-                                        nakamaId: account.custom_id!,
-                                    },
-                                    status: TaskStatus.IN_PROGRESS,
-                                },
-                            });
-                            this.taskRepository.remove(tasks);
-                        },
-                        createTask: async (key: string) => {
-                            const user = await manager.findOne(ChatwoUser, {
-                                where: { nakamaId: account.custom_id! },
-                            });
-                            if (!user) {
-                                throw new NotFoundException(`User with nakamaId ${account.custom_id!} not found`);
-                            }
-                            const task = manager.create(ChatwoTask, {
-                                key,
-                                owner: user,
-                            });
-                            await manager.save(task);
-                            return task;
                         },
                         getItemsByType: async (type: string) => {
                             const items = await manager.find(ChatwoItem, {
