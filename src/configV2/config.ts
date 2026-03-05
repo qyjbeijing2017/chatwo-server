@@ -2125,7 +2125,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitVerdantCoreDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 5,
@@ -2141,7 +2141,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitFrostShardDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 5,
@@ -2157,7 +2157,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitSilverDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 15,
@@ -2173,7 +2173,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitIronDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 20,
@@ -2189,7 +2189,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitCopperDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 20,
@@ -2205,7 +2205,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "SubmitRockDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 30,
@@ -2221,7 +2221,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeLightsaberDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 1,
@@ -2237,7 +2237,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeRapierDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 1,
@@ -2253,7 +2253,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeScimitarDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 8,
@@ -2269,7 +2269,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeKatanaDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 7,
@@ -2285,7 +2285,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeJianDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 6,
@@ -2301,7 +2301,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeMorningStarDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 5,
@@ -2317,7 +2317,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeTangDaoDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 4,
@@ -2333,7 +2333,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeBaseballBatDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 3,
@@ -2349,7 +2349,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeBaguetteDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 2,
@@ -2365,7 +2365,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeLollipopDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 1,
@@ -2381,7 +2381,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeFryingPanDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 0,
@@ -2397,7 +2397,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeRulerDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 1,
@@ -2413,7 +2413,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "ForgeSausageSaberDaily",
             "Type": 1,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 1,
@@ -2429,7 +2429,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KilledMonstersDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 30,
@@ -2447,7 +2447,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "FlyDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 1000,
@@ -2465,7 +2465,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillSnowGuardianDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2483,7 +2483,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillWraithDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2501,7 +2501,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillWolfDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2519,7 +2519,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillBatDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2537,7 +2537,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillMimicDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2555,7 +2555,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillWoodGuardianDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 5,
@@ -2573,7 +2573,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillBeeDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 10,
@@ -2591,7 +2591,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillSpiderDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 20,
@@ -2609,7 +2609,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "AddFriendDaily",
             "Type": 1,
-            "Category": "social",
+            "Category": 3,
             "Submit": [
                 {
                     "total": 1,
@@ -2627,7 +2627,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "TeleportPlayersDaily",
             "Type": 1,
-            "Category": "social",
+            "Category": 3,
             "Submit": [
                 {
                     "total": 3,
@@ -2645,7 +2645,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "DuelPlayersDaily",
             "Type": 1,
-            "Category": "social",
+            "Category": 3,
             "Submit": [
                 {
                     "total": 3,
@@ -2663,7 +2663,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillFrostveilDragonDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 1,
@@ -2681,7 +2681,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "KillCosmoDevourDaily",
             "Type": 1,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 1,
@@ -2699,7 +2699,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "AddFriendWeekly",
             "Type": 2,
-            "Category": "social",
+            "Category": 3,
             "Submit": [
                 {
                     "total": 5,
@@ -2717,7 +2717,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "DuelPlayersWeekly",
             "Type": 2,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 20,
@@ -2735,7 +2735,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "Defeat 100 mobs",
             "Type": 2,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 100,
@@ -2753,7 +2753,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "Forge 10 swords",
             "Type": 2,
-            "Category": "crafting",
+            "Category": 1,
             "Submit": [
                 {
                     "total": 10,
@@ -2771,7 +2771,7 @@ export const configManager = new ConfigManager({
         {
             "Name": "Defeat bosses 10 times",
             "Type": 2,
-            "Category": "combat",
+            "Category": 2,
             "Submit": [
                 {
                     "total": 10,

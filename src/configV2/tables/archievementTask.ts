@@ -42,5 +42,11 @@ export class ArchievementTaskConfig extends ConfigTable {
       Weekly: ArchievementTaskType.weekly,
     })(this, 'Type');
     ConfigYaml()(this, 'Submit');
+    ConfigEnum({
+      unknown: ArchievementTaskCategory.unknown,
+      crafting: ArchievementTaskCategory.crafting,
+      combat: ArchievementTaskCategory.combat,
+      social: ArchievementTaskCategory.social,
+    })(this, 'Category');
   }
 }

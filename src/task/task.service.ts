@@ -238,7 +238,7 @@ export class TaskService {
         if (!dailycraftingTasks) {
             const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
             this.logger.log(`Found ${craftingTaskConfig.length} daily crafting task configs when handling sign-in event for task refresh`);
-            if (craftingTaskConfig.length < 0) {
+            if (craftingTaskConfig.length <= 0) {
                 this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
@@ -254,7 +254,7 @@ export class TaskService {
         this.logger.log(`Finished creating daily crafting task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailyCombatTasks) {
             const combatTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.combat && t.Type === ArchievementTaskType.daily);
-            if (combatTaskConfig.length < 0) {
+            if (combatTaskConfig.length <= 0) {
                 this.logger.error(`No combat daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = combatTaskConfig[Math.floor(Math.random() * combatTaskConfig.length)];
@@ -268,7 +268,7 @@ export class TaskService {
         this.logger.log(`Finished creating daily combat task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailySocialTasks) {
             const socialTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.social && t.Type === ArchievementTaskType.daily);
-            if (socialTaskConfig.length < 0) {
+            if (socialTaskConfig.length <= 0) {
                 this.logger.error(`No social daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = socialTaskConfig[Math.floor(Math.random() * socialTaskConfig.length)];
