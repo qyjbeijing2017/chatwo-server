@@ -241,13 +241,16 @@ export class TaskService {
                 this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
+                this.logger.log(`Creating daily crafting task with key ${config.key} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
                 const craftingTask = this.taskRepository.create({
                     key: config.key,
                     owner: user,
                 });
+                this.logger.log(`Saving daily crafting task with key ${config.key} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
                 await this.taskRepository.save(craftingTask);
             }
         }
+        this.logger.log(`Finished creating daily crafting task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailyCombatTasks) {
             const combatTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.combat && t.Type === ArchievementTaskType.daily);
             if (combatTaskConfig.length < 0) {
@@ -261,6 +264,7 @@ export class TaskService {
                 await this.taskRepository.save(combatTask);
             }
         }
+        this.logger.log(`Finished creating daily combat task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailySocialTasks) {
             const socialTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.social && t.Type === ArchievementTaskType.daily);
             if (socialTaskConfig.length < 0) {
