@@ -1,5 +1,5 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { ChatwoItem, keyToItemType } from 'src/entities/item.entity';
@@ -22,6 +22,7 @@ import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
 
 @Injectable()
 export class GmService {
+    private readonly logger: Logger = new Logger(GmService.name);
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
@@ -333,28 +334,32 @@ export class GmService {
                             await manager.save(items);
                         },
                         deleteAllTask: async () => {
-                            const tasks = await this.taskRepository.find({
+                            const tasks = await manager.find(ChatwoTask, {
                                 where: {
-                                    owner: { 
+                                    owner: {
                                         nakamaId: account.custom_id!,
                                     },
                                     status: TaskStatus.IN_PROGRESS,
                                 },
                             });
-                            this.taskRepository.remove(tasks);
+                            await manager.delete(ChatwoTask, tasks);
                         },
                         createTask: async (key: string) => {
+                            this.logger.log(`Creating task with key ${key} for user ${account.custom_id}`);
                             const user = await manager.findOne(ChatwoUser, {
                                 where: { nakamaId: account.custom_id! },
                             });
                             if (!user) {
                                 throw new NotFoundException(`User with nakamaId ${account.custom_id!} not found`);
                             }
+                            this.logger.log(`User found: ${user.name}`);
                             const task = manager.create(ChatwoTask, {
                                 key,
                                 owner: user,
                             });
+                            this.logger.log(`Saving task with key ${key} for user ${account.custom_id}`);
                             await manager.save(task);
+                            this.logger.log(`Task with key ${key} for user ${account.custom_id} saved with id ${task.id}`);
                             return task;
                         },
                         getItemsByType: async (type: string) => {
