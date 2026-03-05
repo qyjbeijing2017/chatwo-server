@@ -179,6 +179,8 @@ export class TaskService {
             return;
         }
 
+        this.logger.log(`Handling sign-in event for user ${user.name} (${payload.account.custom_id}) for task refresh`);
+
         const tasks = await this.taskRepository.find({
             where: {
                 owner: {
@@ -194,6 +196,8 @@ export class TaskService {
             [key: string]: ChatwoTask
         } = {}; // can be multiple, but not guaranteed to have all of them
 
+
+        this.logger.log(`Found ${tasks.length} in-progress tasks for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         // task delete if expired
         for (const task of tasks) {
             const taskConfig = configManager.archievementTaskMap.get(task.key);
@@ -226,6 +230,8 @@ export class TaskService {
                 await this.taskRepository.save(task);
             }
         }
+
+        this.logger.log(`After cleaning up expired tasks, found ${dailycraftingTasks ? 1 : 0} daily crafting task, ${dailyCombatTasks ? 1 : 0} daily combat task, ${dailySocialTasks ? 1 : 0} daily social task, and ${Object.keys(weeklyTasks).length} weekly tasks for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
 
 
         // task create if not exist
@@ -268,6 +274,8 @@ export class TaskService {
                 await this.taskRepository.save(socialTask);
             }
         }
+
+        this.logger.log(`Finished creating daily tasks if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
 
 
         // weekly task create if not exist, no random here, just create all if not exist, since we don't have that many weekly tasks and it's not a problem to have them all
