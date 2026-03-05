@@ -339,7 +339,6 @@ export class GmService {
                                     owner: {
                                         nakamaId: account.custom_id!,
                                     },
-                                    status: TaskStatus.IN_PROGRESS,
                                 },
                             });
                             await manager.delete(ChatwoTask, tasks);
