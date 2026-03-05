@@ -79,7 +79,7 @@ export class TaskService {
 
             await this.itemService.gainItems(manager, account, taskConfig.Award, true);
             task.status = TaskStatus.DONE;
-            await manager.getRepository(ChatwoTask).save(task);
+            await manager.save(task);
             return {
                 tags,
                 result: task,
