@@ -72,7 +72,7 @@ export class TaskService {
 
             for (let i = 0; i < taskConfig.Submit.length; i++) {
                 const submitInfo = taskConfig.Submit[i];
-                if (submitInfo.total !== task.progress[i]) {
+                if (submitInfo.total < task.progress[i]) {
                     throw new BadRequestException('Task not completed yet');
                 }
             }
