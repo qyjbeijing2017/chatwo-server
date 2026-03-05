@@ -12,7 +12,7 @@ import { ItemService } from 'src/item/item.service';
 import { StatisticService } from 'src/statistic/statistic.service';
 import { autoPatch } from 'src/utils/autoPatch';
 import { getServerTime } from 'src/utils/serverTime';
-import { DataSource, EntityManager, Repository } from 'typeorm';
+import { DataSource, EntityManager, In, Repository } from 'typeorm';
 import { SubmitItemDto } from './submit-Item.dto';
 import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { UserEvent } from 'src/event/user.event';
@@ -44,7 +44,7 @@ export class TaskService {
                 owner: {
                     nakamaId: account.custom_id,
                 },
-                status: TaskStatus.IN_PROGRESS,
+                isExpired: false,
             },
         });
     }
@@ -154,7 +154,7 @@ export class TaskService {
             tags.push(submitItemDto.key);
             task.progress[submitInfoIndex] = (task.progress[submitInfoIndex] || 0) + 1;
             await manager.getRepository(ChatwoTask).save(task);
-            if(itemConfig.type & ItemType.arm) {
+            if (itemConfig.type & ItemType.arm) {
                 this.eventEmitter.emit('user.submit-arm', new SubmitArmEvent(account, submitItemDto as ChatwoItem));
             }
             return {
@@ -184,7 +184,7 @@ export class TaskService {
                 owner: {
                     nakamaId: payload.account.custom_id,
                 },
-                status: TaskStatus.IN_PROGRESS,
+                isExpired: false,
             },
         });
         let dailycraftingTasks: ChatwoTask | null = null; // 3
@@ -201,10 +201,11 @@ export class TaskService {
                 this.logger.error(`Task config not found for task key ${task.key} when handling sign-in event for task refresh`);
                 continue;
             }
-            if (taskConfig.Type === ArchievementTaskType.daily) {
+            if (taskConfig.Type === ArchievementTaskType.daily && task.status === TaskStatus.IN_PROGRESS) {
                 const time = getServerTime().startOf('day');
                 if (task.createdAt < time.toDate()) {
-                    await this.taskRepository.remove(task);
+                    task.isExpired = true;
+                    await this.taskRepository.save(task);
                     continue;
                 }
                 if (taskConfig.Category === ArchievementTaskCategory.crafting) {
@@ -214,16 +215,16 @@ export class TaskService {
                 } else if (taskConfig.Category === ArchievementTaskCategory.social) {
                     dailySocialTasks = task;
                 }
-            } else if (taskConfig.Type === ArchievementTaskType.weekly) {
+            } else if (taskConfig.Type === ArchievementTaskType.weekly && task.status === TaskStatus.IN_PROGRESS) {
                 const time = getServerTime().startOf('week');
                 if (task.createdAt < time.toDate()) {
-                    await this.taskRepository.remove(task);
+                    task.isExpired = true;
+                    await this.taskRepository.save(task);
                     continue;
                 }
                 weeklyTasks[task.key] = task;
             } else {
-                task.status = TaskStatus.DELETED;
-                await this.taskRepository.save(task);
+                await this.taskRepository.remove(task);
             }
         }
 
@@ -316,7 +317,7 @@ export class TaskService {
                             try {
                                 const value = await this.statisticService.execDsl(submitInfo.events[eventKey], payload.account, {
                                     teleportDifferent: async (name: string) => {
-                                        if(task.extra[name]) {
+                                        if (task.extra[name]) {
                                             return false;
                                         }
                                         task.extra = {

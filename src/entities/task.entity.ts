@@ -11,7 +11,6 @@ import { ChatwoUser } from './user.entity';
 export enum TaskStatus {
     IN_PROGRESS = 'IN_PROGRESS',
     DONE = 'DONE',
-    DELETED = 'DELETED',
 }
 
 @Entity()
@@ -36,6 +35,9 @@ export class ChatwoTask extends Patchable {
 
     @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.IN_PROGRESS })
     status: TaskStatus;
+
+    @Column({ default: false })
+    isExpired: boolean;
 
     @Column({ type: 'jsonb', default: {} })
     extra: { [key: string]: any };
