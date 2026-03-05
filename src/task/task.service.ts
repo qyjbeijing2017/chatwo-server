@@ -153,7 +153,7 @@ export class TaskService {
             }
             tags.push(submitItemDto.key);
             task.progress[submitInfoIndex] = (task.progress[submitInfoIndex] || 0) + 1;
-            await manager.getRepository(ChatwoTask).save(task);
+            await manager.save(task);
             if (itemConfig.type & ItemType.arm) {
                 this.eventEmitter.emit('user.submit-arm', new SubmitArmEvent(account, submitItemDto as ChatwoItem));
             }
