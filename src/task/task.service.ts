@@ -301,6 +301,7 @@ export class TaskService {
                 owner: {
                     nakamaId: payload.account.custom_id,
                 },
+                isExpired: false,
                 status: TaskStatus.IN_PROGRESS,
             },
         });
@@ -317,7 +318,7 @@ export class TaskService {
                     for (const eventKey in submitInfo.events) {
                         if (eventKey === payload.eventId) {
                             try {
-                                const value = await this.statisticService.execDsl(submitInfo.events[eventKey], payload.account, {
+                                const value = await this.statisticService.execDsl(submitInfo.events[eventKey].toString(), payload.account, {
                                     teleportDifferent: async (name: string) => {
                                         if (task.extra[name]) {
                                             return false;
