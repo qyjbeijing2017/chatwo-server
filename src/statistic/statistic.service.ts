@@ -16,6 +16,13 @@ import { getMetadata } from 'src/utils/meta-data';
 import { Item } from 'src/configV2/tables/Items';
 import { getServerTime, todayStart } from 'src/utils/serverTime';
 import { ChatwoBug } from 'src/entities/bug.entity';
+import { ChatwoTask } from 'src/entities/task.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { FlyEvent } from 'src/event/fly.event';
+import { MonsterKilledEvent } from 'src/event/monster-killed.event';
+import { DuelEvent } from 'src/event/duel.evemt';
+import { TeleportEvent } from 'src/event/teleport.event';
+import { AddFriendEvent } from 'src/event/add-friend.event';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -48,8 +55,11 @@ export class StatisticService {
         private readonly containerRepository: Repository<ChatwoContainer>,
         @InjectRepository(ChatwoBug)
         private readonly bugRepository: Repository<ChatwoBug>,
+        @InjectRepository(ChatwoTask)
+        private readonly taskRepository: Repository<ChatwoTask>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
+        private readonly eventEmitter: EventEmitter2,
     ) { }
 
     async query(context, from, select, where, join, orderBy, limit, offset) {
@@ -155,6 +165,31 @@ export class StatisticService {
                     results: containerResult,
                     total: containerCount,
                 };
+            case 'task':
+                const taskWhere: FindOptionsWhere<ChatwoTask> | FindOptionsWhere<ChatwoTask>[] = where ?? {};
+                if (context.account) {
+                    if (Array.isArray(taskWhere)) {
+                        for (const condition of taskWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        taskWhere.owner = taskWhere.owner ?? {};
+                        (taskWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                }
+                const [taskResult, taskCount] = await this.taskRepository.findAndCount({
+                    select: select,
+                    where: taskWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+                return {
+                    results: taskResult,
+                    total: taskCount,
+                };
             case 'bug':
                 if (context.options?.openBug) {
                     const bugWhere: FindOptionsWhere<ChatwoBug> | FindOptionsWhere<ChatwoBug>[] = where ?? {};
@@ -173,6 +208,7 @@ export class StatisticService {
                 } else {
                     throw new Error('Table bug is not open for query');
                 }
+
             default:
                 throw new Error(`Unknown from type: ${from}`);
         }
@@ -350,6 +386,7 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
+        this.eventEmitter.emit('user.fly',new FlyEvent(account, dto.meters));
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
                 where: {
@@ -377,6 +414,7 @@ export class StatisticService {
     }
 
     async pve(account: ApiAccount, dto: KilledDto) {
+        this.eventEmitter.emit('user.monster-killed', new MonsterKilledEvent(account, dto.whoWasKilled));
         const monster = configManager.monsterMap.get(dto.whoWasKilled);
         if (!monster) {
             throw new NotFoundException(`Monster with id ${dto.whoWasKilled} not found`);
@@ -390,7 +428,8 @@ export class StatisticService {
     }
 
     async pvp(account: ApiAccount, dto: KilledDto) {
-        const user = this.userRepository.findOneBy({ name: dto.whoWasKilled });
+        this.eventEmitter.emit('user.duel', new DuelEvent(account, dto.whoWasKilled));
+        const user = await this.userRepository.findOneBy({ name: dto.whoWasKilled });
         if (!user) {
             throw new NotFoundException(`User with name ${dto.whoWasKilled} not found`);
         }
@@ -429,6 +468,8 @@ export class StatisticService {
             getServerTime,
             todayStart,
             todayFlyMeters: this.todayFlyMeters.bind(this),
+            getMonsterConfigByKey: (key: string) => configManager.monsterMap.get(key),
+            getItemConfigByKey: (key: string) => configManager.itemMap.get(key),
             account,
             ...other,
             options,
@@ -474,5 +515,13 @@ export class StatisticService {
         }
         user.breakBladeTimes += 1;
         return await this.userRepository.save(user);
+    }
+
+    async teleport(account: ApiAccount, name: string) {
+        this.eventEmitter.emit('user.teleport', new TeleportEvent(account, name));
+    }
+
+    async addNewFriend(account: ApiAccount, friendName: string) {
+        this.eventEmitter.emit('user.add-friend', new AddFriendEvent(account, friendName));
     }
 }

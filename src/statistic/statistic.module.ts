@@ -8,11 +8,12 @@ import { ChatwoItem } from 'src/entities/item.entity';
 import { NakamaModule } from 'src/nakama/nakama.module';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoBug } from 'src/entities/bug.entity';
+import { ChatwoTask } from 'src/entities/task.entity';
 
 @Module({
   imports: [
     NakamaModule,
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoBug]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoBug, ChatwoTask]),
   ],
   controllers: [StatisticController],
   providers: [StatisticService],

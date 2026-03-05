@@ -72,6 +72,7 @@ export class ItemController {
   ) {
     await this.itemService.resetItems(account);
     await this.itemService.initItemsForNewUser(account);
+    await this.itemService.signInEvent(account);
   }
 
   @ApiBearerAuth()

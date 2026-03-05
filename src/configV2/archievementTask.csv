@@ -1,22 +1,195 @@
-﻿Name,Description,Type,Award,Progress,Test
-Tutorial,Finish tutorial,once,ss: 100,(SELECT * FROM user).results[0].tutorialCompleted,1
-Fly200,Fly for 200 meters,once,ss: 200,(SELECT * FROM user).results[0].flyMeters,200
-AddFriend1,"Add 1 Friend (purchase a Friend Stone, pair with other, collect stars from metors)",once,ss: 200,friendList(account).length,1
-KilledSpider25,Kill 25 spiders,once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", ""Spider""]).total",25
-BreakBlade50,Break and reforge your blade 50 times,once,ss: 200,(SELECT * FROM user).results[0].breakBladeTimes,50
-UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,ss: 500,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 700]).total",1
-PurchaseHilt1,"Purchase a hilt ",once,ss: 300,"(SELECT * FROM log WHERE tags @>&& [[""store""], KeysFromItemType(""arm"")]).total",1
-DrawBlade1,Draw your first blade and assemble a brand new Soul-Arm,once,ss: 100,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB [""string"", ""bladeKey"", ""IS NOT NULL""]).total",1
-UpgradeArmLv10,Upgrade any Soul-Arm to Lv. 10,once,ss: 500,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 2280]).total",1
-KilledWoodGuardian10,Kill 10 Wood Guardian,once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", ""Wood Guardian""]).total",10
-KilledMimicChest1,Kill 1 Mimic Chest,once,,"(SELECT * FROM log WHERE tags @> [""pve"", ""Mimic Chest""]).total",1
-DefeatSpiritborne5,Defeat 5 Spiritborne (players),once,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve"", account.custom_id]).total",1
-KilledBoss1,1st Boss Kill,once,ss: 1000,"(SELECT * FROM log WHERE tags @> [""pve"", ""boss""]).total",1
-UpgradeArm30,Upgrade any Soul-Arm to Lv. 30,once,ss: 1000,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 50000]).total",1
-OwnSeasonLimitedWeapon1,Own 1 season limited weapon,once,,"(SELECT * FROM item WHERE meta JSONB [""string"", ""bladeKey"", ""IN"", [”Tang_lv20_9”,”Katana_lv20_9”]]).total",1
-KilledMonsters10,Kill 10 monsters,daily,ss: 200,"(SELECT * FROM log WHERE tags @> [""pve""] AND createdAt > todayStart()).total",10
-"DefeatSpiritborne5 ",Defeat 5 Spiritborne,daily,ss: 200,"(SELECT * FROM log WHERE tags @> [""pvp"", account.custom_id] AND createdAt > todayStart()).total",10
-Fly500,Fly for 500 meters,daily,ss: 200,todayFlyMeters(account),500
-KilledBoss10,Kill 10 boss,longterm,,"(SELECT * FROM log WHERE tags @> [""pve"", ""boss""]).total",10
-OwnArmLv30_10,Own 10 Lv. 30 Soul-Arms,longterm,,"(SELECT * FROM item WHERE key IN KeysFromItemType(""arm"") AND meta JSONB  [""number"", ""exp"", "">="", 50000]).total",10
-AddFriend100,Add 100 friends,longterm,,friendList(account).length,100
+Name,Description,Type,Category,Award,Submit
+#Tutorial,Finish tutorial,once,,ss: 100,
+#Fly200,Fly for 200 meters,once,,ss: 200,
+#AddFriend1,"Add 1 Friend (purchase a Friend Stone, pair with other, collect stars from metors)",once,,ss: 200,
+#KilledSpider25,Kill 25 spiders,once,,ss: 200,
+#BreakBlade50,Break and reforge your blade 50 times,once,,ss: 200,
+#UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,,ss: 500,
+#PurchaseHilt1,Purchase a hilt ,once,,ss: 300,
+#DrawBlade1,Draw your first blade and assemble a brand new Soul-Arm,once,,ss: 100,
+#UpgradeArmLv10,Upgrade any Soul-Arm to Lv. 10,once,,ss: 500,
+#KilledWoodGuardian10,Kill 10 Wood Guardian,once,,ss: 200,
+#KilledMimicChest1,Kill 1 Mimic Chest,once,,,
+#DefeatSpiritborne5,Defeat 5 Spiritborne (players),once,,ss: 200,
+#KilledBoss1,1st Boss Kill,once,,ss: 1000,
+#UpgradeArm30,Upgrade any Soul-Arm to Lv. 30,once,,ss: 1000,
+#OwnSeasonLimitedWeapon1,Own 1 season limited weapon,once,,,
+#KilledBoss10,Kill 10 boss,once,,,
+#OwnArmLv30_10,Own 10 Lv. 30 Soul-Arms,once,,,
+#AddFriend100,Add 100 friends,once,,,
+SubmitVerdantCoreDaily,Collect and submit 5 Verdant Cores,daily,crafting,ss: 500,"-
+  total: 5
+  description: Collect and submit 5 Verdant Cores
+  check: key == ""Verdant_Ore"""
+SubmitFrostShardDaily,Collect and submit 5 Frost Shards,daily,crafting,ss: 500,"-
+  total: 5
+  description: Collect and submit 5 Frost Shards
+  check: key == ""Frost_Ore"""
+SubmitSilverDaily,Collect and submit 15 Silver Ore,daily,crafting,ss: 300,"-
+  total: 15
+  description: Collect and submit 15 Silver Ore
+  check: key == ""Silver_Ore"""
+SubmitIronDaily,Collect and submit 20 Iron Ore,daily,crafting,ss: 300,"-
+  total: 20
+  description: Collect and submit 20 Iron Ore
+  check: key == ""Iron_Ore"""
+SubmitCopperDaily,Collect and submit 20 Copper Ore,daily,crafting,ss: 300,"-
+  total: 20
+  description: Collect and submit 20 Copper Ore
+  check: key == ""Copper_Ore"""
+SubmitRockDaily,Collect and submit 30 Rocks,daily,crafting,ss: 300,"-
+  total: 30
+  description: Collect and submit 30 Rocks
+  check: key == ""Earth_Ore"""
+ForgeLightsaberDaily,Forge and submit a Lightsaber,daily,crafting,ss: 500,"-
+  total: 1
+  description: Forge and submit a Lightsaber
+  check: meta.bladeKey == ""Lightsaber"""
+ForgeRapierDaily,Forge and submit a Rapier,daily,crafting,ss: 350,"-
+  total: 1
+  description: Forge and submit a Rapier
+  check: meta.bladeKey == ""Ruler"""
+ForgeScimitarDaily,Forge and submit a Scimitar,daily,crafting,ss: 350,"-
+  total: 8
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeKatanaDaily,Forge and submit a Katana,daily,crafting,ss: 350,"-
+  total: 7
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeJianDaily,Forge and submit a Jian,daily,crafting,ss: 350,"-
+  total: 6
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeMorningStarDaily,Forge and submit a Morning Star,daily,crafting,ss: 350,"-
+  total: 5
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeTangDaoDaily,Forge and submit a Tang Dao,daily,crafting,ss: 350,"-
+  total: 4
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeBaseballBatDaily,Forge and submit a Baseball Bat,daily,crafting,ss: 300,"-
+  total: 3
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeBaguetteDaily,Forge and submit a Baguette,daily,crafting,ss: 300,"-
+  total: 2
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeLollipopDaily,Forge and submit a Lollipop,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeFryingPanDaily,Forge and submit a Frying Pan,daily,crafting,ss: 300,"-
+  total: 0
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeRulerDaily,Forge and submit a Ruler,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Ruler
+  check: meta.bladeKey == ""Ruler"""
+ForgeSausageSaberDaily,Forge and submit a Sausage Saber,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Sausage Saber
+  check: meta.bladeKey == ""Sausage Saber"""
+KilledMonstersDaily,Kill 30 monsters,daily,combat,ss: 3000,"-
+  total: 30
+  description: Kill 30 monsters
+  events:
+    user.moster-killed: 1 "
+FlyDaily,Fly for 1000 meters,daily,combat,ss: 1000,"-
+  total: 1000
+  description: Fly for 1000 meters
+  events:
+    user.fly: meters"
+KillSnowGuardianDaily,Defeat 5 Snowbound Guardian,daily,combat,ss: 500,"-
+  total: 5
+  description: Defeat 5 Snowbound Guardian
+  events:
+    user.monster-killed: monsterId == ""Snowbound Guardian"""
+KillWraithDaily,Defeat 5 Frostshade Wraiths,daily,combat,ss: 450,"-
+  total: 5
+  description: Defeat 5 Frostshade Wraiths
+  events:
+    user.monster-killed: monsterId == ""Frostshade Wraith"""
+KillWolfDaily,Defeat 5 Frostfang Wolves,daily,combat,ss: 400,"-
+  total: 5
+  description: Defeat 5 Frostfang Wolves
+  events:
+    user.monster-killed: monsterId == ""Frostfang Wolf"""
+KillBatDaily,Defeat 10 Corvyn Bats,daily,combat,ss: 300,"-
+  total: 5
+  description: Defeat 10 Corvyn Bats
+  events:
+    user.monster-killed: monsterId == ""Corvyn Bat"""
+KillMimicDaily,Defeat 5 Mimic Chests,daily,combat,ss: 500,"-
+  total: 5
+  description: Defeat 5 Mimic Chests
+  events:
+    user.monster-killed: monsterId == ""Mimic Chest"""
+KillWoodGuardianDaily,Defeat 5 Wood Guardians,daily,combat,ss: 450,"-
+  total: 5
+  description: Defeat 5 Wood Guardians
+  events:
+    user.monster-killed: monsterId == ""Wood Guardian"""
+KillBeeDaily,Defeat 10 Venom Bees,daily,combat,ss: 350,"-
+  total: 10
+  description: Defeat 10 Venom Bees
+  events:
+    user.monster-killed: monsterId == ""Venom Bee"""
+KillSpiderDaily,Defeat 20 Spiders,daily,combat,ss: 300,"-
+  total: 20
+  description: Defeat 20 Spiders
+  events:
+    user.monster-killed: monsterId == ""Spider"""
+AddFriendDaily,Add 1 new friend,daily,social,ss: 300,"-
+  total: 1
+  description: Add 1 new friend
+  events:
+    user.add-friend: 1"
+TeleportPlayersDaily,Teleport to 3 different players,daily,social,ss: 300,"-
+  total: 3
+  description: Teleport to 3 different players
+  events:
+    user.teleport: teleportDifferent(destination)"
+DuelPlayersDaily,Win 3 duels against other players,daily,social,ss: 300,"-
+  total: 3
+  description: Win 3 duels against other players
+  events:
+    user.pvp: 1"
+KillFrostveilDragonDaily,"Defeat Glaciron, the Frostveil Dragon",daily,combat,ss: 1500,"-
+  total: 1
+  description: Defeat Glaciron, the Frostveil Dragon
+  events:
+    user.monster-killed: monsterId == ""Glaciron, the Frostveil Serpent"""
+KillCosmoDevourDaily,Defeat Cosmo Devour,daily,combat,ss: 1200,"-
+  total: 1
+  description: Defeat Glaciron, the Frostveil Dragon
+  events:
+    user.monster-killed: monsterId == ""Cosmo Devour"""
+AddFriendWeekly,Add 5 new friends,Weekly,social,ss: 1000,"-
+  total: 5
+  description: Add 5 new friends
+  events:
+    user.add-friend: 1"
+DuelPlayersWeekly,Win 20 duels against other players,Weekly,combat,ss: 1000,"-
+  total: 20
+  description: Win 20 duels against other players
+  events:
+    user.duel: 1"
+Defeat 100 mobs,Defeat 100 monsters,Weekly,combat,ss: 1000,"-
+  total: 100
+  description: Defeat 100 monsters
+  events:
+    user.moster-killed: 1 "
+Forge 10 swords,Forge and submit 10 Soul-Arms,Weekly,crafting,ss: 1000,"-
+  total: 10
+  description: Defeat 100 monsters
+  events:
+    user.forge: 1 "
+Defeat bosses 10 times,Defeat bosses 10 times.,Weekly,combat,ss: 10000,"-
+  total: 10
+  description: Defeat bosses 10 times.
+  events:
+    user.moster-killed: getMonsterConfigByKey(monsterId).Type == ""Boss"""
