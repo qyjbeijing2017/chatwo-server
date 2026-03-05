@@ -10,6 +10,8 @@ import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { autoPatch } from 'src/utils/autoPatch';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { forceRefreshToChest, StoreGainInfo, storeGainInfoMeta, storeGainInfoToCount } from 'src/configV2/tables/store';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { SignInEvent } from 'src/event/sign-in.event';
 
 @Injectable()
 export class ItemService {
@@ -21,8 +23,8 @@ export class ItemService {
     @InjectRepository(ChatwoContainer)
     private readonly containerRepository: Repository<ChatwoContainer>,
     private readonly dataSource: DataSource,
+    private readonly eventEmitter: EventEmitter2,
   ) { }
-
 
   async costItems(manager: EntityManager, account: ApiAccount, costs: Record<string, number>) {
     const user = await manager.findOne(ChatwoUser, {
@@ -582,5 +584,9 @@ export class ItemService {
       });
       await this.itemRepository.save(item);
     }
+  }
+
+  async signInEvent(account: ApiAccount) {
+      this.eventEmitter.emit('user.sign-in', new SignInEvent(account));
   }
 }

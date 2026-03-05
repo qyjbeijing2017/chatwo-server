@@ -65,7 +65,11 @@ export function ConfigFlagEnum(enumObj: { [key: string]: any }) {
 
 export function ConfigYaml() {
   return ConfigTransform((val: string) => {
-    return YAML.parse(val);
+    try {
+      return YAML.parse(val);
+    } catch (e) {
+      throw new Error(`Failed to parse YAML: ${e.message}, value: ${val}`);
+    }
   });
 }
 

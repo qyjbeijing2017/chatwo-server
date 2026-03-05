@@ -10,6 +10,7 @@ import { ChatwoItem } from 'src/entities/item.entity';
 import { StatisticModule } from 'src/statistic/statistic.module';
 import { ItemModule } from 'src/item/item.module';
 import { PurchaseModule } from 'src/purchase/purchase.module';
+import { ChatwoTask } from 'src/entities/task.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { PurchaseModule } from 'src/purchase/purchase.module';
     StatisticModule,
     ItemModule,
     PurchaseModule,
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoTask]),
   ],
   controllers: [GmController],
   providers: [GmService]

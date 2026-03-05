@@ -1,23 +1,45 @@
-import { ConfigInt, ConfigTable, ConfigYaml } from '../table';
+import { ConfigEnum, ConfigInt, ConfigTable, ConfigYaml } from '../table';
+import { StoreGainInfo } from './store';
 
 export enum ArchievementTaskType {
   once = 0,
   daily = 1,
-  longterm = 2,
+  weekly = 2,
 }
+
+export enum ArchievementTaskCategory {
+  unknown = 0,
+  crafting = 1,
+  combat = 2,
+  social = 3,
+}
+
+export type SubmitItemsInfo = {
+  total: number;
+  check: string;
+  description?: string;
+  events?: {
+    [key: string]: string;
+  }
+};
 
 export class ArchievementTaskConfig extends ConfigTable {
   Name: string = '';
   Type: ArchievementTaskType = ArchievementTaskType.once;
+  Category: ArchievementTaskCategory = ArchievementTaskCategory.unknown;
+  Submit: SubmitItemsInfo[] = [];
   Award: {
-    [key: string]: number;
+    [key: string]: StoreGainInfo;
   } = {};
-  Progress: string = 'false';
-  Test: number = 0;
 
   constructor() {
     super();
     ConfigYaml()(this, 'Award');
     ConfigInt()(this, 'Test');
+    ConfigEnum({
+      once: ArchievementTaskType.once,
+      daily: ArchievementTaskType.daily,
+      Weekly: ArchievementTaskType.weekly,
+    })(this, 'Type');
   }
 }

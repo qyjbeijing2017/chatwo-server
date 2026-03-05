@@ -69,4 +69,22 @@ export class StatisticController {
     ) {
         return this.statisticService.breakBlade(account);
     }
+
+    @ApiBearerAuth()
+    @Post('teleport/:name')
+    async teleport(
+        @Account() account: ApiAccount,
+        @Param('name') name: string,
+    ) {
+        return this.statisticService.teleport(account, name);
+    }
+
+    @ApiBearerAuth()
+    @Post('addNewFriend/:name')
+    async addNewFriend(
+        @Account() account: ApiAccount,
+        @Param('name') name: string,
+    ) {
+        return this.statisticService.addNewFriend(account, name);
+    }
 }

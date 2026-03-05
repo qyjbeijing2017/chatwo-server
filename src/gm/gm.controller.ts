@@ -32,22 +32,22 @@ export class GmController {
         return this.gmService.getAllStatistics(logDto);
     }
 
-    @ApiBearerAuth()
-    @Post('syncFromNakama')
-    @Server()
-    async syncFromNakamaGM() {
-        return this.gmService.syncAllFromNakama();
-    }
+    // @ApiBearerAuth()
+    // @Post('syncFromNakama')
+    // @Server()
+    // async syncFromNakamaGM() {
+    //     return this.gmService.syncAllFromNakama();
+    // }
 
 
-    @ApiBearerAuth()
-    @Post('syncOneFromNakama/:customId')
-    @Server()
-    async syncOneFromNakamaGM(
-        @Query('customId') customId: string,
-    ) {
-        return this.gmService.syncOneFromNakama(customId);
-    }
+    // @ApiBearerAuth()
+    // @Post('syncOneFromNakama/:customId')
+    // @Server()
+    // async syncOneFromNakamaGM(
+    //     @Query('customId') customId: string,
+    // ) {
+    //     return this.gmService.syncOneFromNakama(customId);
+    // }
 
     @ApiBearerAuth()
     @Post('addSS')

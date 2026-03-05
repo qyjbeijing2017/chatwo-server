@@ -20,6 +20,8 @@ import { TaskModule } from './task/task.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { BugReportModule } from './bug-report/bug-report.module';
 import { ChatwoBug } from './entities/bug.entity';
+import { ChatwoTask } from './entities/task.entity';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -38,9 +40,12 @@ import { ChatwoBug } from './entities/bug.entity';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer, ChatwoBug],
+        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer, ChatwoBug, ChatwoTask],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
+    }),
+    EventEmitterModule.forRoot({
+      wildcard: true,
     }),
     S3Module,
     AuthModule,
