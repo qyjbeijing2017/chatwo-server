@@ -32,7 +32,7 @@ export class ChatwoTask extends Patchable {
     owner: ChatwoUser;
 
     @Column("float", { array: true })
-    progress: number[];
+    progress: number[] = [];
 
     @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.IN_PROGRESS })
     status: TaskStatus;

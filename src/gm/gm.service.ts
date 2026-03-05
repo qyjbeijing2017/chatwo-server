@@ -353,6 +353,10 @@ export class GmService {
                                 throw new NotFoundException(`User with nakamaId ${account.custom_id!} not found`);
                             }
                             this.logger.log(`User found: ${user.name}`);
+                            const config = configManager.archievementTaskMap.get(key);
+                            if (!config) {
+                                throw new NotFoundException(`Task config with key ${key} not found`);
+                            }
                             const task = manager.create(ChatwoTask, {
                                 key,
                                 owner: user,
