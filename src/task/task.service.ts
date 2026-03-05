@@ -237,6 +237,7 @@ export class TaskService {
         // task create if not exist
         if (!dailycraftingTasks) {
             const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
+            this.logger.log(`Found ${craftingTaskConfig.length} daily crafting task configs when handling sign-in event for task refresh`);
             if (craftingTaskConfig.length < 0) {
                 this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
             } else {
