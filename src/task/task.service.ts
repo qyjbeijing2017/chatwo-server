@@ -58,6 +58,7 @@ export class TaskService {
                     owner: {
                         nakamaId: account.custom_id,
                     },
+                    isExpired: false,
                     status: TaskStatus.IN_PROGRESS,
                 },
             });
@@ -97,6 +98,7 @@ export class TaskService {
                     owner: {
                         nakamaId: account.custom_id,
                     },
+                    isExpired: false,
                     status: TaskStatus.IN_PROGRESS,
                 },
             });
@@ -201,7 +203,7 @@ export class TaskService {
                 this.logger.error(`Task config not found for task key ${task.key} when handling sign-in event for task refresh`);
                 continue;
             }
-            if (taskConfig.Type === ArchievementTaskType.daily && task.status === TaskStatus.IN_PROGRESS) {
+            if (taskConfig.Type === ArchievementTaskType.daily) {
                 const time = getServerTime().startOf('day');
                 if (task.createdAt < time.toDate()) {
                     task.isExpired = true;
@@ -215,7 +217,7 @@ export class TaskService {
                 } else if (taskConfig.Category === ArchievementTaskCategory.social) {
                     dailySocialTasks = task;
                 }
-            } else if (taskConfig.Type === ArchievementTaskType.weekly && task.status === TaskStatus.IN_PROGRESS) {
+            } else if (taskConfig.Type === ArchievementTaskType.weekly) {
                 const time = getServerTime().startOf('week');
                 if (task.createdAt < time.toDate()) {
                     task.isExpired = true;
