@@ -179,8 +179,6 @@ export class TaskService {
             return;
         }
 
-        this.logger.log(`Handling sign-in event for user ${user.name} (${payload.account.custom_id}) for task refresh`);
-
         const tasks = await this.taskRepository.find({
             where: {
                 owner: {
@@ -196,8 +194,6 @@ export class TaskService {
             [key: string]: ChatwoTask
         } = {}; // can be multiple, but not guaranteed to have all of them
 
-
-        this.logger.log(`Found ${tasks.length} in-progress tasks for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         // task delete if expired
         for (const task of tasks) {
             const taskConfig = configManager.archievementTaskMap.get(task.key);
@@ -231,9 +227,6 @@ export class TaskService {
             }
         }
 
-        this.logger.log(`After cleaning up expired tasks, found ${dailycraftingTasks ? 1 : 0} daily crafting task, ${dailyCombatTasks ? 1 : 0} daily combat task, ${dailySocialTasks ? 1 : 0} daily social task, and ${Object.keys(weeklyTasks).length} weekly tasks for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
-
-
         // task create if not exist
         if (!dailycraftingTasks) {
             const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
@@ -241,23 +234,19 @@ export class TaskService {
                 this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
-                this.logger.log(`config: ${JSON.stringify(config)} when handling sign-in event for task refresh`);
                 const craftingTask = this.taskRepository.create({
                     key: config.Name,
                     owner: user,
                 });
-                this.logger.log(`Saving daily crafting task with key ${config.Name} for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
                 await this.taskRepository.save(craftingTask);
             }
         }
-        this.logger.log(`Finished creating daily crafting task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailyCombatTasks) {
             const combatTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.combat && t.Type === ArchievementTaskType.daily);
             if (combatTaskConfig.length <= 0) {
                 this.logger.error(`No combat daily task config found when handling sign-in event for task refresh`);
             } else {
                 const config = combatTaskConfig[Math.floor(Math.random() * combatTaskConfig.length)];
-                this.logger.log(`config: ${JSON.stringify(config)} when handling sign-in event for task refresh`);
                 const combatTask = this.taskRepository.create({
                     key: config.Name,
                     owner: user,
@@ -265,7 +254,6 @@ export class TaskService {
                 await this.taskRepository.save(combatTask);
             }
         }
-        this.logger.log(`Finished creating daily combat task if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
         if (!dailySocialTasks) {
             const socialTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.social && t.Type === ArchievementTaskType.daily);
             if (socialTaskConfig.length <= 0) {
@@ -280,13 +268,10 @@ export class TaskService {
             }
         }
 
-        this.logger.log(`Finished creating daily tasks if not exist for user ${user.name} (${payload.account.custom_id}) when handling sign-in event for task refresh`);
-
-
         // weekly task create if not exist, no random here, just create all if not exist, since we don't have that many weekly tasks and it's not a problem to have them all
         const weeklyTaskConfig = configManager.archievementTask.filter(t => t.Type === ArchievementTaskType.weekly);
         for (const config of weeklyTaskConfig) {
-            if (!weeklyTasks[config.key]) {
+            if (!weeklyTasks[config.Name]) {
                 const weeklyTask = this.taskRepository.create({
                     key: config.Name,
                     owner: user,
