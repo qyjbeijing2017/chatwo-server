@@ -1,11 +1,11 @@
-Name,Description,Type,Category,Award,Submit
+﻿Name,Description,Type,Category,Award,Submit
 #Tutorial,Finish tutorial,once,,ss: 100,
 #Fly200,Fly for 200 meters,once,,ss: 200,
 #AddFriend1,"Add 1 Friend (purchase a Friend Stone, pair with other, collect stars from metors)",once,,ss: 200,
 #KilledSpider25,Kill 25 spiders,once,,ss: 200,
 #BreakBlade50,Break and reforge your blade 50 times,once,,ss: 200,
 #UpgradeArm50,Upgrade any Soul-Arm to Lv. 5,once,,ss: 500,
-#PurchaseHilt1,Purchase a hilt ,once,,ss: 300,
+#PurchaseHilt1,Purchase a hilt ,once,,ss: 300,
 #DrawBlade1,Draw your first blade and assemble a brand new Soul-Arm,once,,ss: 100,
 #UpgradeArmLv10,Upgrade any Soul-Arm to Lv. 10,once,,ss: 500,
 #KilledWoodGuardian10,Kill 10 Wood Guardian,once,,ss: 200,
@@ -48,43 +48,43 @@ ForgeLightsaberDaily,Forge and submit a Lightsaber,daily,crafting,ss: 500,"-
 ForgeRapierDaily,Forge and submit a Rapier,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Rapier
-  check: meta.bladeKey == ""Ruler"""
+  check: meta.bladeKey == ""Rapier"""
 ForgeScimitarDaily,Forge and submit a Scimitar,daily,crafting,ss: 350,"-
-  total: 8
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  total: 1
+  description: Forge and submit a Scimitar
+  check: meta.bladeKey == ""Scimitar"""
 ForgeKatanaDaily,Forge and submit a Katana,daily,crafting,ss: 350,"-
-  total: 7
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  total: 1
+  description: Forge and submit a Katana
+  check: meta.bladeKey == ""Katana"""
 ForgeJianDaily,Forge and submit a Jian,daily,crafting,ss: 350,"-
-  total: 6
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  total: 1
+  description: Forge and submit a Jian
+  check: meta.bladeKey == ""Jian"""
 ForgeMorningStarDaily,Forge and submit a Morning Star,daily,crafting,ss: 350,"-
-  total: 5
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  total: 1
+  description: Forge and submit a Morning Star
+  check: meta.bladeKey == ""Morning Star"""
 ForgeTangDaoDaily,Forge and submit a Tang Dao,daily,crafting,ss: 350,"-
-  total: 4
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
-ForgeBaseballBatDaily,Forge and submit a Baseball Bat,daily,crafting,ss: 300,"-
-  total: 3
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
-ForgeBaguetteDaily,Forge and submit a Baguette,daily,crafting,ss: 300,"-
-  total: 2
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
-ForgeLollipopDaily,Forge and submit a Lollipop,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  check: meta.bladeKey == ""Tang Dao"""
+ForgeBaseballBatDaily,Forge and submit a Baseball Bat,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Baseball Bat
+  check: meta.bladeKey == ""Baseball Bat"""
+ForgeBaguetteDaily,Forge and submit a Baguette,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Baguette
+  check: meta.bladeKey == ""Baguette"""
+ForgeLollipopDaily,Forge and submit a Lollipop,daily,crafting,ss: 300,"-
+  total: 1
+  description: Forge and submit a Lollipop
+  check: meta.bladeKey == ""Lollipop"""
 ForgeFryingPanDaily,Forge and submit a Frying Pan,daily,crafting,ss: 300,"-
-  total: 0
-  description: Forge and submit a Ruler
-  check: meta.bladeKey == ""Ruler"""
+  total: 1
+  description: Forge and submit a Frying Pan
+  check: meta.bladeKey == ""Frying Pan"""
 ForgeRulerDaily,Forge and submit a Ruler,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Ruler
@@ -97,7 +97,7 @@ KilledMonstersDaily,Kill 30 monsters,daily,combat,ss: 3000,"-
   total: 30
   description: Kill 30 monsters
   events:
-    user.moster-killed: 1 "
+    user.moster-killed: 1 "
 FlyDaily,Fly for 1000 meters,daily,combat,ss: 1000,"-
   total: 1000
   description: Fly for 1000 meters
@@ -157,7 +157,7 @@ DuelPlayersDaily,Win 3 duels against other players,daily,social,ss: 300,"-
   total: 3
   description: Win 3 duels against other players
   events:
-    user.pvp: 1"
+     user.duel: 1"
 KillFrostveilDragonDaily,"Defeat Glaciron, the Frostveil Dragon",daily,combat,ss: 1500,"-
   total: 1
   description: Defeat Glaciron, the Frostveil Dragon
@@ -182,14 +182,14 @@ Defeat 100 mobs,Defeat 100 monsters,Weekly,combat,ss: 1000,"-
   total: 100
   description: Defeat 100 monsters
   events:
-    user.moster-killed: 1 "
+    user.monster-killed: 1 "
 Forge 10 swords,Forge and submit 10 Soul-Arms,Weekly,crafting,ss: 1000,"-
   total: 10
   description: Defeat 100 monsters
   events:
-    user.forge: 1 "
+    user.forge: 1 "
 Defeat bosses 10 times,Defeat bosses 10 times.,Weekly,combat,ss: 10000,"-
   total: 10
   description: Defeat bosses 10 times.
   events:
-    user.moster-killed: getMonsterConfigByKey(monsterId).Type == ""Boss"""
+    user.monster-killed: getMonsterConfigByKey(monsterId).Type == ""Boss"""
