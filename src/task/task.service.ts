@@ -119,7 +119,7 @@ export class TaskService {
                         nakamaId: account.custom_id,
                     },
                     key: submitItemDto.key,
-                    nakamaId: account.custom_id,
+                    nakamaId: submitItemDto.nakamaId,
                 },
             })
             try {
