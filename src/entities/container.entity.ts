@@ -1,6 +1,5 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
     Column,
     ManyToOne,
     OneToMany,
@@ -32,5 +31,5 @@ export class ChatwoContainer extends Patchable {
 
     @IgnoreInhJsonPath()
     @OneToMany(() => ChatwoItem, (item) => item.container)
-    items: ChatwoItem[];
+    items: ChatwoItem[] = [];
 }
