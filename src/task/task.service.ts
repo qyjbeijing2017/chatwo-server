@@ -73,6 +73,8 @@ export class TaskService {
 
             for (let i = 0; i < taskConfig.Submit.length; i++) {
                 const submitInfo = taskConfig.Submit[i];
+                this.logger.log(`Checking submit info for task ${task.key} and submit index ${i} when claiming task reward for task id ${taskId} and account ${account.custom_id}`);
+                this.logger.log(`total: ${submitInfo.total}, progress: ${task.progress[i]}`);
                 if (submitInfo.total > task.progress[i]) {
                     throw new BadRequestException('Task not completed yet');
                 }
