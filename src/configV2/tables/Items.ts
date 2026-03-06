@@ -21,7 +21,7 @@ export class Item extends ConfigTable {
       vfx: ItemType.vfx,
       currency: ItemType.currency,
       ownable: ItemType.ownable,
-      lock: ItemType.locked,
+      locked: ItemType.locked,
       ownableArm: ItemType.ownableArm,
       lockOwnableArm: ItemType.lockOwnableArm,
       skin: ItemType.skin,

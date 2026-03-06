@@ -1483,7 +1483,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Moderator Hilt",
-            "type": 65,
+            "type": 193,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1492,7 +1492,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Fish Stick Hilt",
-            "type": 65,
+            "type": 193,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1501,7 +1501,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Seven Branched Sword Hilt",
-            "type": 65,
+            "type": 193,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1510,7 +1510,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Six-Ring Hilt",
-            "type": 65,
+            "type": 193,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
