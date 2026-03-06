@@ -1479,6 +1479,15 @@ export const configManager = new ConfigManager({
             "fromFile": "items.csv"
         },
         {
+            "key": "A_Mod_Hilt",
+            "InitInStorage": false,
+            "description": "",
+            "name": "A Moderator Hilt",
+            "type": 386,
+            "packagedSIze": 0.1,
+            "fromFile": "arm.csv"
+        },
+        {
             "key": "A_FishStick_Hilt",
             "InitInStorage": false,
             "description": "",
