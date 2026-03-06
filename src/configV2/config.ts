@@ -2226,7 +2226,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Lightsaber",
-                    "check": "meta.bladeKey == \"Lightsaber\""
+                    "check": "meta && meta.bladeKey == \"Lightsaber\""
                 }
             ],
             "Award": {
@@ -2242,7 +2242,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Rapier",
-                    "check": "meta.bladeKey == \"Rapier\""
+                    "check": "meta && meta.bladeKey == \"Rapier\""
                 }
             ],
             "Award": {
@@ -2258,7 +2258,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Scimitar",
-                    "check": "meta.bladeKey == \"Scimitar\""
+                    "check": "meta && meta.bladeKey == \"Scimitar\""
                 }
             ],
             "Award": {
@@ -2274,7 +2274,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Katana",
-                    "check": "meta.bladeKey == \"Katana\""
+                    "check": "meta && meta.bladeKey == \"Katana\""
                 }
             ],
             "Award": {
@@ -2290,7 +2290,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Jian",
-                    "check": "meta.bladeKey == \"Jian\""
+                    "check": "meta && meta.bladeKey == \"Jian\""
                 }
             ],
             "Award": {
@@ -2306,7 +2306,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Morning Star",
-                    "check": "meta.bladeKey == \"Morning Star\""
+                    "check": "meta && meta.bladeKey == \"Morning Star\""
                 }
             ],
             "Award": {
@@ -2322,7 +2322,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Ruler",
-                    "check": "meta.bladeKey == \"Tang Dao\""
+                    "check": "meta && meta.bladeKey == \"Tang Dao\""
                 }
             ],
             "Award": {
@@ -2338,7 +2338,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Baseball Bat",
-                    "check": "meta.bladeKey == \"Baseball Bat\""
+                    "check": "meta && meta.bladeKey == \"Baseball Bat\""
                 }
             ],
             "Award": {
@@ -2354,7 +2354,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Baguette",
-                    "check": "meta.bladeKey == \"Baguette\""
+                    "check": "meta && meta.bladeKey == \"Baguette\""
                 }
             ],
             "Award": {
@@ -2370,7 +2370,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Lollipop",
-                    "check": "meta.bladeKey == \"Lollipop\""
+                    "check": "meta && meta.bladeKey == \"Lollipop\""
                 }
             ],
             "Award": {
@@ -2386,7 +2386,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Frying Pan",
-                    "check": "meta.bladeKey == \"Frying Pan\""
+                    "check": "meta && meta.bladeKey == \"Frying Pan\""
                 }
             ],
             "Award": {
@@ -2402,7 +2402,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Ruler",
-                    "check": "meta.bladeKey == \"Ruler\""
+                    "check": "meta && meta.bladeKey == \"Ruler\""
                 }
             ],
             "Award": {
@@ -2418,7 +2418,7 @@ export const configManager = new ConfigManager({
                 {
                     "total": 1,
                     "description": "Forge and submit a Sausage Saber",
-                    "check": "meta.bladeKey == \"Sausage Saber\""
+                    "check": "meta && meta.bladeKey == \"Sausage Saber\""
                 }
             ],
             "Award": {
