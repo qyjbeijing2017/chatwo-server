@@ -81,9 +81,47 @@ export class TaskService {
                 }
             }
 
-            await this.itemService.gainItems(manager, account, taskConfig.Award, true);
+            let award = taskConfig.Award;
+
+            const tasks = await manager.find(ChatwoTask, {
+                where: {
+                    owner: {
+                        nakamaId: account.custom_id,
+                    },
+                    isExpired: false,
+                    status: TaskStatus.IN_PROGRESS,
+                },
+            });
+
+            // daily 25
+            if (taskConfig.Type === ArchievementTaskType.daily) {
+
+                const dailyTaskCount = tasks.filter(t => configManager.archievementTaskMap.get(t.key)?.Type === ArchievementTaskType.daily && t.key !== task.key).length;
+                if (dailyTaskCount === 0) {
+                    award = {
+                        ...award,
+                        sc: 25
+                    }
+                }
+            }
+            // weekly 125
+
+            if (taskConfig.Type === ArchievementTaskType.weekly) {
+                const weeklyTaskCount = tasks.filter(t => configManager.archievementTaskMap.get(t.key)?.Type === ArchievementTaskType.weekly && t.key !== task.key).length;
+                if (weeklyTaskCount === 0) {
+                    award = {
+                        ...award,
+                        sc: 125
+                    }
+                }
+            }
+
+            await this.itemService.gainItems(manager, account, award, true);
+
+
             task.status = TaskStatus.DONE;
             await manager.save(task);
+
             return {
                 tags,
                 result: task,
