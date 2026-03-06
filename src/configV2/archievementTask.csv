@@ -44,55 +44,55 @@ SubmitRockDaily,Collect and submit 30 Rocks,daily,crafting,ss: 300,"-
 ForgeLightsaberDaily,Forge and submit a Lightsaber,daily,crafting,ss: 500,"-
   total: 1
   description: Forge and submit a Lightsaber
-  check: meta && meta.bladeKey == ""Lightsaber"""
+  check: (meta && meta.bladeKey) == ""Lightsaber"""
 ForgeRapierDaily,Forge and submit a Rapier,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Rapier
-  check: meta && meta.bladeKey == ""Rapier"""
+  check: (meta && meta.bladeKey) == ""Rapier"""
 ForgeScimitarDaily,Forge and submit a Scimitar,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Scimitar
-  check: meta && meta.bladeKey == ""Scimitar"""
+  check: (meta && meta.bladeKey) == ""Scimitar"""
 ForgeKatanaDaily,Forge and submit a Katana,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Katana
-  check: meta && meta.bladeKey == ""Katana"""
+  check: (meta && meta.bladeKey) == ""Katana"""
 ForgeJianDaily,Forge and submit a Jian,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Jian
-  check: meta && meta.bladeKey == ""Jian"""
+  check: (meta && meta.bladeKey) == ""Jian"""
 ForgeMorningStarDaily,Forge and submit a Morning Star,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Morning Star
-  check: meta && meta.bladeKey == ""Morning Star"""
+  check: (meta && meta.bladeKey) == ""Morning Star"""
 ForgeTangDaoDaily,Forge and submit a Tang Dao,daily,crafting,ss: 350,"-
   total: 1
   description: Forge and submit a Ruler
-  check: meta && meta.bladeKey == ""Tang Dao"""
+  check: (meta && meta.bladeKey) == ""Tang Dao"""
 ForgeBaseballBatDaily,Forge and submit a Baseball Bat,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Baseball Bat
-  check: meta && meta.bladeKey == ""Baseball Bat"""
+  check: (meta && meta.bladeKey) == ""Baseball Bat"""
 ForgeBaguetteDaily,Forge and submit a Baguette,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Baguette
-  check: meta && meta.bladeKey == ""Baguette"""
+  check: (meta && meta.bladeKey) == ""Baguette"""
 ForgeLollipopDaily,Forge and submit a Lollipop,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Lollipop
-  check: meta && meta.bladeKey == ""Lollipop"""
+  check: (meta && meta.bladeKey) == ""Lollipop"""
 ForgeFryingPanDaily,Forge and submit a Frying Pan,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Frying Pan
-  check: meta && meta.bladeKey == ""Frying Pan"""
+  check: (meta && meta.bladeKey) == ""Frying Pan"""
 ForgeRulerDaily,Forge and submit a Ruler,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Ruler
-  check: meta && meta.bladeKey == ""Ruler"""
+  check: (meta && meta.bladeKey) == ""Ruler"""
 ForgeSausageSaberDaily,Forge and submit a Sausage Saber,daily,crafting,ss: 300,"-
   total: 1
   description: Forge and submit a Sausage Saber
-  check: meta && meta.bladeKey == ""Sausage Saber"""
+  check: (meta && meta.bladeKey) == ""Sausage Saber"""
 KilledMonstersDaily,Kill 30 monsters,daily,combat,ss: 3000,"-
   total: 30
   description: Kill 30 monsters
