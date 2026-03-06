@@ -2767,29 +2767,11 @@ export const configManager = new ConfigManager({
                 {
                     "total": 10,
                     "description": "Forge and submit 10 Soul-Arms",
-                    "check": "(meta && meta.bladeKey)"
+                    "check": "meta && meta.bladeKey"
                 }
             ],
             "Award": {
                 "ss": 1000
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "Defeat bosses 10 times",
-            "Type": 2,
-            "Category": 2,
-            "Submit": [
-                {
-                    "total": 10,
-                    "description": "Defeat bosses 10 times.",
-                    "events": {
-                        "user.monster-killed": "getMonsterConfigByKey(monsterId).Type == \"Boss\""
-                    }
-                }
-            ],
-            "Award": {
-                "ss": 10000
             },
             "fromFile": "archievementTask.csv"
         }
