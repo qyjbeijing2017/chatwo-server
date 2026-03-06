@@ -2757,10 +2757,8 @@ export const configManager = new ConfigManager({
             "Submit": [
                 {
                     "total": 10,
-                    "description": "Defeat 100 monsters",
-                    "events": {
-                        "user.forge": 1
-                    }
+                    "description": "Forge and submit 10 Soul-Arms",
+                    "check": "(meta && meta.bladeKey)"
                 }
             ],
             "Award": {

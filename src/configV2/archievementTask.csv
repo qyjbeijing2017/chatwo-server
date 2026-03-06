@@ -185,9 +185,8 @@ Defeat 100 mobs,Defeat 100 monsters,Weekly,combat,ss: 1000,"-
     user.monster-killed: 1 "
 Forge 10 swords,Forge and submit 10 Soul-Arms,Weekly,crafting,ss: 1000,"-
   total: 10
-  description: Defeat 100 monsters
-  events:
-    user.forge: 1 "
+  description: Forge and submit 10 Soul-Arms
+  check: (meta && meta.bladeKey)"
 Defeat bosses 10 times,Defeat bosses 10 times.,Weekly,combat,ss: 10000,"-
   total: 10
   description: Defeat bosses 10 times.
