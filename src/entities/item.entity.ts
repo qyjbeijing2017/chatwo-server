@@ -39,7 +39,7 @@ const itemTypeMap = new Map<string, ItemType>([
   ['currency', ItemType.currency],
   ['skin', ItemType.skin],
   ['ownable', ItemType.ownable],
-  ['lock', ItemType.locked],
+  ['locked', ItemType.locked],
   ['ore', ItemType.ore],
   ['ownableArm', ItemType.ownableArm],
   ['lockOwnableArm', ItemType.lockOwnableArm],
