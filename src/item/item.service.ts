@@ -55,7 +55,7 @@ export class ItemService {
           },
         });
         if (userItems.length < costs[cost]) {
-          throw new BadRequestException(`Not enough ${cost} items to buy item`);
+          throw new Error(`Not enough ${cost} items to buy item`);
         }
         const itemsToRemove = userItems.slice(0, costs[cost]);
         await manager.remove(itemsToRemove);
@@ -236,7 +236,7 @@ export class ItemService {
         key: dto.key,
         meta: dto.meta,
       });
-      if (equipContainer?.items?.[0]) {
+      if (equipContainer?.items[0]) {
         throw new BadRequestException(`Item with nakamaId ${equipContainer.items[0].nakamaId} is already in a container`);
       }
       item.container = equipContainer;
