@@ -348,7 +348,7 @@ export class ItemService {
           throw new BadRequestException(`lock Item with nakamaId ${nakamaId} has no owner`);
         }
         if (item.owner.nakamaId !== account.custom_id) {
-          if (itemConfig.type & ItemType.lock) {
+          if (itemConfig.type & ItemType.locked) {
             lockedFailed = true;
           } else {
             item.owner = user;

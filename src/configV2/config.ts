@@ -7,7 +7,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Small Red Eyes",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -16,7 +16,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Green Devil Eyes",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -25,7 +25,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Red Devil Eyes",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -34,7 +34,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Heart Eyes 001",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -43,7 +43,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Eyes 004",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -52,7 +52,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Eyes 003",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -61,7 +61,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Eyes 002",
-            "type": 8,
+            "type": 4,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -70,7 +70,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Toilet Janitor Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -79,7 +79,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Toilet Janitor Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -88,7 +88,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Anglerfish Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -97,7 +97,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Anglerfish Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -106,7 +106,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Yin Yang Knight Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -115,7 +115,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Yin Yang Knight Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -124,7 +124,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Red Samurai Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -133,7 +133,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Red Samurai Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -142,7 +142,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Dino Egg Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -151,7 +151,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Stranger Things Monster Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -160,7 +160,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Head 003",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -169,7 +169,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Body 003",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -178,7 +178,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Head 002",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -187,7 +187,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Body 002",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -196,7 +196,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Head 001",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -205,7 +205,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Elite Knight Body 001",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -214,7 +214,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "White Knight Head 001",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -223,7 +223,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "White Knight Body 001",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -232,7 +232,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Black Knight Head 001",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -241,7 +241,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Black Knight Body 001",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -250,7 +250,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Yellow Knight King Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -259,7 +259,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Yellow Knight King Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -268,7 +268,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight Y Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -277,7 +277,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight P Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -286,7 +286,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight O Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -295,7 +295,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight G Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -304,7 +304,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight B Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -313,7 +313,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight Y Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -322,7 +322,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight P Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -331,7 +331,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight O Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -340,7 +340,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight G Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -349,7 +349,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight B Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -358,7 +358,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -367,7 +367,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Knight Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -376,7 +376,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Frost Shard",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -385,7 +385,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Verdant Core",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -394,7 +394,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Silver Ore",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -403,7 +403,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Iron Ore",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -412,7 +412,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Copper Ore",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -421,7 +421,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Earth Ore",
-            "type": 512,
+            "type": 256,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -430,7 +430,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "SC",
-            "type": 64,
+            "type": 32,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -439,7 +439,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "SS",
-            "type": 64,
+            "type": 32,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -448,7 +448,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier SSS Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -457,7 +457,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier SS Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -466,7 +466,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier S Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -475,7 +475,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier A Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -484,7 +484,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier B Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -493,7 +493,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Tier C Forging Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -502,7 +502,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Water Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -511,7 +511,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Water Trial VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -520,7 +520,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Rainbow Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -529,7 +529,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Rainbow Trial VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -538,7 +538,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Funnel Cannon Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -547,7 +547,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Funnel Cannon Trial VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -556,7 +556,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Orange",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -565,7 +565,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Purple",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -574,7 +574,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Green",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -583,7 +583,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Blue",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -592,7 +592,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Yellow",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -601,7 +601,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Wind Breaker VFX Red",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -610,7 +610,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Orange",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -619,7 +619,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Purple",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -628,7 +628,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Green",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -637,7 +637,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Blue",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -646,7 +646,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Yellow",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -655,7 +655,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pixel Style Trail VFX Red",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -664,7 +664,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Flame Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -673,7 +673,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Flame Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -682,7 +682,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Flame Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -691,7 +691,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head Orange",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -700,7 +700,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head Purple",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -709,7 +709,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head Blue",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -718,7 +718,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head Yellow",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -727,7 +727,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head Red",
-            "type": 4,
+            "type": 2,
             "packagedSIze": null,
             "fromFile": "items.csv"
         },
@@ -736,7 +736,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Hilt Temporary",
-            "type": 2,
+            "type": 1,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -745,7 +745,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "BrownGreen 1000 Fans Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -754,7 +754,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "BlackBrown 1000 Fans Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -763,7 +763,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "WhiteBlue 1000 Fans Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -772,7 +772,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -781,7 +781,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -790,7 +790,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -799,7 +799,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -808,7 +808,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -817,7 +817,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -826,7 +826,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -835,7 +835,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Wind Breaker VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -844,7 +844,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -853,7 +853,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -862,7 +862,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -871,7 +871,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -880,7 +880,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Halloween Trail VFX",
-            "type": 32,
+            "type": 16,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -889,7 +889,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -898,7 +898,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Halloween Zombie Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -907,7 +907,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "BrownGreen 1000 Fans Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -916,7 +916,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -925,7 +925,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -934,7 +934,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "WhiteBlue 1000 Fans Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -943,7 +943,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -952,7 +952,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -961,7 +961,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Default Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -970,7 +970,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "BlackBrown 1000 Fans Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -979,7 +979,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Halloween Dino Body",
-            "type": 16,
+            "type": 8,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -988,7 +988,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Black Square Eye",
-            "type": 8,
+            "type": 4,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -997,7 +997,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Eye",
-            "type": 8,
+            "type": 4,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1006,7 +1006,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Halloween Zombie Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1015,7 +1015,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Halloween Dino Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1024,7 +1024,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1033,7 +1033,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1042,7 +1042,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1051,7 +1051,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1060,7 +1060,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1069,7 +1069,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Blue Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1078,7 +1078,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1087,7 +1087,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1096,7 +1096,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1105,7 +1105,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1114,7 +1114,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1123,7 +1123,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Orange Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1132,7 +1132,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1141,7 +1141,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1150,7 +1150,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1159,7 +1159,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1168,7 +1168,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1177,7 +1177,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Purple Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1186,7 +1186,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1195,7 +1195,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1204,7 +1204,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1213,7 +1213,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1222,7 +1222,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1231,7 +1231,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Green Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1240,7 +1240,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1249,7 +1249,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1258,7 +1258,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1267,7 +1267,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1276,7 +1276,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1285,7 +1285,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Yellow Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1294,7 +1294,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Round-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1303,7 +1303,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Pentagon-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1312,7 +1312,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Triangle-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1321,7 +1321,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Cube-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1330,7 +1330,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Water-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1339,7 +1339,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": true,
             "description": "",
             "name": "Red Fire-Shape Default Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1348,7 +1348,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Pumpkin Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1357,7 +1357,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Goofy Head",
-            "type": 4,
+            "type": 2,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1366,7 +1366,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Energy Star",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1375,7 +1375,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Walkie-Talkie",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1384,7 +1384,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Friend Stone",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1393,7 +1393,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Color Crystal",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1402,7 +1402,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Energy Pack (Small)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1411,7 +1411,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Energy Pack (Medium)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1420,7 +1420,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Energy Pack (Large)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1429,7 +1429,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Boost Engine (Small)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1438,7 +1438,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Boost Engine (Medium)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1447,7 +1447,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Boost Engine (Large)",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1456,7 +1456,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Glide Module",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1465,7 +1465,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Dash Module",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1474,7 +1474,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "Overload Module",
-            "type": 1,
+            "type": 0,
             "packagedSIze": 0.1,
             "fromFile": "items.csv"
         },
@@ -1483,7 +1483,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Moderator Hilt",
-            "type": 386,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1492,7 +1492,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Fish Stick Hilt",
-            "type": 386,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1501,7 +1501,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Seven Branched Sword Hilt",
-            "type": 386,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1510,7 +1510,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Six-Ring Hilt",
-            "type": 386,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1519,7 +1519,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Tutorial Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1528,7 +1528,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Relic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1537,7 +1537,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Relic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1546,7 +1546,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Relic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1555,7 +1555,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Mystic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1564,7 +1564,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Mystic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1573,7 +1573,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Mystic Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1582,7 +1582,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "A Techno Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1591,7 +1591,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "B Techno Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         },
@@ -1600,7 +1600,7 @@ export const configManager = new ConfigManager({
             "InitInStorage": false,
             "description": "",
             "name": "C Techno Default Hilt",
-            "type": 130,
+            "type": 65,
             "packagedSIze": 0.1,
             "fromFile": "arm.csv"
         }

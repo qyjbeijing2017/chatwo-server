@@ -149,7 +149,7 @@ export class TaskService {
                 this.logger.error(`Item config not found for item key ${submitItemDto.key} when submitting item for task id ${taskId} and account ${account.custom_id}`);
                 throw new NotFoundException('Item config not found');
             }
-            if (itemConfig.type & ItemType.lock) {
+            if (itemConfig.type & ItemType.locked) {
                 throw new BadRequestException('Locked item cannot be submitted for task');
             }
             if (item) {

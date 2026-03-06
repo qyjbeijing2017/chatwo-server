@@ -1,8 +1,8 @@
 ﻿key,name,InitInStorage,type,sourcePath,description,packagedSIze
-A_Mod_Hilt,A Moderator Hilt,,"arm, lock, ownable",RAssets/Prefabs/Items/Hilts/A_Mod_Hilt,,0.1
-A_FishStick_Hilt,A Fish Stick Hilt,,"arm, lock, ownable",RAssets/Prefabs/Items/Hilts/A_FishStick_Hilt,,0.1
-A_SevenBranchedSword_Hilt,A Seven Branched Sword Hilt,,"arm, lock, ownable",RAssets/Prefabs/Items/Hilts/A_SevenBranchedSword_Hilt,,0.1
-A_SixRing_Hilt,A Six-Ring Hilt,,"arm, lock, ownable",RAssets/Prefabs/Items/Hilts/A_SixRing_Hilt,,0.1
+A_Mod_Hilt,A Moderator Hilt,,"arm, locked, ownable",RAssets/Prefabs/Items/Hilts/A_Mod_Hilt,,0.1
+A_FishStick_Hilt,A Fish Stick Hilt,,"arm, locked, ownable",RAssets/Prefabs/Items/Hilts/A_FishStick_Hilt,,0.1
+A_SevenBranchedSword_Hilt,A Seven Branched Sword Hilt,,"arm, locked, ownable",RAssets/Prefabs/Items/Hilts/A_SevenBranchedSword_Hilt,,0.1
+A_SixRing_Hilt,A Six-Ring Hilt,,"arm, locked, ownable",RAssets/Prefabs/Items/Hilts/A_SixRing_Hilt,,0.1
 C_Tutorial_Hilt,C Tutorial Hilt,,"arm, ownable",RAssets/Prefabs/Items/Hilts/C_Tutorial_Hilt,,0.1
 A_Relic_Hilt,A Relic Default Hilt,,"arm, ownable",RAssets/Prefabs/Items/Hilts/A_Relic_Hilt,,0.1
 B_Relic_Hilt,B Relic Default Hilt,,"arm, ownable",RAssets/Prefabs/Items/Hilts/B_Relic_Hilt,,0.1

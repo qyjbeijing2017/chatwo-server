@@ -11,32 +11,20 @@ import { ChatwoUser } from './user.entity';
 import { ChatwoContainer } from './container.entity';
 import { IgnoreInhJsonPath, Patchable, TransformToPathJson } from './patchable';
 
-export enum ItemTypeV1 {
-  item = 4096,
-  arm = 8192,
-  skin = 16384,
-  currency = 32768,
-  type = 61440,
-  blade = 8193,
-  head = 16385,
-  eye = 16486,
-  body = 16387,
-  vfx = 16388,
-}
 
 export enum ItemType {
-  item = 1,
-  arm = 1 << 1,
-  head = 1 << 2,
-  eye = 1 << 3,
-  body = 1 << 4,
-  vfx = 1 << 5,
-  currency = 1 << 6,
-  ownable = 1 << 7,
-  lock = 1 << 8,
-  ore = 1 << 9,
+  item = 0,
+  arm = 1,
+  head = 1 << 1,
+  eye = 1 << 2,
+  body = 1 << 3,
+  vfx = 1 << 4,
+  currency = 1 << 5,
+  ownable = 1 << 6,
+  locked = 1 << 7,
+  ore = 1 << 8,
   ownableArm = arm | ownable,
-  lockOwnableArm = arm | ownable | lock,
+  lockOwnableArm = arm | ownable | locked,
   skin = head | eye | body | vfx,
   dropable = item | arm | ore,
 }
@@ -51,7 +39,7 @@ const itemTypeMap = new Map<string, ItemType>([
   ['currency', ItemType.currency],
   ['skin', ItemType.skin],
   ['ownable', ItemType.ownable],
-  ['lock', ItemType.lock],
+  ['lock', ItemType.locked],
   ['ore', ItemType.ore],
   ['ownableArm', ItemType.ownableArm],
   ['lockOwnableArm', ItemType.lockOwnableArm],
