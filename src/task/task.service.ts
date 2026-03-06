@@ -125,10 +125,17 @@ export class TaskService {
             try {
                 requiredItem = await findOneAsync(taskConfig.Submit, async (submitInfo, index) => {
                     submitInfoIndex = index;
-                    return this.statisticService.execDsl(submitInfo.check, account, {
+                    const context = this.statisticService.createContext(account, {
+                        ...submitItemDto,
+                        ...(item || {}),
+                    }, {})
+                    this.logger.log(`Checking submit requirement for task ${taskId} and account ${account.custom_id} with item ${submitItemDto.key},${submitInfo.check} and context ${JSON.stringify(context)}`);
+                    const result = this.statisticService.execDsl(submitInfo.check, account, {
                         ...submitItemDto,
                         ...(item || {}),
                     });
+                    this.logger.log(`Checking submit requirement for task ${taskId} and account ${account.custom_id} with item ${submitItemDto.key},${submitInfo.check} with result: ${result}`);
+                    return result;
                 });
             } catch (e) {
                 this.logger.error(`Error parsing task submit requirement for task id ${taskId} and account ${account.custom_id}: ${e}`);
