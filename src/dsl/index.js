@@ -9768,46 +9768,45 @@ var ChatwoAstBinaryOperation = class extends ChatwoAstNode {
   }
   async execute(context) {
     const left = this.left instanceof ChatwoAstNode ? await this.left.execute(context) : this.left;
-    const right = this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right;
     switch (this.operator) {
       case "+" /* Add */:
-        return left + right;
+        return left + (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "-" /* Subtract */:
-        return left - right;
+        return left - (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "*" /* Multiply */:
-        return left * right;
+        return left * (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "/" /* Divide */:
-        return left / right;
+        return left / (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "%" /* Modulus */:
-        return left % right;
+        return left % (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "**" /* Power */:
-        return left ** right;
+        return left ** (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "&" /* BitwiseAnd */:
-        return left & right;
+        return left & (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "|" /* BitwiseOr */:
-        return left | right;
+        return left | (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "||" /* Or */:
-        return left || right;
+        return left || (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "&&" /* And */:
-        return left && right;
+        return left && (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case ">" /* GreaterThan */:
-        return left > right;
+        return left > (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "<" /* LessThan */:
-        return left < right;
+        return left < (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case ">=" /* GreaterThanEquals */:
-        return left >= right;
+        return left >= (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "<=" /* LessThanEquals */:
-        return left <= right;
+        return left <= (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "==" /* EqualsEquals */:
-        return left == right;
+        return left == (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "!=" /* NotEquals */:
-        return left != right;
+        return left != (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "<<" /* LeftShift */:
-        return left << right;
+        return left << (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case ">>" /* RightShift */:
-        return left >> right;
+        return left >> (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       case "^" /* BitwiseXor */:
-        return left ^ right;
+        return left ^ (this.right instanceof ChatwoAstNode ? await this.right.execute(context) : this.right);
       default:
         throw new Error(`Unknown operator: ${this.operator}`);
     }

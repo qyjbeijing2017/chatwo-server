@@ -12,7 +12,7 @@ import { ItemService } from 'src/item/item.service';
 import { StatisticService } from 'src/statistic/statistic.service';
 import { autoPatch } from 'src/utils/autoPatch';
 import { getServerTime } from 'src/utils/serverTime';
-import { DataSource, EntityManager, In, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 import { SubmitItemDto } from './submit-Item.dto';
 import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { UserEvent } from 'src/event/user.event';
@@ -112,11 +112,22 @@ export class TaskService {
             }
             let requiredItem: SubmitItemsInfo | null = null;
             let submitInfoIndex = -1;
+
+            const item = await manager.findOne(ChatwoItem, {
+                where: {
+                    owner: {
+                        nakamaId: account.custom_id,
+                    },
+                    key: submitItemDto.key,
+                    nakamaId: account.custom_id,
+                },
+            })
             try {
                 requiredItem = await findOneAsync(taskConfig.Submit, async (submitInfo, index) => {
                     submitInfoIndex = index;
                     return this.statisticService.execDsl(submitInfo.check, account, {
                         ...submitItemDto,
+                        ...(item || {}),
                     });
                 });
             } catch (e) {
@@ -137,27 +148,14 @@ export class TaskService {
             if (itemConfig.type & ItemType.lock) {
                 throw new BadRequestException('Locked item cannot be submitted for task');
             }
-            if (itemConfig.type & ItemType.ownable) {
-                let item = await manager.findOne(ChatwoItem, {
-                    where: {
-                        owner: {
-                            nakamaId: account.custom_id,
-                        },
-                        key: submitItemDto.key,
-                        nakamaId: account.custom_id,
-                    },
-                })
-                if (!item) {
-                    throw new NotFoundException('Item not found, or it is not your item.');
-                }
+            if (item) {
                 await manager.delete(ChatwoItem, item);
-                submitItemDto = item;
             }
-            tags.push(submitItemDto.key);
+            tags.push(submitItemDto.nakamaId);
             task.progress[submitInfoIndex] = (task.progress[submitInfoIndex] || 0) + 1;
             await manager.save(task);
-            if (itemConfig.type & ItemType.arm) {
-                this.eventEmitter.emit('user.submit-arm', new SubmitArmEvent(account, submitItemDto as ChatwoItem));
+            if (itemConfig.type & ItemType.arm && item) {
+                this.eventEmitter.emit('user.submit-arm', new SubmitArmEvent(account, item));
             }
             return {
                 tags,
