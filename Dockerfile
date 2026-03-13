@@ -7,6 +7,7 @@ RUN yarn
 
 COPY tsconfig.json .
 COPY src/ src/
+RUN yarn compile-config
 RUN yarn build
 
 # Runtime stage
