@@ -7,6 +7,7 @@ RUN yarn
 
 COPY tsconfig.json .
 COPY src/ src/
+COPY tsconfig.node.json .
 RUN yarn compile-config
 RUN yarn build
 
