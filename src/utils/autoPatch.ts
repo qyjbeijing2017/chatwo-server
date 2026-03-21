@@ -68,10 +68,18 @@ export class AutoPatchManager {
 
 const logger = new Logger('autoPatch');
 
-export async function autoPatch<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<{ result: T, message: string, tags: string[], finally?: () => void | Promise<void> }>): Promise<T> {
+export async function autoPatch<T>(
+    dataSource: DataSource,
+    callback: (manager: EntityManager) => Promise<{
+        result: T,
+        message: string,
+        tags: string[],
+        finally?: () => void | Promise<void>,
+        forceInDatabase?: boolean,
+    }>): Promise<T> {
     return startTransaction<T>(dataSource, async (manager) => {
         const autoPatchManager = new AutoPatchManager(manager);
-        const { result, message, tags, finally: finallyCallback } = await callback(autoPatchManager as any as EntityManager);
+        const { result, message, tags, finally: finallyCallback, forceInDatabase } = await callback(autoPatchManager as any as EntityManager);
         const data: {
             [key: string]: {
                 id: number;
@@ -88,13 +96,19 @@ export async function autoPatch<T>(dataSource: DataSource, callback: (manager: E
                 });
             }
         }
-        const log = manager.create(ChatwoLog, {
-            message,
-            tags,
-            data,
-        });
+
+        // TODO: 这里可以考虑增加一个配置项，决定是否将这些patch信息也存储在数据库中，目前先存储, 减少出现bug的可能性
+        // if (forceInDatabase) {
+            const log = manager.create(ChatwoLog, {
+                message,
+                tags,
+                data,
+            });
+            await manager.save(log);
+        // }
+
+        // 日志系统处理信息，不放在database里面，节省空间，减少不必要的查询
         logger.log(message, { tags, data });
-        await manager.save(log);
 
         if (finallyCallback) {
             await finallyCallback();

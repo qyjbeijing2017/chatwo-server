@@ -83,6 +83,7 @@ export class StoreService {
                 result: items,
                 message: `Successfully redeemed code ${code}`,
                 tags,
+                forceInDatabase: true, // 强制将兑换日志存储在数据库中，避免出现日志丢失导致无法追踪兑换记录的情况
             };
         });
     }
