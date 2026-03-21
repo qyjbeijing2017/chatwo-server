@@ -19,6 +19,7 @@ import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
 import { configManager } from 'src/configV2/config';
 import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
+import { LoggerService } from 'src/logger/logger.service';
 
 @Injectable()
 export class GmService {
@@ -39,6 +40,7 @@ export class GmService {
         private readonly statisticsService: StatisticService,
         private readonly itemService: ItemService,
         private readonly purchaseService: PurchaseService,
+        private readonly loggerService: LoggerService,
     ) { }
 
     async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
@@ -407,6 +409,13 @@ export class GmService {
                         log: async (message: string) => {
                             this.logger.log(`DSL Log: ${message}`);
                         },
+                        searchLogs: async (filters: Record<string, any>, options: { limit?: number, skip?: number }) => {
+                            return this.loggerService.search({
+                                filters,
+                                limit: options.limit,
+                                skip: options.skip,
+                            });
+                        }
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {

@@ -3,6 +3,7 @@ import { startTransaction } from "./transaction";
 import { Patchable } from "src/entities/patchable";
 import { Operation } from "fast-json-patch";
 import { ChatwoLog } from "src/entities/log.entity";
+import { Logger } from "@nestjs/common";
 
 export class AutoPatchManager {
     patchables: Set<Patchable> = new Set();
@@ -65,6 +66,8 @@ export class AutoPatchManager {
     }
 }
 
+const logger = new Logger('autoPatch');
+
 export async function autoPatch<T>(dataSource: DataSource, callback: (manager: EntityManager) => Promise<{ result: T, message: string, tags: string[], finally?: () => void | Promise<void> }>): Promise<T> {
     return startTransaction<T>(dataSource, async (manager) => {
         const autoPatchManager = new AutoPatchManager(manager);
@@ -90,6 +93,7 @@ export async function autoPatch<T>(dataSource: DataSource, callback: (manager: E
             tags,
             data,
         });
+        logger.log(message, { tags, data });
         await manager.save(log);
 
         if (finallyCallback) {

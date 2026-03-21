@@ -3,6 +3,7 @@ import { WinstonModule } from 'nest-winston';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
+import { LoggerService } from './logger.service';
 
 @Module({
   imports: [
@@ -43,8 +44,8 @@ import 'winston-daily-rotate-file';
       },
     }),
   ],
-  exports: [WinstonModule],
+  exports: [WinstonModule, LoggerService],
   controllers: [],
-  providers: [],
+  providers: [LoggerService],
 })
 export class LoggerModule {}
