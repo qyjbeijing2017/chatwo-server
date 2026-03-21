@@ -4,7 +4,6 @@ import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import { configManager } from 'src/configV2/config';
 import { ArchievementTaskCategory, ArchievementTaskType, SubmitItemsInfo } from 'src/configV2/tables/archievementTask';
-import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { SignInEvent } from 'src/event/sign-in.event';
@@ -24,8 +23,6 @@ export class TaskService {
     private readonly logger = new Logger(TaskService.name);
     constructor(
         private readonly statisticService: StatisticService,
-        @InjectRepository(ChatwoLog)
-        private readonly logRepository: Repository<ChatwoLog>,
         @InjectRepository(ChatwoTask)
         private readonly taskRepository: Repository<ChatwoTask>,
         @InjectRepository(ChatwoUser)
@@ -240,6 +237,8 @@ export class TaskService {
         for (const task of tasks) {
             const taskConfig = configManager.archievementTaskMap.get(task.key);
             if (!taskConfig) {
+                task.isExpired = true;
+                await this.taskRepository.save(task);
                 this.logger.error(`Task config not found for task key ${task.key} when handling sign-in event for task refresh`);
                 continue;
             }
@@ -266,7 +265,8 @@ export class TaskService {
                 }
                 weeklyTasks[task.key] = task;
             } else {
-                await this.taskRepository.remove(task);
+                task.isExpired = true;
+                await this.taskRepository.save(task);
             }
         }
 

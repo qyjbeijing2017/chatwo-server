@@ -403,7 +403,10 @@ export class GmService {
                                 }
                             }
                             return newArray;
-                        }
+                        },
+                        log: async (message: string) => {
+                            this.logger.log(`DSL Log: ${message}`);
+                        },
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {

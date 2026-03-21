@@ -2670,42 +2670,6 @@ export const configManager = new ConfigManager({
             "fromFile": "archievementTask.csv"
         },
         {
-            "Name": "KillFrostveilDragonDaily",
-            "Type": 1,
-            "Category": 2,
-            "Submit": [
-                {
-                    "total": 1,
-                    "description": "Defeat Glaciron, the Frostveil Dragon",
-                    "events": {
-                        "user.monster-killed": "monsterId == \"Glaciron, the Frostveil Serpent\""
-                    }
-                }
-            ],
-            "Award": {
-                "ss": 1500
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
-            "Name": "KillCosmoDevourDaily",
-            "Type": 1,
-            "Category": 2,
-            "Submit": [
-                {
-                    "total": 1,
-                    "description": "Defeat Glaciron, the Frostveil Dragon",
-                    "events": {
-                        "user.monster-killed": "monsterId == \"Cosmo Devour\""
-                    }
-                }
-            ],
-            "Award": {
-                "ss": 1200
-            },
-            "fromFile": "archievementTask.csv"
-        },
-        {
             "Name": "AddFriendWeekly",
             "Type": 2,
             "Category": 3,
