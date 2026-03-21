@@ -97,15 +97,14 @@ export async function autoPatch<T>(
             }
         }
 
-        // TODO: 这里可以考虑增加一个配置项，决定是否将这些patch信息也存储在数据库中，目前先存储, 减少出现bug的可能性
-        // if (forceInDatabase) {
+        if (forceInDatabase) {
             const log = manager.create(ChatwoLog, {
                 message,
                 tags,
                 data,
             });
             await manager.save(log);
-        // }
+        }
 
         // 日志系统处理信息，不放在database里面，节省空间，减少不必要的查询
         logger.log(message, { tags, data });

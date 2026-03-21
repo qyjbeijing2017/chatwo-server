@@ -409,7 +409,7 @@ export class GmService {
                         log: async (message: string) => {
                             this.logger.log(`DSL Log: ${message}`);
                         },
-                        searchLogs: async (filters: Record<string, any>, options: { limit?: number, skip?: number }) => {
+                        searchLogs: async (filters: Record<string, any> = {}, options: { limit?: number, skip?: number } = {}) => {
                             return this.loggerService.search({
                                 filters,
                                 limit: options.limit,
