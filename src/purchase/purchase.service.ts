@@ -119,8 +119,7 @@ export class PurchaseService {
             return {
                 result: items,
                 message: 'Purchase successful',
-                tags,
-                forceInDatabase: true, // 强制将购买日志存储在数据库中，避免出现日志丢失导致无法退款的情况
+                tags
             };
         });
     }
