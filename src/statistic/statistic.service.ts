@@ -1,5 +1,5 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
 import { And, Any, ArrayContainedBy, ArrayContains, Between, DataSource, FindOptionsWhere, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
@@ -17,12 +17,16 @@ import { Item } from 'src/configV2/tables/Items';
 import { getServerTime, todayStart } from 'src/utils/serverTime';
 import { ChatwoBug } from 'src/entities/bug.entity';
 import { ChatwoTask } from 'src/entities/task.entity';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { FlyEvent } from 'src/event/fly.event';
 import { MonsterKilledEvent } from 'src/event/monster-killed.event';
 import { DuelEvent } from 'src/event/duel.evemt';
 import { TeleportEvent } from 'src/event/teleport.event';
 import { AddFriendEvent } from 'src/event/add-friend.event';
+import { OnlineDto } from './dto/online.dto';
+import { UserEvent } from 'src/event/user.event';
+import { ChatwoStatistic } from 'src/entities/statistic.entity';
+import { StatisticRefreshType } from 'src/configV2/tables/statistic';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -44,6 +48,7 @@ export interface DslOptions {
 
 @Injectable()
 export class StatisticService {
+    private readonly logger = new Logger(StatisticService.name);
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
@@ -57,6 +62,8 @@ export class StatisticService {
         private readonly bugRepository: Repository<ChatwoBug>,
         @InjectRepository(ChatwoTask)
         private readonly taskRepository: Repository<ChatwoTask>,
+        @InjectRepository(ChatwoStatistic)
+        private readonly statisticRepository: Repository<ChatwoStatistic>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly eventEmitter: EventEmitter2,
@@ -189,6 +196,31 @@ export class StatisticService {
                 return {
                     results: taskResult,
                     total: taskCount,
+                };
+            case 'statistic':
+                const statisticWhere: FindOptionsWhere<ChatwoStatistic> | FindOptionsWhere<ChatwoStatistic>[] = where ?? {};
+                if (context.account) {
+                    if (Array.isArray(statisticWhere)) {
+                        for (const condition of statisticWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        statisticWhere.owner = statisticWhere.owner ?? {};
+                        (statisticWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                }
+                const [statisticResult, statisticCount] = await this.statisticRepository.findAndCount({
+                    select: select,
+                    where: statisticWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+                return {
+                    results: statisticResult,
+                    total: statisticCount,
                 };
             case 'bug':
                 if (context.options?.openBug) {
@@ -386,7 +418,7 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
-        this.eventEmitter.emit('user.fly',new FlyEvent(account, dto.meters));
+        this.eventEmitter.emit('user.fly', new FlyEvent(account, dto.meters));
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
                 where: {
@@ -441,6 +473,9 @@ export class StatisticService {
         return log;
     }
 
+    async online(account: ApiAccount, dto: OnlineDto) {
+    }
+
     async dslQuery(account: ApiAccount, query: string) {
         try {
             const result = await this.execDsl(query, account);
@@ -470,6 +505,7 @@ export class StatisticService {
             todayFlyMeters: this.todayFlyMeters.bind(this),
             getMonsterConfigByKey: (key: string) => configManager.monsterMap.get(key),
             getItemConfigByKey: (key: string) => configManager.itemMap.get(key),
+            branch: (condition: boolean, trueVal: any, falseVal: any) => condition ? trueVal : falseVal,
             account,
             ...other,
             options,
@@ -523,5 +559,58 @@ export class StatisticService {
 
     async addNewFriend(account: ApiAccount, friendName: string) {
         this.eventEmitter.emit('user.add-friend', new AddFriendEvent(account, friendName));
+    }
+
+    @OnEvent('user.*')
+    async handleUserEvent(payload: UserEvent) {
+        const user = await this.userRepository.findOne({
+            where: {
+                nakamaId: payload.account.custom_id,
+            },
+        });
+        if (!user) {
+            this.logger.error(`User with nakamaId ${payload.account.custom_id} not found`);
+            return;
+        }
+
+        const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
+        for (const config of configs) {
+            let [statistic] = await this.statisticRepository.find({
+                where: {
+                    name: config.name,
+                    owner: user,
+                },
+                order: {
+                    createdAt: 'DESC',
+                },
+                take: 1,
+            });
+
+            if (
+                !statistic ||
+                (config.RefreshType === StatisticRefreshType.yearly && statistic.createdAt < getServerTime().startOf('year').toDate()) ||
+                (config.RefreshType === StatisticRefreshType.monthly && statistic.createdAt < getServerTime().startOf('month').toDate()) ||
+                (config.RefreshType === StatisticRefreshType.weekly && statistic.createdAt < getServerTime().startOf('week').toDate()) ||
+                (config.RefreshType === StatisticRefreshType.daily && statistic.createdAt < getServerTime().startOf('day').toDate())
+            ) {
+                statistic = this.statisticRepository.create({
+                    name: config.name,
+                    progress: 0,
+                    owner: user,
+                });
+            }
+
+            try {
+                const value = await this.execDsl(config.Rule[payload.eventId], payload.account, {
+                    ...payload,
+                }) as boolean | number;
+                statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
+                await this.statisticRepository.save(statistic);
+            } catch (e) {
+                this.logger.error(`Failed to execute statistic DSL for statistic ${config.name} on event ${payload.eventId}: ${e.message}`);
+                continue;
+            }
+
+        }
     }
 }

@@ -7,6 +7,7 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { LogDto } from './dto/log.dto';
+import { OnlineDto } from './dto/online.dto';
 
 @Controller('statistic')
 export class StatisticController {
@@ -43,6 +44,12 @@ export class StatisticController {
     @Post('pvp')
     async pvp(@Account() account: ApiAccount, @Body() body: KilledDto) {
         return this.statisticService.pvp(account, body);
+    }
+
+    @ApiBearerAuth()
+    @Post('online')
+    async online(@Account() account: ApiAccount, @Body() body: OnlineDto) {
+        return this.statisticService.online(account, body);
     }
 
     @ApiBearerAuth()

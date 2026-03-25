@@ -12,6 +12,7 @@ import { IgnoreInhJsonPath, Patchable } from './patchable';
 import { ChatwoTask } from './task.entity';
 import { ChatwoBill } from './bill.entity';
 import { ChatwoReedem } from './reedem.entity';
+import { ChatwoStatistic } from './statistic.entity';
 
 @Entity()
 export class ChatwoUser extends Patchable {
@@ -67,4 +68,7 @@ export class ChatwoUser extends Patchable {
 
   @OneToMany(() => ChatwoReedem, (reedem) => reedem.owner)
   reedems: ChatwoReedem[];
+
+  @OneToMany(() => ChatwoStatistic, (statistic) => statistic.owner)
+  statistics: ChatwoStatistic[];
 }
