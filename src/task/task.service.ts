@@ -17,6 +17,8 @@ import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { UserEvent } from 'src/event/user.event';
 import { findOneAsync } from 'src/utils/arrayAsync';
 import { SubmitArmEvent } from 'src/event/submit-arm.event';
+import { TaskFinishedEvent } from 'src/event/task-finished.event';
+import { ChatwoEvent } from 'src/event/base.event';
 
 @Injectable()
 export class TaskService {
@@ -118,6 +120,8 @@ export class TaskService {
 
             task.status = TaskStatus.DONE;
             await manager.save(task);
+            
+            ChatwoEvent.emit(this.eventEmitter, new TaskFinishedEvent(account, taskId));
 
             return {
                 tags,

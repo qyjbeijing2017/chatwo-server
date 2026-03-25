@@ -14,10 +14,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SignInEvent } from 'src/event/sign-in.event';
 import { ForgeEvent } from 'src/event/forge.event';
 import { LevelUpEvent } from 'src/event/level-up.event';
-
-export interface ItemArmMeta {
-
-}
+import { ChatwoEvent } from 'src/event/base.event';
 
 @Injectable()
 export class ItemService {
@@ -554,13 +551,13 @@ export class ItemService {
 
       if (itemConfig.type & ItemType.arm) {
         if (!item.meta?.bladeKey && dto.meta?.bladeKey) {
-          this.eventEmitter.emit('item.forge', new ForgeEvent(account, {
+          ChatwoEvent.emit(this.eventEmitter, new ForgeEvent(account, {
             ...item,
             meta: dto.meta,
           } as ChatwoItem));
         }
         if (item.meta?.exp !== dto.meta?.exp) {
-          this.eventEmitter.emit('item.level-up', new LevelUpEvent(account, {
+          ChatwoEvent.emit(this.eventEmitter, new LevelUpEvent(account, {
             ...item,
             meta: dto.meta,
           } as ChatwoItem, item.meta?.exp || 0, dto.meta?.exp || 0));

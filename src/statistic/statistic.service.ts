@@ -27,6 +27,7 @@ import { OnlineDto } from './dto/online.dto';
 import { UserEvent } from 'src/event/user.event';
 import { ChatwoStatistic } from 'src/entities/statistic.entity';
 import { StatisticRefreshType } from 'src/configV2/tables/statistic';
+import { OnlineEvent } from 'src/event/online.event';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -355,22 +356,6 @@ export class StatisticService {
         return keys;
     }
 
-    async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
-        const [result, total] = await this.logRepository.findAndCount({
-            skip: logDto.skip || 0,
-            take: 100,
-            order: { createdAt: 'DESC' },
-            where: {
-                tags: account ? ArrayContains([...(logDto.tags || []), account.custom_id || '']) : ArrayContains(logDto.tags || []),
-                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || 0)),
-            }
-        });
-        return {
-            result,
-            total,
-        }
-    }
-
     date(value: string | number | Date) {
         return new Date(value);
     }
@@ -474,6 +459,7 @@ export class StatisticService {
     }
 
     async online(account: ApiAccount, dto: OnlineDto) {
+        this.eventEmitter.emit('user.online', new OnlineEvent(account, dto.minutes));
     }
 
     async dslQuery(account: ApiAccount, query: string) {
@@ -506,6 +492,11 @@ export class StatisticService {
             getMonsterConfigByKey: (key: string) => configManager.monsterMap.get(key),
             getItemConfigByKey: (key: string) => configManager.itemMap.get(key),
             branch: (condition: boolean, trueVal: any, falseVal: any) => condition ? trueVal : falseVal,
+            crossOver: (before: number, after: number, threshold: number) => before < threshold && after >= threshold,
+            min: (a: number, b: number) => Math.min(a, b),
+            max: (a: number, b: number) => Math.max(a, b),
+            floor: (a: number) => Math.floor(a),
+            ceil: (a: number) => Math.ceil(a),
             account,
             ...other,
             options,
@@ -518,6 +509,16 @@ export class StatisticService {
         const cst = parserToCST(dsl);
         const ast = parseToAST(cst);
         return exec(ast, context);
+    }
+
+    async dslToExec(dsl: string, account: ApiAccount | null = null, options: DslOptions = {}) {
+        const { exec, parserToCST, parseToAST } = await import(`../dsl`);
+        const cst = parserToCST(dsl);
+        const ast = parseToAST(cst);
+        return (extraContext: { [key: string]: any } = {}) => {
+            const context = this.createContext(account, extraContext, options);
+            return exec(ast, context);
+        }
     }
 
     async completeTutorial(account: ApiAccount) {
@@ -601,10 +602,128 @@ export class StatisticService {
             }
 
             try {
-                const value = await this.execDsl(config.Rule[payload.eventId], payload.account, {
-                    ...payload,
-                }) as boolean | number;
-                statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
+                const dsls: string[] = Array.isArray(config.Rule[payload.eventId]) ? config.Rule[payload.eventId] as string[] : [config.Rule[payload.eventId] as string];
+
+                const statistics: Map<string, ChatwoStatistic> = new Map();
+                const getStatistic = async (name: string) => {
+                    if (statistics.has(name)) {
+                        return statistics.get(name);
+                    }
+                    const stat = await this.statisticRepository.findOne({
+                        where: {
+                            name,
+                            owner: user,
+                        },
+                    });
+                    if (stat) {
+                        statistics.set(name, stat);
+                    }
+                    return stat
+                }
+
+                for (const dsl of dsls) {
+                    const value = await this.execDsl(dsl.toString(), payload.account, {
+                        configManager,
+                        ...payload,
+                        extra: statistic.extra,
+                        before: statistic.progress,
+                        getStatistic,
+                        statisticEvery: async (name: string, value: number, everyValue: number) => {
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            const times = Math.floor(statistic.progress / everyValue);
+                            const newTimes = Math.floor((statistic.progress + value) / everyValue);
+                            return newTimes - times;
+                        },
+                        statisticHit: async (name: string, value: number, hit: number) => {
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            return statistic.progress < hit && statistic.progress + value >= hit ? 1 : 0;
+                        },
+                        setExtra: (key: string, value: any) => {
+                            statistic.extra = {
+                                ...statistic.extra,
+                                [key]: value,
+                            }
+                        },
+                        addExtra: (key: string, value: number) => {
+                            statistic.extra = {
+                                ...statistic.extra,
+                                [key]: ((statistic.extra as any)[key] || 0) + value,
+                            }
+                        },
+                        statisticExtra: async (name: string, key: any) => {
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            return statistic.extra ? (statistic.extra as any)[key] : 0;
+                        },
+                        statisticExtrasMoreThanOne: async (name: string, keys: string[]) => {
+                            if (keys.length === 0) {
+                                return 0;
+                            }
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            return keys.every(key => statistic.extra && (statistic.extra as any)[key]) ? 1 : 0;
+                        },
+                        armSessionNames: (name: string) => {
+                            return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
+                        },
+                        collectionSession: async (name: string, variantIndex: number) => {
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            const collection = configManager.bladeAppearanceMap.get(statistic.name);
+                            if (!collection) {
+                                return 0;
+                            }
+                            const extra = statistic.extra || {};
+                            for (let index = 0; index < collection.length; index++) {
+                                const key = collection[index].BladeKey + index;
+                                if (index === variantIndex) {
+                                    if (extra[key] && extra[key] >= 1) {
+                                        return 0;
+                                    }
+                                } else {
+                                    if (!extra[key] || extra[key] < 1) {
+                                        return 0;
+                                    }
+                                }
+                            }
+                            return 1;
+
+                        },
+                        collectionArms: async (name: string, keys: string[], newKey: string) => {
+                            const statistic = await getStatistic(name);
+                            if (!statistic) {
+                                return 0;
+                            }
+                            const extra = statistic.extra || {};
+                            for (const key of keys) {
+                                if(key === newKey) {
+                                    if (extra[key] && extra[key] >= 1) {
+                                        return 0;
+                                    }
+                                } else {
+                                    if (!extra[key] || extra[key] < 1) {
+                                        return 0;
+                                    }
+                                }
+                            }
+                            return 1;
+
+                        }
+                    }) as boolean | number;
+                    statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
+                }
                 await this.statisticRepository.save(statistic);
             } catch (e) {
                 this.logger.error(`Failed to execute statistic DSL for statistic ${config.name} on event ${payload.eventId}: ${e.message}`);
@@ -612,5 +731,32 @@ export class StatisticService {
             }
 
         }
+    }
+
+    async getMyStatistic(account: ApiAccount, name: string) {
+        return this.statisticRepository.findOne({
+            where: {
+                name,
+                owner: {
+                    nakamaId: account.custom_id,
+                }
+            },
+            order: {
+                createdAt: 'DESC',
+            }
+        });
+    }
+
+    async getStatistic(name: string, limit = 100, offset = 0) {
+        return this.statisticRepository.find({
+            where: {
+                name,
+            },
+            order: {
+                progress: 'DESC',
+            },
+            take: limit,
+            skip: offset,
+        });
     }
 }

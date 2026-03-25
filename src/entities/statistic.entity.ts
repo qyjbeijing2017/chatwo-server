@@ -1,9 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IgnoreInhJsonPath, Patchable } from "./patchable";
 import { ChatwoUser } from "./user.entity";
 
 @Entity()
 export class ChatwoStatistic {
+    @PrimaryGeneratedColumn()
+    id: number;
+    
     @Column()
     name: string;
 
@@ -21,4 +24,7 @@ export class ChatwoStatistic {
     @IgnoreInhJsonPath()
     @ManyToOne(() => ChatwoUser, (user) => user.statistics)
     owner: ChatwoUser;
+
+    @Column({ type: 'jsonb', default: {} })
+    extra: { [key: string]: any };
 }

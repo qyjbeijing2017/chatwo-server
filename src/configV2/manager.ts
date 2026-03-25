@@ -4,6 +4,7 @@ import { defineMetadata } from '../utils/meta-data';
 import { ChatwoConfigFileName } from './filesName';
 import { ConfigTable } from './table';
 import { ArchievementTaskConfig } from './tables/archievementTask';
+import { BladeAppearance } from './tables/bladeAppearance';
 import { Hilt } from './tables/hilt';
 import { Item } from './tables/Items';
 import { Level } from './tables/level';
@@ -37,7 +38,7 @@ export class ConfigManager {
   purchases: Purchase[] = [];
   levels: Level[] = [];
   statistic: Statistic[] = [];
-  
+  bladeAppearance: BladeAppearance[] = [];
 
   itemMap: Map<string, Item> = new Map();
   storeMap: Map<string, Store> = new Map();
@@ -47,6 +48,7 @@ export class ConfigManager {
   redeemMap: Map<string, Redeem> = new Map();
   purchaseMap: Map<string, Purchase> = new Map();
   statisticMap: Map<string, Statistic> = new Map();
+  bladeAppearanceMap: Map<string, BladeAppearance[]> = new Map();
 
   constructor(data: ConfigManagerData) {
     ConfigParse(Item, 'items.csv', 'arm.csv')(this, 'items');
@@ -61,6 +63,7 @@ export class ConfigManager {
     ConfigParse(Purchase, 'purchase.csv')(this, 'purchases');
     ConfigParse(Level, 'level.csv')(this, 'levels');
     ConfigParse(Statistic, 'statistic.csv')(this, 'statistic');
+    ConfigParse(BladeAppearance, 'bladeAppearance.csv')(this, 'bladeAppearance');
 
     // 赋值
     for (const key in data) {
@@ -87,7 +90,15 @@ export class ConfigManager {
     for (const hilt of this.hilts) {
       this.hiltMap.set(hilt.key, hilt);
     }
-    
+
+    this.bladeAppearance.sort((a, b) => a.Index - b.Index);
+    for (const bladeAppearance of this.bladeAppearance) {
+      if (!this.bladeAppearanceMap.has(bladeAppearance.BladeKey)) {
+        this.bladeAppearanceMap.set(bladeAppearance.BladeKey, []);
+      }
+      this.bladeAppearanceMap.get(bladeAppearance.BladeKey)!.push(bladeAppearance);
+    }
+
     for (const redeem of this.redeem) {
       this.redeemMap.set(redeem.code, redeem);
     }

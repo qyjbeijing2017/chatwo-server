@@ -13,7 +13,7 @@ export class Statistic extends ConfigTable {
     Name: string = '';
     RefreshType: StatisticRefreshType = StatisticRefreshType.never;
     Rule: {
-        [key: string]: string;
+        [key: string]: string | string[];
     } = {};
 
     constructor() {
@@ -25,6 +25,6 @@ export class Statistic extends ConfigTable {
             monthly: StatisticRefreshType.monthly,
             yearly: StatisticRefreshType.yearly,
         })(this, 'RefreshType');
-        ConfigYaml()(this, 'Submit');
+        ConfigYaml()(this, 'Rule');
     }
 }

@@ -23,4 +23,13 @@ export class LevelUpEvent extends UserEvent {
         return endLevel - startLevel;
     }
 
+    get levelMax(): boolean {
+        const config = configManager.levels;
+        if (!config) {
+            return false;
+        }
+        const endLevel =config[config.length - 1];
+        return this.endExp >= endLevel.Sum;
+    }
+
 }
