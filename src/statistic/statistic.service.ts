@@ -30,6 +30,7 @@ import { StatisticRefreshType } from 'src/configV2/tables/statistic';
 import { OnlineEvent } from 'src/event/online.event';
 import { ChatwoReedem } from 'src/entities/reedem.entity';
 import { ChatwoBill } from 'src/entities/bill.entity';
+import { log } from 'console';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -678,7 +679,10 @@ export class StatisticService {
                     return stat
                 }
 
+                this.logger.log(`dsls ${JSON.stringify(log)}`);
+
                 for (const dsl of dsls) {
+                    this.logger.log(`dsl ${dsl}`)
                     const value = await this.execDsl(dsl.toString(), payload.account, {
                         configManager,
                         ...payload,
@@ -779,8 +783,11 @@ export class StatisticService {
 
                         }
                     }) as boolean | number;
+                    this.logger.log(`value ${value}`)
                     statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
+                    this.logger.log(`progress ${statistic.progress}`);                    
                 }
+                this.logger.log(`statistic ${JSON.stringify(statistic)}`)
                 await this.statisticRepository.save(statistic);
             } catch (e) {
                 this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
