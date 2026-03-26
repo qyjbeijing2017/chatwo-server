@@ -9,7 +9,7 @@ export enum BillStatus {
 
 @Entity()
 export class ChatwoBill extends Patchable {
-    @Column({ unique: true })
+    @Column()
     sku: string;
 
     @IgnoreInhJsonPath()
