@@ -3074,7 +3074,107 @@ export const configManager = new ConfigManager({
             "fromFile": "level.csv"
         }
     ],
-    "statistic": [],
+    "statistic": [
+        {
+            "Name": "Forge Master",
+            "RefreshType": 0,
+            "Rule": {
+                "user.forge": [
+                    "branch(statisticExtra(\"Forge\", item.meta.bladeKey), 0, 50)",
+                    "collectionSession(\"Forge\", item.meta.bladeKey) * 500",
+                    "collectionArms(\"Forge\", [\"Lightsaber\", \"Morning Star\", \"Scimitar\", \"Sausage Saber\", \"Frying Pan\", \"Jian\", \"Rapier\", \"Lollipop\", \"Baguette\", \"Ruler\", \"Baseball Bat\", \"Katana\", \"Tang Dao\"], item.meta.bladeKey) * 1000"
+                ],
+                "user.level-up": "branch(levelMax, 102, 2)"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Weekly Activity Board",
+            "RefreshType": 2,
+            "Rule": {
+                "user.online": "statisticEvery(\"Online Daily\", minutes, 20) * 10",
+                "user.task-finished": "branch(configManager.archievementTaskMap.get(taskId).Type == 1, 15, 0)",
+                "user.fly": "statisticEvery(\"Fly Weekly\", meters, 100) * 5",
+                "user.monster-killed": 2,
+                "user.sign-in": "statisticHit(\"Sign In Daily\", 1, 1) * 50"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Weekly Forge Progress Board",
+            "RefreshType": 2,
+            "Rule": {
+                "user.forge": "branch(statisticExtra(\"Forge Daily\", item.meta.bladeKey), 0, 50)",
+                "user.level-up": 5,
+                "user.task-finished": "branch(taskId ==  \"Forge 10 swords\", 500, 0)"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Kill Monster Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.monster-killed": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Dule Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.duel": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Online Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.online": "minutes"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Sign In Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.sign-in": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Fly Weekly",
+            "RefreshType": 2,
+            "Rule": {
+                "user.fly": "meters"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Forge",
+            "RefreshType": 0,
+            "Rule": {
+                "user.forge": [
+                    1,
+                    "addExtra(item.meta.bladeKey, 1)",
+                    "addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
+                ]
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Forge Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.forge": [
+                    1,
+                    "addExtra(item.meta.bladeKey, 1)",
+                    "addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
+                ]
+            },
+            "fromFile": "statistic.csv"
+        }
+    ],
     "bladeAppearance": [
         {
             "Index": 0,

@@ -28,6 +28,8 @@ import { UserEvent } from 'src/event/user.event';
 import { ChatwoStatistic } from 'src/entities/statistic.entity';
 import { StatisticRefreshType } from 'src/configV2/tables/statistic';
 import { OnlineEvent } from 'src/event/online.event';
+import { ChatwoReedem } from 'src/entities/reedem.entity';
+import { ChatwoBill } from 'src/entities/bill.entity';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -65,6 +67,10 @@ export class StatisticService {
         private readonly taskRepository: Repository<ChatwoTask>,
         @InjectRepository(ChatwoStatistic)
         private readonly statisticRepository: Repository<ChatwoStatistic>,
+        @InjectRepository(ChatwoReedem)
+        private readonly reedemRepository: Repository<ChatwoReedem>,
+        @InjectRepository(ChatwoBill)
+        private readonly billRepository: Repository<ChatwoBill>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly eventEmitter: EventEmitter2,
@@ -74,6 +80,56 @@ export class StatisticService {
         const take = Math.min(Number(limit) || 100, 100);
         const skip = Number(offset) || 0;
         switch (from) {
+            case 'reedem':
+                const reedemWhere: FindOptionsWhere<ChatwoReedem> | FindOptionsWhere<ChatwoReedem>[] = where ?? {};
+                if (context.account) {
+                    if (Array.isArray(reedemWhere)) {
+                        for (const condition of reedemWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        reedemWhere.owner = reedemWhere.owner ?? {};
+                        (reedemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                }
+                const [reedemResult, reedemCount] = await this.reedemRepository.findAndCount({
+                    select: select,
+                    where: reedemWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+                return {
+                    results: reedemResult,
+                    total: reedemCount,
+                };
+            case 'bill':
+                const billWhere: FindOptionsWhere<ChatwoBill> | FindOptionsWhere<ChatwoBill>[] = where ?? {};
+                if (context.account) {
+                    if (Array.isArray(billWhere)) {
+                        for (const condition of billWhere) {
+                            condition.owner = condition.owner ?? {};
+                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                        }
+                    } else {
+                        billWhere.owner = billWhere.owner ?? {};
+                        (billWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
+                    }
+                }
+                const [billResult, billCount] = await this.billRepository.findAndCount({
+                    select: select,
+                    where: billWhere,
+                    order: orderBy,
+                    skip,
+                    take,
+                    relations: join,
+                });
+                return {
+                    results: billResult,
+                    total: billCount,
+                }
             case 'log':
                 const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where ?? {};
                 if (context.account) {

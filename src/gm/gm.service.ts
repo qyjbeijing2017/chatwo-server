@@ -219,6 +219,9 @@ export class GmService {
                                 limit: options.limit,
                                 skip: options.skip,
                             });
+                        },
+                        simpleSearchLogs: async (keywords: string[], options: { limit?: number, skip?: number } = {}) => {
+                            return this.loggerService.simpleSearch(keywords, options);
                         }
                     }, { openBug: true });
                     results.push(result);
