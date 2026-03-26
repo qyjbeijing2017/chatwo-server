@@ -224,7 +224,16 @@ export class GmService {
                             return this.loggerService.simpleSearch(keywords, options);
                         },
                         addTestAccount: async (name: string) => {
-                            
+                            const newUser = manager.create(ChatwoUser, {
+                                oculusId: `test-${Date.now()}`,
+                                name,
+                            });
+                            const chatwoUser = await manager.save(newUser);
+                            this.nakamaService.authenticate(
+                                chatwoUser.nakamaId,
+                                name,
+                            );
+                            return chatwoUser;
                         }
                     }, { openBug: true });
                     results.push(result);
