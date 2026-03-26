@@ -41,7 +41,7 @@ export class GmService {
             await manager.save(user);
             return {
                 result: user.wallet,
-                tags: ['gm', 'addSS', account.custom_id!, ...(dto.tags || [])],
+                tags: ['gm', 'addSS', account.custom_id!, ...(dto.tags || []), account.user?.username || ''],
                 message: `Added ${dto.amount} SS to user ${account.custom_id!}, reason: ${dto.reason}`,
             }
         });
@@ -222,6 +222,9 @@ export class GmService {
                         },
                         simpleSearchLogs: async (keywords: string[], options: { limit?: number, skip?: number } = {}) => {
                             return this.loggerService.simpleSearch(keywords, options);
+                        },
+                        addTestAccount: async (name: string) => {
+                            
                         }
                     }, { openBug: true });
                     results.push(result);

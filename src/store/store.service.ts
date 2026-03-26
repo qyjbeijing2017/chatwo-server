@@ -33,7 +33,7 @@ export class StoreService {
 
     async buyItem(account: ApiAccount, goodId: string) {
         return autoPatch(this.dataSource, async (manager) => {
-            const tags = ['store', account.custom_id!, goodId];
+            const tags = ['store', account.custom_id!, goodId, account.user?.username || ''];
             const storeConfig = configManager.storeMap.get(goodId);
             if (!storeConfig) {
                 throw new NotFoundException(`Store good with id ${goodId} not found`);
@@ -61,7 +61,7 @@ export class StoreService {
                 where: { nakamaId: account.custom_id },
             });
             if (!user) {
-                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+                throw new NotFoundException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
             }
 
             code = code.trim().toUpperCase();
@@ -81,7 +81,7 @@ export class StoreService {
                 throw new BadRequestException(`Redeem code ${code} has already been used by this account`);
             }
 
-            const tags = ['redeem', account.user?.username!, code];
+            const tags = ['redeem', account.user?.username || '', code];
             // 发放物品
             const items = await this.itemService.gainItems(
                 manager,

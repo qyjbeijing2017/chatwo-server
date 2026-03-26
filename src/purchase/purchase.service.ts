@@ -67,7 +67,7 @@ export class PurchaseService {
 
     async buy(account: ApiAccount, sku: string) {
         return autoPatch(this.dataSource, async (manager) => {
-            const tags = ['purchase', account.custom_id!, sku, 'buy'];
+            const tags = ['purchase', account.custom_id!, sku, 'buy', account.user?.username || ''];
             const purchaseConfig = configManager.purchaseMap.get(sku);
             if (!purchaseConfig) {
                 throw new BadRequestException(`Purchase with sku ${sku} not found`);
@@ -91,7 +91,7 @@ export class PurchaseService {
                     }
                 })
                 if (brought) {
-                    throw new BadRequestException(`Purchase with sku ${sku} already bought`);
+                    throw new BadRequestException(`Purchase with sku ${sku} already bought, account ${account.user?.username} ${account.custom_id}`);
                 }
                 if (!await this.verify_entitlement(user.oculusId, sku)) {
                     throw new BadRequestException(`Entitlement verification failed for sku ${sku}`);
@@ -100,13 +100,13 @@ export class PurchaseService {
                 tags.push(...items.map(i => i.nakamaId));
             } else if (purchaseConfig.type === PruchaseType.Consumable) {
                 if (!await this.verify_entitlement(user.oculusId, sku)) {
-                    throw new BadRequestException(`Entitlement verification failed for sku ${sku}`);
+                    throw new BadRequestException(`Entitlement verification failed for sku ${sku}, account ${account.user?.username} ${account.custom_id}`);
                 }
                 const items = await this.itemService.gainItems(manager, account, purchaseConfig.gain, true);
                 tags.push(...items.map(i => i.nakamaId));
                 await this.consume_entitlement(user.oculusId, sku);
             } else {
-                throw new BadRequestException(`Invalid purchase type ${purchaseConfig.type}`);
+                throw new BadRequestException(`Invalid purchase type ${purchaseConfig.type}, sku ${sku}, account ${account.user?.username} ${account.custom_id}`);
             }
 
             const bill = manager.create(ChatwoBill, {
@@ -139,7 +139,7 @@ export class PurchaseService {
             })
 
             if (!brought) {
-                throw new NotFoundException(`Purchase with sku ${sku} not found for user ${account.custom_id}`);
+                throw new NotFoundException(`Purchase with sku ${sku} not found for user ${account.custom_id}, name: ${account.user?.username || ''}`);
             }
             const cost: Record<string, number> = {};
             for (const key in config.gain) {

@@ -481,7 +481,7 @@ export class StatisticService {
             return {
                 result: user,
                 message: `User ${account.user?.username} flew ${dto.meters} meters.`,
-                tags: [account.custom_id!, 'fly'],
+                tags: [account.custom_id!, 'fly', `meters:${dto.meters}`, account.user?.username || ''],
             }
         });
     }
@@ -494,7 +494,7 @@ export class StatisticService {
         }
         const log = this.logRepository.create({
             message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
-            tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type],
+            tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type, account.user?.username || ''],
         });
         await this.logRepository.save(log);
         return log;
@@ -508,7 +508,7 @@ export class StatisticService {
         }
         const log = this.logRepository.create({
             message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
-            tags: [account.custom_id || '', 'pvp', dto.whoWasKilled],
+            tags: [account.custom_id || '', 'pvp', dto.whoWasKilled, account.user?.username || ''],
         });
         await this.logRepository.save(log);
         return log;
@@ -586,14 +586,14 @@ export class StatisticService {
                 }
             });
             if (!user) {
-                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+                throw new NotFoundException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
             }
             user.tutorialCompleted = true;
             await manager.save(user);
             return {
                 result: user,
                 message: `User ${account.user?.username} completed the tutorial.`,
-                tags: [account.custom_id!, 'tutorial'],
+                tags: [account.custom_id!, 'tutorial', account.user?.username || ''],
             }
         });
     }
@@ -605,7 +605,7 @@ export class StatisticService {
             }
         });
         if (!user) {
-            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+            throw new NotFoundException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
         }
         user.breakBladeTimes += 1;
         return await this.userRepository.save(user);
@@ -627,7 +627,7 @@ export class StatisticService {
             },
         });
         if (!user) {
-            this.logger.error(`User with nakamaId ${payload.account.custom_id} not found`);
+            this.logger.error(`User with nakamaId ${payload.account.custom_id}, name: ${payload.account.user?.username || ''} not found`);
             return;
         }
 
