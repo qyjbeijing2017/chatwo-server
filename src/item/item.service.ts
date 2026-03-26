@@ -12,6 +12,9 @@ import { UpdateItemDto } from './dto/update-item.dto';
 import { forceRefreshToChest, StoreGainInfo, storeGainInfoMeta, storeGainInfoToCount } from 'src/configV2/tables/store';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SignInEvent } from 'src/event/sign-in.event';
+import { ForgeEvent } from 'src/event/forge.event';
+import { LevelUpEvent } from 'src/event/level-up.event';
+import { ChatwoEvent } from 'src/event/base.event';
 
 @Injectable()
 export class ItemService {
@@ -546,6 +549,21 @@ export class ItemService {
         }
       }
 
+      if (itemConfig.type & ItemType.arm) {
+        if (!item.meta?.bladeKey && dto.meta?.bladeKey) {
+          ChatwoEvent.emit(this.eventEmitter, new ForgeEvent(account, {
+            ...item,
+            meta: dto.meta,
+          } as ChatwoItem));
+        }
+        if (item.meta?.exp !== dto.meta?.exp) {
+          ChatwoEvent.emit(this.eventEmitter, new LevelUpEvent(account, {
+            ...item,
+            meta: dto.meta,
+          } as ChatwoItem, item.meta?.exp || 0, dto.meta?.exp || 0));
+        }
+      }
+
       item.meta = Object.assign(item.meta || {}, dto.meta);
       await manager.save(item);
       return {
@@ -587,6 +605,6 @@ export class ItemService {
   }
 
   async signInEvent(account: ApiAccount) {
-      this.eventEmitter.emit('user.sign-in', new SignInEvent(account));
+    this.eventEmitter.emit('user.sign-in', new SignInEvent(account));
   }
 }

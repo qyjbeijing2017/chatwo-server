@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package.json ./
 RUN yarn
 
+
 COPY tsconfig.json .
 COPY src/ src/
 COPY tsconfig.node.json .

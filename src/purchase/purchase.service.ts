@@ -3,13 +3,13 @@ import { BadRequestException, Injectable, NotFoundException, UnauthorizedExcepti
 import { ConfigService } from '@nestjs/config';
 import { configManager } from 'src/configV2/config';
 import { PruchaseType } from 'src/configV2/tables/purchase';
+import { BillStatus, ChatwoBill } from 'src/entities/bill.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
-import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { ItemService } from 'src/item/item.service';
 import { autoPatch } from 'src/utils/autoPatch';
 import { startTransaction } from 'src/utils/transaction';
-import { And, ArrayContains, DataSource, Not } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PurchaseService {
@@ -84,14 +84,10 @@ export class PurchaseService {
             let items: ChatwoItem[] = [];
 
             if (purchaseConfig.type === PruchaseType.Durable) {
-                const brought = await manager.findOne(ChatwoLog, {
+                const brought = await manager.findOne(ChatwoBill, {
                     where: {
-                        tags: And(
-                            ArrayContains([`purchase`, account.custom_id!, sku, 'buy']),
-                            Not(
-                                ArrayContains(['refund'])
-                            )
-                        )
+                        sku,
+                        owner: { nakamaId: account.custom_id },
                     }
                 })
                 if (brought) {
@@ -112,11 +108,18 @@ export class PurchaseService {
             } else {
                 throw new BadRequestException(`Invalid purchase type ${purchaseConfig.type}`);
             }
+
+            const bill = manager.create(ChatwoBill, {
+                sku,
+                owner: user,
+                status: BillStatus.PURCHASED
+            });
+            await manager.save(bill);
+
             return {
                 result: items,
                 message: 'Purchase successful',
-                tags,
-                forceInDatabase: true, // 强制将购买日志存储在数据库中，避免出现日志丢失导致无法退款的情况
+                tags
             };
         });
     }
@@ -128,16 +131,13 @@ export class PurchaseService {
                 throw new NotFoundException(`Purchase config with sku ${sku} not found`);
             }
 
-            const brought = await manager.findOne(ChatwoLog, {
+            const brought = await manager.findOne(ChatwoBill, {
                 where: {
-                    tags: And(
-                        ArrayContains([`purchase`, account.custom_id!, sku, 'buy']),
-                        Not(
-                            ArrayContains(['refund'])
-                        )
-                    )
+                    sku,
+                    owner: { nakamaId: account.custom_id },
                 }
             })
+
             if (!brought) {
                 throw new NotFoundException(`Purchase with sku ${sku} not found for user ${account.custom_id}`);
             }
@@ -146,7 +146,7 @@ export class PurchaseService {
                 cost[key] = (typeof config.gain[key] === 'number' ? config.gain[key] : config.gain[key].amount) || 1;
             }
             await this.itemService.costItems(manager, account, cost);
-            brought.tags.push('refund');
+            brought.status = BillStatus.REFUNDED;
             await manager.save(brought);
             await this.refund_iap_entitlement(account.custom_id!, sku, reason);
         });

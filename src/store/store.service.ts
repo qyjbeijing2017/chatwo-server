@@ -1,11 +1,11 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { configManager } from 'src/configV2/config';
-import { ChatwoLog } from 'src/entities/log.entity';
+import { ChatwoReedem } from 'src/entities/reedem.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { ItemService } from 'src/item/item.service';
 import { autoPatch } from 'src/utils/autoPatch';
-import { ArrayContains, DataSource, EntityManager } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 
 @Injectable()
 export class StoreService {
@@ -57,21 +57,31 @@ export class StoreService {
 
     async redeemCode(account: ApiAccount, code: string) {
         return autoPatch(this.dataSource, async (manager) => {
+            const user = await manager.findOne(ChatwoUser, {
+                where: { nakamaId: account.custom_id },
+            });
+            if (!user) {
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
+            }
+
             code = code.trim().toUpperCase();
-            const codeHistory = await manager.findOne(ChatwoLog, {
+
+            const redeemConfig = configManager.redeemMap.get(code);
+            if (!redeemConfig) {
+                throw new NotFoundException(`Redeem code ${code} not found`);
+            }
+
+            const codeHistory = await manager.findOne(ChatwoReedem, {
                 where: {
-                    tags: ArrayContains([account.custom_id!, code, 'redeem']),
+                    key: code,
+                    owner: { nakamaId: account.custom_id },
                 }
             });
             if (codeHistory) {
                 throw new BadRequestException(`Redeem code ${code} has already been used by this account`);
             }
 
-            const tags = ['redeem', account.custom_id!, code];
-            const redeemConfig = configManager.redeemMap.get(code);
-            if (!redeemConfig) {
-                throw new NotFoundException(`Redeem code ${code} not found`);
-            }
+            const tags = ['redeem', account.user?.username!, code];
             // 发放物品
             const items = await this.itemService.gainItems(
                 manager,
@@ -79,11 +89,18 @@ export class StoreService {
                 redeemConfig.gain
             );
             tags.push(...items.map(i => i.nakamaId));
+
+
+            const redeemLog = manager.create(ChatwoReedem, {
+                key: code,
+                owner: user,
+            });
+            await manager.save(redeemLog);
+
             return {
                 result: items,
                 message: `Successfully redeemed code ${code}`,
-                tags,
-                forceInDatabase: true, // 强制将兑换日志存储在数据库中，避免出现日志丢失导致无法追踪兑换记录的情况
+                tags
             };
         });
     }
