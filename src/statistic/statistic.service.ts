@@ -516,6 +516,7 @@ export class StatisticService {
 
     async online(account: ApiAccount, dto: OnlineDto) {
         this.eventEmitter.emit('user.online', new OnlineEvent(account, dto.minutes));
+        return {};
     }
 
     async dslQuery(account: ApiAccount, query: string) {
