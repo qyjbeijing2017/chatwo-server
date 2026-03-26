@@ -652,7 +652,7 @@ export class StatisticService {
                 (config.RefreshType === StatisticRefreshType.daily && statistic.createdAt < getServerTime().startOf('day').toDate())
             ) {
                 statistic = this.statisticRepository.create({
-                    name: config.name,
+                    name: config.Name,
                     progress: 0,
                     owner: user,
                 });
@@ -783,7 +783,7 @@ export class StatisticService {
                 }
                 await this.statisticRepository.save(statistic);
             } catch (e) {
-                this.logger.error(`Failed to execute statistic DSL for statistic ${config.name} on event ${payload.eventId}: ${e.message}`);
+                this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
                 continue;
             }
 
