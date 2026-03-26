@@ -4,7 +4,7 @@ import { ChatwoUser } from "./user.entity";
 
 @Entity()
 export class ChatwoReedem extends Patchable {
-    @Column({ unique: true })
+    @Column()
     key: string;
 
     @IgnoreInhJsonPath()
