@@ -638,7 +638,7 @@ export class StatisticService {
             this.logger.log(`config ${config.Name}`);
             let [statistic] = await this.statisticRepository.find({
                 where: {
-                    name: config.name,
+                    name: config.Name,
                     owner: { id: user.id },
                 },
                 order: {
