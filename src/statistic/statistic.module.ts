@@ -9,24 +9,11 @@ import { NakamaModule } from 'src/nakama/nakama.module';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoBug } from 'src/entities/bug.entity';
 import { ChatwoTask } from 'src/entities/task.entity';
-import { ChatwoStatistic } from 'src/entities/statistic.entity';
-import { ChatwoReedem } from 'src/entities/reedem.entity';
-import { ChatwoBill } from 'src/entities/bill.entity';
 
 @Module({
   imports: [
     NakamaModule,
-    TypeOrmModule.forFeature([
-      ChatwoUser,
-      ChatwoLog,
-      ChatwoContainer,
-      ChatwoItem,
-      ChatwoBug,
-      ChatwoTask,
-      ChatwoStatistic,
-      ChatwoBill,
-      ChatwoReedem
-    ]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoBug, ChatwoTask]),
   ],
   controllers: [StatisticController],
   providers: [StatisticService],
