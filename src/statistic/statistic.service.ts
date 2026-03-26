@@ -636,7 +636,7 @@ export class StatisticService {
             let [statistic] = await this.statisticRepository.find({
                 where: {
                     name: config.name,
-                    owner: user,
+                    owner: { id: user.id },
                 },
                 order: {
                     createdAt: 'DESC',
@@ -669,7 +669,7 @@ export class StatisticService {
                     const stat = await this.statisticRepository.findOne({
                         where: {
                             name,
-                            owner: user,
+                            owner: { id: user.id },
                         },
                     });
                     if (stat) {
@@ -765,7 +765,7 @@ export class StatisticService {
                             }
                             const extra = statistic.extra || {};
                             for (const key of keys) {
-                                if(key === newKey) {
+                                if (key === newKey) {
                                     if (extra[key] && extra[key] >= 1) {
                                         return 0;
                                     }
@@ -791,7 +791,7 @@ export class StatisticService {
     }
 
     async getMyStatistic(account: ApiAccount, name: string) {
-        return this.statisticRepository.findOne({
+        const result = await this.statisticRepository.findOne({
             where: {
                 name,
                 owner: {
@@ -801,7 +801,11 @@ export class StatisticService {
             order: {
                 createdAt: 'DESC',
             }
+        }) || this.statisticRepository.create({
+            name,
+            progress: 0,
         });
+        return result;
     }
 
     async getStatistic(name: string, limit = 100, offset = 0) {
