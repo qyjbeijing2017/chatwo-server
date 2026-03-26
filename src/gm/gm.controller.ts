@@ -48,6 +48,14 @@ export class GmController {
 
     @ApiBearerAuth()
     @Server()
+    @Post('createTestAccount/:name')
+    async createTestAccount(@Param('name') name: string) {
+        return this.gmService.createTestAccount(name);
+    }
+
+
+    @ApiBearerAuth()
+    @Server()
     @Post('refund')
     async refundGM(
         @Body() dto: RefundDto,

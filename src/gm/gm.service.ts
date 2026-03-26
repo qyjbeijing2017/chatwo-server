@@ -223,18 +223,6 @@ export class GmService {
                         simpleSearchLogs: async (keywords: string[], options: { limit?: number, skip?: number } = {}) => {
                             return this.loggerService.simpleSearch(keywords, options);
                         },
-                        addTestAccount: async (name: string) => {
-                            const newUser = manager.create(ChatwoUser, {
-                                oculusId: `test-${Date.now()}`,
-                                name,
-                            });
-                            const chatwoUser = await manager.save(newUser);
-                            this.nakamaService.authenticate(
-                                chatwoUser.nakamaId,
-                                name,
-                            );
-                            return chatwoUser;
-                        }
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {
@@ -247,6 +235,28 @@ export class GmService {
                 },
                 message: `Executed DSL lines for user ${dto.customId}`,
                 tags,
+            }
+        });
+    }
+
+    async createTestAccount(name: string) {
+        return autoPatch(this.dataSource, async (manager) => {
+            const newUser = manager.create(ChatwoUser, {
+                oculusId: `test-${Date.now()}`,
+                name,
+            });
+            const chatwoUser = await manager.save(newUser);
+            this.nakamaService.authenticate(
+                chatwoUser.nakamaId,
+                name,
+            );
+            return {
+                message: `Test account created with name ${name} and nakamaId ${chatwoUser.nakamaId}`,
+                result: {
+                    nakamaId: chatwoUser.nakamaId,
+                    name: chatwoUser.name,
+                },
+                tags: ['gm', 'createTestAccount', chatwoUser.nakamaId, name],
             }
         });
     }
