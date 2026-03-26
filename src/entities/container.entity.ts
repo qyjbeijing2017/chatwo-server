@@ -1,12 +1,13 @@
 import {
     Entity,
+    PrimaryGeneratedColumn,
     Column,
     ManyToOne,
     OneToMany,
 } from 'typeorm';
 import { ChatwoUser } from './user.entity';
 import { ChatwoItem } from './item.entity';
-import { IgnoreInhJsonPath, Patchable } from './patchable';
+import { IgnoreInhJsonPath, Patchable, TransformToPathJson } from './patchable';
 
 
 export enum ContainerType {

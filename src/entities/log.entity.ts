@@ -2,7 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn
+  CreateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ChatwoItem } from './item.entity';
 
@@ -24,6 +25,7 @@ export interface ChatwoItemLogData {
   added?: Partial<ChatwoItem>[];
   removed?: string[];
 }
+
 export interface ChatwoDropLogData {
   itemId: string;
 

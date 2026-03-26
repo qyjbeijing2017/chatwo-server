@@ -3,14 +3,14 @@ import { StoreController } from './store.controller';
 import { StoreService } from './store.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatwoUser } from 'src/entities/user.entity';
+import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
 import { ItemModule } from 'src/item/item.module';
-import { ChatwoReedem } from 'src/entities/reedem.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoContainer, ChatwoItem, ChatwoReedem]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem]),
     ItemModule,
   ],
   controllers: [StoreController],

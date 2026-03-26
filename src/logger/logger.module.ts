@@ -30,6 +30,7 @@ import { LoggerService } from './logger.service';
               dirname: logDir,
               filename: `${appName}-%DATE%.log`,
               datePattern: 'YYYY-MM-DD',
+              zippedArchive: true,
               maxSize: '20m',
               maxFiles: '14d',
               level,

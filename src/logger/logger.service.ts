@@ -73,50 +73,6 @@ export class LoggerService {
         return results;
     }
 
-    async simpleSearch(keywords: string[], options: { limit?: number, skip?: number } = {}) {
-        const logDir = this.configService.get<string>('LOG_DIR', 'logs');
-        const logDirPath = join(process.cwd(), logDir);
-        const limit = options.limit ?? 100;
-        const skip = options.skip ?? 0;
-        const files = await fs.readdir(logDirPath).catch(() => [] as string[]);
-        const logFiles = files
-            .filter((file) => file.toLowerCase().endsWith('.log'))
-            .sort()
-            .reverse();
-        const results: Record<string, unknown>[] = [];
-        let skipped = 0;
-        for (const file of logFiles) {
-            const filePath = join(logDirPath, file);
-            const content = await fs.readFile(filePath, 'utf8').catch(() => '');
-            if (!content) {
-                continue;
-            }
-            const lines = content.split(/\r?\n/);
-            for (let i = lines.length - 1; i >= 0; i -= 1) {
-                const line = lines[i].trim();
-                if (!line) {
-                    continue;
-                }
-                if (!keywords.some((keyword) => line.includes(keyword))) {
-                    continue;
-                }
-                const entry = this.parseJsonLine(line);
-                if (!entry) {
-                    continue;
-                }
-                if (skipped < skip) {
-                    skipped += 1;
-                    continue;
-                }
-                results.push(entry);
-                if (results.length >= limit) {
-                    return results;
-                }
-            }
-        }
-        return results;
-    }
-
     private parseJsonLine(line: string): Record<string, unknown> | null {
         try {
             const parsed = JSON.parse(line) as Record<string, unknown>;
