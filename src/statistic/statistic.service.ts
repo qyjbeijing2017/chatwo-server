@@ -634,6 +634,8 @@ export class StatisticService {
 
         const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
         for (const config of configs) {
+            this.logger.log(`event ${payload.eventId}`);
+            this.logger.log(`config ${config.Name}`);
             let [statistic] = await this.statisticRepository.find({
                 where: {
                     name: config.name,
@@ -679,7 +681,7 @@ export class StatisticService {
                     return stat
                 }
 
-                this.logger.log(`dsls ${JSON.stringify(log)}`);
+                this.logger.log(`dsls ${JSON.stringify(dsls)}`);
 
                 for (const dsl of dsls) {
                     this.logger.log(`dsl ${dsl}`)
@@ -785,10 +787,11 @@ export class StatisticService {
                     }) as boolean | number;
                     this.logger.log(`value ${value}`)
                     statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
-                    this.logger.log(`progress ${statistic.progress}`);                    
+                    this.logger.log(`progress ${statistic.progress}`);
                 }
                 this.logger.log(`statistic ${JSON.stringify(statistic)}`)
                 await this.statisticRepository.save(statistic);
+                this.logger.log(`-----------------------------------`)
             } catch (e) {
                 this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
                 continue;
