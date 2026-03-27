@@ -700,10 +700,8 @@ export class StatisticService {
                         },
                         statisticHit: async (name: string, value: number, hit: number) => {
                             const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            return statistic.progress < hit && statistic.progress + value >= hit ? 1 : 0;
+                            const progress = statistic ? statistic.progress : 0;
+                            return progress < hit && progress + value >= hit ? 1 : 0;
                         },
                         setExtra: (key: string, value: any) => {
                             statistic.extra = {
