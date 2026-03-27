@@ -16,6 +16,7 @@ import { parse as QSParse } from 'qs';
 import { configManager } from 'src/configV2/config';
 import { ChatwoTask } from 'src/entities/task.entity';
 import { LoggerService } from 'src/logger/logger.service';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class GmService {
@@ -223,6 +224,36 @@ export class GmService {
                         simpleSearchLogs: async (keywords: string[], options: { limit?: number, skip?: number } = {}) => {
                             return this.loggerService.simpleSearch(keywords, options);
                         },
+                        addArm: async (hilt: string, blade: string, index: number) => {
+                            this.itemService.gainItems(manager, account, {
+                                [hilt]: {
+                                    amount: 1,
+                                    gainTo: 'Chest',
+                                    meta: {
+                                        bladeKey: blade,
+                                        exp: 0,
+                                        variantIndex: index,
+                                    }
+                                }
+                            })
+                        },
+                        forge: async (hilt: string, blade: string, index: number) => {
+                            const id = v4();
+                            await this.itemService.dropItemIn(account, id, {
+                                key: hilt,
+                                meta: {}
+                            })
+
+                            const item = await this.itemService.updateItem(account, id, {
+                                tags: ['gm', 'forge'],
+                                meta: {
+                                    bladeKey: blade,
+                                    exp: 0,
+                                    variantIndex: index,
+                                }
+                            })
+                            return item;
+                        }
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {
