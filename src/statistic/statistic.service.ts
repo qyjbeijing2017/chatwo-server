@@ -632,7 +632,7 @@ export class StatisticService {
 
         const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
         for (const config of configs) {
-            this.logger.log(`event ${payload.eventId}`);
+            this.logger.log(`event ${payload}`);
             this.logger.log(`config ${config.Name}`);
             let [statistic] = await this.statisticRepository.find({
                 where: {
