@@ -443,7 +443,7 @@ export class GmService {
                         },
                         checkTotalBill: async () => {
                             // const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.findAndCount(ChatwoBill, {
+                            const bill = await manager.find(ChatwoBill, {
                                 relations: {
                                     owner: true,
                                 }
