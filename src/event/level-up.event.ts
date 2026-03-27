@@ -23,6 +23,8 @@ export class LevelUpEvent extends UserEvent {
             this.levelUpCount = endLevel - startLevel;
             const endLevelConfig = config[config.length - 1];
             this.levelMax = this.endExp >= endLevelConfig.Sum;
+            console.log(`endLevelConfig: ${JSON.stringify(endLevelConfig)}`);
+            console.log(`config: ${JSON.stringify(config)}`);
             console.log(`startExp: ${this.startExp}, endExp: ${this.endExp}, startLevel: ${startLevel}, endLevel: ${endLevel}, levelUpCount: ${this.levelUpCount}, levelMax: ${this.levelMax}`);
         }
     }
