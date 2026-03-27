@@ -795,7 +795,12 @@ export class StatisticService {
     }
 
     async getMyStatistic(account: ApiAccount, name: string) {
-        const result = await this.statisticRepository.findOne({
+
+        const statisticConfig = configManager.statisticMap.get(name);
+        if (!statisticConfig) {
+            throw new NotFoundException(`Statistic with name ${name} not found`);
+        }
+        let result = await this.statisticRepository.findOne({
             where: {
                 name,
                 owner: {
@@ -805,10 +810,26 @@ export class StatisticService {
             order: {
                 createdAt: 'DESC',
             }
-        }) || this.statisticRepository.create({
-            name,
-            progress: 0,
-        });
+        })
+        if (!result) {
+            result = this.statisticRepository.create({
+                name,
+                progress: 0,
+                createdAt: new Date(),
+            });
+        }
+        if (
+            statisticConfig.RefreshType === StatisticRefreshType.daily && result.createdAt < getServerTime().startOf('day').toDate() ||
+            statisticConfig.RefreshType === StatisticRefreshType.weekly && result.createdAt < getServerTime().startOf('week').toDate() ||
+            statisticConfig.RefreshType === StatisticRefreshType.monthly && result.createdAt < getServerTime().startOf('month').toDate() ||
+            statisticConfig.RefreshType === StatisticRefreshType.yearly && result.createdAt < getServerTime().startOf('year').toDate()
+        ) {
+            result = this.statisticRepository.create({
+                name,
+                progress: 0,
+                createdAt: new Date(),
+            })
+        }
         return result;
     }
 
