@@ -284,7 +284,7 @@ export class GmService {
         if (!user) {
             throw new NotFoundException(`User with nakamaId ${id} not found`);
         }
-        await this.dataSource.manager.delete(ChatwoUser, user);
+        await this.dataSource.manager.delete(ChatwoUser, { id: user.id });
         return {
             message: `User with nakamaId ${id} deleted successfully`,
             tags: ['gm', 'deleteUser', id, user.name],
