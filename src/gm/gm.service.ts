@@ -7,7 +7,7 @@ import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
 import { LogDto } from 'src/statistic/dto/log.dto';
-import { ArrayContains, DataSource, EntityManager, In, MoreThanOrEqual, Repository } from 'typeorm';
+import { And, ArrayContainedBy, ArrayContains, DataSource, EntityManager, In, MoreThanOrEqual, Not, Repository } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
@@ -20,6 +20,8 @@ import { parse as QSParse } from 'qs';
 import { configManager } from 'src/configV2/config';
 import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
 import { LoggerService } from 'src/logger/logger.service';
+import { ChatwoBill } from 'src/entities/bill.entity';
+import { PruchaseType } from 'src/configV2/tables/purchase';
 
 @Injectable()
 export class GmService {
@@ -415,6 +417,59 @@ export class GmService {
                                 limit: options.limit,
                                 skip: options.skip,
                             });
+                        },
+                        checkPurchase: async () => {
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const bill = await manager.findAndCount(ChatwoBill, {
+                                where: {
+                                    sku: In(durable.map(d => d.sku)),
+                                },
+                                relations: {
+                                    owner: true,
+                                }
+                            });
+                            return bill;
+                        },
+                        checkLog: async () => {
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const logs = await manager.findAndCount(ChatwoLog, {
+                                where: durable.map(d => ({
+                                    tags: And(
+                                        ArrayContains(['purchase', d.sku, 'buy']),
+                                    )
+                                }))
+                            });
+                            return logs;
+                        },
+                        checkBill: async () => {
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const bill = await manager.findAndCount(ChatwoBill, {
+                                where: {
+                                    sku: In(durable.map(d => d.sku)),
+                                },
+                                relations: {
+                                    owner: true,
+                                }
+                            });
+                            const results: ChatwoBill[] = [];
+                            for (const b of bill[0]) {
+                                const brought = await manager.findOne(ChatwoLog, {
+                                    where: {
+                                        tags: And(
+                                            ArrayContains([`purchase`, b.owner.nakamaId, b.sku, 'buy']),
+                                            Not(
+                                                ArrayContains(['refund'])
+                                            )
+                                        )
+                                    }
+                                });
+                                if (brought) {
+                                    results.push(b);
+                                }
+                            }
+                            return results;
+                        },
+                        refund: async () => {
                         }
                     }, { openBug: true });
                     results.push(result);

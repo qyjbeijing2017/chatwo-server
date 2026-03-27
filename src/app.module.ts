@@ -22,6 +22,7 @@ import { BugReportModule } from './bug-report/bug-report.module';
 import { ChatwoBug } from './entities/bug.entity';
 import { ChatwoTask } from './entities/task.entity';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ChatwoBill } from './entities/bill.entity';
 
 @Module({
   imports: [
@@ -40,7 +41,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer, ChatwoBug, ChatwoTask],
+        entities: [ChatwoUser, ChatwoItem, ChatwoLog, ChatwoContainer, ChatwoBug, ChatwoTask, ChatwoBill],
         synchronize: true, // ⚠️ 生产环境下应为 false
       }),
     }),

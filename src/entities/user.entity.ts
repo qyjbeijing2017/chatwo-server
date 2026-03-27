@@ -10,6 +10,7 @@ import { ChatwoItem } from './item.entity';
 import { ChatwoContainer } from './container.entity';
 import { IgnoreInhJsonPath, Patchable } from './patchable';
 import { ChatwoTask } from './task.entity';
+import { ChatwoBill } from './bill.entity';
 
 @Entity()
 export class ChatwoUser extends Patchable {
@@ -59,4 +60,8 @@ export class ChatwoUser extends Patchable {
 
   @OneToMany(() => ChatwoTask, (mission) => mission.owner)
   missions: ChatwoTask[];
+
+  @IgnoreInhJsonPath()
+  @OneToMany(() => ChatwoBill, (bill) => bill.owner)
+  bills: ChatwoBill[];
 }
