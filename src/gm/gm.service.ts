@@ -493,7 +493,47 @@ export class GmService {
                             return results;
                         },
                         refund: async () => {
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const bill = await manager.find(ChatwoBill, {
+                                where: {
+                                    sku: In(durable.map(d => d.sku)),
+                                    owner: {
+                                        nakamaId: account.custom_id!,
+                                    }
+                                },
+                                relations: {
+                                    owner: true,
+                                }
+                            });
+                            const user = await manager.findOne(ChatwoUser, {
+                                where: { nakamaId: account.custom_id! },
+                            });
 
+                            const refundBill: ChatwoBill[] = [];
+                            for (const b of bill) {
+                                const brought = await manager.findOne(ChatwoLog, {
+                                    where: {
+                                        tags: And(
+                                            ArrayContains([`purchase`, user!.nakamaId, b.sku, 'buy']),
+                                            Not(
+                                                ArrayContains(['refund'])
+                                            )
+                                        )
+                                    }
+                                });
+                                if (brought) {
+                                    refundBill.push(b);
+                                }
+                            }
+                            const moneyBack = refundBill.reduce((sum, b) => {
+                                const config = configManager.purchaseMap.get(b.sku);
+                                const gainSc = config?.gain["sc"] as number || 0;
+                                return sum + gainSc;
+                            }, 0);
+                            return {
+                                billRefund: refundBill,
+                                moneyBack,
+                            }
                         }
                     }, { openBug: true });
                     results.push(result);
