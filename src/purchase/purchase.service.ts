@@ -109,7 +109,6 @@ export class PurchaseService {
                 }
                 const items = await this.itemService.gainItems(manager, account, purchaseConfig.gain, true);
                 tags.push(...items.map(i => i.nakamaId));
-                await this.consume_entitlement(user.oculusId, sku);
             } else if (purchaseConfig.type === PruchaseType.Consumable) {
                 if (!await this.verify_entitlement(user.oculusId, sku)) {
                     throw new BadRequestException(`Entitlement verification failed for sku ${sku}, account ${account.user?.username} ${account.custom_id}`);
