@@ -7,7 +7,6 @@ import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
-import { LogDto } from './dto/log.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { ChatwoItem, ItemType, keyToItemType } from 'src/entities/item.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
@@ -30,7 +29,6 @@ import { StatisticRefreshType } from 'src/configV2/tables/statistic';
 import { OnlineEvent } from 'src/event/online.event';
 import { ChatwoReedem } from 'src/entities/reedem.entity';
 import { ChatwoBill } from 'src/entities/bill.entity';
-import { log } from 'console';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -815,7 +813,7 @@ export class StatisticService {
     }
 
     async getStatistic(name: string, limit = 100, offset = 0) {
-        return this.statisticRepository.find({
+        const statistics = await this.statisticRepository.find({
             where: {
                 name,
             },
@@ -824,6 +822,21 @@ export class StatisticService {
             },
             take: limit,
             skip: offset,
+            relations: {
+                owner: true,
+            }
         });
+        const infoFinally: any[] = [];
+        for (const statistic of statistics) {
+            const session = await this.nakamaService.login(statistic.owner.nakamaId);
+            const account = await this.nakamaService.getAccount(session);
+            const name = account.user?.username || '';
+            infoFinally.push({
+                name,
+                progress: statistic.progress,
+                extra: statistic.extra,
+            });
+        }
+        return infoFinally;
     }
 }
