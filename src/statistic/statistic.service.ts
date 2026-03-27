@@ -693,11 +693,9 @@ export class StatisticService {
                         getStatistic,
                         statisticEvery: async (name: string, value: number, everyValue: number) => {
                             const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            const times = Math.floor(statistic.progress / everyValue);
-                            const newTimes = Math.floor((statistic.progress + value) / everyValue);
+                            const progress = statistic ? statistic.progress : 0;
+                            const times = Math.floor(progress / everyValue);
+                            const newTimes = Math.floor((progress + value) / everyValue);
                             return newTimes - times;
                         },
                         statisticHit: async (name: string, value: number, hit: number) => {
