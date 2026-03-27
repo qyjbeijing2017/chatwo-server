@@ -442,8 +442,11 @@ export class GmService {
                             return logs;
                         },
                         checkTotalBill: async () => {
-                            // const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
                             const bill = await manager.find(ChatwoBill, {
+                                where: {
+                                    sku: In(durable.map(d => d.sku)),
+                                },
                                 relations: {
                                     owner: true,
                                 }
@@ -465,6 +468,12 @@ export class GmService {
                                     owner: true,
                                 }
                             });
+                            for (const b of bill) {
+                                const session = await this.nakamaService.login(b.owner.nakamaId);
+                                const account = await this.nakamaService.getAccount(session); // 验证用户是否存在
+                                b.owner.name = account.user?.username || b.owner.name; // 同步用户名
+                            }
+
                             const results: ChatwoBill[] = [];
                             for (const b of bill) {
                                 const brought = await manager.findOne(ChatwoLog, {
@@ -484,6 +493,7 @@ export class GmService {
                             return results;
                         },
                         refund: async () => {
+
                         }
                     }, { openBug: true });
                     results.push(result);
