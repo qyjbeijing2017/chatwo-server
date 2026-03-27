@@ -238,8 +238,8 @@ export class GmService {
                             })
                         },
                         forge: async (hilt: string, blade: string, index: number) => {
-                            const id = v4();
                             this.logger.log(`Forging item with hilt ${hilt}, blade ${blade}, index ${index}`);
+                            const id = v4();
                             this.logger.log(`Generated nakamaId for new item: ${id}`);
                             const itemIn = await this.itemService.dropItemIn(account, id, {
                                 key: hilt,
