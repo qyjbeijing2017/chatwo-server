@@ -17,6 +17,7 @@ import { configManager } from 'src/configV2/config';
 import { ChatwoTask } from 'src/entities/task.entity';
 import { LoggerService } from 'src/logger/logger.service';
 import { v4 } from 'uuid';
+import { StoreService } from 'src/store/store.service';
 
 @Injectable()
 export class GmService {
@@ -28,6 +29,7 @@ export class GmService {
         private readonly itemService: ItemService,
         private readonly purchaseService: PurchaseService,
         private readonly loggerService: LoggerService,
+        private readonly storeService: StoreService,
     ) { }
 
     async addSS(account: ApiAccount, dto: AddSSDto): Promise<Record<string, number>> {
@@ -237,16 +239,10 @@ export class GmService {
                                 }
                             })
                         },
-                        forge: async (hilt: string, blade: string, index: number) => {
-                            this.logger.log(`Forging item with hilt ${hilt}, blade ${blade}, index ${index}`);
-                            const id = v4();
-                            this.logger.log(`Generated nakamaId for new item: ${id}`);
-                            const itemIn = await this.itemService.dropItemIn(account, id, {
-                                key: hilt,
-                                meta: {}
-                            })
-                            this.logger.log(`Item dropped in: ${JSON.stringify(itemIn)}`);
-                            const item = await this.itemService.updateItem(account, id, {
+                        forge: async (blade: string, index: number) => {
+                            const [itemBuy] = await this.storeService.buyItem(account, 'C_Tutorial_Hilt')
+                            this.logger.log(`Item dropped in: ${JSON.stringify(itemBuy)}`);
+                            const item = await this.itemService.updateItem(account, itemBuy.nakamaId, {
                                 tags: ['gm', 'forge'],
                                 meta: {
                                     bladeKey: blade,
