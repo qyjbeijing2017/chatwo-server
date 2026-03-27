@@ -432,7 +432,7 @@ export class GmService {
                         },
                         checkLog: async () => {
                             const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const logs = await manager.findAndCount(ChatwoLog, {
+                            const logs = await manager.find(ChatwoLog, {
                                 where: durable.map(d => ({
                                     tags: And(
                                         ArrayContains(['purchase', d.sku, 'buy']),
@@ -457,7 +457,7 @@ export class GmService {
                         },
                         checkBill: async () => {
                             const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.findAndCount(ChatwoBill, {
+                            const bill = await manager.find(ChatwoBill, {
                                 where: {
                                     sku: In(durable.map(d => d.sku)),
                                 },
@@ -466,7 +466,7 @@ export class GmService {
                                 }
                             });
                             const results: ChatwoBill[] = [];
-                            for (const b of bill[0]) {
+                            for (const b of bill) {
                                 const brought = await manager.findOne(ChatwoLog, {
                                     where: {
                                         tags: And(
