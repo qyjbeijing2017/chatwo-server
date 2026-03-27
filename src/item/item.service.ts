@@ -556,7 +556,7 @@ export class ItemService {
             meta: dto.meta,
           } as ChatwoItem));
         }
-        if (item.meta?.exp !== dto.meta?.exp) {
+        if ((item.meta?.exp || 0) !== (dto.meta?.exp || 0)) {
           ChatwoEvent.emit(this.eventEmitter, new LevelUpEvent(account, {
             ...item,
             meta: dto.meta,
