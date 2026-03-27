@@ -5,11 +5,12 @@ import { configManager } from 'src/configV2/config';
 import { PruchaseType } from 'src/configV2/tables/purchase';
 import { BillStatus, ChatwoBill } from 'src/entities/bill.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
+import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { ItemService } from 'src/item/item.service';
 import { autoPatch } from 'src/utils/autoPatch';
 import { startTransaction } from 'src/utils/transaction';
-import { DataSource } from 'typeorm';
+import { And, ArrayContains, DataSource, Not } from 'typeorm';
 
 @Injectable()
 export class PurchaseService {
@@ -90,7 +91,17 @@ export class PurchaseService {
                         owner: { nakamaId: account.custom_id },
                     }
                 })
-                if (brought) {
+                const broughtLog = await manager.findOne(ChatwoLog, {
+                    where: {
+                        tags: And(
+                            ArrayContains([`purchase`, account.custom_id!, sku, 'buy']),
+                            Not(
+                                ArrayContains(['refund'])
+                            )
+                        )
+                    }
+                })
+                if (brought || broughtLog) {
                     throw new BadRequestException(`Purchase with sku ${sku} already bought, account ${account.user?.username} ${account.custom_id}`);
                 }
                 if (!await this.verify_entitlement(user.oculusId, sku)) {

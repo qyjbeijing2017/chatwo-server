@@ -7,11 +7,12 @@ import { ChatwoUser } from 'src/entities/user.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
 import { ItemModule } from 'src/item/item.module';
+import { ChatwoLog } from 'src/entities/log.entity';
 
 @Module({
   imports: [
     NakamaModule,
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoContainer, ChatwoItem]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoContainer, ChatwoItem, ChatwoLog]),
     ItemModule,
   ],
   controllers: [PurchaseController],
