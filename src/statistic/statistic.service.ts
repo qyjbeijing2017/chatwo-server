@@ -783,7 +783,7 @@ export class StatisticService {
                     }) as boolean | number;
                     this.logger.log(`value ${value}`)
                     if(!statistic.progress) statistic.progress = 0;
-                    statistic.progress += typeof value === 'boolean' ? (value ? 1 : 0) : value;
+                    statistic.progress += Number(value) || 0;
                     this.logger.log(`progress ${statistic.progress}`);
                 }
                 this.logger.log(`statistic ${JSON.stringify(statistic)}`)
