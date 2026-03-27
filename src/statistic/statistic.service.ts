@@ -710,7 +710,7 @@ export class StatisticService {
                         addExtra: (key: string, value: number) => {
                             statistic.extra = {
                                 ...statistic.extra,
-                                [key]: ((statistic.extra as any)[key] || 0) + value,
+                                [key]: ((statistic?.extra as any)?.[key] || 0) + value,
                             }
                         },
                         statisticExtra: async (name: string, key: any) => {
