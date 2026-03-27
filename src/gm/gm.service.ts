@@ -266,4 +266,28 @@ export class GmService {
         const account = await this.nakamaService.getAccount(session);
         return this.purchaseService.refund(account, dto.sku, dto.reason);
     }
+
+    async getUserByCustomId(id: string) {
+        return this.dataSource.manager.findOne(ChatwoUser, {
+            where: { nakamaId: id },
+        });
+    }
+
+    async getAllUsers() {
+        return this.dataSource.manager.find(ChatwoUser);
+    }
+
+    async deleteUserByCustomId(id: string) {
+        const user = await this.dataSource.manager.findOne(ChatwoUser, {
+            where: { nakamaId: id },
+        });
+        if (!user) {
+            throw new NotFoundException(`User with nakamaId ${id} not found`);
+        }
+        await this.dataSource.manager.delete(ChatwoUser, user);
+        return {
+            message: `User with nakamaId ${id} deleted successfully`,
+            tags: ['gm', 'deleteUser', id, user.name],
+        }
+    }
 }

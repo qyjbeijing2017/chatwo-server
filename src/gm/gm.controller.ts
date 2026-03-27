@@ -53,7 +53,6 @@ export class GmController {
         return this.gmService.createTestAccount(name);
     }
 
-
     @ApiBearerAuth()
     @Server()
     @Post('refund')
@@ -68,6 +67,27 @@ export class GmController {
     @Get('env')
     async refundGMByCustomId() {
         return process.env;
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Get('user/:id')
+    async getUserByCustomId(@Param('id') id: string) {
+        return this.gmService.getUserByCustomId(id);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Get('users')
+    async getUsersByCustomIds() {
+        return this.gmService.getAllUsers();
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Delete('user/:id')
+    async deleteUserByCustomId(@Param('id') id: string) {
+        return this.gmService.deleteUserByCustomId(id);
     }
 
 }
