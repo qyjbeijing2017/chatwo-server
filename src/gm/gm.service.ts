@@ -441,6 +441,18 @@ export class GmService {
                             });
                             return logs;
                         },
+                        checkTotalBill: async () => {
+                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
+                            const bill = await manager.findAndCount(ChatwoBill, {
+                                where: {
+                                    sku: In(durable.map(d => d.sku)),
+                                },
+                                relations: {
+                                    owner: true,
+                                }
+                            });
+                            return bill;
+                        },
                         checkBill: async () => {
                             const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
                             const bill = await manager.findAndCount(ChatwoBill, {
