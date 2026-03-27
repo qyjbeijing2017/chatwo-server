@@ -706,12 +706,14 @@ export class StatisticService {
                                 ...statistic.extra,
                                 [key]: value,
                             }
+                            return 0;
                         },
                         addExtra: (key: string, value: number) => {
                             statistic.extra = {
                                 ...statistic.extra,
                                 [key]: ((statistic?.extra as any)?.[key] || 0) + value,
                             }
+                            return 0;
                         },
                         statisticExtra: async (name: string, key: any) => {
                             const statistic = await getStatistic(name);
