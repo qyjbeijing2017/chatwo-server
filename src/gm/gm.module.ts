@@ -4,7 +4,6 @@ import { GmService } from './gm.service';
 import { NakamaModule } from 'src/nakama/nakama.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatwoUser } from 'src/entities/user.entity';
-import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
 import { ChatwoItem } from 'src/entities/item.entity';
 import { StatisticModule } from 'src/statistic/statistic.module';
@@ -12,7 +11,6 @@ import { ItemModule } from 'src/item/item.module';
 import { PurchaseModule } from 'src/purchase/purchase.module';
 import { ChatwoTask } from 'src/entities/task.entity';
 import { LoggerModule } from 'src/logger/logger.module';
-import { ChatwoBill } from 'src/entities/bill.entity';
 
 @Module({
   imports: [
@@ -21,7 +19,7 @@ import { ChatwoBill } from 'src/entities/bill.entity';
     ItemModule,
     PurchaseModule,
     LoggerModule,
-    TypeOrmModule.forFeature([ChatwoUser, ChatwoLog, ChatwoContainer, ChatwoItem, ChatwoTask, ChatwoBill]),
+    TypeOrmModule.forFeature([ChatwoUser, ChatwoContainer, ChatwoItem, ChatwoTask]),
   ],
   controllers: [GmController],
   providers: [GmService]

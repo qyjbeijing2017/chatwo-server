@@ -1,13 +1,9 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ChatwoContainer, ContainerType } from 'src/entities/container.entity';
 import { ChatwoItem, keyToItemType } from 'src/entities/item.entity';
-import { ChatwoLog } from 'src/entities/log.entity';
 import { ChatwoUser } from 'src/entities/user.entity';
 import { NakamaService } from 'src/nakama/nakama.service';
-import { LogDto } from 'src/statistic/dto/log.dto';
-import { And, ArrayContainedBy, ArrayContains, DataSource, EntityManager, In, MoreThanOrEqual, Not, Repository } from 'typeorm';
+import { DataSource, EntityManager, In } from 'typeorm';
 import { AddSSDto } from './dto/addSS.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { StatisticService } from 'src/statistic/statistic.service';
@@ -18,25 +14,13 @@ import { RefundDto } from './dto/refund.dto';
 import { StoreGainInfo } from 'src/configV2/tables/store';
 import { parse as QSParse } from 'qs';
 import { configManager } from 'src/configV2/config';
-import { ChatwoTask, TaskStatus } from 'src/entities/task.entity';
+import { ChatwoTask } from 'src/entities/task.entity';
 import { LoggerService } from 'src/logger/logger.service';
-import { ChatwoBill } from 'src/entities/bill.entity';
-import { PruchaseType } from 'src/configV2/tables/purchase';
 
 @Injectable()
 export class GmService {
     private readonly logger: Logger = new Logger(GmService.name);
     constructor(
-        @InjectRepository(ChatwoLog)
-        private readonly logRepository: Repository<ChatwoLog>,
-        @InjectRepository(ChatwoUser)
-        private readonly userRepository: Repository<ChatwoUser>,
-        @InjectRepository(ChatwoItem)
-        private readonly itemRepository: Repository<ChatwoItem>,
-        @InjectRepository(ChatwoContainer)
-        private readonly containerRepository: Repository<ChatwoContainer>,
-        @InjectRepository(ChatwoTask)
-        private readonly taskRepository: Repository<ChatwoTask>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly statisticsService: StatisticService,
@@ -44,174 +28,6 @@ export class GmService {
         private readonly purchaseService: PurchaseService,
         private readonly loggerService: LoggerService,
     ) { }
-
-    async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
-        const [result, total] = await this.logRepository.findAndCount({
-            skip: logDto.skip || 0,
-            take: 100,
-            order: { createdAt: 'DESC' },
-            where: {
-                tags: account ? ArrayContains([...(logDto.tags || []), account.custom_id || '']) : ArrayContains(logDto.tags || []),
-                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || 0)),
-            }
-        });
-        return {
-            result,
-            total,
-        }
-    }
-
-    async syncFromNakama(user: ChatwoUser, manager: EntityManager): Promise<void> {
-
-        const session = await this.nakamaService.login(user.nakamaId);
-        const nakamaItems = await this.nakamaService.listItems(session);
-
-        const itmesNeedToSave: ChatwoItem[] = [];
-        const itmesNeedToDelete: ChatwoItem[] = [];
-
-        let container = await manager.findOne(ChatwoContainer, {
-            where: { owner: { nakamaId: user.nakamaId }, type: ContainerType.chest },
-        });
-        if (!container) {
-            container = manager.create(ChatwoContainer, {
-                owner: user,
-                type: ContainerType.chest,
-            });
-            await manager.save(container);
-        }
-
-
-        user.name = (await this.nakamaService.getAccount(session)).user?.username || user.name;
-
-        const log = manager.create(ChatwoLog, {
-            message: `User synced from Nakama`,
-            about: [
-                user.nakamaId,
-                'user/syncFromNakama',
-            ],
-            data: {}
-        });
-
-        const wallet = await this.nakamaService.getWallet(session);
-
-        for (const [key, value] of Object.entries(wallet)) {
-            if (user.wallet[key] !== value) {
-                log.data.wallet = log.data.wallet || {};
-                log.data.wallet[key] = value - (user.wallet[key] || 0);
-                user.wallet[key] = value;
-            }
-        }
-
-        for (const nakamaItem of nakamaItems) {
-            let item = user.items.find((item) => item.nakamaId === nakamaItem.nakamaId);
-            if (!item) {
-                item = manager.create(ChatwoItem, {
-                    ...nakamaItem,
-                });
-                item.owner = user;
-                log.data.item = log.data.item || {};
-                log.data.item.added = log.data.item.added || [];
-                log.data.item.added.push({ ...nakamaItem });
-            } else {
-                log.data.item = log.data.item || {};
-                log.data.item.update = log.data.item.update || {};
-                log.data.item.update[item.nakamaId] = {
-                    metadata: {
-                        before: item.meta,
-                        after: nakamaItem.meta,
-                    },
-                };
-                item.owner = user;
-                item.meta = nakamaItem.meta;
-            }
-            item.container = container;
-            itmesNeedToSave.push(item);
-            log.tags.push(nakamaItem.nakamaId!);
-        }
-
-        for (const item of user.items) {
-            const nakamaItem = nakamaItems.find((ni) => ni.nakamaId === item.nakamaId);
-            if (!nakamaItem) {
-                itmesNeedToDelete.push(item);
-            }
-        }
-
-        await manager.save(itmesNeedToSave);
-        await manager.update(
-            ChatwoUser,
-            { id: user.id },
-            {
-                name: user.name,
-                wallet: user.wallet,
-            },
-        );
-        await manager.save(log);
-    }
-
-    async syncOneFromNakama(nakamaId: string) {
-
-        const queryRunner = this.dataSource.createQueryRunner();
-        await queryRunner.connect();
-        await queryRunner.startTransaction();
-        try {
-            const user = await queryRunner.manager.findOne(ChatwoUser, {
-                where: { nakamaId },
-                relations: {
-                    items: true,
-                },
-            });
-            if (!user) {
-                throw new NotFoundException(`User with nakamaId ${nakamaId} not found`);
-            }
-
-            await this.syncFromNakama(user, queryRunner.manager);
-            await queryRunner.commitTransaction();
-            await queryRunner.release();
-
-            return {
-                ...user,
-                items: user.items.map(item => ({
-                    id: item.id,
-                    nakamaId: item.nakamaId,
-                    meta: item.meta,
-                    key: item.key,
-                    createdAt: item.createdAt,
-                    updatedAt: item.updatedAt,
-                })),
-            }
-        } catch (error) {
-            await queryRunner.rollbackTransaction();
-            await queryRunner.release();
-            throw error;
-        }
-    }
-
-    async syncAllFromNakama(): Promise<void> {
-        const users = await this.userRepository.find();
-        for (const user of users) {
-            console.log(`Syncing user ${user.name} from Nakama`);
-            const queryRunner = this.dataSource.createQueryRunner();
-            await queryRunner.connect();
-            await queryRunner.startTransaction();
-            try {
-                const userEntity = await queryRunner.manager.findOne(ChatwoUser, {
-                    where: { id: user.id },
-                    relations: {
-                        items: true,
-                    }
-                });
-                await this.syncFromNakama(userEntity!, queryRunner.manager);
-
-                await queryRunner.commitTransaction();
-                await queryRunner.release();
-            } catch (error) {
-                await queryRunner.rollbackTransaction();
-                await queryRunner.release();
-                throw error;
-            }
-            console.log(`Synced user ${user.name} from Nakama`);
-        }
-    }
 
     async addSS(account: ApiAccount, dto: AddSSDto): Promise<Record<string, number>> {
         return autoPatch(this.dataSource, async (manager) => {
@@ -225,19 +41,10 @@ export class GmService {
             await manager.save(user);
             return {
                 result: user.wallet,
-                tags: ['gm', 'addSS', account.custom_id!, ...(dto.tags || [])],
+                tags: ['gm', 'addSS', account.custom_id!, ...(dto.tags || []), account.user?.username || ''],
                 message: `Added ${dto.amount} SS to user ${account.custom_id!}, reason: ${dto.reason}`,
             }
         });
-    }
-
-    async deleteStatistics(id: number) {
-        const log = await this.logRepository.findOneBy({ id });
-        if (!log) {
-            throw new NotFoundException(`Log with id ${id} not found`);
-        }
-        await this.logRepository.remove(log);
-        return { message: `Log with id ${id} deleted.` };
     }
 
     async dslQuery(query: string): Promise<{
@@ -281,11 +88,6 @@ export class GmService {
                             const items = await this.gain(key, amount, account, manager);
                             tags.push(...items.map(i => i.nakamaId));
                             return items;
-                        },
-                        deleteLog: async (something: any) => {
-                            return this.logRepository.delete({
-                                id: something.id,
-                            });
                         },
                         deleteItem: async (something: any) => {
                             return manager.delete(ChatwoItem, something);
@@ -418,123 +220,9 @@ export class GmService {
                                 skip: options.skip,
                             });
                         },
-                        checkPurchase: async () => {
-                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.findAndCount(ChatwoBill, {
-                                where: {
-                                    sku: In(durable.map(d => d.sku)),
-                                },
-                                relations: {
-                                    owner: true,
-                                }
-                            });
-                            return bill;
+                        simpleSearchLogs: async (keywords: string[], options: { limit?: number, skip?: number } = {}) => {
+                            return this.loggerService.simpleSearch(keywords, options);
                         },
-                        checkLog: async () => {
-                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const logs = await manager.find(ChatwoLog, {
-                                where: durable.map(d => ({
-                                    tags: And(
-                                        ArrayContains(['purchase', d.sku, 'buy']),
-                                    )
-                                }))
-                            });
-                            return logs;
-                        },
-                        checkTotalBill: async () => {
-                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.find(ChatwoBill, {
-                                where: {
-                                    sku: In(durable.map(d => d.sku)),
-                                },
-                                relations: {
-                                    owner: true,
-                                }
-                            });
-                            for (const b of bill) {
-                                const session = await this.nakamaService.login(b.owner.nakamaId);
-                                const account = await this.nakamaService.getAccount(session); // 验证用户是否存在
-                                b.owner.name = account.user?.username || b.owner.name; // 同步用户名
-                            }
-                            return bill;
-                        },
-                        checkBill: async () => {
-                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.find(ChatwoBill, {
-                                where: {
-                                    sku: In(durable.map(d => d.sku)),
-                                },
-                                relations: {
-                                    owner: true,
-                                }
-                            });
-                            for (const b of bill) {
-                                const session = await this.nakamaService.login(b.owner.nakamaId);
-                                const account = await this.nakamaService.getAccount(session); // 验证用户是否存在
-                                b.owner.name = account.user?.username || b.owner.name; // 同步用户名
-                            }
-
-                            const results: ChatwoBill[] = [];
-                            for (const b of bill) {
-                                const brought = await manager.findOne(ChatwoLog, {
-                                    where: {
-                                        tags: And(
-                                            ArrayContains([`purchase`, b.owner.nakamaId, b.sku, 'buy']),
-                                            Not(
-                                                ArrayContains(['refund'])
-                                            )
-                                        )
-                                    }
-                                });
-                                if (brought) {
-                                    results.push(b);
-                                }
-                            }
-                            return results;
-                        },
-                        refund: async () => {
-                            const durable = configManager.purchases.filter(p => p.type === PruchaseType.Durable)
-                            const bill = await manager.find(ChatwoBill, {
-                                where: {
-                                    sku: In(durable.map(d => d.sku)),
-                                    owner: {
-                                        nakamaId: account.custom_id!,
-                                    }
-                                },
-                                relations: {
-                                    owner: true,
-                                }
-                            });
-                            const user = await manager.findOne(ChatwoUser, {
-                                where: { nakamaId: account.custom_id! },
-                            });
-
-                            const refundBill: ChatwoBill[] = [];
-                            for (const b of bill) {
-                                const brought = await manager.findOne(ChatwoLog, {
-                                    where: {
-                                        tags: And(
-                                            ArrayContains([`purchase`, user!.nakamaId, b.sku, 'buy']),
-                                            Not(
-                                                ArrayContains(['refund'])
-                                            )
-                                        )
-                                    }
-                                });
-                                if (brought) {
-                                    refundBill.push(b);
-                                }
-                            }
-                            const moneyBack = refundBill.reduce((sum, b) => {
-                                const config = configManager.purchaseMap.get(b.sku);
-                                const gainSc = config?.gain["sc"] as number || 0;
-                                return sum + gainSc;
-                            }, 0);
-                            return {
-                                billRefund: refundBill,
-                                moneyBack,
-                            }
-                        }
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {
@@ -547,6 +235,28 @@ export class GmService {
                 },
                 message: `Executed DSL lines for user ${dto.customId}`,
                 tags,
+            }
+        });
+    }
+
+    async createTestAccount(name: string) {
+        return autoPatch(this.dataSource, async (manager) => {
+            const newUser = manager.create(ChatwoUser, {
+                oculusId: `test-${Date.now()}`,
+                name,
+            });
+            const chatwoUser = await manager.save(newUser);
+            this.nakamaService.authenticate(
+                chatwoUser.nakamaId,
+                name,
+            );
+            return {
+                message: `Test account created with name ${name} and nakamaId ${chatwoUser.nakamaId}`,
+                result: {
+                    nakamaId: chatwoUser.nakamaId,
+                    name: chatwoUser.name,
+                },
+                tags: ['gm', 'createTestAccount', chatwoUser.nakamaId, name],
             }
         });
     }

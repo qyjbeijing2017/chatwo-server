@@ -11,6 +11,8 @@ import { ChatwoContainer } from './container.entity';
 import { IgnoreInhJsonPath, Patchable } from './patchable';
 import { ChatwoTask } from './task.entity';
 import { ChatwoBill } from './bill.entity';
+import { ChatwoReedem } from './reedem.entity';
+import { ChatwoStatistic } from './statistic.entity';
 
 @Entity()
 export class ChatwoUser extends Patchable {
@@ -58,10 +60,19 @@ export class ChatwoUser extends Patchable {
   @Column({ type: 'float4', default: 0 })
   todayFlyMeters: number = 0;
 
+  @IgnoreInhJsonPath()
   @OneToMany(() => ChatwoTask, (mission) => mission.owner)
   missions: ChatwoTask[];
 
   @IgnoreInhJsonPath()
   @OneToMany(() => ChatwoBill, (bill) => bill.owner)
   bills: ChatwoBill[];
+
+  @IgnoreInhJsonPath()
+  @OneToMany(() => ChatwoReedem, (reedem) => reedem.owner)
+  reedems: ChatwoReedem[];
+
+  @IgnoreInhJsonPath()
+  @OneToMany(() => ChatwoStatistic, (statistic) => statistic.owner)
+  statistics: ChatwoStatistic[];
 }

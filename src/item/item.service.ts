@@ -12,6 +12,9 @@ import { UpdateItemDto } from './dto/update-item.dto';
 import { forceRefreshToChest, StoreGainInfo, storeGainInfoMeta, storeGainInfoToCount } from 'src/configV2/tables/store';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SignInEvent } from 'src/event/sign-in.event';
+import { ForgeEvent } from 'src/event/forge.event';
+import { LevelUpEvent } from 'src/event/level-up.event';
+import { ChatwoEvent } from 'src/event/base.event';
 
 @Injectable()
 export class ItemService {
@@ -199,7 +202,7 @@ export class ItemService {
     dto: DropItemInDto,
   ): Promise<ChatwoItem> {
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'equip', dto.key, nakamaId, account.custom_id!, `pointerIndex:${pointerIndex}`];
+      const tags: string[] = ['item', 'equip', dto.key, nakamaId, account.custom_id!, `pointerIndex:${pointerIndex}`, account.user?.username || ''];
       if (pointerIndex < ContainerType.equipped_start || pointerIndex > ContainerType.equipped_end) {
         throw new BadRequestException(`pointerIndex ${pointerIndex} is out of range`);
       }
@@ -255,7 +258,7 @@ export class ItemService {
     pointerIndex: number,
   ): Promise<ChatwoItem> {
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'unequip', account.custom_id!, `pointerIndex:${pointerIndex}`];
+      const tags: string[] = ['item', 'unequip', account.custom_id!, `pointerIndex:${pointerIndex}`, account.user?.username || ''];
       if (pointerIndex < ContainerType.equipped_start || pointerIndex > ContainerType.equipped_end) {
         throw new BadRequestException(`pointerIndex ${pointerIndex} is out of range`);
       }
@@ -302,7 +305,7 @@ export class ItemService {
   ): Promise<ChatwoItem> {
 
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'drop-in', dto.key, nakamaId, account.custom_id!];
+      const tags: string[] = ['item', 'drop-in', dto.key, nakamaId, account.custom_id!, account.user?.username || ''];
 
       const itemConfig = configManager.itemMap.get(dto.key);
       if (!itemConfig) {
@@ -391,7 +394,7 @@ export class ItemService {
     account: ApiAccount,
   ): Promise<void> {
     return autoPatch<void>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'reset', account.custom_id!];
+      const tags: string[] = ['item', 'reset', account.custom_id!, account.user?.username || ''];
       const ownerItems = await manager.find(ChatwoItem, {
         where: [
           {
@@ -438,7 +441,7 @@ export class ItemService {
       }
       return {
         result: undefined,
-        message: `Reset ${ownerItems.length} items to chest for user ${account.custom_id}`,
+        message: `Reset ${ownerItems.length} items to chest for user ${account.custom_id}, name: ${account.user?.username || ''}`,
         tags,
       }
     });
@@ -449,7 +452,7 @@ export class ItemService {
     nakamaId: string,
   ): Promise<ChatwoItem> {
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'take-out', nakamaId, account.custom_id!];
+      const tags: string[] = ['item', 'take-out', nakamaId, account.custom_id!, account.user?.username || ''];
       const item = await manager.findOne(ChatwoItem, {
         where: {
           nakamaId,
@@ -516,7 +519,7 @@ export class ItemService {
     dto: UpdateItemDto,
   ): Promise<ChatwoItem> {
     return autoPatch<ChatwoItem>(this.dataSource, async (manager) => {
-      const tags: string[] = ['item', 'update', nakamaId, account.custom_id!, ...dto.tags];
+      const tags: string[] = ['item', 'update', nakamaId, account.custom_id!, ...dto.tags, account.user?.username || ''];
       const item = await manager.findOne(ChatwoItem, {
         where: {
           nakamaId,
@@ -529,7 +532,7 @@ export class ItemService {
         throw new NotFoundException(`Item with nakamaId ${nakamaId} not found`);
       }
       if (item.owner && item.owner.nakamaId !== account.custom_id) {
-        throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}`);
+        throw new BadRequestException(`Item with nakamaId ${nakamaId} is not owned by user ${account.custom_id}, name: ${account.user?.username || ''}`);
       }
 
       // meta protected
@@ -543,6 +546,21 @@ export class ItemService {
         }
         if (item.meta?.variantIndex && dto.meta?.variantIndex && item.meta.variantIndex !== dto.meta?.variantIndex) {
           throw new BadRequestException(`Item with nakamaId ${nakamaId} has variantIndex ${item.meta.variantIndex} which cannot be changed to ${dto.meta?.variantIndex}`);
+        }
+      }
+
+      if (itemConfig.type & ItemType.arm) {
+        if (!item.meta?.bladeKey && dto.meta?.bladeKey) {
+          ChatwoEvent.emit(this.eventEmitter, new ForgeEvent(account, {
+            ...item,
+            meta: dto.meta,
+          } as ChatwoItem));
+        }
+        if (item.meta?.exp !== dto.meta?.exp) {
+          ChatwoEvent.emit(this.eventEmitter, new LevelUpEvent(account, {
+            ...item,
+            meta: dto.meta,
+          } as ChatwoItem, item.meta?.exp || 0, dto.meta?.exp || 0));
         }
       }
 
@@ -565,7 +583,7 @@ export class ItemService {
       }
     });
     if (!user) {
-      throw new UnauthorizedException(`User with nakamaId ${account.custom_id} not found`);
+      throw new UnauthorizedException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
     }
     const chest = await this.getContainer(this.dataSource.manager, account, ContainerType.chest);
     const starterItems = configManager.items.filter(i => i.InitInStorage);
@@ -587,6 +605,6 @@ export class ItemService {
   }
 
   async signInEvent(account: ApiAccount) {
-      this.eventEmitter.emit('user.sign-in', new SignInEvent(account));
+    this.eventEmitter.emit('user.sign-in', new SignInEvent(account));
   }
 }
