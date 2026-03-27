@@ -10,7 +10,7 @@ COPY tsconfig.json .
 COPY src/ src/
 COPY tsconfig.node.json .
 RUN yarn compile-config
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN yarn build
 
 # Runtime stage
