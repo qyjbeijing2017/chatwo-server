@@ -448,6 +448,11 @@ export class GmService {
                                     owner: true,
                                 }
                             });
+                            for (const b of bill) {
+                                const session = await this.nakamaService.login(b.owner.nakamaId);
+                                const account = await this.nakamaService.getAccount(session); // 验证用户是否存在
+                                b.owner.name = account.user?.username || b.owner.name; // 同步用户名
+                            }
                             return bill;
                         },
                         checkBill: async () => {
