@@ -239,11 +239,13 @@ export class GmService {
                         },
                         forge: async (hilt: string, blade: string, index: number) => {
                             const id = v4();
-                            await this.itemService.dropItemIn(account, id, {
+                            this.logger.log(`Forging item with hilt ${hilt}, blade ${blade}, index ${index}`);
+                            this.logger.log(`Generated nakamaId for new item: ${id}`);
+                            const itemIn = await this.itemService.dropItemIn(account, id, {
                                 key: hilt,
                                 meta: {}
                             })
-
+                            this.logger.log(`Item dropped in: ${JSON.stringify(itemIn)}`);
                             const item = await this.itemService.updateItem(account, id, {
                                 tags: ['gm', 'forge'],
                                 meta: {
@@ -252,6 +254,7 @@ export class GmService {
                                     variantIndex: index,
                                 }
                             })
+                            this.logger.log(`Item after update: ${JSON.stringify(item)}`);
                             return item;
                         }
                     }, { openBug: true });
