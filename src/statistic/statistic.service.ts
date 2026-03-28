@@ -864,9 +864,9 @@ export class StatisticService {
                 const account = await this.nakamaService.getAccount(session);
                 const name = account.user?.username || '';
                 infoFinally.push({
-                    name,
-                    progress: statistic.progress,
-                    extra: statistic.extra,
+                    ...statistic,
+                    owner: undefined,
+                    name: name,
                 });
             } catch (e) {
                 this.logger.error(`Failed to get nakama account for username ${statistic.owner.name} nakamaId ${statistic.owner.nakamaId}: ${e.message}`);
