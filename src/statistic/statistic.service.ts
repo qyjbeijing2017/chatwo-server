@@ -29,6 +29,7 @@ import { StatisticRefreshType } from 'src/configV2/tables/statistic';
 import { OnlineEvent } from 'src/event/online.event';
 import { ChatwoReedem } from 'src/entities/reedem.entity';
 import { ChatwoBill } from 'src/entities/bill.entity';
+import { BladeAppearanceType } from 'src/configV2/tables/bladeAppearance';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -736,7 +737,7 @@ export class StatisticService {
                             return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
                         },
                         collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
-                            this.logger.log(`-------------------collectionSession ${name} ${bladeKey} ${variantIndex}-------------------------`)
+                            this.logger.log(`-------------------collectionSeries ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             const statistic = await getStatistic(name);
                             if (!statistic) {
                                 return 0;
@@ -746,10 +747,12 @@ export class StatisticService {
                             if (!collection) {
                                 return 0;
                             }
+                            const collection20 = collection.filter(appearance => appearance.Type === BladeAppearanceType.v20);
+                            console.log(`collection ${JSON.stringify(collection20)}`)
                             const extra = statistic.extra || {};
                             this.logger.log(`extra ${JSON.stringify(extra)}`);
-                            for (let index = 0; index < collection.length; index++) {
-                                const key = collection[index].BladeKey + index;
+                            for (let index = 0; index < collection20.length; index++) {
+                                const key = collection20[index].BladeKey + index;
                                 this.logger.log(`key ${key} ${extra[key]}`);
                                 if (index === variantIndex) {
                                     if (extra[key] && extra[key] >= 1) {
@@ -763,7 +766,7 @@ export class StatisticService {
                                     }
                                 }
                             }
-                            this.logger.log(`-------------------End collectionSession ${name} ${bladeKey} ${variantIndex}-------------------------`)
+                            this.logger.log(`-------------------End collectionSeries ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             return 1;
 
                         },
