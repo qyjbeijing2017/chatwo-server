@@ -633,26 +633,22 @@ export class StatisticService {
 
         const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
         for (const config of configs) {
-            this.logger.log(`event ${JSON.stringify(payload)}`);
-            this.logger.log(`config ${config.Name}`);
-            let [statistic] = await this.statisticRepository.find({
+            const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+                config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                    config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                        config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
+            let statistic = await this.statisticRepository.findOne({
                 where: {
                     name: config.Name,
                     owner: { id: user.id },
+                    createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
                 },
                 order: {
                     createdAt: 'DESC',
                 },
-                take: 1,
             });
 
-            if (
-                !statistic ||
-                (config.RefreshType === StatisticRefreshType.yearly && statistic.createdAt < getServerTime().startOf('year').toDate()) ||
-                (config.RefreshType === StatisticRefreshType.monthly && statistic.createdAt < getServerTime().startOf('month').toDate()) ||
-                (config.RefreshType === StatisticRefreshType.weekly && statistic.createdAt < getServerTime().startOf('week').toDate()) ||
-                (config.RefreshType === StatisticRefreshType.daily && statistic.createdAt < getServerTime().startOf('day').toDate())
-            ) {
+            if (!statistic) {
                 statistic = this.statisticRepository.create({
                     name: config.Name,
                     progress: 0,
@@ -680,10 +676,7 @@ export class StatisticService {
                     return stat
                 }
 
-                this.logger.log(`dsls ${JSON.stringify(dsls)}`);
-
                 for (const dsl of dsls) {
-                    this.logger.log(`dsl ${dsl}`)
                     const value = await this.execDsl(dsl.toString(), payload.account, {
                         configManager,
                         ...payload,
@@ -737,12 +730,10 @@ export class StatisticService {
                             return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
                         },
                         collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
-                            this.logger.log(`-------------------collectionSeries ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             const statistic = await getStatistic(name);
                             if (!statistic) {
                                 return 0;
                             }
-                            this.logger.log(`statistic ${JSON.stringify(statistic)}`)
                             const collection = configManager.bladeAppearanceMap.get(bladeKey);
                             if (!collection) {
                                 return 0;
@@ -750,23 +741,18 @@ export class StatisticService {
                             const collection20 = collection.filter(appearance => appearance.Type === BladeAppearanceType.v20);
                             console.log(`collection ${JSON.stringify(collection20)}`)
                             const extra = statistic.extra || {};
-                            this.logger.log(`extra ${JSON.stringify(extra)}`);
                             for (let index = 0; index < collection20.length; index++) {
                                 const key = collection20[index].BladeKey + index;
-                                this.logger.log(`key ${key} ${extra[key]}`);
                                 if (index === variantIndex) {
                                     if (extra[key] && extra[key] >= 1) {
-                                        this.logger.log(`key ${key} already collected`);
                                         return 0;
                                     }
                                 } else {
                                     if (!extra[key] || extra[key] < 1) {
-                                        this.logger.log(`key ${key} not collected`);
                                         return 0;
                                     }
                                 }
                             }
-                            this.logger.log(`-------------------End collectionSeries ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             return 1;
 
                         },
@@ -791,14 +777,10 @@ export class StatisticService {
 
                         }
                     }) as boolean | number;
-                    this.logger.log(`value ${value}`)
                     if (!statistic.progress) statistic.progress = 0;
                     statistic.progress += Number(value) || 0;
-                    this.logger.log(`progress ${statistic.progress}`);
                 }
-                this.logger.log(`statistic ${JSON.stringify(statistic)}`)
                 await this.statisticRepository.save(statistic);
-                this.logger.log(`-----------------------------------`)
             } catch (e) {
                 this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
                 continue;
@@ -813,12 +795,12 @@ export class StatisticService {
         if (!config) {
             throw new NotFoundException(`Statistic with name ${name} not found`);
         }
-        
+
         const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
             config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
                 config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
                     config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-        
+
         let result = await this.statisticRepository.findOne({
             where: {
                 name,

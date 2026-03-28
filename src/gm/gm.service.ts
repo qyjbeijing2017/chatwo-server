@@ -18,6 +18,7 @@ import { ChatwoTask } from 'src/entities/task.entity';
 import { LoggerService } from 'src/logger/logger.service';
 import { v4 } from 'uuid';
 import { StoreService } from 'src/store/store.service';
+import { ChatwoStatistic } from 'src/entities/statistic.entity';
 
 @Injectable()
 export class GmService {
@@ -252,7 +253,10 @@ export class GmService {
                             })
                             this.logger.log(`Item after update: ${JSON.stringify(item)}`);
                             return item;
-                        }
+                        },
+                        getAllStatistic: async () => {
+                            return manager.find(ChatwoStatistic, {})
+                        },
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {
