@@ -30,6 +30,7 @@ import { OnlineEvent } from 'src/event/online.event';
 import { ChatwoReedem } from 'src/entities/reedem.entity';
 import { ChatwoBill } from 'src/entities/bill.entity';
 import { BladeAppearanceType } from 'src/configV2/tables/bladeAppearance';
+import { startTransaction } from 'src/utils/transaction';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -633,175 +634,188 @@ export class StatisticService {
         this.logger.log(`Handling event ${payload.eventId} for user ${user.name} (${user.nakamaId})`);
         const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
         for (const config of configs) {
-            this.logger.log(`Config ${config.Name} matched for event ${payload.eventId}`);
-            const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-                config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                    config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                        config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-            let statistic = await this.statisticRepository.findOne({
-                where: {
-                    name: config.Name,
-                    owner: { id: user.id },
-                    createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-                },
-                order: {
-                    createdAt: 'DESC',
-                },
-            });
+            startTransaction(this.dataSource, async (manager) => {
+                this.logger.log(`Config ${config.Name} matched for event ${payload.eventId}`);
+                const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+                    config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                        config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                            config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
 
-            if (!statistic) {
-                statistic = this.statisticRepository.create({
-                    name: config.Name,
-                    progress: 0,
-                    owner: user,
+                // =====================================================================
+                // 1. 获取事务级咨询锁 (Advisory Lock)
+                // 注意：这里使用 manager.query，确保锁是在当前事务上下文中获取的。
+                // Postgres 的 pg_advisory_xact_lock 支持传入两个 32位整数。
+                // 我们巧妙地利用 hashtext() 把两个字符串转换成整数，作为锁的唯一标识。
+                // =====================================================================
+                await manager.query(
+                    `SELECT pg_advisory_xact_lock(hashtext($1), hashtext($2))`,
+                    [user.id, config.Name],
+                );
+
+                let statistic = await manager.findOne(ChatwoStatistic, {
+                    where: {
+                        name: config.Name,
+                        owner: { id: user.id },
+                        createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
+                    },
+                    order: {
+                        createdAt: 'DESC',
+                    },
                 });
-            }
-            this.logger.log(`Executing DSL for statistic ${statistic.name} with current progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
 
-            try {
-                const dsls: string[] = Array.isArray(config.Rule[payload.eventId]) ? config.Rule[payload.eventId] as string[] : [config.Rule[payload.eventId] as string];
-
-                this.logger.log(`DSLs to execute for statistic ${statistic.name}: ${JSON.stringify(dsls)}`);
-                const statistics: Map<string, ChatwoStatistic> = new Map();
-                const getStatistic = async (name: string) => {
-                    const config = configManager.statisticMap.get(name);
-                    if (!config) {
-                        return null;
-                    }
-                    const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-                        config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                            config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                                config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-
-                    if (statistics.has(name)) {
-                        return statistics.get(name);
-                    }
-                    const stat = await this.statisticRepository.findOne({
-                        where: {
-                            name,
-                            owner: { id: user.id },
-                            createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-                        },
+                if (!statistic) {
+                    statistic = manager.create(ChatwoStatistic, {
+                        name: config.Name,
+                        progress: 0,
+                        owner: user,
                     });
-                    if (stat) {
-                        statistics.set(name, stat);
-                    }
-                    return stat
                 }
+                this.logger.log(`Executing DSL for statistic ${statistic.name} with current progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
 
-                for (const dsl of dsls) {
-                    this.logger.log(`Executing DSL for statistic ${statistic.name}: ${dsl}`);
-                    const value = await this.execDsl(dsl.toString(), payload.account, {
-                        configManager,
-                        ...payload,
-                        extra: statistic.extra,
-                        before: statistic.progress,
-                        getStatistic,
-                        statisticEvery: async (name: string, value: number, everyValue: number) => {
-                            const statistic = await getStatistic(name);
-                            const progress = statistic ? statistic.progress : 0;
-                            const times = Math.floor(progress / everyValue);
-                            const newTimes = Math.floor((progress + value) / everyValue);
-                            return newTimes - times;
-                        },
-                        statisticHit: async (name: string, value: number, hit: number) => {
-                            const statistic = await getStatistic(name);
-                            const progress = statistic ? statistic.progress : 0;
-                            return progress < hit && progress + value >= hit ? 1 : 0;
-                        },
-                        setExtra: (key: string, value: any) => {
-                            statistic.extra = {
-                                ...statistic.extra,
-                                [key]: value,
-                            }
-                            return 0;
-                        },
-                        addExtra: (key: string, value: number) => {
-                            statistic.extra = {
-                                ...statistic.extra,
-                                [key]: ((statistic?.extra as any)?.[key] || 0) + value,
-                            }
-                            return 0;
-                        },
-                        statisticExtra: async (name: string, key: any) => {
-                            const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            return statistic.extra ? (statistic.extra as any)[key] : 0;
-                        },
-                        statisticExtrasMoreThanOne: async (name: string, keys: string[]) => {
-                            if (keys.length === 0) {
-                                return 0;
-                            }
-                            const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            return keys.every(key => statistic.extra && (statistic.extra as any)[key]) ? 1 : 0;
-                        },
-                        armSessionNames: (name: string) => {
-                            return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
-                        },
-                        collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
-                            const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            const collection = configManager.bladeAppearanceMap.get(bladeKey);
-                            if (!collection) {
-                                return 0;
-                            }
-                            const collection20 = collection.filter(appearance => appearance.Type === BladeAppearanceType.v20);
-                            console.log(`collection ${JSON.stringify(collection20)}`)
-                            const extra = statistic.extra || {};
-                            for (let index = 0; index < collection20.length; index++) {
-                                const key = collection20[index].BladeKey + index;
-                                if (index === variantIndex) {
-                                    if (extra[key] && extra[key] >= 1) {
-                                        return 0;
-                                    }
-                                } else {
-                                    if (!extra[key] || extra[key] < 1) {
-                                        return 0;
-                                    }
-                                }
-                            }
-                            return 1;
+                try {
+                    const dsls: string[] = Array.isArray(config.Rule[payload.eventId]) ? config.Rule[payload.eventId] as string[] : [config.Rule[payload.eventId] as string];
 
-                        },
-                        collectionArms: async (name: string, keys: string[], newKey: string) => {
-                            const statistic = await getStatistic(name);
-                            if (!statistic) {
-                                return 0;
-                            }
-                            const extra = statistic.extra || {};
-                            for (const key of keys) {
-                                if (key === newKey) {
-                                    if (extra[key] && extra[key] >= 1) {
-                                        return 0;
-                                    }
-                                } else {
-                                    if (!extra[key] || extra[key] < 1) {
-                                        return 0;
-                                    }
-                                }
-                            }
-                            return 1;
-
+                    this.logger.log(`DSLs to execute for statistic ${statistic.name}: ${JSON.stringify(dsls)}`);
+                    const statistics: Map<string, ChatwoStatistic> = new Map();
+                    const getStatistic = async (name: string) => {
+                        const config = configManager.statisticMap.get(name);
+                        if (!config) {
+                            return null;
                         }
-                    }) as boolean | number;
-                    if (!statistic.progress) statistic.progress = 0;
-                    statistic.progress += Number(value) || 0;
-                    this.logger.log(`DSL executed for statistic ${statistic.name}, got value ${value}`);
-                    this.logger.log(`Statistic ${statistic.name} progress updated to ${statistic.progress}`);
+                        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+                            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
+
+                        if (statistics.has(name)) {
+                            return statistics.get(name);
+                        }
+                        const stat = await manager.findOne(ChatwoStatistic, {
+                            where: {
+                                name,
+                                owner: { id: user.id },
+                                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
+                            },
+                        });
+                        if (stat) {
+                            statistics.set(name, stat);
+                        }
+                        return stat;
+                    }
+
+                    for (const dsl of dsls) {
+                        this.logger.log(`Executing DSL for statistic ${statistic.name}: ${dsl}`);
+                        const value = await this.execDsl(dsl.toString(), payload.account, {
+                            configManager,
+                            ...payload,
+                            extra: statistic.extra,
+                            before: statistic.progress,
+                            getStatistic,
+                            statisticEvery: async (name: string, value: number, everyValue: number) => {
+                                const statistic = await getStatistic(name);
+                                const progress = statistic ? statistic.progress : 0;
+                                const times = Math.floor(progress / everyValue);
+                                const newTimes = Math.floor((progress + value) / everyValue);
+                                return newTimes - times;
+                            },
+                            statisticHit: async (name: string, value: number, hit: number) => {
+                                const statistic = await getStatistic(name);
+                                const progress = statistic ? statistic.progress : 0;
+                                return progress < hit && progress + value >= hit ? 1 : 0;
+                            },
+                            setExtra: (key: string, value: any) => {
+                                statistic.extra = {
+                                    ...statistic.extra,
+                                    [key]: value,
+                                }
+                                return 0;
+                            },
+                            addExtra: (key: string, value: number) => {
+                                statistic.extra = {
+                                    ...statistic.extra,
+                                    [key]: ((statistic?.extra as any)?.[key] || 0) + value,
+                                }
+                                return 0;
+                            },
+                            statisticExtra: async (name: string, key: any) => {
+                                const statistic = await getStatistic(name);
+                                if (!statistic) {
+                                    return 0;
+                                }
+                                return statistic.extra ? (statistic.extra as any)[key] : 0;
+                            },
+                            statisticExtrasMoreThanOne: async (name: string, keys: string[]) => {
+                                if (keys.length === 0) {
+                                    return 0;
+                                }
+                                const statistic = await getStatistic(name);
+                                if (!statistic) {
+                                    return 0;
+                                }
+                                return keys.every(key => statistic.extra && (statistic.extra as any)[key]) ? 1 : 0;
+                            },
+                            armSessionNames: (name: string) => {
+                                return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
+                            },
+                            collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
+                                const statistic = await getStatistic(name);
+                                if (!statistic) {
+                                    return 0;
+                                }
+                                const collection = configManager.bladeAppearanceMap.get(bladeKey);
+                                if (!collection) {
+                                    return 0;
+                                }
+                                const collection20 = collection.filter(appearance => appearance.Type === BladeAppearanceType.v20);
+                                console.log(`collection ${JSON.stringify(collection20)}`)
+                                const extra = statistic.extra || {};
+                                for (let index = 0; index < collection20.length; index++) {
+                                    const key = collection20[index].BladeKey + index;
+                                    if (index === variantIndex) {
+                                        if (extra[key] && extra[key] >= 1) {
+                                            return 0;
+                                        }
+                                    } else {
+                                        if (!extra[key] || extra[key] < 1) {
+                                            return 0;
+                                        }
+                                    }
+                                }
+                                return 1;
+
+                            },
+                            collectionArms: async (name: string, keys: string[], newKey: string) => {
+                                const statistic = await getStatistic(name);
+                                if (!statistic) {
+                                    return 0;
+                                }
+                                const extra = statistic.extra || {};
+                                for (const key of keys) {
+                                    if (key === newKey) {
+                                        if (extra[key] && extra[key] >= 1) {
+                                            return 0;
+                                        }
+                                    } else {
+                                        if (!extra[key] || extra[key] < 1) {
+                                            return 0;
+                                        }
+                                    }
+                                }
+                                return 1;
+
+                            }
+                        }) as boolean | number;
+                        if (!statistic.progress) statistic.progress = 0;
+                        statistic.progress += Number(value) || 0;
+                        this.logger.log(`DSL executed for statistic ${statistic.name}, got value ${value}`);
+                        this.logger.log(`Statistic ${statistic.name} progress updated to ${statistic.progress}`);
+                    }
+                    this.logger.log(`Saving statistic ${statistic.name} with progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
+                    await manager.save(statistic);
+                } catch (e) {
+                    this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
                 }
-                this.logger.log(`Saving statistic ${statistic.name} with progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
-                await this.statisticRepository.save(statistic);
-            } catch (e) {
-                this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
-                continue;
-            }
+            });
 
         }
     }
