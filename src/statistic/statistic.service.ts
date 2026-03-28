@@ -661,6 +661,15 @@ export class StatisticService {
 
                 const statistics: Map<string, ChatwoStatistic> = new Map();
                 const getStatistic = async (name: string) => {
+                    const config = configManager.statisticMap.get(name);
+                    if (!config) {
+                        return null;
+                    }
+                    const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+                        config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                            config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                                config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
+
                     if (statistics.has(name)) {
                         return statistics.get(name);
                     }
@@ -668,6 +677,7 @@ export class StatisticService {
                         where: {
                             name,
                             owner: { id: user.id },
+                            createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
                         },
                     });
                     if (stat) {
