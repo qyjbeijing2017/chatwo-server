@@ -489,16 +489,18 @@ export class StatisticService {
 
     async pve(account: ApiAccount, dto: KilledDto) {
         this.eventEmitter.emit('user.monster-killed', new MonsterKilledEvent(account, dto.whoWasKilled));
-        const monster = configManager.monsterMap.get(dto.whoWasKilled);
-        if (!monster) {
-            throw new NotFoundException(`Monster with id ${dto.whoWasKilled} not found`);
-        }
-        const log = this.logRepository.create({
-            message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
-            tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type, account.user?.username || ''],
-        });
-        await this.logRepository.save(log);
-        return log;
+        // const monster = configManager.monsterMap.get(dto.whoWasKilled);
+        // if (!monster) {
+        //     throw new NotFoundException(`Monster with id ${dto.whoWasKilled} not found`);
+        // }
+        // const log = this.logRepository.create({
+        //     message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
+        //     tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type, account.user?.username || ''],
+        // });
+        // await this.logRepository.save(log);
+        // return log;
+        this.logger.log(`User ${account.user?.username} killed ${dto.whoWasKilled}.`);
+        return {};
     }
 
     async pvp(account: ApiAccount, dto: KilledDto) {
