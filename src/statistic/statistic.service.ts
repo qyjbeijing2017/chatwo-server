@@ -735,14 +735,14 @@ export class StatisticService {
                         armSessionNames: (name: string) => {
                             return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
                         },
-                        collectionSession: async (name: string, variantIndex: number) => {
-                            this.logger.log(`-------------------collectionSession ${name} ${variantIndex}-------------------------`)
+                        collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
+                            this.logger.log(`-------------------collectionSession ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             const statistic = await getStatistic(name);
                             if (!statistic) {
                                 return 0;
                             }
                             this.logger.log(`statistic ${JSON.stringify(statistic)}`)
-                            const collection = configManager.bladeAppearanceMap.get(statistic.name);
+                            const collection = configManager.bladeAppearanceMap.get(bladeKey);
                             if (!collection) {
                                 return 0;
                             }
@@ -763,7 +763,7 @@ export class StatisticService {
                                     }
                                 }
                             }
-                            this.logger.log(`-------------------End collectionSession ${name} ${variantIndex}-------------------------`)
+                            this.logger.log(`-------------------End collectionSession ${name} ${bladeKey} ${variantIndex}-------------------------`)
                             return 1;
 
                         },

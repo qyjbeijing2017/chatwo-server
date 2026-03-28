@@ -1,7 +1,7 @@
 ﻿Name,RefreshType,Rule
 Forge Master,never,"user.forge: 
   - branch(statisticExtra(""Forge"", item.meta.bladeKey), 0, 50)
-  - collectionSession(""Forge"", item.meta.bladeKey) * 500
+  - collectionSeries(""Forge"", item.meta.bladeKey, item.meta.variantIndex) * 500
   - collectionArms(""Forge"", [""Lightsaber"", ""Morning Star"", ""Scimitar"", ""Sausage Saber"", ""Frying Pan"", ""Jian"", ""Rapier"", ""Lollipop"", ""Baguette"", ""Ruler"", ""Baseball Bat"", ""Katana"", ""Tang Dao""], item.meta.bladeKey) * 1000
 user.level-up: branch(levelMax, 100 + levelUpCount * 2, levelUpCount * 2)"
 Weekly Activity Board,weekly,"user.online: statisticEvery(""Online Daily"", minutes, 20) * 10
