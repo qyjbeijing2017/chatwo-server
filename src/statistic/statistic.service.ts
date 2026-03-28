@@ -736,34 +736,34 @@ export class StatisticService {
                             return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
                         },
                         collectionSession: async (name: string, variantIndex: number) => {
-                            this.logger.debug(`-------------------collectionSession ${name} ${variantIndex}-------------------------`)
+                            this.logger.log(`-------------------collectionSession ${name} ${variantIndex}-------------------------`)
                             const statistic = await getStatistic(name);
                             if (!statistic) {
                                 return 0;
                             }
-                            this.logger.debug(`statistic ${JSON.stringify(statistic)}`)
+                            this.logger.log(`statistic ${JSON.stringify(statistic)}`)
                             const collection = configManager.bladeAppearanceMap.get(statistic.name);
                             if (!collection) {
                                 return 0;
                             }
                             const extra = statistic.extra || {};
-                            this.logger.debug(`extra ${JSON.stringify(extra)}`);
+                            this.logger.log(`extra ${JSON.stringify(extra)}`);
                             for (let index = 0; index < collection.length; index++) {
                                 const key = collection[index].BladeKey + index;
-                                this.logger.debug(`key ${key} ${extra[key]}`);
+                                this.logger.log(`key ${key} ${extra[key]}`);
                                 if (index === variantIndex) {
                                     if (extra[key] && extra[key] >= 1) {
-                                        this.logger.debug(`key ${key} already collected`);
+                                        this.logger.log(`key ${key} already collected`);
                                         return 0;
                                     }
                                 } else {
                                     if (!extra[key] || extra[key] < 1) {
-                                        this.logger.debug(`key ${key} not collected`);
+                                        this.logger.log(`key ${key} not collected`);
                                         return 0;
                                     }
                                 }
                             }
-                            this.logger.debug(`-------------------End collectionSession ${name} ${variantIndex}-------------------------`)
+                            this.logger.log(`-------------------End collectionSession ${name} ${variantIndex}-------------------------`)
                             return 1;
 
                         },
@@ -806,15 +806,22 @@ export class StatisticService {
 
     async getMyStatistic(account: ApiAccount, name: string) {
 
-        const statisticConfig = configManager.statisticMap.get(name);
-        if (!statisticConfig) {
+        const config = configManager.statisticMap.get(name);
+        if (!config) {
             throw new NotFoundException(`Statistic with name ${name} not found`);
         }
+        
+        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
+        
         let result = await this.statisticRepository.findOne({
             where: {
                 name,
                 owner: {
                     nakamaId: account.custom_id,
+                    createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
                 }
             },
             order: {
@@ -828,25 +835,23 @@ export class StatisticService {
                 createdAt: new Date(),
             });
         }
-        if (
-            statisticConfig.RefreshType === StatisticRefreshType.daily && result.createdAt < getServerTime().startOf('day').toDate() ||
-            statisticConfig.RefreshType === StatisticRefreshType.weekly && result.createdAt < getServerTime().startOf('week').toDate() ||
-            statisticConfig.RefreshType === StatisticRefreshType.monthly && result.createdAt < getServerTime().startOf('month').toDate() ||
-            statisticConfig.RefreshType === StatisticRefreshType.yearly && result.createdAt < getServerTime().startOf('year').toDate()
-        ) {
-            result = this.statisticRepository.create({
-                name,
-                progress: 0,
-                createdAt: new Date(),
-            })
-        }
         return result;
     }
 
     async getStatistic(name: string, limit = 100, offset = 0) {
+        const config = configManager.statisticMap.get(name);
+        if (!config) {
+            throw new NotFoundException(`Statistic with name ${name} not found`);
+        }
+        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
+            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
+                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
+                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
+
         const statistics = await this.statisticRepository.find({
             where: {
                 name,
+                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
             },
             order: {
                 progress: 'DESC',
