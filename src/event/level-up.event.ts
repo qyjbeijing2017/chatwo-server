@@ -14,10 +14,10 @@ export class LevelUpEvent extends UserEvent {
         const config = configManager.levels;
         if (!config) return 0;
         const configCopy = [...config];
-        config.pop();
+        configCopy.pop();
         let level = 0;
-        config.sort((a, b) => a.Sum - b.Sum);
-        while (level < config.length && exp > config[level].Sum) {
+        configCopy.sort((a, b) => a.Sum - b.Sum);
+        while (level < configCopy.length && exp > configCopy[level].Sum) {
             level++;
         }
         return level + 1;
