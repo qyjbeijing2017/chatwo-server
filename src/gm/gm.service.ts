@@ -257,6 +257,9 @@ export class GmService {
                         getAllStatistic: async () => {
                             return manager.find(ChatwoStatistic, {})
                         },
+                        deleteAllStatistic: async () => {
+                            return manager.delete(ChatwoStatistic, {});
+                        }
                     }, { openBug: true });
                     results.push(result);
                 } catch (error) {
