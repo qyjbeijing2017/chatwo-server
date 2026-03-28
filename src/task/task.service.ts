@@ -17,9 +17,6 @@ import { ChatwoItem, ItemType } from 'src/entities/item.entity';
 import { UserEvent } from 'src/event/user.event';
 import { findOneAsync } from 'src/utils/arrayAsync';
 import { SubmitArmEvent } from 'src/event/submit-arm.event';
-import { TaskFinishedEvent } from 'src/event/task-finished.event';
-import { ChatwoEvent } from 'src/event/base.event';
-import { startTransaction } from 'src/utils/transaction';
 
 @Injectable()
 export class TaskService {
@@ -122,8 +119,6 @@ export class TaskService {
             task.status = TaskStatus.DONE;
             await manager.save(task);
 
-            ChatwoEvent.emit(this.eventEmitter, new TaskFinishedEvent(account, taskId));
-
             return {
                 tags,
                 result: task,
@@ -223,125 +218,110 @@ export class TaskService {
             return;
         }
 
-        startTransaction(this.dataSource, async (manager) => {
-
-            // =====================================================================
-            // 1. 获取事务级咨询锁 (Advisory Lock)
-            // 注意：这里使用 manager.query，确保锁是在当前事务上下文中获取的。
-            // Postgres 的 pg_advisory_xact_lock 支持传入两个 32位整数。
-            // 我们巧妙地利用 hashtext() 把两个字符串转换成整数，作为锁的唯一标识。
-            // =====================================================================
-            await manager.query(
-                `SELECT pg_advisory_xact_lock(hashtext($1), hashtext($2))`,
-                [user.id, 'refresh_tasks'],
-            );
-
-            const tasks = await manager.find(ChatwoTask, {
-                where: {
-                    owner: {
-                        nakamaId: payload.account.custom_id,
-                    },
-                    isExpired: false,
+        const tasks = await this.taskRepository.find({
+            where: {
+                owner: {
+                    nakamaId: payload.account.custom_id,
                 },
-            });
-            let dailycraftingTasks: ChatwoTask | null = null; // 3
-            let dailyCombatTasks: ChatwoTask | null = null; // 1
-            let dailySocialTasks: ChatwoTask | null = null; // 2
-            const weeklyTasks: {
-                [key: string]: ChatwoTask
-            } = {}; // can be multiple, but not guaranteed to have all of them
+                isExpired: false,
+            },
+        });
+        let dailycraftingTasks: ChatwoTask | null = null; // 3
+        let dailyCombatTasks: ChatwoTask | null = null; // 1
+        let dailySocialTasks: ChatwoTask | null = null; // 2
+        const weeklyTasks: {
+            [key: string]: ChatwoTask
+        } = {}; // can be multiple, but not guaranteed to have all of them
 
-            // task delete if expired
-            for (const task of tasks) {
-                const taskConfig = configManager.archievementTaskMap.get(task.key);
-                if (!taskConfig) {
+        // task delete if expired
+        for (const task of tasks) {
+            const taskConfig = configManager.archievementTaskMap.get(task.key);
+            if (!taskConfig) {
+                task.isExpired = true;
+                await this.taskRepository.save(task);
+                this.logger.error(`Task config not found for task key ${task.key} when handling sign-in event for task refresh`);
+                continue;
+            }
+            if (taskConfig.Type === ArchievementTaskType.daily) {
+                const time = getServerTime().startOf('day');
+                if (task.createdAt < time.toDate()) {
                     task.isExpired = true;
-                    await manager.save(task);
-                    this.logger.error(`Task config not found for task key ${task.key} when handling sign-in event for task refresh`);
+                    await this.taskRepository.save(task);
                     continue;
                 }
-                if (taskConfig.Type === ArchievementTaskType.daily) {
-                    const time = getServerTime().startOf('day');
-                    if (task.createdAt < time.toDate()) {
-                        task.isExpired = true;
-                        await manager.save(task);
-                        continue;
-                    }
-                    if (taskConfig.Category === ArchievementTaskCategory.crafting) {
-                        dailycraftingTasks = task;
-                    } else if (taskConfig.Category === ArchievementTaskCategory.combat) {
-                        dailyCombatTasks = task;
-                    } else if (taskConfig.Category === ArchievementTaskCategory.social) {
-                        dailySocialTasks = task;
-                    }
-                } else if (taskConfig.Type === ArchievementTaskType.weekly) {
-                    const time = getServerTime().startOf('week');
-                    if (task.createdAt < time.toDate()) {
-                        task.isExpired = true;
-                        await manager.save(task);
-                        continue;
-                    }
-                    weeklyTasks[task.key] = task;
-                } else {
+                if (taskConfig.Category === ArchievementTaskCategory.crafting) {
+                    dailycraftingTasks = task;
+                } else if (taskConfig.Category === ArchievementTaskCategory.combat) {
+                    dailyCombatTasks = task;
+                } else if (taskConfig.Category === ArchievementTaskCategory.social) {
+                    dailySocialTasks = task;
+                }
+            } else if (taskConfig.Type === ArchievementTaskType.weekly) {
+                const time = getServerTime().startOf('week');
+                if (task.createdAt < time.toDate()) {
                     task.isExpired = true;
-                    await manager.save(task);
+                    await this.taskRepository.save(task);
+                    continue;
                 }
+                weeklyTasks[task.key] = task;
+            } else {
+                task.isExpired = true;
+                await this.taskRepository.save(task);
             }
+        }
 
-            // task create if not exist
-            if (!dailycraftingTasks) {
-                const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
-                if (craftingTaskConfig.length <= 0) {
-                    this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
-                } else {
-                    const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
-                    const craftingTask = manager.create(ChatwoTask, {
-                        key: config.Name,
-                        owner: user,
-                    });
-                    await manager.save(craftingTask);
-                }
+        // task create if not exist
+        if (!dailycraftingTasks) {
+            const craftingTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.crafting && t.Type === ArchievementTaskType.daily);
+            if (craftingTaskConfig.length <= 0) {
+                this.logger.error(`No crafting daily task config found when handling sign-in event for task refresh`);
+            } else {
+                const config = craftingTaskConfig[Math.floor(Math.random() * craftingTaskConfig.length)];
+                const craftingTask = this.taskRepository.create({
+                    key: config.Name,
+                    owner: user,
+                });
+                await this.taskRepository.save(craftingTask);
             }
-            if (!dailyCombatTasks) {
-                const combatTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.combat && t.Type === ArchievementTaskType.daily);
-                if (combatTaskConfig.length <= 0) {
-                    this.logger.error(`No combat daily task config found when handling sign-in event for task refresh`);
-                } else {
-                    const config = combatTaskConfig[Math.floor(Math.random() * combatTaskConfig.length)];
-                    const combatTask = manager.create(ChatwoTask, {
-                        key: config.Name,
-                        owner: user,
-                    });
-                    await manager.save(combatTask);
-                }
+        }
+        if (!dailyCombatTasks) {
+            const combatTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.combat && t.Type === ArchievementTaskType.daily);
+            if (combatTaskConfig.length <= 0) {
+                this.logger.error(`No combat daily task config found when handling sign-in event for task refresh`);
+            } else {
+                const config = combatTaskConfig[Math.floor(Math.random() * combatTaskConfig.length)];
+                const combatTask = this.taskRepository.create({
+                    key: config.Name,
+                    owner: user,
+                });
+                await this.taskRepository.save(combatTask);
             }
-            if (!dailySocialTasks) {
-                const socialTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.social && t.Type === ArchievementTaskType.daily);
-                if (socialTaskConfig.length <= 0) {
-                    this.logger.error(`No social daily task config found when handling sign-in event for task refresh`);
-                } else {
-                    const config = socialTaskConfig[Math.floor(Math.random() * socialTaskConfig.length)];
-                    const socialTask = manager.create(ChatwoTask, {
-                        key: config.Name,
-                        owner: user,
-                    });
-                    await manager.save(socialTask);
-                }
+        }
+        if (!dailySocialTasks) {
+            const socialTaskConfig = configManager.archievementTask.filter(t => t.Category === ArchievementTaskCategory.social && t.Type === ArchievementTaskType.daily);
+            if (socialTaskConfig.length <= 0) {
+                this.logger.error(`No social daily task config found when handling sign-in event for task refresh`);
+            } else {
+                const config = socialTaskConfig[Math.floor(Math.random() * socialTaskConfig.length)];
+                const socialTask = this.taskRepository.create({
+                    key: config.Name,
+                    owner: user,
+                });
+                await this.taskRepository.save(socialTask);
             }
+        }
 
-            // weekly task create if not exist, no random here, just create all if not exist, since we don't have that many weekly tasks and it's not a problem to have them all
-            const weeklyTaskConfig = configManager.archievementTask.filter(t => t.Type === ArchievementTaskType.weekly);
-            for (const config of weeklyTaskConfig) {
-                if (!weeklyTasks[config.Name]) {
-                    const weeklyTask = manager.create(ChatwoTask, {
-                        key: config.Name,
-                        owner: user,
-                    });
-                    await manager.save(weeklyTask);
-                }
+        // weekly task create if not exist, no random here, just create all if not exist, since we don't have that many weekly tasks and it's not a problem to have them all
+        const weeklyTaskConfig = configManager.archievementTask.filter(t => t.Type === ArchievementTaskType.weekly);
+        for (const config of weeklyTaskConfig) {
+            if (!weeklyTasks[config.Name]) {
+                const weeklyTask = this.taskRepository.create({
+                    key: config.Name,
+                    owner: user,
+                });
+                await this.taskRepository.save(weeklyTask);
             }
-
-        });
+        }
 
     }
 
@@ -406,5 +386,4 @@ export class TaskService {
             }
         }
     }
-
 }

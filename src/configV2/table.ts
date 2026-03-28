@@ -31,11 +31,11 @@ export function ConfigTransform(transformer: (val: string) => any) {
 }
 
 export function ConfigFloat() {
-  return ConfigTransform((val: string) => parseFloat(val.replace(/,/g, '')));
+  return ConfigTransform((val: string) => parseFloat(val));
 }
 
 export function ConfigInt() {
-  return ConfigTransform((val: string) => parseInt(val.replace(/,/g, ''), 10));
+  return ConfigTransform((val: string) => parseInt(val, 10));
 }
 
 export function ConfigBool() {

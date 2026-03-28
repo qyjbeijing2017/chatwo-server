@@ -1,5 +1,5 @@
 import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
-import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatwoLog } from 'src/entities/log.entity';
 import { And, Any, ArrayContainedBy, ArrayContains, Between, DataSource, FindOptionsWhere, ILike, In, IsNull, LessThan, LessThanOrEqual, Like, MoreThan, MoreThanOrEqual, Not, Raw, Repository } from 'typeorm';
@@ -7,6 +7,7 @@ import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { configManager } from 'src/configV2/config';
 import { ChatwoUser } from 'src/entities/user.entity';
+import { LogDto } from './dto/log.dto';
 import { autoPatch } from 'src/utils/autoPatch';
 import { ChatwoItem, ItemType, keyToItemType } from 'src/entities/item.entity';
 import { ChatwoContainer } from 'src/entities/container.entity';
@@ -16,21 +17,12 @@ import { Item } from 'src/configV2/tables/Items';
 import { getServerTime, todayStart } from 'src/utils/serverTime';
 import { ChatwoBug } from 'src/entities/bug.entity';
 import { ChatwoTask } from 'src/entities/task.entity';
-import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { FlyEvent } from 'src/event/fly.event';
 import { MonsterKilledEvent } from 'src/event/monster-killed.event';
 import { DuelEvent } from 'src/event/duel.evemt';
 import { TeleportEvent } from 'src/event/teleport.event';
 import { AddFriendEvent } from 'src/event/add-friend.event';
-import { OnlineDto } from './dto/online.dto';
-import { UserEvent } from 'src/event/user.event';
-import { ChatwoStatistic } from 'src/entities/statistic.entity';
-import { StatisticRefreshType } from 'src/configV2/tables/statistic';
-import { OnlineEvent } from 'src/event/online.event';
-import { ChatwoReedem } from 'src/entities/reedem.entity';
-import { ChatwoBill } from 'src/entities/bill.entity';
-import { BladeAppearanceType } from 'src/configV2/tables/bladeAppearance';
-import { startTransaction } from 'src/utils/transaction';
 
 const WHITE_PATH_MAP: Record<string, string> = {
     exp: 'exp',
@@ -52,7 +44,6 @@ export interface DslOptions {
 
 @Injectable()
 export class StatisticService {
-    private readonly logger = new Logger(StatisticService.name);
     constructor(
         @InjectRepository(ChatwoLog)
         private readonly logRepository: Repository<ChatwoLog>,
@@ -66,12 +57,6 @@ export class StatisticService {
         private readonly bugRepository: Repository<ChatwoBug>,
         @InjectRepository(ChatwoTask)
         private readonly taskRepository: Repository<ChatwoTask>,
-        @InjectRepository(ChatwoStatistic)
-        private readonly statisticRepository: Repository<ChatwoStatistic>,
-        @InjectRepository(ChatwoReedem)
-        private readonly reedemRepository: Repository<ChatwoReedem>,
-        @InjectRepository(ChatwoBill)
-        private readonly billRepository: Repository<ChatwoBill>,
         private readonly dataSource: DataSource,
         private readonly nakamaService: NakamaService,
         private readonly eventEmitter: EventEmitter2,
@@ -81,56 +66,6 @@ export class StatisticService {
         const take = Math.min(Number(limit) || 100, 100);
         const skip = Number(offset) || 0;
         switch (from) {
-            case 'reedem':
-                const reedemWhere: FindOptionsWhere<ChatwoReedem> | FindOptionsWhere<ChatwoReedem>[] = where ?? {};
-                if (context.account) {
-                    if (Array.isArray(reedemWhere)) {
-                        for (const condition of reedemWhere) {
-                            condition.owner = condition.owner ?? {};
-                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                        }
-                    } else {
-                        reedemWhere.owner = reedemWhere.owner ?? {};
-                        (reedemWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                    }
-                }
-                const [reedemResult, reedemCount] = await this.reedemRepository.findAndCount({
-                    select: select,
-                    where: reedemWhere,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: reedemResult,
-                    total: reedemCount,
-                };
-            case 'bill':
-                const billWhere: FindOptionsWhere<ChatwoBill> | FindOptionsWhere<ChatwoBill>[] = where ?? {};
-                if (context.account) {
-                    if (Array.isArray(billWhere)) {
-                        for (const condition of billWhere) {
-                            condition.owner = condition.owner ?? {};
-                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                        }
-                    } else {
-                        billWhere.owner = billWhere.owner ?? {};
-                        (billWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                    }
-                }
-                const [billResult, billCount] = await this.billRepository.findAndCount({
-                    select: select,
-                    where: billWhere,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: billResult,
-                    total: billCount,
-                }
             case 'log':
                 const logWhere: FindOptionsWhere<ChatwoLog> | FindOptionsWhere<ChatwoLog>[] = where ?? {};
                 if (context.account) {
@@ -254,31 +189,6 @@ export class StatisticService {
                 return {
                     results: taskResult,
                     total: taskCount,
-                };
-            case 'statistic':
-                const statisticWhere: FindOptionsWhere<ChatwoStatistic> | FindOptionsWhere<ChatwoStatistic>[] = where ?? {};
-                if (context.account) {
-                    if (Array.isArray(statisticWhere)) {
-                        for (const condition of statisticWhere) {
-                            condition.owner = condition.owner ?? {};
-                            (condition.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                        }
-                    } else {
-                        statisticWhere.owner = statisticWhere.owner ?? {};
-                        (statisticWhere.owner as ChatwoUser).nakamaId = context.account.custom_id;
-                    }
-                }
-                const [statisticResult, statisticCount] = await this.statisticRepository.findAndCount({
-                    select: select,
-                    where: statisticWhere,
-                    order: orderBy,
-                    skip,
-                    take,
-                    relations: join,
-                });
-                return {
-                    results: statisticResult,
-                    total: statisticCount,
                 };
             case 'bug':
                 if (context.options?.openBug) {
@@ -413,6 +323,22 @@ export class StatisticService {
         return keys;
     }
 
+    async getAllStatistics(logDto: LogDto, account?: ApiAccount) {
+        const [result, total] = await this.logRepository.findAndCount({
+            skip: logDto.skip || 0,
+            take: 100,
+            order: { createdAt: 'DESC' },
+            where: {
+                tags: account ? ArrayContains([...(logDto.tags || []), account.custom_id || '']) : ArrayContains(logDto.tags || []),
+                createdAt: MoreThanOrEqual(new Date(logDto.afterThan || 0)),
+            }
+        });
+        return {
+            result,
+            total,
+        }
+    }
+
     date(value: string | number | Date) {
         return new Date(value);
     }
@@ -460,7 +386,7 @@ export class StatisticService {
     }
 
     async fly(account: ApiAccount, dto: FlyDto) {
-        this.eventEmitter.emit('user.fly', new FlyEvent(account, dto.meters));
+        this.eventEmitter.emit('user.fly',new FlyEvent(account, dto.meters));
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
                 where: {
@@ -482,46 +408,37 @@ export class StatisticService {
             return {
                 result: user,
                 message: `User ${account.user?.username} flew ${dto.meters} meters.`,
-                tags: [account.custom_id!, 'fly', `meters:${dto.meters}`, account.user?.username || ''],
+                tags: [account.custom_id!, 'fly'],
             }
         });
     }
 
     async pve(account: ApiAccount, dto: KilledDto) {
         this.eventEmitter.emit('user.monster-killed', new MonsterKilledEvent(account, dto.whoWasKilled));
-        // const monster = configManager.monsterMap.get(dto.whoWasKilled);
-        // if (!monster) {
-        //     throw new NotFoundException(`Monster with id ${dto.whoWasKilled} not found`);
-        // }
-        // const log = this.logRepository.create({
-        //     message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
-        //     tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type, account.user?.username || ''],
-        // });
-        // await this.logRepository.save(log);
-        // return log;
-        this.logger.log(`User ${account.user?.username} killed ${dto.whoWasKilled}.`);
-        return {};
+        const monster = configManager.monsterMap.get(dto.whoWasKilled);
+        if (!monster) {
+            throw new NotFoundException(`Monster with id ${dto.whoWasKilled} not found`);
+        }
+        const log = this.logRepository.create({
+            message: `User ${account.user?.username} killed ${dto.whoWasKilled}.`,
+            tags: [account.custom_id || '', 'pve', dto.whoWasKilled, monster.Type],
+        });
+        await this.logRepository.save(log);
+        return log;
     }
 
     async pvp(account: ApiAccount, dto: KilledDto) {
         this.eventEmitter.emit('user.duel', new DuelEvent(account, dto.whoWasKilled));
-        // const user = await this.userRepository.findOneBy({ name: dto.whoWasKilled });
-        // if (!user) {
-        //     throw new NotFoundException(`User with name ${dto.whoWasKilled} not found`);
-        // }
-        // const log = this.logRepository.create({
-        //     message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
-        //     tags: [account.custom_id || '', 'pvp', dto.whoWasKilled, account.user?.username || ''],
-        // });
-        // await this.logRepository.save(log);
-        // return log;
-        this.logger.log(`User ${account.user?.username} killed player ${dto.whoWasKilled}.`);
-        return {};
-    }
-
-    async online(account: ApiAccount, dto: OnlineDto) {
-        this.eventEmitter.emit('user.online', new OnlineEvent(account, dto.minutes));
-        return {};
+        const user = await this.userRepository.findOneBy({ name: dto.whoWasKilled });
+        if (!user) {
+            throw new NotFoundException(`User with name ${dto.whoWasKilled} not found`);
+        }
+        const log = this.logRepository.create({
+            message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
+            tags: [account.custom_id || '', 'pvp', dto.whoWasKilled],
+        });
+        await this.logRepository.save(log);
+        return log;
     }
 
     async dslQuery(account: ApiAccount, query: string) {
@@ -553,12 +470,6 @@ export class StatisticService {
             todayFlyMeters: this.todayFlyMeters.bind(this),
             getMonsterConfigByKey: (key: string) => configManager.monsterMap.get(key),
             getItemConfigByKey: (key: string) => configManager.itemMap.get(key),
-            branch: (condition: boolean, trueVal: any, falseVal: any) => condition ? trueVal : falseVal,
-            crossOver: (before: number, after: number, threshold: number) => before < threshold && after >= threshold,
-            min: (a: number, b: number) => Math.min(a, b),
-            max: (a: number, b: number) => Math.max(a, b),
-            floor: (a: number) => Math.floor(a),
-            ceil: (a: number) => Math.ceil(a),
             account,
             ...other,
             options,
@@ -573,16 +484,6 @@ export class StatisticService {
         return exec(ast, context);
     }
 
-    async dslToExec(dsl: string, account: ApiAccount | null = null, options: DslOptions = {}) {
-        const { exec, parserToCST, parseToAST } = await import(`../dsl`);
-        const cst = parserToCST(dsl);
-        const ast = parseToAST(cst);
-        return (extraContext: { [key: string]: any } = {}) => {
-            const context = this.createContext(account, extraContext, options);
-            return exec(ast, context);
-        }
-    }
-
     async completeTutorial(account: ApiAccount) {
         return autoPatch(this.dataSource, async (manager) => {
             const user = await manager.findOne(ChatwoUser, {
@@ -591,14 +492,14 @@ export class StatisticService {
                 }
             });
             if (!user) {
-                throw new NotFoundException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
+                throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
             }
             user.tutorialCompleted = true;
             await manager.save(user);
             return {
                 result: user,
                 message: `User ${account.user?.username} completed the tutorial.`,
-                tags: [account.custom_id!, 'tutorial', account.user?.username || ''],
+                tags: [account.custom_id!, 'tutorial'],
             }
         });
     }
@@ -610,7 +511,7 @@ export class StatisticService {
             }
         });
         if (!user) {
-            throw new NotFoundException(`User with nakamaId ${account.custom_id}, name: ${account.user?.username || ''} not found`);
+            throw new NotFoundException(`User with nakamaId ${account.custom_id} not found`);
         }
         user.breakBladeTimes += 1;
         return await this.userRepository.save(user);
@@ -622,281 +523,5 @@ export class StatisticService {
 
     async addNewFriend(account: ApiAccount, friendName: string) {
         this.eventEmitter.emit('user.add-friend', new AddFriendEvent(account, friendName));
-    }
-
-    @OnEvent('user.*')
-    async handleUserEvent(payload: UserEvent) {
-        const user = await this.userRepository.findOne({
-            where: {
-                nakamaId: payload.account.custom_id,
-            },
-        });
-        if (!user) {
-            this.logger.error(`User with nakamaId ${payload.account.custom_id}, name: ${payload.account.user?.username || ''} not found`);
-            return;
-        }
-        this.logger.log(`Handling event ${payload.eventId} for user ${user.name} (${user.nakamaId})`);
-        const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
-        for (const config of configs) {
-            startTransaction(this.dataSource, async (manager) => {
-                this.logger.log(`Config ${config.Name} matched for event ${payload.eventId}`);
-                const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-                    config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                        config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                            config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-
-                // =====================================================================
-                // 1. 获取事务级咨询锁 (Advisory Lock)
-                // 注意：这里使用 manager.query，确保锁是在当前事务上下文中获取的。
-                // Postgres 的 pg_advisory_xact_lock 支持传入两个 32位整数。
-                // 我们巧妙地利用 hashtext() 把两个字符串转换成整数，作为锁的唯一标识。
-                // =====================================================================
-                await manager.query(
-                    `SELECT pg_advisory_xact_lock(hashtext($1), hashtext($2))`,
-                    [user.id, config.Name],
-                );
-
-                let statistic = await manager.findOne(ChatwoStatistic, {
-                    where: {
-                        name: config.Name,
-                        owner: { id: user.id },
-                        createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-                    },
-                    order: {
-                        createdAt: 'DESC',
-                    },
-                });
-
-                if (!statistic) {
-                    statistic = manager.create(ChatwoStatistic, {
-                        name: config.Name,
-                        progress: 0,
-                        owner: user,
-                    });
-                }
-                this.logger.log(`Executing DSL for statistic ${statistic.name} with current progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
-
-                try {
-                    const dsls: string[] = Array.isArray(config.Rule[payload.eventId]) ? config.Rule[payload.eventId] as string[] : [config.Rule[payload.eventId] as string];
-
-                    this.logger.log(`DSLs to execute for statistic ${statistic.name}: ${JSON.stringify(dsls)}`);
-                    const statistics: Map<string, ChatwoStatistic> = new Map();
-                    const getStatistic = async (name: string) => {
-                        const config = configManager.statisticMap.get(name);
-                        if (!config) {
-                            return null;
-                        }
-                        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-                            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-
-                        if (statistics.has(name)) {
-                            return statistics.get(name);
-                        }
-                        const stat = await manager.findOne(ChatwoStatistic, {
-                            where: {
-                                name,
-                                owner: { id: user.id },
-                                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-                            },
-                        });
-                        if (stat) {
-                            statistics.set(name, stat);
-                        }
-                        return stat;
-                    }
-
-                    for (const dsl of dsls) {
-                        this.logger.log(`Executing DSL for statistic ${statistic.name}: ${dsl}`);
-                        const value = await this.execDsl(dsl.toString(), payload.account, {
-                            configManager,
-                            ...payload,
-                            extra: statistic.extra,
-                            before: statistic.progress,
-                            getStatistic,
-                            statisticEvery: async (name: string, value: number, everyValue: number) => {
-                                const statistic = await getStatistic(name);
-                                const progress = statistic ? statistic.progress : 0;
-                                const times = Math.floor(progress / everyValue);
-                                const newTimes = Math.floor((progress + value) / everyValue);
-                                return newTimes - times;
-                            },
-                            statisticHit: async (name: string, value: number, hit: number) => {
-                                const statistic = await getStatistic(name);
-                                const progress = statistic ? statistic.progress : 0;
-                                return progress < hit && progress + value >= hit ? 1 : 0;
-                            },
-                            setExtra: (key: string, value: any) => {
-                                statistic.extra = {
-                                    ...statistic.extra,
-                                    [key]: value,
-                                }
-                                return 0;
-                            },
-                            addExtra: (key: string, value: number) => {
-                                statistic.extra = {
-                                    ...statistic.extra,
-                                    [key]: ((statistic?.extra as any)?.[key] || 0) + value,
-                                }
-                                return 0;
-                            },
-                            statisticExtra: async (name: string, key: any) => {
-                                const statistic = await getStatistic(name);
-                                if (!statistic) {
-                                    return 0;
-                                }
-                                return statistic.extra ? (statistic.extra as any)[key] : 0;
-                            },
-                            statisticExtrasMoreThanOne: async (name: string, keys: string[]) => {
-                                if (keys.length === 0) {
-                                    return 0;
-                                }
-                                const statistic = await getStatistic(name);
-                                if (!statistic) {
-                                    return 0;
-                                }
-                                return keys.every(key => statistic.extra && (statistic.extra as any)[key]) ? 1 : 0;
-                            },
-                            armSessionNames: (name: string) => {
-                                return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
-                            },
-                            collectionSeries: async (name: string, bladeKey: string, variantIndex: number) => {
-                                const statistic = await getStatistic(name);
-                                if (!statistic) {
-                                    return 0;
-                                }
-                                const collection = configManager.bladeAppearanceMap.get(bladeKey);
-                                if (!collection) {
-                                    return 0;
-                                }
-                                const collection20 = collection.filter(appearance => appearance.Type === BladeAppearanceType.v20);
-                                console.log(`collection ${JSON.stringify(collection20)}`)
-                                const extra = statistic.extra || {};
-                                for (let index = 0; index < collection20.length; index++) {
-                                    const key = collection20[index].BladeKey + index;
-                                    if (index === variantIndex) {
-                                        if (extra[key] && extra[key] >= 1) {
-                                            return 0;
-                                        }
-                                    } else {
-                                        if (!extra[key] || extra[key] < 1) {
-                                            return 0;
-                                        }
-                                    }
-                                }
-                                return 1;
-
-                            },
-                            collectionArms: async (name: string, keys: string[], newKey: string) => {
-                                const statistic = await getStatistic(name);
-                                if (!statistic) {
-                                    return 0;
-                                }
-                                const extra = statistic.extra || {};
-                                for (const key of keys) {
-                                    if (key === newKey) {
-                                        if (extra[key] && extra[key] >= 1) {
-                                            return 0;
-                                        }
-                                    } else {
-                                        if (!extra[key] || extra[key] < 1) {
-                                            return 0;
-                                        }
-                                    }
-                                }
-                                return 1;
-
-                            }
-                        }) as boolean | number;
-                        if (!statistic.progress) statistic.progress = 0;
-                        statistic.progress += Number(value) || 0;
-                        this.logger.log(`DSL executed for statistic ${statistic.name}, got value ${value}`);
-                        this.logger.log(`Statistic ${statistic.name} progress updated to ${statistic.progress}`);
-                    }
-                    this.logger.log(`Saving statistic ${statistic.name} with progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
-                    await manager.save(statistic);
-                } catch (e) {
-                    this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);
-                }
-            });
-
-        }
-    }
-
-    async getMyStatistic(account: ApiAccount, name: string) {
-
-        const config = configManager.statisticMap.get(name);
-        if (!config) {
-            throw new NotFoundException(`Statistic with name ${name} not found`);
-        }
-
-        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-
-        let result = await this.statisticRepository.findOne({
-            where: {
-                name,
-                owner: {
-                    nakamaId: account.custom_id,
-                },
-                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-            },
-            order: {
-                createdAt: 'DESC',
-            }
-        })
-        if (!result) {
-            result = this.statisticRepository.create({
-                name,
-                progress: 0,
-                createdAt: new Date(),
-            });
-        }
-        return result;
-    }
-
-    async getStatistic(name: string, limit = 100, offset = 0) {
-        const config = configManager.statisticMap.get(name);
-        if (!config) {
-            throw new NotFoundException(`Statistic with name ${name} not found`);
-        }
-        const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
-            config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
-                config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
-                    config.RefreshType === StatisticRefreshType.yearly ? getServerTime().startOf('year').toDate() : undefined;
-
-        const statistics = await this.statisticRepository.find({
-            where: {
-                name,
-                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-            },
-            order: {
-                progress: 'DESC',
-            },
-            take: limit,
-            skip: offset,
-            relations: {
-                owner: true,
-            }
-        });
-        const infoFinally: any[] = [];
-        for (const statistic of statistics) {
-            try {
-                const session = await this.nakamaService.login(statistic.owner.nakamaId);
-                const account = await this.nakamaService.getAccount(session);
-                const name = account.user?.username || '';
-                infoFinally.push({
-                    ...statistic,
-                    owner: undefined,
-                    name: name,
-                });
-            } catch (e) {
-                this.logger.error(`Failed to get nakama account for username ${statistic.owner.name} nakamaId ${statistic.owner.nakamaId}: ${e.message}`);
-            }
-        }
-        return infoFinally;
     }
 }

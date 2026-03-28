@@ -24,12 +24,45 @@ export class GmController {
     }
 
     @ApiBearerAuth()
+    @Get('statistics')
+    @Server()
+    async getStatisticsGM(
+        @Query() logDto: LogDto,
+    ) {
+        return this.gmService.getAllStatistics(logDto);
+    }
+
+    // @ApiBearerAuth()
+    // @Post('syncFromNakama')
+    // @Server()
+    // async syncFromNakamaGM() {
+    //     return this.gmService.syncAllFromNakama();
+    // }
+
+
+    // @ApiBearerAuth()
+    // @Post('syncOneFromNakama/:customId')
+    // @Server()
+    // async syncOneFromNakamaGM(
+    //     @Query('customId') customId: string,
+    // ) {
+    //     return this.gmService.syncOneFromNakama(customId);
+    // }
+
+    @ApiBearerAuth()
     @Post('addSS')
     async addSSGM(
         @Account() account: ApiAccount,
         @Body() dto: AddSSDto,
     ) {
         return this.gmService.addSS(account, dto);
+    }
+
+    @ApiBearerAuth()
+    @Server()
+    @Delete('statistics/:id')
+    async deleteStatistics(@Param('id', ParseIntPipe) id: number) {
+        return this.gmService.deleteStatistics(id);
     }
 
     @ApiBearerAuth()
@@ -48,13 +81,6 @@ export class GmController {
 
     @ApiBearerAuth()
     @Server()
-    @Post('createTestAccount/:name')
-    async createTestAccount(@Param('name') name: string) {
-        return this.gmService.createTestAccount(name);
-    }
-
-    @ApiBearerAuth()
-    @Server()
     @Post('refund')
     async refundGM(
         @Body() dto: RefundDto,
@@ -67,27 +93,6 @@ export class GmController {
     @Get('env')
     async refundGMByCustomId() {
         return process.env;
-    }
-
-    @ApiBearerAuth()
-    @Server()
-    @Get('user/:id')
-    async getUserByCustomId(@Param('id') id: string) {
-        return this.gmService.getUserByCustomId(id);
-    }
-
-    @ApiBearerAuth()
-    @Server()
-    @Get('users')
-    async getUsersByCustomIds() {
-        return this.gmService.getAllUsers();
-    }
-
-    @ApiBearerAuth()
-    @Server()
-    @Delete('user/:id')
-    async deleteUserByCustomId(@Param('id') id: string) {
-        return this.gmService.deleteUserByCustomId(id);
     }
 
 }
