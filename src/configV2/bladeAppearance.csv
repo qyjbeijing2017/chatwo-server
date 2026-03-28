@@ -1,0 +1,194 @@
+﻿Name,BladeKey,BladePath,DropWeight,Index,MaterialPath,Type,vfxKey
+Tang_v1,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,0,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv1,v1,
+Tang_v10_1,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,1,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_1,v10,
+Tang_v10_2,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,2,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_2,v10,
+Tang_v10_3,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,3,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_3,v10,
+Tang_v10_4,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,4,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_4,v10,
+Tang_v10_5,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,5,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_5,v10,
+Tang_v10_6,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,6,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_6,v10,
+Tang_v10_7,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,7,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_7,v10,
+Tang_v10_8,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,8,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_8,v10,
+Tang_v10_9,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_s,1,9,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_9,v10,
+Tang_v20_1,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_a,1,10,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_1,v20,BladeVFX_White
+Tang_v20_2,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_a,1,11,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_2,v20,BladeVFX_Purple
+Tang_v20_3,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_a,1,12,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_3,v20,BladeVFX_Yellow
+Tang_v20_4,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_a,1,13,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_4,v20,BladeVFX_Orange
+Tang_v20_5,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_b,1,14,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_5,v20,BladeVFX_Red
+Tang_v20_6,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_b,1,15,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_6,v20,BladeVFX_Red
+Tang_v20_7,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_b,1,16,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_7,v20,BladeVFX_Pink
+Tang_v20_8,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_b,1,17,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_8,v20,BladeVFX_Cyan
+Tang_v20_9,Tang Dao,RAssets/Prefabs/Blades/tang/Blade_tang_c,1,18,RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_9,v20,BladeVFX_Black
+Katana_v1,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,19,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv1,v1,
+Katana_v10_1,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,20,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_1,v10,
+Katana_v10_2,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,21,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_2,v10,
+Katana_v10_3,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,22,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_3,v10,
+Katana_v10_4,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,23,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_4,v10,
+Katana_v10_5,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,24,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_5,v10,
+Katana_v10_6,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,25,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_6,v10,
+Katana_v10_7,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,26,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_7,v10,
+Katana_v10_8,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,27,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_8,v10,
+Katana_v10_9,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_s,1,28,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_9,v10,
+Katana_v20_1,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_a,1,29,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_1,v20,BladeVFX_Black
+Katana_v20_2,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_a,1,30,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_2,v20,BladeVFX_Black
+Katana_v20_3,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_a,1,31,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_3,v20,BladeVFX_Yellow
+Katana_v20_4,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_a,1,32,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_4,v20,BladeVFX_White
+Katana_v20_5,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_b,1,33,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_5,v20,BladeVFX_Blue
+Katana_v20_6,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_b,1,34,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_6,v20,BladeVFX_Pink
+Katana_v20_7,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_b,1,35,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_7,v20,BladeVFX_Yellow
+Katana_v20_8,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_b,1,36,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_8,v20,BladeVFX_Red
+Katana_v20_9,Katana,RAssets/Prefabs/Blades/katana/Blade_katana_c,1,37,RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_9,v20,BladeVFX_Red
+Baguette_v1,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_xs,1,38,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v1,
+Baguette_v10_1,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_as,1,39,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v10,
+Baguette_v10_3,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_cs,1,40,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v10,
+Baguette_v10_2,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_bs,1,41,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v10,
+Bat_v1,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,42,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv1,v1,
+Bat_v10_1,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,43,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_1,v10,
+Bat_v10_2,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,44,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_2,v10,
+Bat_v10_3,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,45,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_3,v10,
+Bat_v10_4,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,46,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_4,v10,
+Bat_v10_5,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,47,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_5,v10,
+Bat_v10_6,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,48,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_6,v10,
+Bat_v10_7,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,49,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_7,v10,
+Bat_v10_8,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,50,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_8,v10,
+Bat_v10_9,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,51,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_9,v10,
+Bat_v10_10,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_s,1,52,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_10,v10,
+Bat_v20_1,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_b,1,53,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_1,v20,BladeVFX_Yellow
+Bat_v20_2,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_b,1,54,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_2,v20,BladeVFX_Purple
+Bat_v20_3,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_b,1,55,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_3,v20,BladeVFX_Orange
+Bat_v20_4,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_b,1,56,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_4,v20,BladeVFX_Green
+Bat_v20_5,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_a,1,57,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_5,v20,BladeVFX_Black
+Bat_v20_6,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_a,1,58,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_6,v20,BladeVFX_Pink
+Bat_v20_7,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_a,1,59,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_7,v20,BladeVFX_White
+Bat_v20_8,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_a,1,60,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_8,v20,BladeVFX_Red
+Bat_v20_9,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_a,1,61,RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_9,v20,BladeVFX_Blue
+Bat_v20_10,Baseball Bat,RAssets/Prefabs/Blades/bat/Blade_bat_c,1,62,RAssets/Prefabs/Blades/bat/Materials/Blade_bta_lv20_10,v20,BladeVFX_Orange
+Ruler_v1,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,63,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv1,v1,
+Ruler_v10_1,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,64,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_1,v10,
+Ruler_v10_2,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,65,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_2,v10,
+Ruler_v10_3,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,66,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_3,v10,
+Ruler_v10_4,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,67,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_4,v10,
+Ruler_v10_5,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,68,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_5,v10,
+Ruler_v10_6,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_s,1,69,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_6,v10,
+Ruler_v20_1,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,70,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_1,v20,BladeVFX_Orange
+Ruler_v20_2,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,71,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_2,v20,BladeVFX_Yellow
+Ruler_v20_3,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,72,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_3,v20,BladeVFX_Green
+Ruler_v20_4,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,73,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_4,v20,BladeVFX_Pink
+Ruler_v20_5,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,74,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_5,v20,BladeVFX_Blue
+Ruler_v20_6,Ruler,RAssets/Prefabs/Blades/ruler/Blade_ruler_a,1,75,RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_6,v20,BladeVFX_White
+Baguette_v20_1,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_a,1,76,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v20,BladeVFX_Green
+Baguette_v20_2,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_b,1,77,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v20,BladeVFX_Orange
+Baguette_v20_3,Baguette,RAssets/Prefabs/Blades/baguette/Blade_baguette_c,1,78,RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette,v20,BladeVFX_Yellow
+Lollipop_v1,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_xs,1,79,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v1,
+Lollipop_v20_6,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_f,1,80,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Green
+Lollipop_v20_5,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_e,1,81,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Blue
+Lollipop_v20_4,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_d,1,82,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Cyan
+Lollipop_v20_3,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_c,1,83,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Yellow
+Lollipop_v20_2,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_b,1,84,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Orange
+Lollipop_v20_1,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_a,1,85,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Red
+Lollipop_v10_6,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_fs,1,86,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_5,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_es,1,87,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_4,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_ds,1,88,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_3,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_cs,1,89,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_2,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_bs,1,90,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_1,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_as,1,91,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_7,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_gs,1,92,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v10_8,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_hs,1,93,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v10,
+Lollipop_v20_7,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_g,1,94,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Pink
+Lollipop_v20_8,Lollipop,RAssets/Prefabs/Blades/lollipop/Blade_lollipop_h,1,95,RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop,v20,BladeVFX_Purple
+Rapier_v1,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,96,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv1,v1,
+Rapier_v20_6,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,97,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_6,v20,BladeVFX_Pink
+Rapier_v20_5,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,98,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_5,v20,BladeVFX_Blue
+Rapier_v20_4,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,99,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_4,v20,BladeVFX_Cyan
+Rapier_v20_3,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,100,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_3,v20,BladeVFX_Green
+Rapier_v20_2,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,101,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_2,v20,BladeVFX_Yellow
+Rapier_v20_1,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,102,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_1,v20,BladeVFX_Red
+Rapier_v10_6,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,103,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_6,v10,
+Rapier_v10_5,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,104,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_5,v10,
+Rapier_v10_4,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,105,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_4,v10,
+Rapier_v10_3,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,106,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_3,v10,
+Rapier_v10_2,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,107,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_2,v10,
+Rapier_v10_1,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,108,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_1,v10,
+Rapier_v10_7,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_s,1,109,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_7,v10,
+Rapier_v20_7,Rapier,RAssets/Prefabs/Blades/rapier/Blade_rapier_a,1,110,RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_7,v20,BladeVFX_Black
+Jian_v1,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,111,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv1,v1,
+Jian_v20_9,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_a,1,112,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_9,v20,BladeVFX_White
+Jian_v20_8,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_a,1,113,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_8,v20,BladeVFX_Cyan
+Jian_v20_7,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_a,1,114,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_7,v20,BladeVFX_Black
+Jian_v20_6,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_a,1,115,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_6,v20,BladeVFX_Yellow
+Jian_v20_5,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_a,1,116,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_5,v20,BladeVFX_Blue
+Jian_v20_4,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_b,1,117,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_4,v20,BladeVFX_Black
+Jian_v20_3,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_b,1,118,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_3,v20,BladeVFX_Green
+Jian_v20_2,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_b,1,119,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_2,v20,BladeVFX_Yellow
+Jian_v20_1,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_b,1,120,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_1,v20,BladeVFX_White
+Jian_v10_9,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,121,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_9,v10,
+Jian_v10_8,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,122,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_8,v10,
+Jian_v10_7,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,123,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_7,v10,
+Jian_v10_6,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,124,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_6,v10,
+Jian_v10_5,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,125,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_5,v10,
+Jian_v10_4,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,126,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_4,v10,
+Jian_v10_3,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,127,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_3,v10,
+Jian_v10_2,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,128,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_2,v10,
+Jian_v10_1,Jian,RAssets/Prefabs/Blades/jian/Blade_jian_s,1,129,RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_1,v10,
+Pot_v1,Frying Pan,RAssets/Prefabs/Blades/pot/Blade_pot_ss,1,130,RAssets/Prefabs/Blades/pot/Materials/Blade_pot,v1,
+Pot_v20_3,Frying Pan,RAssets/Prefabs/Blades/pot/Blade_pot_c,1,131,RAssets/Prefabs/Blades/pot/Materials/Blade_pot,v20,BladeVFX_Black
+Pot_v20_2,Frying Pan,RAssets/Prefabs/Blades/pot/Blade_pot_b,1,132,RAssets/Prefabs/Blades/pot/Materials/Blade_pot,v20,BladeVFX_Black
+Pot_v20_1,Frying Pan,RAssets/Prefabs/Blades/pot/Blade_pot_a,1,133,RAssets/Prefabs/Blades/pot/Materials/Blade_pot,v20,BladeVFX_Black
+Pot_v10_1,Frying Pan,RAssets/Prefabs/Blades/pot/Blade_pot_s,1,134,RAssets/Prefabs/Blades/pot/Materials/Blade_pot,v10,
+Sausage_v1,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_xs,1,135,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v1,
+Sausage_v10_1,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_as,1,136,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v10,
+Sausage_v10_2,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_bs,1,137,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v10,
+Sausage_v10_3,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_cs,1,138,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v10,
+Sausage_v20_1,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_a,1,139,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v20,BladeVFX_Red
+Sausage_v20_2,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_b,1,140,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v20,BladeVFX_Red
+Sausage_v20_3,Sausage Saber,RAssets/Prefabs/Blades/sausage/Blade_sausage_c,1,141,RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage,v20,BladeVFX_Orange
+Scimitar_v1,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,142,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv1,v1,
+Scimitar_v20_8,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b,1,143,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_8,v20,BladeVFX_White
+Scimitar_v20_7,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b,1,144,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_7,v20,BladeVFX_Orange
+Scimitar_v20_6,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b,1,145,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_6,v20,BladeVFX_Black
+Scimitar_v20_5,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b,1,146,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_5,v20,BladeVFX_Blue
+Scimitar_v20_4,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a,1,147,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_4,v20,BladeVFX_Red
+Scimitar_v20_3,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a,1,148,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_3,v20,BladeVFX_Green
+Scimitar_v20_2,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a,1,149,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_2,v20,BladeVFX_Black
+Scimitar_v20_1,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a,1,150,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_1,v20,BladeVFX_White
+Scimitar_v10_8,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,151,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_8,v10,
+Scimitar_v10_7,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,152,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_7,v10,
+Scimitar_v10_6,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,153,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_6,v10,
+Scimitar_v10_5,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,154,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_5,v10,
+Scimitar_v10_4,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,155,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_4,v10,
+Scimitar_v10_3,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,156,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_3,v10,
+Scimitar_v10_2,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,157,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_2,v10,
+Scimitar_v10_1,Scimitar,RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s,1,158,RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_1,v10,
+Fish_v1,Fish Fang mace,RAssets/Prefabs/Blades/fish/Blade_fish_xs,1,159,RAssets/Prefabs/Blades/fish/Materials/Blade_fish,v1,
+Fish_v10_1,Fish Fang mace,RAssets/Prefabs/Blades/fish/Blade_fish_s,1,160,RAssets/Prefabs/Blades/fish/Materials/Blade_fish,v10,
+Fish_v20_1,Fish Fang mace,RAssets/Prefabs/Blades/fish/Blade_fish,1,161,RAssets/Prefabs/Blades/fish/Materials/Blade_fish,v20,BladeVFX_Fish
+Seven_v1,Seven Branched sword,RAssets/Prefabs/Blades/seven/Blade_seven_xs,1,162,RAssets/Prefabs/Blades/seven/Materials/Blade_seven,v1,
+Seven_v20_1,Seven Branched sword,RAssets/Prefabs/Blades/seven/Blade_seven_a,1,163,RAssets/Prefabs/Blades/seven/Materials/Blade_seven,v20,BladeVFX_BlackAndWhite
+Seven_v10_1,Seven Branched sword,RAssets/Prefabs/Blades/seven/Blade_seven_s,1,164,RAssets/Prefabs/Blades/seven/Materials/Blade_seven,v10,
+Morning_v1,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_xs,1,165,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v1,
+Morning_v20_3,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_c,1,166,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v20,BladeVFX_Orange
+Morning_v20_2,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_b,1,167,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v20,BladeVFX_Yellow
+Morning_v20_1,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_a,1,168,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v20,BladeVFX_Green
+Morning_v10_1,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_as,1,169,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v10,
+Morning_v10_2,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_bs,1,170,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v10,
+Morning_v10_3,Morning Star,RAssets/Prefabs/Blades/morning/Blade_morning_star_cs,1,171,RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star,v10,
+Six_Ring_v1,Six Ring,RAssets/Prefabs/Blades/sixRing/Blade_six_ring_xs,1,172,RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring,v1,
+Six_Ring_v10,Six Ring,RAssets/Prefabs/Blades/sixRing/Blade_six_ring_s,1,173,RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring,v10,
+Six_Ring_v20,Six Ring,RAssets/Prefabs/Blades/sixRing/Blade_six_ring,1,174,RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring,v20,BladeVFX_SixRing
+Lightsaber_v1,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,175,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv1,v1,
+Lightsaber_v20_8,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_b,1,176,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_8,v20,BladeVFX_Red
+Lightsaber_v20_7,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_bl,1,177,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_7,v20,BladeVFX_Black
+Lightsaber_v20_6,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,178,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_6,v20,BladeVFX_Blue
+Lightsaber_v20_5,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,179,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_5,v20,BladeVFX_Cyan
+Lightsaber_v20_4,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,180,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_4,v20,BladeVFX_Green
+Lightsaber_v20_3,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,181,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_3,v20,BladeVFX_Yellow
+Lightsaber_v20_2,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,182,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_2,v20,BladeVFX_Orange
+Lightsaber_v20_1,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a,1,183,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_1,v20,BladeVFX_Red
+Lightsaber_v10_8,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_bs,1,184,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_8,v10,
+Lightsaber_v10_7,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_l,1,185,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_7,v10,
+Lightsaber_v10_6,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,186,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_6,v10,
+Lightsaber_v10_5,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,187,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_5,v10,
+Lightsaber_v10_4,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,188,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_4,v10,
+Lightsaber_v10_3,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,189,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_3,v10,
+Lightsaber_v10_2,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,190,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_2,v10,
+Lightsaber_v10_1,Lightsaber,RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s,1,191,RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_1,v10,
+Moderator Sword,Moderator Sword,RAssets/Prefabs/Blades/moderator/Blade_moderator,1,192,RAssets/Prefabs/Blades/moderator/Materials/Blade_moderator,v20,BladeVFX_Orange

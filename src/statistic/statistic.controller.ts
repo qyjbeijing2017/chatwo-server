@@ -7,18 +7,30 @@ import { ApiAccount } from '@heroiclabs/nakama-js/dist/api.gen';
 import { FlyDto } from './dto/fly.dto';
 import { KilledDto } from './dto/pve.dto';
 import { LogDto } from './dto/log.dto';
+import { OnlineDto } from './dto/online.dto';
+import { Public } from 'src/auth/public.decorator';
 
 @Controller('statistic')
 export class StatisticController {
     constructor(readonly statisticService: StatisticService) { }
 
     @ApiBearerAuth()
-    @Get('')
-    async getStatistics(
+    @Get('my/:name')
+    async getMyStatistic(
         @Account() account: ApiAccount,
-        @Query() logDto: LogDto,
+        @Param('name') name: string,
     ) {
-        return this.statisticService.getAllStatistics(logDto, account);
+        return this.statisticService.getMyStatistic(account, name);
+    }
+
+    @Public()
+    @Get(':name')
+    async getStatistic(
+        @Param('name') name: string,
+        @Query('limit', ParseIntPipe) limit: number = 100,
+        @Query('offset', ParseIntPipe) offset: number = 0,
+    ) {
+        return this.statisticService.getStatistic(name, limit, offset);
     }
 
     @ApiBearerAuth()
@@ -44,6 +56,13 @@ export class StatisticController {
     async pvp(@Account() account: ApiAccount, @Body() body: KilledDto) {
         return this.statisticService.pvp(account, body);
     }
+
+    @ApiBearerAuth()
+    @Post('online')
+    async online(@Account() account: ApiAccount, @Body() body: OnlineDto) {
+        return this.statisticService.online(account, body);
+    }
+
 
     @ApiBearerAuth()
     @Get('dsl/:query')

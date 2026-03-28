@@ -3011,5 +3011,1907 @@ export const configManager = new ConfigManager({
             },
             "fromFile": "purchase.csv"
         }
+    ],
+    "levels": [
+        {
+            "Level": 4,
+            "Exp": 250,
+            "Sum": 700,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 3,
+            "Exp": 200,
+            "Sum": 450,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 1,
+            "Exp": 100,
+            "Sum": 100,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 2,
+            "Exp": 150,
+            "Sum": 250,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 5,
+            "Exp": 300,
+            "Sum": 1,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 6,
+            "Exp": 350,
+            "Sum": 1,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 10,
+            "Exp": 0,
+            "Sum": 3,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 8,
+            "Exp": 500,
+            "Sum": 2,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 9,
+            "Exp": 750,
+            "Sum": 3,
+            "fromFile": "level.csv"
+        },
+        {
+            "Level": 7,
+            "Exp": 400,
+            "Sum": 1,
+            "fromFile": "level.csv"
+        }
+    ],
+    "statistic": [
+        {
+            "Name": "Forge Master",
+            "RefreshType": 0,
+            "Rule": {
+                "user.forge": [
+                    "branch(statisticExtra(\"Forge\", item.meta.bladeKey), 0, 50)",
+                    "collectionSession(\"Forge\", item.meta.bladeKey) * 500",
+                    "collectionArms(\"Forge\", [\"Lightsaber\", \"Morning Star\", \"Scimitar\", \"Sausage Saber\", \"Frying Pan\", \"Jian\", \"Rapier\", \"Lollipop\", \"Baguette\", \"Ruler\", \"Baseball Bat\", \"Katana\", \"Tang Dao\"], item.meta.bladeKey) * 1000"
+                ],
+                "user.level-up": "branch(levelMax, 102, 2)"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Weekly Activity Board",
+            "RefreshType": 2,
+            "Rule": {
+                "user.online": "statisticEvery(\"Online Daily\", minutes, 20) * 10",
+                "user.task-finished": "branch(configManager.archievementTaskMap.get(taskId).Type == 1, 15, 0)",
+                "user.fly": "statisticEvery(\"Fly Weekly\", meters, 100) * 5",
+                "user.monster-killed": 2,
+                "user.sign-in": "statisticHit(\"Sign In Daily\", 1, 1) * 50"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Weekly Forge Progress Board",
+            "RefreshType": 2,
+            "Rule": {
+                "user.forge": "branch(statisticExtra(\"Forge Daily\", item.meta.bladeKey), 0, 50)",
+                "user.level-up": 5,
+                "user.task-finished": "branch(taskId ==  \"Forge 10 swords\", 500, 0)"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Kill Monster Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.monster-killed": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Dule Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.duel": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Online Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.online": "minutes"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Sign In Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.sign-in": 1
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Fly Weekly",
+            "RefreshType": 2,
+            "Rule": {
+                "user.fly": "meters"
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Forge",
+            "RefreshType": 0,
+            "Rule": {
+                "user.forge": [
+                    1,
+                    "addExtra(item.meta.bladeKey, 1)",
+                    "addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
+                ]
+            },
+            "fromFile": "statistic.csv"
+        },
+        {
+            "Name": "Forge Daily",
+            "RefreshType": 1,
+            "Rule": {
+                "user.forge": [
+                    1,
+                    "addExtra(item.meta.bladeKey, 1)",
+                    "addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
+                ]
+            },
+            "fromFile": "statistic.csv"
+        }
+    ],
+    "bladeAppearance": [
+        {
+            "Index": 0,
+            "Name": "Tang_v1",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv1",
+            "BladeKey": "Tang Dao",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 1,
+            "Name": "Tang_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_1",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 2,
+            "Name": "Tang_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_2",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 3,
+            "Name": "Tang_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_3",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 4,
+            "Name": "Tang_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_4",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 5,
+            "Name": "Tang_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_5",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 6,
+            "Name": "Tang_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_6",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 7,
+            "Name": "Tang_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_7",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 8,
+            "Name": "Tang_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_8",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 9,
+            "Name": "Tang_v10_9",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv10_9",
+            "BladeKey": "Tang Dao",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 10,
+            "Name": "Tang_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_1",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 11,
+            "Name": "Tang_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_2",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 12,
+            "Name": "Tang_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_3",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 13,
+            "Name": "Tang_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_4",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 14,
+            "Name": "Tang_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_5",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 15,
+            "Name": "Tang_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_6",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 16,
+            "Name": "Tang_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_7",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 17,
+            "Name": "Tang_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_8",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 18,
+            "Name": "Tang_v20_9",
+            "BladePath": "RAssets/Prefabs/Blades/tang/Blade_tang_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/tang/Materials/Blade_tang_lv20_9",
+            "BladeKey": "Tang Dao",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 19,
+            "Name": "Katana_v1",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv1",
+            "BladeKey": "Katana",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 20,
+            "Name": "Katana_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_1",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 21,
+            "Name": "Katana_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_2",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 22,
+            "Name": "Katana_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_3",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 23,
+            "Name": "Katana_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_4",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 24,
+            "Name": "Katana_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_5",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 25,
+            "Name": "Katana_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_6",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 26,
+            "Name": "Katana_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_7",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 27,
+            "Name": "Katana_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_8",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 28,
+            "Name": "Katana_v10_9",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv10_9",
+            "BladeKey": "Katana",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 29,
+            "Name": "Katana_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_1",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 30,
+            "Name": "Katana_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_2",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 31,
+            "Name": "Katana_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_3",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 32,
+            "Name": "Katana_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_4",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 33,
+            "Name": "Katana_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_5",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 34,
+            "Name": "Katana_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_6",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 35,
+            "Name": "Katana_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_7",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 36,
+            "Name": "Katana_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_8",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 37,
+            "Name": "Katana_v20_9",
+            "BladePath": "RAssets/Prefabs/Blades/katana/Blade_katana_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/katana/Materials/Blade_katana_lv20_9",
+            "BladeKey": "Katana",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 38,
+            "Name": "Baguette_v1",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 39,
+            "Name": "Baguette_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_as",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 40,
+            "Name": "Baguette_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_cs",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 41,
+            "Name": "Baguette_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_bs",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 42,
+            "Name": "Bat_v1",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv1",
+            "BladeKey": "Baseball Bat",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 43,
+            "Name": "Bat_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_1",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 44,
+            "Name": "Bat_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_2",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 45,
+            "Name": "Bat_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_3",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 46,
+            "Name": "Bat_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_4",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 47,
+            "Name": "Bat_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_5",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 48,
+            "Name": "Bat_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_6",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 49,
+            "Name": "Bat_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_7",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 50,
+            "Name": "Bat_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_8",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 51,
+            "Name": "Bat_v10_9",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_9",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 52,
+            "Name": "Bat_v10_10",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv10_10",
+            "BladeKey": "Baseball Bat",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 53,
+            "Name": "Bat_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_1",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 54,
+            "Name": "Bat_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_2",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 55,
+            "Name": "Bat_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_3",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 56,
+            "Name": "Bat_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_4",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 57,
+            "Name": "Bat_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_5",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 58,
+            "Name": "Bat_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_6",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 59,
+            "Name": "Bat_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_7",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 60,
+            "Name": "Bat_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_8",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 61,
+            "Name": "Bat_v20_9",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bat_lv20_9",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 62,
+            "Name": "Bat_v20_10",
+            "BladePath": "RAssets/Prefabs/Blades/bat/Blade_bat_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/bat/Materials/Blade_bta_lv20_10",
+            "BladeKey": "Baseball Bat",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 63,
+            "Name": "Ruler_v1",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv1",
+            "BladeKey": "Ruler",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 64,
+            "Name": "Ruler_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_1",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 65,
+            "Name": "Ruler_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_2",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 66,
+            "Name": "Ruler_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_3",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 67,
+            "Name": "Ruler_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_4",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 68,
+            "Name": "Ruler_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_5",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 69,
+            "Name": "Ruler_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv10_6",
+            "BladeKey": "Ruler",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 70,
+            "Name": "Ruler_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_1",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 71,
+            "Name": "Ruler_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_2",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 72,
+            "Name": "Ruler_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_3",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 73,
+            "Name": "Ruler_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_4",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 74,
+            "Name": "Ruler_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_5",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 75,
+            "Name": "Ruler_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/ruler/Blade_ruler_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/ruler/Materials/Blade_ruler_lv20_6",
+            "BladeKey": "Ruler",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 76,
+            "Name": "Baguette_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 77,
+            "Name": "Baguette_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 78,
+            "Name": "Baguette_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/baguette/Blade_baguette_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/baguette/Materials/Blade_baguette",
+            "BladeKey": "Baguette",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 79,
+            "Name": "Lollipop_v1",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 80,
+            "Name": "Lollipop_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_f",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 81,
+            "Name": "Lollipop_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_e",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 82,
+            "Name": "Lollipop_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_d",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 83,
+            "Name": "Lollipop_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 84,
+            "Name": "Lollipop_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 85,
+            "Name": "Lollipop_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 86,
+            "Name": "Lollipop_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_fs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 87,
+            "Name": "Lollipop_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_es",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 88,
+            "Name": "Lollipop_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_ds",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 89,
+            "Name": "Lollipop_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_cs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 90,
+            "Name": "Lollipop_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_bs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 91,
+            "Name": "Lollipop_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_as",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 92,
+            "Name": "Lollipop_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_gs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 93,
+            "Name": "Lollipop_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_hs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 94,
+            "Name": "Lollipop_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_g",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 95,
+            "Name": "Lollipop_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/lollipop/Blade_lollipop_h",
+            "MaterialPath": "RAssets/Prefabs/Blades/lollipop/Materials/Blade_lollipop",
+            "BladeKey": "Lollipop",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 96,
+            "Name": "Rapier_v1",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv1",
+            "BladeKey": "Rapier",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 97,
+            "Name": "Rapier_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_6",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 98,
+            "Name": "Rapier_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_5",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 99,
+            "Name": "Rapier_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_4",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 100,
+            "Name": "Rapier_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_3",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 101,
+            "Name": "Rapier_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_2",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 102,
+            "Name": "Rapier_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_1",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 103,
+            "Name": "Rapier_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_6",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 104,
+            "Name": "Rapier_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_5",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 105,
+            "Name": "Rapier_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_4",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 106,
+            "Name": "Rapier_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_3",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 107,
+            "Name": "Rapier_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_2",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 108,
+            "Name": "Rapier_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_1",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 109,
+            "Name": "Rapier_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv10_7",
+            "BladeKey": "Rapier",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 110,
+            "Name": "Rapier_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/rapier/Blade_rapier_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/rapier/Materials/Blade_rapier_lv20_7",
+            "BladeKey": "Rapier",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 111,
+            "Name": "Jian_v1",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv1",
+            "BladeKey": "Jian",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 112,
+            "Name": "Jian_v20_9",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_9",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 113,
+            "Name": "Jian_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_8",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 114,
+            "Name": "Jian_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_7",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 115,
+            "Name": "Jian_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_6",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 116,
+            "Name": "Jian_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_5",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 117,
+            "Name": "Jian_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_4",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 118,
+            "Name": "Jian_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_3",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 119,
+            "Name": "Jian_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_2",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 120,
+            "Name": "Jian_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv20_1",
+            "BladeKey": "Jian",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 121,
+            "Name": "Jian_v10_9",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_9",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 122,
+            "Name": "Jian_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_8",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 123,
+            "Name": "Jian_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_7",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 124,
+            "Name": "Jian_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_6",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 125,
+            "Name": "Jian_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_5",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 126,
+            "Name": "Jian_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_4",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 127,
+            "Name": "Jian_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_3",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 128,
+            "Name": "Jian_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_2",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 129,
+            "Name": "Jian_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/jian/Blade_jian_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/jian/Materials/Blade_jian_lv10_1",
+            "BladeKey": "Jian",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 130,
+            "Name": "Pot_v1",
+            "BladePath": "RAssets/Prefabs/Blades/pot/Blade_pot_ss",
+            "MaterialPath": "RAssets/Prefabs/Blades/pot/Materials/Blade_pot",
+            "BladeKey": "Frying Pan",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 131,
+            "Name": "Pot_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/pot/Blade_pot_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/pot/Materials/Blade_pot",
+            "BladeKey": "Frying Pan",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 132,
+            "Name": "Pot_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/pot/Blade_pot_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/pot/Materials/Blade_pot",
+            "BladeKey": "Frying Pan",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 133,
+            "Name": "Pot_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/pot/Blade_pot_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/pot/Materials/Blade_pot",
+            "BladeKey": "Frying Pan",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 134,
+            "Name": "Pot_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/pot/Blade_pot_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/pot/Materials/Blade_pot",
+            "BladeKey": "Frying Pan",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 135,
+            "Name": "Sausage_v1",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 136,
+            "Name": "Sausage_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_as",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 137,
+            "Name": "Sausage_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_bs",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 138,
+            "Name": "Sausage_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_cs",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 139,
+            "Name": "Sausage_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 140,
+            "Name": "Sausage_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 141,
+            "Name": "Sausage_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/sausage/Blade_sausage_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/sausage/Materials/Blade_sausage",
+            "BladeKey": "Sausage Saber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 142,
+            "Name": "Scimitar_v1",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv1",
+            "BladeKey": "Scimitar",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 143,
+            "Name": "Scimitar_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_8",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 144,
+            "Name": "Scimitar_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_7",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 145,
+            "Name": "Scimitar_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_6",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 146,
+            "Name": "Scimitar_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_5",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 147,
+            "Name": "Scimitar_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_4",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 148,
+            "Name": "Scimitar_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_3",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 149,
+            "Name": "Scimitar_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_2",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 150,
+            "Name": "Scimitar_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv20_1",
+            "BladeKey": "Scimitar",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 151,
+            "Name": "Scimitar_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_8",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 152,
+            "Name": "Scimitar_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_7",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 153,
+            "Name": "Scimitar_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_6",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 154,
+            "Name": "Scimitar_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_5",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 155,
+            "Name": "Scimitar_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_4",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 156,
+            "Name": "Scimitar_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_3",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 157,
+            "Name": "Scimitar_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_2",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 158,
+            "Name": "Scimitar_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/scimitar/Blade_scimitar_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/scimitar/Materials/Blade_scimitar_lv10_1",
+            "BladeKey": "Scimitar",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 159,
+            "Name": "Fish_v1",
+            "BladePath": "RAssets/Prefabs/Blades/fish/Blade_fish_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/fish/Materials/Blade_fish",
+            "BladeKey": "Fish Fang mace",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 160,
+            "Name": "Fish_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/fish/Blade_fish_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/fish/Materials/Blade_fish",
+            "BladeKey": "Fish Fang mace",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 161,
+            "Name": "Fish_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/fish/Blade_fish",
+            "MaterialPath": "RAssets/Prefabs/Blades/fish/Materials/Blade_fish",
+            "BladeKey": "Fish Fang mace",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 162,
+            "Name": "Seven_v1",
+            "BladePath": "RAssets/Prefabs/Blades/seven/Blade_seven_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/seven/Materials/Blade_seven",
+            "BladeKey": "Seven Branched sword",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 163,
+            "Name": "Seven_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/seven/Blade_seven_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/seven/Materials/Blade_seven",
+            "BladeKey": "Seven Branched sword",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 164,
+            "Name": "Seven_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/seven/Blade_seven_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/seven/Materials/Blade_seven",
+            "BladeKey": "Seven Branched sword",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 165,
+            "Name": "Morning_v1",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 166,
+            "Name": "Morning_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_c",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 167,
+            "Name": "Morning_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 168,
+            "Name": "Morning_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 169,
+            "Name": "Morning_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_as",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 170,
+            "Name": "Morning_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_bs",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 171,
+            "Name": "Morning_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/morning/Blade_morning_star_cs",
+            "MaterialPath": "RAssets/Prefabs/Blades/morning/Materials/Blade_morning_star",
+            "BladeKey": "Morning Star",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 172,
+            "Name": "Six_Ring_v1",
+            "BladePath": "RAssets/Prefabs/Blades/sixRing/Blade_six_ring_xs",
+            "MaterialPath": "RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring",
+            "BladeKey": "Six Ring",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 173,
+            "Name": "Six_Ring_v10",
+            "BladePath": "RAssets/Prefabs/Blades/sixRing/Blade_six_ring_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring",
+            "BladeKey": "Six Ring",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 174,
+            "Name": "Six_Ring_v20",
+            "BladePath": "RAssets/Prefabs/Blades/sixRing/Blade_six_ring",
+            "MaterialPath": "RAssets/Prefabs/Blades/sixRing/Materials/Blade_six_ring",
+            "BladeKey": "Six Ring",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 175,
+            "Name": "Lightsaber_v1",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv1",
+            "BladeKey": "Lightsaber",
+            "Type": "v1",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 176,
+            "Name": "Lightsaber_v20_8",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_b",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_8",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 177,
+            "Name": "Lightsaber_v20_7",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_bl",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_7",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 178,
+            "Name": "Lightsaber_v20_6",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_6",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 179,
+            "Name": "Lightsaber_v20_5",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_5",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 180,
+            "Name": "Lightsaber_v20_4",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_4",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 181,
+            "Name": "Lightsaber_v20_3",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_3",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 182,
+            "Name": "Lightsaber_v20_2",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_2",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 183,
+            "Name": "Lightsaber_v20_1",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_a",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv20_1",
+            "BladeKey": "Lightsaber",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 184,
+            "Name": "Lightsaber_v10_8",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_bs",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_8",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 185,
+            "Name": "Lightsaber_v10_7",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_l",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_7",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 186,
+            "Name": "Lightsaber_v10_6",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_6",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 187,
+            "Name": "Lightsaber_v10_5",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_5",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 188,
+            "Name": "Lightsaber_v10_4",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_4",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 189,
+            "Name": "Lightsaber_v10_3",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_3",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 190,
+            "Name": "Lightsaber_v10_2",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_2",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 191,
+            "Name": "Lightsaber_v10_1",
+            "BladePath": "RAssets/Prefabs/Blades/lightSaber/Blade_light_saber_s",
+            "MaterialPath": "RAssets/Prefabs/Blades/lightSaber/Materials/Blade_light_saber_lv10_1",
+            "BladeKey": "Lightsaber",
+            "Type": "v10",
+            "fromFile": "bladeAppearance.csv"
+        },
+        {
+            "Index": 192,
+            "Name": "Moderator Sword",
+            "BladePath": "RAssets/Prefabs/Blades/moderator/Blade_moderator",
+            "MaterialPath": "RAssets/Prefabs/Blades/moderator/Materials/Blade_moderator",
+            "BladeKey": "Moderator Sword",
+            "Type": "v20",
+            "fromFile": "bladeAppearance.csv"
+        }
     ]
 });

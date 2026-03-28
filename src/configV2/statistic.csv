@@ -1,0 +1,27 @@
+﻿Name,RefreshType,Rule
+Forge Master,never,"user.forge: 
+  - branch(statisticExtra(""Forge"", item.meta.bladeKey), 0, 50)
+  - collectionSeries(""Forge"", item.meta.bladeKey, item.meta.variantIndex) * 500
+  - collectionArms(""Forge"", [""Lightsaber"", ""Morning Star"", ""Scimitar"", ""Sausage Saber"", ""Frying Pan"", ""Jian"", ""Rapier"", ""Lollipop"", ""Baguette"", ""Ruler"", ""Baseball Bat"", ""Katana"", ""Tang Dao""], item.meta.bladeKey) * 1000
+user.level-up: branch(levelMax, 100 + levelUpCount * 2, levelUpCount * 2)"
+Weekly Activity Board,weekly,"user.online: statisticEvery(""Online Daily"", minutes, 20) * 10
+user.task-finished: branch(configManager.archievementTaskMap.get(taskId).Type == 1, 15, 0)
+user.fly: statisticEvery(""Fly Weekly"", meters, 1000) * 5
+user.monster-killed: 2
+user.sign-in: statisticHit(""Sign In Daily"", 1, 1) * 50"
+Weekly Forge Progress Board,weekly,"user.forge: statisticHit(""Forge Daily"", 1, 1) * 50
+user.level-up: levelUpCount * 5
+user.task-finished:  branch(taskId ==  ""Forge 10 swords"", 500, 0)"
+Kill Monster Daily,daily,user.monster-killed: 1
+Dule Daily,daily,user.duel: 1
+Online Daily,daily,user.online: minutes
+Sign In Daily,daily,user.sign-in: 1
+Fly Weekly,weekly,user.fly: meters
+Forge,never,"user.forge: 
+  - 1
+  - addExtra(item.meta.bladeKey, 1)
+  - addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
+Forge Daily,daily,"user.forge: 
+  - 1
+  - addExtra(item.meta.bladeKey, 1)
+  - addExtra(item.meta.bladeKey + item.meta.variantIndex, 1)"
