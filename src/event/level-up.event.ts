@@ -11,16 +11,27 @@ export class LevelUpEvent extends UserEvent {
     levelEnd: number;
 
     level(exp: number) {
-        const config = configManager.levels;
-        if (!config) return 0;
-        const configCopy = [...config];
-        configCopy.pop();
-        let level = 0;
-        configCopy.sort((a, b) => a.Sum - b.Sum);
-        while (level < configCopy.length && exp > configCopy[level].Sum) {
-            level++;
+        const levels = configManager.levels;
+        if (!levels?.length) return 1;
+
+        const sortedLevels = [...levels].sort((a, b) => a.Level - b.Level);
+        let currentLevel = sortedLevels[0].Level;
+        let requiredExp = 0;
+
+        for (const lv of sortedLevels) {
+            if (lv.Exp <= 0) {
+                break;
+            }
+
+            requiredExp += lv.Exp;
+            if (exp >= requiredExp) {
+                currentLevel = lv.Level + 1;
+            } else {
+                break;
+            }
         }
-        return level + 1;
+
+        return Math.min(currentLevel, sortedLevels[sortedLevels.length - 1].Level);
     }
 
     constructor(
@@ -30,9 +41,10 @@ export class LevelUpEvent extends UserEvent {
         public readonly endExp: number,
     ) {
         super('user.level-up', account);
+        const maxLevel = configManager.levels.reduce((max, lv) => Math.max(max, lv.Level), 1);
         this.levelStart = this.level(startExp);
         this.levelEnd = this.level(endExp);
-        this.levelUpCount = clamp(this.levelEnd - this.levelStart, 0, configManager.levels.length);
-        this.levelMax = this.levelEnd >= configManager.levels.length;
+        this.levelUpCount = clamp(this.levelEnd - this.levelStart, 0, maxLevel);
+        this.levelMax = this.levelStart < maxLevel && this.levelEnd >= maxLevel;
     }
 }
