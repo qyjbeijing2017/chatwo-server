@@ -503,16 +503,18 @@ export class StatisticService {
 
     async pvp(account: ApiAccount, dto: KilledDto) {
         this.eventEmitter.emit('user.duel', new DuelEvent(account, dto.whoWasKilled));
-        const user = await this.userRepository.findOneBy({ name: dto.whoWasKilled });
-        if (!user) {
-            throw new NotFoundException(`User with name ${dto.whoWasKilled} not found`);
-        }
-        const log = this.logRepository.create({
-            message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
-            tags: [account.custom_id || '', 'pvp', dto.whoWasKilled, account.user?.username || ''],
-        });
-        await this.logRepository.save(log);
-        return log;
+        // const user = await this.userRepository.findOneBy({ name: dto.whoWasKilled });
+        // if (!user) {
+        //     throw new NotFoundException(`User with name ${dto.whoWasKilled} not found`);
+        // }
+        // const log = this.logRepository.create({
+        //     message: `User ${account.user?.username} killed player ${dto.whoWasKilled}.`,
+        //     tags: [account.custom_id || '', 'pvp', dto.whoWasKilled, account.user?.username || ''],
+        // });
+        // await this.logRepository.save(log);
+        // return log;
+        this.logger.log(`User ${account.user?.username} killed player ${dto.whoWasKilled}.`);
+        return {};
     }
 
     async online(account: ApiAccount, dto: OnlineDto) {
