@@ -823,8 +823,8 @@ export class StatisticService {
                 name,
                 owner: {
                     nakamaId: account.custom_id,
-                    createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
-                }
+                },
+                createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
             },
             order: {
                 createdAt: 'DESC',
