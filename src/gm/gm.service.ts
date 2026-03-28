@@ -258,7 +258,8 @@ export class GmService {
                             return manager.find(ChatwoStatistic, {})
                         },
                         deleteAllStatistic: async () => {
-                            return manager.delete(ChatwoStatistic, {});
+                            const allStatistics = await manager.find(ChatwoStatistic, {});
+                            return manager.delete(ChatwoStatistic, allStatistics.map(s => s.id));
                         }
                     }, { openBug: true });
                     results.push(result);
