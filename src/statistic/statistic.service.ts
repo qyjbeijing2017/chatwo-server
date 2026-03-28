@@ -736,27 +736,34 @@ export class StatisticService {
                             return configManager.bladeAppearanceMap.get(name)?.map((appearance, index) => appearance.BladeKey + index) || [];
                         },
                         collectionSession: async (name: string, variantIndex: number) => {
+                            this.logger.debug(`-------------------collectionSession ${name} ${variantIndex}-------------------------`)
                             const statistic = await getStatistic(name);
                             if (!statistic) {
                                 return 0;
                             }
+                            this.logger.debug(`statistic ${JSON.stringify(statistic)}`)
                             const collection = configManager.bladeAppearanceMap.get(statistic.name);
                             if (!collection) {
                                 return 0;
                             }
                             const extra = statistic.extra || {};
+                            this.logger.debug(`extra ${JSON.stringify(extra)}`);
                             for (let index = 0; index < collection.length; index++) {
                                 const key = collection[index].BladeKey + index;
+                                this.logger.debug(`key ${key} ${extra[key]}`);
                                 if (index === variantIndex) {
                                     if (extra[key] && extra[key] >= 1) {
+                                        this.logger.debug(`key ${key} already collected`);
                                         return 0;
                                     }
                                 } else {
                                     if (!extra[key] || extra[key] < 1) {
+                                        this.logger.debug(`key ${key} not collected`);
                                         return 0;
                                     }
                                 }
                             }
+                            this.logger.debug(`-------------------End collectionSession ${name} ${variantIndex}-------------------------`)
                             return 1;
 
                         },
@@ -782,7 +789,7 @@ export class StatisticService {
                         }
                     }) as boolean | number;
                     this.logger.log(`value ${value}`)
-                    if(!statistic.progress) statistic.progress = 0;
+                    if (!statistic.progress) statistic.progress = 0;
                     statistic.progress += Number(value) || 0;
                     this.logger.log(`progress ${statistic.progress}`);
                 }
