@@ -6,7 +6,7 @@ Forge Master,never,"user.forge:
 user.level-up: branch(levelMax, 100 + levelUpCount * 2, levelUpCount * 2)"
 Weekly Activity Board,weekly,"user.online: statisticEvery(""Online Daily"", minutes, 20) * 10
 user.task-finished: branch(configManager.archievementTaskMap.get(taskId).Type == 1, 15, 0)
-user.fly: statisticEvery(""Fly Weekly"", meters, 10000) * 5
+user.fly: statisticEvery(""Fly Weekly"", meters, 1000) * 5
 user.monster-killed: 2
 user.sign-in: statisticHit(""Sign In Daily"", 1, 1) * 50"
 Weekly Forge Progress Board,weekly,"user.forge: statisticHit(""Forge Daily"", 1, 1) * 50
