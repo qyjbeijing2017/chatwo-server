@@ -871,6 +871,7 @@ export class StatisticService {
         const statistics = await this.statisticRepository.find({
             where: {
                 name,
+                progress: MoreThan(0),
                 createdAt: timeLimit ? MoreThan(timeLimit) : undefined,
             },
             order: {
