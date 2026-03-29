@@ -635,11 +635,9 @@ export class StatisticService {
             this.logger.error(`User with nakamaId ${payload.account.custom_id}, name: ${payload.account.user?.username || ''} not found`);
             return;
         }
-        this.logger.log(`Handling event ${payload.eventId} for user ${user.name} (${user.nakamaId})`);
         const configs = configManager.statistic.filter(config => payload.eventId in config.Rule);
         for (const config of configs) {
             startTransaction(this.dataSource, async (manager) => {
-                this.logger.log(`Config ${config.Name} matched for event ${payload.eventId}`);
                 const timeLimit = config.RefreshType === StatisticRefreshType.daily ? getServerTime().startOf('day').toDate() :
                     config.RefreshType === StatisticRefreshType.weekly ? getServerTime().startOf('week').toDate() :
                         config.RefreshType === StatisticRefreshType.monthly ? getServerTime().startOf('month').toDate() :
@@ -674,12 +672,10 @@ export class StatisticService {
                         owner: user,
                     });
                 }
-                this.logger.log(`Executing DSL for statistic ${statistic.name} with current progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
 
                 try {
                     const dsls: string[] = Array.isArray(config.Rule[payload.eventId]) ? config.Rule[payload.eventId] as string[] : [config.Rule[payload.eventId] as string];
 
-                    this.logger.log(`DSLs to execute for statistic ${statistic.name}: ${JSON.stringify(dsls)}`);
                     const statistics: Map<string, ChatwoStatistic> = new Map();
                     const getStatistic = async (name: string) => {
                         const config = configManager.statisticMap.get(name);
@@ -708,7 +704,6 @@ export class StatisticService {
                     }
 
                     for (const dsl of dsls) {
-                        this.logger.log(`Executing DSL for statistic ${statistic.name}: ${dsl}`);
                         const value = await this.execDsl(dsl.toString(), payload.account, {
                             configManager,
                             ...payload,
@@ -811,10 +806,7 @@ export class StatisticService {
                         }) as boolean | number;
                         if (!statistic.progress) statistic.progress = 0;
                         statistic.progress += Number(value) || 0;
-                        this.logger.log(`DSL executed for statistic ${statistic.name}, got value ${value}`);
-                        this.logger.log(`Statistic ${statistic.name} progress updated to ${statistic.progress}`);
                     }
-                    this.logger.log(`Saving statistic ${statistic.name} with progress ${statistic.progress} and extra ${JSON.stringify(statistic.extra)}`);
                     await manager.save(statistic);
                 } catch (e) {
                     this.logger.error(`Failed to execute statistic DSL for statistic ${config.Name} on event ${payload.eventId}:  ${e.message}`);

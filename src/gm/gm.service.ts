@@ -242,7 +242,6 @@ export class GmService {
                         },
                         forge: async (blade: string, index: number) => {
                             const [itemBuy] = await this.storeService.buyItem(account, 'C_Tutorial_Hilt')
-                            this.logger.log(`Item dropped in: ${JSON.stringify(itemBuy)}`);
                             const item = await this.itemService.updateItem(account, itemBuy.nakamaId, {
                                 tags: ['gm', 'forge'],
                                 meta: {
@@ -251,7 +250,6 @@ export class GmService {
                                     variantIndex: index,
                                 }
                             })
-                            this.logger.log(`Item after update: ${JSON.stringify(item)}`);
                             return item;
                         },
                         getAllStatistic: async () => {
